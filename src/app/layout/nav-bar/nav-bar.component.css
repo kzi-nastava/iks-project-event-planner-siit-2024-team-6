@@ -123,4 +123,10 @@
 .navbar__profile {
   margin-left: 20px; /* Ensure there's space between the profile icon and other items */
 }
-  
+.navbar__logo {
+    font-family: 'Charm', sans-serif; /* Apply Charm font */
+    font-weight: 700; /* Bold weight for Charm */
+    font-size: 24px; /* Adjust size as needed */
+    font-style: normal;
+    color: #fff; /* White text color */
+  }
