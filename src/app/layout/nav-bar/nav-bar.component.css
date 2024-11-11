@@ -1,16 +1,126 @@
-mat-toolbar {
-    background-color: #5656a1;
+/* General Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Distribute space between sections */
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #2c3e50;
+    color: white;
+    font-family: Arial, sans-serif;
+    position: relative;
+  }
+  
+  /* Navbar Menu (Logo and Icon) */
+  .navbar__menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  /* Navbar Logo */
+  .navbar__logo {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* Navbar Links - Center them */
+  .navbar__links {
+    position: absolute; /* Absolutely position the links in the center */
+    left: 50%;
+    transform: translateX(-50%); /* Center the links horizontally */
+    display: flex;
+    gap: 20px;
+  }
+  
+  .navbar__links a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .navbar__links a:hover {
+    background-color: #34495e;
+  }
+  
+  /* Search Bar - Align to right */
+  .navbar__search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto; /* Pushes the search bar to the right */
+  }
+  
+  .navbar__search input {
+    padding: 6px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #bdc3c7;
+    outline: none;
+  }
+  
+  .navbar__search input:focus {
+    border-color: #2980b9;
+  }
+  
+  .navbar__search button {
+    background-color: #fff;
+    color: #34495e;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .navbar__search button i {
+    font-size: 16px;
+  }
+  
+  .navbar__search button:hover {
+    background-color: #3498db;
+  }
+  
+  /* Profile Icon */
+  .navbar__profile i {
+    font-size: 28px;
+    cursor: pointer;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .navbar__menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+    }
+  
+    .navbar__links {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .navbar__links a {
+      width: 100%;
+      padding: 10px;
+    }
+  
+    .navbar__icon {
+      display: block;
+    }
+  
+    .navbar__menu.active + .navbar__links {
+      display: flex;
+    }
+  }
+.navbar__search {
+  margin-right: 20px; /* Add space between search and profile icon */
 }
 
-div {
-    width: 100%;
-    justify-content: flex-end;
+.navbar__profile {
+  margin-left: 20px; /* Ensure there's space between the profile icon and other items */
 }
-
-button {
-    margin-right: 10px;
-}
-
-span {
-    color: white
-}
+  
