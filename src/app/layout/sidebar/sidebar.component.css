@@ -48,14 +48,15 @@
   .sidebar__favorites p {
     margin: 10px 0; /* Расстояние между строками */
     color: white; /* Белый текст */
-    font-size: 14px;
+    font-size: 15px;
     text-align: left; /* Выравнивание текста по левому краю */
-  }
+    cursor: pointer;
+}
   
   
-  .sidebar__favorites p:hover {
-    text-decoration: underline;
-  }
+  /* .sidebar__favorites p:hover {
+    
+  } */
   .sidebar-backdrop {
     position: fixed;
     top: 0;

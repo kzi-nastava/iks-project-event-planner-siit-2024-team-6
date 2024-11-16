@@ -1,5 +1,6 @@
 <div class="sidebar-backdrop" *ngIf="isOpen" (click)="closeSidebar()"></div>
 <div class="sidebar" [class.active]="isOpen">
+
         <div class="sidebar__close" (click)="closeSidebar()">
           <i class="fa fa-times"></i>
         </div>
@@ -12,9 +13,9 @@
           </li>
         </ul>
         <div class="sidebar__favorites">
-          <p>favourite events</p>
-          <p>favourite products</p>
-          <p>favourite services</p>
+          <p routerLink="/home">favourite events</p>
+          <p routerLink="/home">favourite products</p>
+          <p routerLink="/home">favourite services</p>
         </div>
         <ul class="sidebar__menu">
           <li>
