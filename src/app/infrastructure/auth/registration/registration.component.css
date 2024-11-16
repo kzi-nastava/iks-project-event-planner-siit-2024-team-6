@@ -1,0 +1,113 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #d3a3b0;
+  }
+  
+  .registration-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #d3a3b0;
+  }
+  
+  .registration-card {
+    background-color: white;
+    width: 600px;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .registration-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .input-group {
+    margin-bottom: 30px;
+    position: relative;
+  }
+  
+  .input-group label {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ffffff80;
+    padding: 5px 0;
+  }
+  
+  .input-group i {
+    font-size: 20px;
+    margin-right: 10px;
+    color: white;
+  }
+  
+  .input-group i {
+    font-size: 20px;
+    margin-right: 10px;
+    color: #888;
+  }
+  
+  input {
+    width: 100%;
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 16px;
+    color: #333;
+    padding: 5px 0;
+  }
+  
+  .radio-group {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .radio-group label {
+    margin-right: 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .radio-group input {
+    margin-right: 5px;
+  }
+  
+  .provider-fields {
+    margin-top: 20px;
+  }
+  
+  .signup-button {
+    background-color: #7b5b8e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .signup-button:hover {
+    background-color: #5c4068;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  h3 {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  

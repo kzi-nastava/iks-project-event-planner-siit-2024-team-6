@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrl: './registration.component.css'
 })
 export class RegistrationComponent {
+  isProvider: boolean = false;
 
+  // check
+  toggleProvider(isProvider: boolean): void {
+    this.isProvider = isProvider;
+  }
 }
