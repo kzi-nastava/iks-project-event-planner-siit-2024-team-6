@@ -1,0 +1,73 @@
+/* Slider container spans the entire width of the viewport and has increased height */
+.slider {
+  position: relative;
+  width: 100%;
+  height: 600px; /* Increased height */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Wrapper to control overflow */
+.slider-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Content slides horizontally */
+.slider-content {
+  display: flex;
+  transition: transform 0.5s ease;
+  width: 100%;
+  height: 100%;
+}
+
+/* Top event cards take full width and height */
+app-top-event-card {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+}
+
+/* Navigation buttons */
+.slider-button {
+  position: absolute;
+  top: 50%; /* Centered vertically */
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.3s ease;
+}
+
+.slider-button:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* Left button */
+.slider-button.prev {
+  left: 20px; /* Positioned at the left edge */
+}
+
+/* Right button */
+.slider-button.next {
+  right: 20px; /* Positioned at the right edge */
+}
+
+/* Arrow icons */
+.arrow-icon {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+
