@@ -1,0 +1,96 @@
+/* Основные стили */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", sans-serif;
+    background-color: #f7f7f7;
+  }
+  
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #eef1f4;
+    font-family: "Inter", sans-serif;
+  }
+  
+  .login-card {
+    background-color: #d3a3b0;
+    width: 400px;
+    padding: 80px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  .login-title {
+    font-family: 'Inter', sans-serif;
+  font-weight: 400; /* Полужирный */
+    font-size: 24px;
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+  .input-group {
+    margin-bottom: 30px;
+    position: relative;
+  }
+  
+  .input-group label {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ffffff80;
+    padding: 5px 0;
+  }
+  
+  .input-group i {
+    font-size: 20px;
+    margin-right: 10px;
+    color: white;
+  }
+  
+  input {
+    width: 100%;
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 16px;
+    color: white;
+    padding: 5px 0;
+  }
+  
+  input::placeholder {
+    color: #ffffff80;
+  }
+  
+  .login-button {
+    background-color: #35446d;
+    color: white;
+    border: none;
+    padding: 10px 48px; /* Уменьшены отступы */
+    border-radius: 25px; /* Закругление краёв */
+    font-size: 14px; /* Уменьшен размер текста */
+    cursor: pointer;
+    width: auto; /* Кнопка будет подстраиваться под текст */
+    margin-top: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .login-button:hover {
+    background-color: #283653;
+  }
+  
+  
+  .forgot-password {
+    display: block;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #ffffff80;
+    text-decoration: none;
+  }
+  
+  .forgot-password:hover {
+    text-decoration: underline;
+  }
+  
