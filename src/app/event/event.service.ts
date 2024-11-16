@@ -1,58 +1,73 @@
 import { Injectable } from '@angular/core';
 import { Event } from './model/event.model'; // Adjust the path based on your project structure
 import { Status } from './model/event.model';
-
 const EVENTS: Event[] = [
   {
-    name: 'Birthday Party',
-    description: 'A fun-filled birthday celebration with friends and family.',
-    location: 'Event Hall "Celebrations", Main Street 123, Belgrade, Serbia',
-    maxParticipants: 50,
-    minParticipants: 10,
+    name: 'Yoga Retreat',
+    description: 'A peaceful and rejuvenating retreat focusing on yoga, meditation, and mindfulness.',
+    location: 'Mountain Bliss Resort, Aspen, Colorado',
+    maxParticipants: 30,
+    minParticipants: 5,
     public: true,
     disabled: false,
-    date: new Date('2024-06-15'),
+    date: new Date('2024-09-20'),
+    photo: 'https://images.squarespace-cdn.com/content/v1/590e5eff20099e49cdc1048d/1506078288556-5AXBZX4RZ2DCOJ6ECUW0/UBU_660.jpg',
     activities: [
       {
-        name: 'Cake Cutting',
-        description: 'Cutting the birthday cake with family and friends.',
-        location: 'Main Hall',
-        time: new Date('2024-06-15T14:00:00'),
+        name: 'Morning Yoga Session',
+        description: 'Start the day with a revitalizing yoga session led by a certified instructor.',
+        location: 'Open Deck with Mountain View',
+        time: new Date('2024-09-20T07:00:00'),
       },
       {
-        name: 'Party Games',
-        description: 'Fun games for everyone to enjoy.',
-        location: 'Garden Area',
-        time: new Date('2024-06-15T15:00:00'),
+        name: 'Meditation Workshop',
+        description: 'A guided meditation session to help you relax and find inner peace.',
+        location: 'Zen Garden',
+        time: new Date('2024-09-20T10:00:00'),
+      },
+      {
+        name: 'Mindfulness Hike',
+        description: 'A scenic hike with mindfulness exercises to connect with nature.',
+        location: 'Aspen Trail',
+        time: new Date('2024-09-20T14:00:00'),
       },
     ],
-    budget: { maxPrices: 500 },
+    budget: { maxPrices: 2000 },
     categories: [
       {
-        name: 'Celebration',
-        description: 'Events that celebrate special moments.',
+        name: 'Wellness',
+        description: 'Events focused on health, wellness, and mindfulness.',
+      },
+      {
+        name: 'Outdoor Activities',
+        description: 'Events involving outdoor and nature-based activities.',
       },
     ],
     eventType: {
-      name: 'Private',
-      description: 'A private event for close friends and family.',
+      name: 'Public',
+      description: 'An event open to anyone interested in yoga and mindfulness.',
       isDisabled: false,
     },
     reservedOffers: [
       {
-        status: Status.ACCEPTED,
-        price: 300,
-        description: 'Catering services for the party.',
+        status: Status.PENDING,
+        price: 1000,
+        description: 'Catering services with healthy meals and beverages.',
         isPublic: true,
         isDisabled: false,
-        latestChange: new Date('2024-06-01'),
+        latestChange: new Date('2024-09-01'),
       },
     ],
     boughtProducts: [
       {
-        name: 'Birthday Cake',
-        description: 'A delicious chocolate cake for the celebration.',
-        price: 50,
+        name: 'Yoga Mats',
+        description: 'High-quality yoga mats for participants.',
+        price: 500,
+      },
+      {
+        name: 'Wellness Kits',
+        description: 'Gift kits with essential oils, candles, and mindfulness guides.',
+        price: 300,
       },
     ],
   },
@@ -65,6 +80,7 @@ const EVENTS: Event[] = [
     public: true,
     disabled: false,
     date: new Date('2024-07-10'),
+    photo: "https://www.thebrewery.co.uk/wp-content/uploads/2020/10/Theatre-style-7.jpg",
     activities: [
       {
         name: 'Keynote Speech',
@@ -118,6 +134,7 @@ const EVENTS: Event[] = [
     public: true,
     disabled: false,
     date: new Date('2024-08-20'),
+    photo: 'https://images.stockcake.com/public/b/1/e/b1efd91e-0c22-4e79-8d5b-6618f8d946ff_large/outdoor-concert-crowd-stockcake.jpg',
     activities: [
       {
         name: 'Live Band Performance',
@@ -162,7 +179,8 @@ const EVENTS: Event[] = [
       },
     ],
   },
-  {name: 'Birthday Party',
+  {
+    name: 'Birthday Party',
     description: 'A fun-filled birthday celebration with friends and family.',
     location: 'Event Hall "Celebrations", Main Street 123, Belgrade, Serbia',
     maxParticipants: 50,
@@ -170,6 +188,7 @@ const EVENTS: Event[] = [
     public: true,
     disabled: false,
     date: new Date('2024-06-15'),
+    photo: 'https://img.freepik.com/premium-photo/friends-celebrating-birthday-party_1280275-114523.jpg',
     activities: [
       {
         name: 'Cake Cutting',
@@ -214,6 +233,72 @@ const EVENTS: Event[] = [
       },
     ],
   },
+  {
+    name: 'Painting Workshop: Mastering Watercolors',
+    description: 'A creative workshop to explore the art of watercolor painting with expert guidance.',
+    location: 'Art Studio, Downtown Chicago, Illinois',
+    maxParticipants: 20,
+    minParticipants: 5,
+    public: true,
+    disabled: false,
+    date: new Date('2024-11-25'),
+    photo: 'https://images.squarespace-cdn.com/content/v1/5804f37703596e417ce39f7f/7c4f36cb-2106-42c2-83ee-c2fbfb7a9460/Adult+abstract+art+painting+class+Brighton+UK.jpg',
+    activities: [
+      {
+        name: 'Introduction to Watercolors',
+        description: 'Learn about watercolor techniques, tools, and materials.',
+        location: 'Art Studio - Main Hall',
+        time: new Date('2024-11-25T10:00:00'),
+      },
+      {
+        name: 'Hands-On Painting Session',
+        description: 'Practice and create your own watercolor painting with guidance from an expert.',
+        location: 'Art Studio - Painting Area',
+        time: new Date('2024-11-25T11:30:00'),
+      },
+      {
+        name: 'Art Exhibition & Feedback',
+        description: 'Showcase your work and receive constructive feedback from peers and the instructor.',
+        location: 'Art Studio - Gallery Room',
+        time: new Date('2024-11-25T14:00:00'),
+      },
+    ],
+    budget: { maxPrices: 1500 },
+    categories: [
+      {
+        name: 'Art',
+        description: 'Events focused on artistic expression and creativity.',
+      },
+      {
+        name: 'Education',
+        description: 'Workshops aimed at teaching new skills and techniques.',
+      },
+    ],
+    eventType: {
+      name: 'Public',
+      description: 'An event open to all art enthusiasts, from beginners to professionals.',
+      isDisabled: false,
+    },
+    reservedOffers: [
+      {
+        status: Status.ACCEPTED,
+        price: 1000,
+        description: 'Studio rental and painting supplies.',
+        isPublic: true,
+        isDisabled: false,
+        latestChange: new Date('2024-11-10'),
+      },
+    ],
+    boughtProducts: [
+      {
+        name: 'Watercolor Kits',
+        description: 'Kits containing brushes, paints, and paper for participants.',
+        price: 500,
+      },
+    ],
+  },
+  
+
 ];
 
 
