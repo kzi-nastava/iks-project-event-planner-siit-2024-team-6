@@ -4,7 +4,8 @@
 
   <nav class="navbar">
     <div class="navbar__menu">
-      <span class="navbar__icon">☰</span>
+      <div (click)="sidebar.toggleSidebar()">
+      <span class="navbar__icon">☰</span></div>
       <span class="navbar__logo">EVENTURE</span>
     </div>
     <div class="navbar__links">
@@ -18,5 +19,6 @@
     <div class="navbar__profile">
       <i class="fa fa-user-circle"></i>
     </div>
+    <app-sidebar #sidebar></app-sidebar>
   </nav>
   
