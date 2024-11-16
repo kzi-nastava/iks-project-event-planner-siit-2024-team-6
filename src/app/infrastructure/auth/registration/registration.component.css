@@ -11,14 +11,17 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #d3a3b0;
+    font-family: "Inter", sans-serif;
   }
   
   .registration-card {
-    background-color: white;
+    border: 1px solid #000000;
+    background-color: #EDEEF1;
     width: 600px;
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
   }
   
 
@@ -44,7 +47,7 @@ body {
   .input-group i {
     font-size: 20px;
     margin-right: 10px;
-    color: white;
+    color: #EDEEF1;
   }
   
   .input-group i {
@@ -128,14 +131,14 @@ body {
   
   .signup-button {
     background-color: #7b5b8e;
-    color: white;
+    color: #EDEEF1;
     border: none;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-size: 16px;
-    cursor: pointer;
-    width: 100%;
     margin-top: 20px;
+    padding: 10px 48px; /* Уменьшены отступы */
+    border-radius: 25px; /* Закругление краёв */
+    font-size: 14px; /* Уменьшен размер текста */
+    cursor: pointer;
+    width: auto; /* Кнопка будет подстраиваться под текст */
   }
   
   .signup-button:hover {
