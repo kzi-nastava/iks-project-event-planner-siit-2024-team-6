@@ -4,7 +4,7 @@
     justify-content: space-between; /* Distribute space between sections */
     align-items: center;
     padding: 10px 20px;
-    background-color: #2c3e50;
+    background-color: var(--blue);
     color: white;
     font-family: Arial, sans-serif;
     position: relative;
@@ -42,7 +42,7 @@
   }
   
   .navbar__links a:hover {
-    background-color: #34495e;
+    background-color: var(--blue);
   }
   
   /* Search Bar - Align to right */
@@ -67,7 +67,7 @@
   
   .navbar__search button {
     background-color: #fff;
-    color: #34495e;
+    color: var(--blue);
     border: none;
     padding: 6px 12px;
     border-radius: 5px;
