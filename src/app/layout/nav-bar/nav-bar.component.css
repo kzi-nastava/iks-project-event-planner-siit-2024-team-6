@@ -97,7 +97,7 @@
 
 /* Add space around search and profile */
 .navbar__search {
-  margin-right: 20px;
+  margin-right: 0px;
 }
 
 .navbar__profile {
