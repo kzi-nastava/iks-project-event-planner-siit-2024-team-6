@@ -1,0 +1,185 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #d3a3b0;
+  }
+  
+  .registration-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #d3a3b0;
+    font-family: "Inter", sans-serif;
+  }
+  
+  .registration-card {
+    border: 1px solid #000000;
+    background-color: #EDEEF1;
+    width: 600px;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+
+  .registration-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .input-group {
+    margin-bottom: 30px;
+    position: relative;
+  }
+  
+  .input-group label {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #000000;
+    padding: 5px 0;
+  }
+  
+  .input-group i {
+    font-size: 20px;
+    margin-right: 10px;
+    color: #EDEEF1;
+  }
+  
+  .input-group i {
+    font-size: 20px;
+    margin-right: 10px;
+    color: #888;
+  }
+  
+  input {
+    width: 100%;
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 16px;
+    color: #333;
+    padding: 5px 0;
+  }
+  .radio-group {
+    display: flex;
+    gap: 20px; /* Расстояние между кнопками */
+    align-items: center;
+  }
+  
+  .custom-radio {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .custom-radio input[type="radio"] {
+    display: none; /* Скрываем стандартное отображение радио-кнопок */
+  }
+  
+  .custom-radio::before {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #aaa; /* Цвет рамки в неактивном состоянии */
+    border-radius: 50%; /* Делаем круг */
+    margin-right: 10px; /* Отступ между кругом и текстом */
+    background-color: white;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+  .custom-radio input[type="radio"]:checked + .radio-label::before {
+    border-color: #7b5b8e; /* Цвет рамки при выборе */
+    background-color: #7b5b8e; /* Цвет фона при выборе */
+  }
+  
+  .radio-label {
+    font-size: 14px; /* Размер текста */
+    color: #555; /* Цвет текста */
+    position: relative;
+  }
+  
+  .custom-radio input[type="radio"]:checked + .radio-label {
+    color: #7b5b8e; /* Цвет текста при выборе */
+    border-bottom: 1px solid #7b5b8e;
+  }
+  
+  /* .radio-group {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .radio-group label {
+    margin-right: 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .radio-group input {
+    margin-right: 5px;
+  } */
+  
+  .provider-fields {
+    margin-top: 20px;
+  }
+  
+  .signup-button {
+    background-color: #7b5b8e;
+    color: #EDEEF1;
+    border: none;
+    margin-top: 20px;
+    padding: 10px 48px; /* Уменьшены отступы */
+    border-radius: 25px; /* Закругление краёв */
+    font-size: 14px; /* Уменьшен размер текста */
+    cursor: pointer;
+    width: auto; /* Кнопка будет подстраиваться под текст */
+  }
+  
+  .signup-button:hover {
+    background-color: #5c4068;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  h3 {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  .input-label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+  }
+  .input-group .label-no-underline {
+    border-bottom: none !important; /* Убираем подчеркивание */
+    padding: 0; /* Убираем лишние отступы */
+    display: block; /* Сохраняем блочное поведение */
+    font-size: 14px; /* Размер текста */
+    color: #555; /* Цвет текста */
+    align-items: flex-start;
+  }
+  .login {
+    display: block;
+    margin-top: 5px;
+    font-size: 13px;
+    text-decoration: none;
+    text-align: center;
+  }
+  
+  .login:hover {
+    text-decoration: underline;
+  }
+  
