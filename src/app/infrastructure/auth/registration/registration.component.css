@@ -62,8 +62,50 @@ body {
     color: #333;
     padding: 5px 0;
   }
-  
   .radio-group {
+    display: flex;
+    gap: 20px; /* Расстояние между кнопками */
+    align-items: center;
+  }
+  
+  .custom-radio {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .custom-radio input[type="radio"] {
+    display: none; /* Скрываем стандартное отображение радио-кнопок */
+  }
+  
+  .custom-radio::before {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #aaa; /* Цвет рамки в неактивном состоянии */
+    border-radius: 50%; /* Делаем круг */
+    margin-right: 10px; /* Отступ между кругом и текстом */
+    background-color: white;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+  .custom-radio input[type="radio"]:checked + .radio-label::before {
+    border-color: #7b5b8e; /* Цвет рамки при выборе */
+    background-color: #7b5b8e; /* Цвет фона при выборе */
+  }
+  
+  .radio-label {
+    font-size: 14px; /* Размер текста */
+    color: #555; /* Цвет текста */
+    position: relative;
+  }
+  
+  .custom-radio input[type="radio"]:checked + .radio-label {
+    color: #7b5b8e; /* Цвет текста при выборе */
+  }
+  
+  /* .radio-group {
     display: flex;
     justify-content: center;
     margin: 20px 0;
@@ -77,7 +119,7 @@ body {
   
   .radio-group input {
     margin-right: 5px;
-  }
+  } */
   
   .provider-fields {
     margin-top: 20px;

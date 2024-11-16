@@ -49,24 +49,24 @@
         </div>
   
         <div class="row">
-          <div class="input-group">
-            <label>
-              <i class="material-icons">attachment</i>
-              <input type="file" placeholder="Photo" />
-            </label>
-          </div>
-          <div class="radio-group">
-            <label>
-              <input type="radio" name="registrationType" value="organizer" (change)="toggleProvider(false)" checked />
-              <span>Organizer</span>
-            </label>
-            <label>
-              <input type="radio" name="registrationType" value="provider" (change)="toggleProvider(true)" />
-              <span>Provider</span>
-            </label>
-          </div>
+            <div class="input-group">
+                <label>
+                    <i class="material-icons">photo</i>
+                    <input type="text" placeholder="Photo" />
+                </label>
+              </div>
+              <div class="radio-group">
+                <label class="custom-radio">
+                  <input type="radio" name="registrationType" value="organizer" (change)="toggleProvider(false)" checked />
+                  <span class="radio-label">Organizer</span>
+                </label>
+                <label class="custom-radio">
+                  <input type="radio" name="registrationType" value="provider" (change)="toggleProvider(true)" />
+                  <span class="radio-label">Provider</span>
+                </label>
+              </div>
         </div>
-  
+    
         <!-- Выбор Organizer/Provider -->
     
   
@@ -105,28 +105,25 @@
   
           <div class="row">
             <div class="input-group">
-              <label class="label-no-underline">Opening time</label>
               <label>
                 <i class="material-icons">access_time</i>
-                <input type="time" placeholder="Description"/>
+                <input type="text" placeholder="Opening time"/>
               </label>
             </div>
             <div class="input-group">
-              <label class="label-no-underline">Closing time</label>
               <label>
                 <i class="material-icons">access_time</i>
-                <input type="time" placeholder="Description"/>
+                <input type="text" placeholder="Closing time"/>
               </label>
             </div>
           </div>
           
           <div class="row">
             <div class="input-group">
-              <label class="label-no-underline">Event photo</label>
-              <label>
-                <i class="material-icons">photo</i>
-                <input type="file" />
-              </label>
+                <label>
+                    <i class="material-icons">photo</i>
+                    <input type="text" placeholder="Event photo" />
+                </label>
             </div>
           </div>          
         </div>
