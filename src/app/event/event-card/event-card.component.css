@@ -1,13 +1,15 @@
 .event-card {
+  position: relative; /* For positioning the heart icon */
   width: 280px;
   height: 400px;
   border: 1px solid #ddd;
-  border-radius: 0px;
+  border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-family: Arial, sans-serif;
   transition: transform 0.3s, box-shadow 0.3s;
   background-color: #fff;
+  margin-bottom: 30px;
 }
 
 .event-card:hover {
@@ -15,6 +17,63 @@
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
+.event-card:hover .event-card-title {
+  background-color: var(--pink); /* Hover color */
+  color: #fff; /* Text color on hover */
+}
+
+/* Favorite Heart Icon */
+.favorite-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  z-index: 2; 
+}
+
+.favorite-icon:hover {
+  background: rgba(211, 163, 176, 0.8);
+  transform: scale(1.1);
+}
+
+.favorite-icon i {
+  font-size: 16px;
+  color: var(--pink);
+}
+
+/* Favorite Heart Icon */
+.favorite-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2; /* Ensure it appears above the image */
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.favorite-icon:hover {
+  transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+.favorite-icon svg {
+  width: 30px;
+  height: 30px;
+  fill: var(--pink); /* Use your pink color for the heart */
+}
+
+.favorite-icon svg:hover {
+  fill: #c55b5b; /* Darker pink on hover */
+}
+
+/* Event Card Image Section */
 .event-card-image {
   position: relative;
   width: 100%;
@@ -32,7 +91,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: var(--pink);
+  background-color: rgba(211, 163, 176, 0.8);
   color: #fff;
   font-size: 16px;
   font-weight: bold;
@@ -42,30 +101,58 @@
   transition: background-color 0.3s;
 }
 
-.event-card-image:hover .event-card-title {
-  background-color: var(--secondary-pink);
-}
 
+/* Event Card Content Section */
 .event-card-content {
   padding: 15px;
   text-align: left;
 }
 
-.event-card-location,
-.event-card-date {
+.event-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 14px;
-  color: #333;
-  margin: 5px 0;
+  color: var(--dark-grey);
 }
 
-.event-card-location strong,
-.event-card-date strong {
+.info-icon {
+  font-size: 18px;
+  color: var(--pink);
+}
+
+.info-item span {
   font-weight: bold;
-  color: #000;
+  color: var(--dark-grey);
 }
 
-.event-card-footer {
-  text-align: center;
-  padding: 10px;
-  background-color: #f2d7d5;
+/* Rating Section */
+.rating {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--dark-grey);
+}
+
+.rating svg {
+  width: 25px;
+  height: 25px;
+  fill: var(--dark-grey);
+}
+
+.rating span {
+  font-size: 17px;
+  color: var(--dark-grey);
 }
