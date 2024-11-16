@@ -103,6 +103,7 @@ body {
   
   .custom-radio input[type="radio"]:checked + .radio-label {
     color: #7b5b8e; /* Цвет текста при выборе */
+    border-bottom: 1px solid #7b5b8e;
   }
   
   /* .radio-group {
@@ -167,3 +168,15 @@ body {
     color: #555; /* Цвет текста */
     align-items: flex-start;
   }
+  .login {
+    display: block;
+    margin-top: 5px;
+    font-size: 13px;
+    text-decoration: none;
+    text-align: center;
+  }
+  
+  .login:hover {
+    text-decoration: underline;
+  }
+  
