@@ -5,6 +5,7 @@ import { MaterialModule } from '../infrastructure/material/material.module';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
+import { EventModule } from '../event/event.module';
 
 
 
@@ -17,11 +18,13 @@ import { FooterComponent } from './footer/footer.component';
   imports: [
     CommonModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
+    EventModule
   ],
   exports: [
     FooterComponent,
-    NavBarComponent
+    NavBarComponent,
+    HomeComponent
   ]
 })
 export class LayoutModule { }
