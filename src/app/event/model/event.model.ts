@@ -1,11 +1,13 @@
-interface Event {
+export interface Event {
     name: string;
     description: string;
+    location: string;
     maxParticipants: number;
     minParticipants: number;
     public: boolean;
     disabled: boolean;
     date: Date;
+    photo?: string;
     activities?: Activity[];
     budget?: Budget;
     categories?: Category[];
@@ -45,7 +47,7 @@ interface Event {
     latestChange: Date;
   }
   
-  enum Status {
+  export enum Status {
     PENDING = "PENDING",
     ACCEPTED = "ACCEPTED",
     REJECTED = "REJECTED",
