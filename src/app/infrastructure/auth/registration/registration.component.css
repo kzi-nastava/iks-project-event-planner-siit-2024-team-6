@@ -111,4 +111,17 @@ body {
     font-weight: bold;
     margin-top: 10px;
   }
-  
+  .input-label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+  }
+  .input-group .label-no-underline {
+    border-bottom: none !important; /* Убираем подчеркивание */
+    padding: 0; /* Убираем лишние отступы */
+    display: block; /* Сохраняем блочное поведение */
+    font-size: 14px; /* Размер текста */
+    color: #555; /* Цвет текста */
+    align-items: flex-start;
+  }
