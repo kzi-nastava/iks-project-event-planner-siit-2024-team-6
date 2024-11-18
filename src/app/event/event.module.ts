@@ -4,7 +4,7 @@ import { EventCardComponent } from './event-card/event-card.component';
 import { EventListComponent } from './event-list/event-list.component';
 import { EventSliderComponent } from './event-slider/event-slider.component';
 import { TopEventCardComponent } from './top-event-card/top-event-card.component';
-
+import { EventsFilterComponent } from './events-filter/events-filter.component';
 
 
 @NgModule({
@@ -12,7 +12,8 @@ import { TopEventCardComponent } from './top-event-card/top-event-card.component
     EventCardComponent,
     EventListComponent,
     EventSliderComponent,
-    TopEventCardComponent
+    TopEventCardComponent,
+    EventsFilterComponent
   ],
   imports: [
     CommonModule
