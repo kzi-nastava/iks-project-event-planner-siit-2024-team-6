@@ -10,9 +10,15 @@ import { Event } from '../model/event.model';
 export class EventListComponent implements OnInit {
   events: Event[] = [];
 
+  isFilterVisible = false;
+
   constructor(private eventService: EventService) {}
 
   ngOnInit(): void {
     this.events = this.eventService.getAll();
+  }
+
+  toggleFilter() {
+    this.isFilterVisible = !this.isFilterVisible;
   }
 }

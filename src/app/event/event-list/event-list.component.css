@@ -1,23 +1,29 @@
+
 .event-section {
   display: flex;
   flex-direction: column;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 30px auto;
+  padding: 20px;
+  background: #f9f9f9; /* Light background for contrast */
+  border-radius: 0px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
-
 .event-section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 70px;
   margin-bottom: 40px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--blue); /* Accent border for styling */
 }
 
 .event-section-title {
-  font-size: 30px;
-  font-weight: bold;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--blue);
   margin: 0;
-  color: #333;
+  letter-spacing: 0.5px;
 }
 
 .filter-container {
