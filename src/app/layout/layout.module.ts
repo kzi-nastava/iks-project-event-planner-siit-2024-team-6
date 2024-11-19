@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { EventModule } from '../event/event.module';
+import { OfferModule } from '../offer/offer.module';
 
 
 
@@ -19,7 +20,8 @@ import { EventModule } from '../event/event.module';
     CommonModule,
     MaterialModule,
     RouterModule,
-    EventModule
+    EventModule,
+    OfferModule
   ],
   exports: [
     FooterComponent,
