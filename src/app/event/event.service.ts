@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Event } from './model/event.model'; // Adjust the path based on your project structure
-import { Status } from './model/event.model';
+import { Status } from '../enums/status.enum';
 const EVENTS: Event[] = [
   {
     name: 'Yoga Retreat',
@@ -49,26 +49,8 @@ const EVENTS: Event[] = [
       isDisabled: false,
     },
     reservedOffers: [
-      {
-        status: Status.PENDING,
-        price: 1000,
-        description: 'Catering services with healthy meals and beverages.',
-        isPublic: true,
-        isDisabled: false,
-        latestChange: new Date('2024-09-01'),
-      },
     ],
     boughtProducts: [
-      {
-        name: 'Yoga Mats',
-        description: 'High-quality yoga mats for participants.',
-        price: 500,
-      },
-      {
-        name: 'Wellness Kits',
-        description: 'Gift kits with essential oils, candles, and mindfulness guides.',
-        price: 300,
-      },
     ],
   },
   {
@@ -108,21 +90,8 @@ const EVENTS: Event[] = [
       isDisabled: false,
     },
     reservedOffers: [
-      {
-        status: Status.PENDING,
-        price: 2000,
-        description: 'Hall rental for the conference.',
-        isPublic: true,
-        isDisabled: false,
-        latestChange: new Date('2024-06-20'),
-      },
     ],
     boughtProducts: [
-      {
-        name: 'Conference Materials',
-        description: 'Brochures and handouts for attendees.',
-        price: 500,
-      },
     ],
   },
   {
@@ -162,21 +131,8 @@ const EVENTS: Event[] = [
       isDisabled: false,
     },
     reservedOffers: [
-      {
-        status: Status.ACCEPTED,
-        price: 5000,
-        description: 'Stage setup and sound system rental.',
-        isPublic: true,
-        isDisabled: false,
-        latestChange: new Date('2024-07-15'),
-      },
     ],
     boughtProducts: [
-      {
-        name: 'Concert Tickets',
-        description: 'Tickets for attendees.',
-        price: 20,
-      },
     ],
   },
   {
@@ -216,21 +172,8 @@ const EVENTS: Event[] = [
       isDisabled: false,
     },
     reservedOffers: [
-      {
-        status: Status.ACCEPTED,
-        price: 300,
-        description: 'Catering services for the party.',
-        isPublic: true,
-        isDisabled: false,
-        latestChange: new Date('2024-06-01'),
-      },
     ],
     boughtProducts: [
-      {
-        name: 'Birthday Cake',
-        description: 'A delicious chocolate cake for the celebration.',
-        price: 50,
-      },
     ],
   },
   {
@@ -280,21 +223,8 @@ const EVENTS: Event[] = [
       isDisabled: false,
     },
     reservedOffers: [
-      {
-        status: Status.ACCEPTED,
-        price: 1000,
-        description: 'Studio rental and painting supplies.',
-        isPublic: true,
-        isDisabled: false,
-        latestChange: new Date('2024-11-10'),
-      },
     ],
     boughtProducts: [
-      {
-        name: 'Watercolor Kits',
-        description: 'Kits containing brushes, paints, and paper for participants.',
-        price: 500,
-      },
     ],
   },
   
