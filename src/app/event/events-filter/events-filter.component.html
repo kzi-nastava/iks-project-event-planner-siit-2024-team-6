@@ -1,22 +1,16 @@
-<!-- Background overlay -->
 <div class="overlay" [class.active]="isVisible" (click)="closeFilter()"></div>
 
-<!-- Filter Sidebar -->
 <div class="filter-sidebar" [class.active]="isVisible">
   <div class="filter-header">
     <h3>Filters</h3>
     <button class="close-button" (click)="closeFilter()">&times;</button>
   </div>
+  
   <div class="filter-section">
-    <h4>Event Type</h4>
-    <label>
-      <input type="radio" name="eventType" value="concert" />
-      Concert
-    </label>
-    <label>
-      <input type="radio" name="eventType" value="conference" />
-      Conference
-    </label>
+    <h4>Category</h4>
+    <select [(ngModel)]="selectedType">
+      <option *ngFor="let type of types" [value]="type.name">{{ type.name }}</option>
+    </select>
   </div>
   <div class="filter-section">
     <h4>Criteria</h4>

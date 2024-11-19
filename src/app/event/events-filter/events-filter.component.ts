@@ -9,6 +9,14 @@ export class EventsFilterComponent {
   @Input() isVisible = false;
   @Output() close = new EventEmitter<void>();
 
+  types = [
+    { name: 'Birthday' },
+    { name: 'Concert' },
+    { name: 'Conference' },
+  ];
+
+  selectedType:string = '';
+
   closeFilter() {
     this.isVisible = false;
     this.close.emit();

@@ -1,15 +1,14 @@
-/* Overlay */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.6); /* Slight white overlay */
+  background-color: rgba(255, 255, 255, 0.6);
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
-  z-index: 900; /* Below the filter but above content */
+  z-index: 900;
 }
 
 .overlay.active {
@@ -17,14 +16,13 @@
   visibility: visible;
 }
 
-/* Sidebar Container */
 .filter-sidebar {
   position: fixed;
   top: 0;
   right: 0;
   width: 350px;
   height: 100%;
-  background-color: #f8f9fa; /* Light gray */
+  background-color: #f8f9fa;
   border-left: 2px solid var(--blue);
   box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
   transform: translateX(100%);
@@ -38,7 +36,6 @@
   transform: translateX(0);
 }
 
-/* Header */
 .filter-header {
   display: flex;
   justify-content: space-between;
@@ -62,7 +59,6 @@
   color: var(--pink);
 }
 
-/* Sections */
 .filter-section {
   padding: 20px;
   border-bottom: 1px solid #e5e5e5;
@@ -95,7 +91,6 @@ label:hover {
   color: var(--pink);
 }
 
-/* Inputs */
 .date-picker,
 .time-picker {
   width: 95%;
@@ -110,7 +105,6 @@ label:hover {
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-/* Hover State */
 .date-picker:hover,
 .time-picker:hover {
   border-color: var(--secondary-pink);
@@ -118,20 +112,17 @@ label:hover {
   color: white;
 }
 
-/* Focus State */
 .date-picker:focus,
 .time-picker:focus {
   border-color: var(--blue);
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-/* Placeholder Color */
 .date-picker::placeholder,
 .time-picker::placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* Custom Calendar and Clock Icon Styling */
 input[type="date"]::-webkit-calendar-picker-indicator,
 input[type="time"]::-webkit-calendar-picker-indicator {
   background-color: var(--pink);
@@ -141,7 +132,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }
 
-/* Footer with Apply and Reset Buttons */
 .filter-footer {
   margin-top: auto;
   padding: 20px;
@@ -184,4 +174,29 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .apply-button:active,
 .reset-button:active {
   transform: scale(0.97);
+}
+
+.filter-section input[type="checkbox"]:checked {
+  accent-color: var(--pink);
+}
+
+/*dropdown style*/
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid var(--blue);
+  border-radius: 5px;
+  background-color: #f8f8f8;
+  color: #333;
+  appearance: none;
+}
+
+select:focus {
+  border-color: var(--pink);
+  outline: none;
+}
+
+option {
+  font-size: 16px;
 }
