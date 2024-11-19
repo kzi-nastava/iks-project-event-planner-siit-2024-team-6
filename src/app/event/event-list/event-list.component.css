@@ -5,9 +5,9 @@
   max-width: 1200px;
   margin: 30px auto;
   padding: 20px;
-  background: #f9f9f9; /* Light background for contrast */
+  background: #f9f9f9;
   border-radius: 0px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 .event-section-header {
   display: flex;
@@ -15,7 +15,7 @@
   align-items: center;
   margin-bottom: 40px;
   padding-bottom: 10px;
-  border-bottom: 2px solid var(--blue); /* Accent border for styling */
+  border-bottom: 2px solid var(--blue);
 }
 
 .event-section-title {

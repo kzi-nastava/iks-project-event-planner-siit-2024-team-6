@@ -1,3 +1,5 @@
+import { Offer } from '../../offer/model/offer.model';
+import { Product } from '../../offer/model/offer.model';
 export interface Event {
     name: string;
     description: string;
@@ -27,34 +29,15 @@ export interface Event {
     maxPrices: number;
   }
   
-  interface Category {
+  export interface Category {
     name: string;
     description: string;
   }
   
-  interface EventType {
+  export interface EventType {
     name: string;
     description: string;
     isDisabled: boolean;
   }
   
-  interface Offer {
-    status: Status;
-    price: number;
-    description: string;
-    isPublic: boolean;
-    isDisabled: boolean;
-    latestChange: Date;
-  }
   
-  export enum Status {
-    PENDING = "PENDING",
-    ACCEPTED = "ACCEPTED",
-    REJECTED = "REJECTED",
-  }
-  
-  interface Product {
-    name: string;
-    description: string;
-    price: number;
-  }
