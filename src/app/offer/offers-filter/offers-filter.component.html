@@ -1,0 +1,57 @@
+<div class="overlay" [class.active]="isVisible" (click)="closeFilter()"></div>
+
+<div class="filter-sidebar" [class.active]="isVisible">
+  <div class="filter-header">
+    <h3>Filter</h3>
+    <button class="close-button" (click)="closeFilter()">&times;</button>
+  </div>
+
+  <div class="filter-section">
+    <h4>Offer Type</h4>
+    <label>
+      <input type="checkbox" [(ngModel)]="isProductsSelected" />
+      Products
+    </label>
+    <label>
+      <input type="checkbox" [(ngModel)]="isServicesSelected" />
+      Services
+    </label>
+  </div>
+
+  <div class="filter-section" *ngIf="isProductsSelected || isServicesSelected">
+    <h4>Category</h4>
+    <select [(ngModel)]="selectedCategory">
+      <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+    </select>
+  </div>
+
+  <div class="filter-section" *ngIf="isProductsSelected || isServicesSelected">
+    <h4>Price Range</h4>
+    <input type="range" min="0" max="1000" step="10" [(ngModel)]="priceRange" />
+    <div class="price-display">
+        <div class="price-item">
+          <span>Min:</span>
+          <strong>$0</strong>
+        </div>
+        <div class="price-item">
+          <span>Max:</span>
+          <strong>${{ priceRange }}</strong>
+        </div>
+      </div>
+  </div>
+
+  <div class="filter-section" *ngIf="isServicesSelected">
+    <h4>Date</h4>
+    <input type="date" class="date-picker" [(ngModel)]="selectedDate" />
+  </div>
+
+  <div class="filter-section" *ngIf="isServicesSelected">
+    <h4>Time</h4>
+    <input type="time" class="time-picker" [(ngModel)]="selectedTime" />
+  </div>
+
+  <div class="filter-footer">
+    <button class="apply-button" (click)="applyFilters()">Apply</button>
+    <button class="reset-button" (click)="resetFilters()">Reset</button>
+  </div>
+</div>
