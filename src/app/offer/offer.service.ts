@@ -1,6 +1,107 @@
 import { Injectable } from '@angular/core';
 import { Offer, Product, Service } from './model/offer.model';
 
+const SERVICES: Service[] = [
+  {
+    status: 'AVAILABLE',
+    name: 'Event Decoration Service',
+    description: 'Professional decoration service for weddings, parties, and more.',
+    price: 500,
+    photos: ['https://static.wixstatic.com/media/cd8c84_2b2a5e93744a46678743bb950173ad63~mv2.jpg/v1/fill/w_1792,h_960,al_c/cd8c84_2b2a5e93744a46678743bb950173ad63~mv2.jpg'],
+    isAvailable: true,
+    isDeleted: false,
+    lastChanged: new Date('2024-02-15'),
+    eventTypes: [],
+    category: { name: 'Decoration', description: 'Birthday and wedding decoration' },
+    minDuration: 120,
+    maxDuration: 480,
+    preciseDuration: 240,
+    latestReservation: 60,
+    latestCancelation: 24,
+    reservations: [
+      {
+        isCanceled: false,
+        reservedAt: new Date('2024-03-01'),
+        timeSlot: { time: new Date('2024-03-15T10:00:00'), duration: 240 },
+      },
+    ],
+  } as Service,
+  {
+    status: 'AVAILABLE',
+    name: 'Photography Service',
+    description: 'Capture your special moments with our professional photography service.',
+    price: 250,
+    photos: ['https://www.indiafilings.com/learn/wp-content/uploads/2017/07/GST-Rate-for-Photography-Services.jpg'],
+    isAvailable: true,
+    isDeleted: false,
+    lastChanged: new Date('2024-03-10'),
+    eventTypes: [],
+    category: { name: 'Photography', description: 'Event photography services' },
+    minDuration: 60,
+    maxDuration: 360,
+    preciseDuration: 180,
+    latestReservation: 48,
+    latestCancelation: 12,
+    reservations: [],
+  } as Service,
+  {
+    status: 'AVAILABLE',
+    name: 'Catering Service',
+    description: 'Delicious catering for events, including appetizers, main courses, and desserts.',
+    price: 1200,
+    sale: 1000,
+    photos: ['https://www.randstad.cl/s3fs-media/cl/public/styles/blog_article/public/migration/blog_page/images/blog_image_5A58832C-CE41-4678-B855-8425FA675F6C.jpeg?itok=6AxHwI2D'],
+    isAvailable: true,
+    isDeleted: false,
+    lastChanged: new Date('2024-04-01'),
+    eventTypes: [],
+    category: { name: 'Food', description: 'Event catering services' },
+    minDuration: 240,
+    maxDuration: 720,
+    preciseDuration: 480,
+    latestReservation: 72,
+    latestCancelation: 48,
+    reservations: [],
+  } as Service,
+  {
+    status: 'AVAILABLE',
+    name: 'Wedding Filming',
+    description: 'Capture your special moments with our professional photography service.',
+    price: 300,
+    photos: ['https://www.indiafilings.com/learn/wp-content/uploads/2017/07/GST-Rate-for-Photography-Services.jpg'],
+    isAvailable: true,
+    isDeleted: false,
+    lastChanged: new Date('2024-03-10'),
+    eventTypes: [],
+    category: { name: 'Photography', description: 'Event photography services' },
+    minDuration: 60,
+    maxDuration: 360,
+    preciseDuration: 180,
+    latestReservation: 48,
+    latestCancelation: 12,
+    reservations: [],
+  } as Service,
+  {
+    status: 'AVAILABLE',
+    name: 'Luna Sweets',
+    description: 'Delicious catering for events, including appetizers, main courses, and desserts.',
+    price: 1200,
+    sale: 160,
+    photos: ['https://www.randstad.cl/s3fs-media/cl/public/styles/blog_article/public/migration/blog_page/images/blog_image_5A58832C-CE41-4678-B855-8425FA675F6C.jpeg?itok=6AxHwI2D'],
+    isAvailable: true,
+    isDeleted: false,
+    lastChanged: new Date('2024-04-01'),
+    eventTypes: [],
+    category: { name: 'Food', description: 'Event catering services' },
+    minDuration: 240,
+    maxDuration: 720,
+    preciseDuration: 480,
+    latestReservation: 72,
+    latestCancelation: 48,
+    reservations: [],
+  } as Service
+]
+
 const OFFERS: (Product | Service)[] = [
   // Products
   {
@@ -103,7 +204,7 @@ const OFFERS: (Product | Service)[] = [
     latestReservation: 72,
     latestCancelation: 48,
     reservations: [],
-  } as Service,
+  } as Service
 ];
 
 
@@ -112,6 +213,7 @@ const OFFERS: (Product | Service)[] = [
 })
 export class OfferService {
   private offerList: Offer[] = [];
+  private servicesList: Service[] = [...SERVICES];
 
   constructor() {
     for (let offerObj of OFFERS) {
@@ -148,4 +250,22 @@ export class OfferService {
   add(offer: Offer): void {
     this.offerList.push(offer);
   }
+  getServices(): Service[] {
+    return this.servicesList;
+  }
+  
+  addService(service: Service): void{
+    this.servicesList.push(service);
+  }
+
+  private serviceData: Offer;
+
+  setService(service: Offer): void {
+    this.serviceData = service;
+  }
+
+  getService(): Offer {
+    return this.serviceData;
+  }
+  
 }
