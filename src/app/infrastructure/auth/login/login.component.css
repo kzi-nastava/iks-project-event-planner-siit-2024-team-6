@@ -1,109 +1,116 @@
 /* Основные стили */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: "Inter", sans-serif;
-    background-color: #EDEEF1;
-  }
-  
-  .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #eef1f4;
-    font-family: "Inter", sans-serif;
-  }
-  
-  .login-card {
-    border: 1px solid #000000;
-    background-color: #d3a3b0;
-    width: 400px;
-    padding: 80px 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-  }
-  
-  .login-title {
-    font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  background-color: #EDEEF1;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #eef1f4;
+  font-family: "Inter", sans-serif;
+  padding: 20px; /* Добавлен отступ для предотвращения обрезания */
+  box-sizing: border-box;
+}
+
+.login-card {
+  border: 1px solid #000000;
+  background-color: #d3a3b0;
+  width: 90%; /* Ширина адаптируется к размеру экрана */
+  max-width: 400px; /* Максимальная ширина для больших экранов */
+  padding: 40px 20px; /* Уменьшен padding для мобильных устройств */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.login-title {
+  font-family: 'Inter', sans-serif;
   font-weight: 400; /* Полужирный */
-    font-size: 26px;
-    color: white;
-    margin-bottom: 20px;
-  }
-  
-  .input-group {
-    margin-bottom: 30px;
-    position: relative;
-  }
-  
-  .input-group label {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #ffffff80;
-    padding: 5px 0;
-  }
-  
-  .input-group i {
-    font-size: 20px;
-    margin-right: 10px;
-    color: white;
-  }
-  
-  input {
-    width: 100%;
-    border: none;
-    background: none;
-    outline: none;
-    font-size: 16px;
-    color: white;
-    padding: 5px 0;
-  }
-  
-  input::placeholder {
-    color: #ffffff80;
-  }
-  
-  .login-button {
-    background-color: #35446d;
-    color: white;
-    border: none;
-    padding: 10px 48px; /* Уменьшены отступы */
-    border-radius: 25px; /* Закругление краёв */
-    font-size: 14px; /* Уменьшен размер текста */
-    cursor: pointer;
-    width: auto; /* Кнопка будет подстраиваться под текст */
-    margin-top: 30px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  .login-button:hover {
-    background-color: #283653;
-  }
-  
-  
-  .forgot-password {
-    display: block;
-    margin-top: 10px;
-    font-size: 13px;
-    color: #ffffff80;
-    text-decoration: none;
-  }
-  
-  .forgot-password:hover {
-    text-decoration: underline;
+  font-size: 20px; /* Адаптивный размер */
+  color: white;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  margin-bottom: 20px; /* Уменьшен отступ */
+  position: relative;
+}
+
+.input-group label {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ffffff80;
+  padding: 5px 0;
+}
+
+.input-group i {
+  font-size: 20px;
+  margin-right: 10px;
+  color: white;
+}
+
+input {
+  width: 100%;
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 16px;
+  color: white;
+  padding: 5px 0;
+}
+
+input::placeholder {
+  color: #ffffff80;
+}
+
+.login-button {
+  background-color: #35446d;
+  color: white;
+  border: none;
+  padding: 10px 24px; /* Уменьшены отступы */
+  border-radius: 25px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.login-button:hover {
+  background-color: #283653;
+}
+
+.forgot-password, .registation {
+  display: block;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #ffffff80;
+  text-decoration: none;
+}
+
+.forgot-password:hover, .registation:hover {
+  text-decoration: underline;
+}
+
+/* Медиазапросы для улучшения адаптивности */
+@media (max-width: 600px) {
+  .login-card {
+      padding: 20px 15px; /* Уменьшаем padding для маленьких экранов */
   }
 
-  .registation {
-    display: block;
-    margin-top: 5px;
-    font-size: 13px;
-    color: #ffffff80;
-    text-decoration: none;
+  .login-title {
+      font-size: 18px; /* Уменьшаем размер заголовка */
   }
-  
-  .registation:hover {
-    text-decoration: underline;
+
+  .login-button {
+      padding: 8px 20px; /* Уменьшаем отступы кнопки */
   }
-  
+
+  .input-group label {
+      font-size: 14px; /* Уменьшаем размер шрифта для форм */
+  }
+}
