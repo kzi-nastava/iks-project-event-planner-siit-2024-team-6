@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Event } from './model/event.model'; // Adjust the path based on your project structure
+import { Event } from './model/event.model';
 import { Status } from '../enums/status.enum';
 const EVENTS: Event[] = [
   {
