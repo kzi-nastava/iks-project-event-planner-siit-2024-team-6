@@ -98,6 +98,18 @@
 }
 
 @media (max-width: 768px) {
+    display: flex;
+    justify-content: space-between; /* Distribute space between sections */
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #3F4C6D;
+    color: white;
+    font-family: Arial, sans-serif;
+    position: relative;
+  }
+  
+  /* Navbar Menu (Logo and Icon) */
+
   .navbar__menu {
     display: flex;
     flex-direction: column;

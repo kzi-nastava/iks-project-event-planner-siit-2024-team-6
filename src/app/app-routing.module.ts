@@ -6,6 +6,7 @@ const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
   { path: 'offers', component: OffersViewComponent },
   { path: '', redirectTo: '/events', pathMatch: 'full' }
+
 ];
 
 @NgModule({
