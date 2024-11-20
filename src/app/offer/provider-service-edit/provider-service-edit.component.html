@@ -12,7 +12,7 @@
   
     <!-- Service Form -->
     <form class="form" [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
-      <h2>Create New Service</h2>
+      <h2>Edit Service</h2>
   
       <!-- Service Name -->
       <div class="form-group">
@@ -37,30 +37,6 @@
         ></textarea>
       </div>
   
-      <!-- Service Category -->
-      <div class="form-group">
-        <label for="category">Category:</label>
-        <select id="category" formControlName="category">
-          <option
-            *ngFor="let category of categories"
-            [value]="category"
-          >{{ category }}</option>
-        </select>
-        <input
-          id="newCategory"
-          type="text"
-          placeholder="Propose a new category"
-          class="new-category-input"
-          formControlName="newCategory"
-        />
-        <button
-          id="proposeCategory"
-          type="button"
-          (click)="proposeCategory()"
-        >
-          Propose New Category
-        </button>
-      </div>
   
       <!-- Specifics -->
       <div class="form-group">

@@ -15,6 +15,6 @@ export class ProviderOfferCardComponent {
   ) {}
   editService(service: Offer): void {
     this.dataTransfer.setService(service);
-    this.router.navigate(['/service-form']);
+    this.router.navigate(['/service-edit']);
   }
 }

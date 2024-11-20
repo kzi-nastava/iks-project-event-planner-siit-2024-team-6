@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OfferService } from '../offer.service';
@@ -9,26 +9,15 @@ import { OfferService } from '../offer.service';
   styleUrl: './provider-service-form.component.css'
 })
 export class ProviderServiceFormComponent implements OnInit{
-
-  onEventTypeChange(event: any, index: number) {
-    const eventTypesArray = this.serviceForm.get('eventTypes') as FormArray;
-
-    if (event.target.checked) {
-      eventTypesArray.push(this.fb.control(this.eventTypes[index]));
-    } else {
-      const idx = eventTypesArray.controls.findIndex((ctrl) => ctrl.value === this.eventTypes[index]);
-      eventTypesArray.removeAt(idx);
-    }
-  }
   serviceForm!: FormGroup;
-  isEditMode: boolean = false; // Flag for create or edit mode
   serviceId: string | null = null;
   categories: string[] = ['Catering', 'Decoration', 'Photography'];
   eventTypes: string[] = ['Wedding', 'Birthday', 'Corporate'];
   isFixedDuration: boolean = true; 
   newCategory: string = '';
+  selectedEventTypes: string[] = []; 
 
-  constructor(private offerService: OfferService, private fb: FormBuilder, private router: Router) {}
+  constructor(private offerService: OfferService, private fb: FormBuilder, private router: Router, private cdr: ChangeDetectorRef) {}
 
   goBack(): void {
     this.router.navigate(['/my-services']);
@@ -42,7 +31,6 @@ export class ProviderServiceFormComponent implements OnInit{
       specifics: [''],
       price: ['', [Validators.required, Validators.min(0)]],
       discount: ['', [Validators.min(0)]],
-      eventTypes: this.fb.array([]), // FormArray for checkboxes
       visibility: [false],
       availability: [true],
       durationType: ['fixed'],
@@ -51,35 +39,25 @@ export class ProviderServiceFormComponent implements OnInit{
       maxDuration: [{ value: '', disabled: true }],
       reservationDeadline: [''],
       cancellationDeadline: [''],
-      confirmation: [{ value: 'automatic', disabled: false }]
+      confirmation: [{ value: 'manual', disabled: false }]
     });
+    this.selectedEventTypes = [];
+  }
+
+  onEventTypeChange(eventType: string, event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    const isChecked = checkbox.checked;
   
-    const service = this.offerService.getService();
-    if (service) {
-      this.isEditMode = true;
-      this.populateForm(service);
-      this.offerService.setService(null);
+    if (isChecked) {
+      this.selectedEventTypes.push(eventType);
+    } else {
+      const index = this.selectedEventTypes.indexOf(eventType);
+      if (index > -1) {
+        this.selectedEventTypes.splice(index, 1);
+      }
     }
   }
   
-  populateForm(service: any): void {
-    this.serviceForm.patchValue({
-      name: service.name,
-      description: service.description,
-      category: service.category || 'Decoration',
-      durationType: service.durationType || 'fixed',
-      duration: service.duration,
-      minDuration: service.minDuration,
-      maxDuration: service.maxDuration,
-      price: service.price,
-      discount: service.discount ?? 0,
-      visibility: service.visibility ?? false,
-      availability: service.availability ?? false,
-      confirmation: service.confirmation || "manual",
-      photos: service.photos?.length ? service.photos : ['default-image.jpg'], // Default image
-      eventTypes: service.eventTypes?.length ? service.eventTypes : ['Wedding']
-    });
-  }
 
   proposeCategory(): void {
     this.newCategory = this.serviceForm.get('newCategory')?.value;
@@ -93,20 +71,15 @@ export class ProviderServiceFormComponent implements OnInit{
 
   onSubmit(): void {
     if (this.serviceForm.valid) {
-      const formData = { ...this.serviceForm.value, id: this.serviceId };
-
-      if (this.isEditMode) {
-        console.log('Service Updated:', formData);
-        // Update the service in the backend or state
-      } else {
-        const newService = { ...this.serviceForm.value };
-        this.offerService.addService(newService)
-      }
-
-      // Navigate back to the previous page
-      this.router.navigate(['/previous-page-route']);
+      const formData = {
+        ...this.serviceForm.value,
+        eventTypes: this.selectedEventTypes // Include selected event types
+      };
+      console.log('Service Created:', formData);
+      this.offerService.addService(formData);
+      this.router.navigate(['/my-services']);
     } else {
-      console.log('Form is invalid');
+      console.error('Form is invalid');
     }
   }
 
