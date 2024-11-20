@@ -1,0 +1,208 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 900;
+}
+
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.filter-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 350px;
+  height: 100%;
+  background-color: #f8f9fa;
+  border-left: 2px solid var(--blue);
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.filter-sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-sidebar.active {
+  transform: translateX(0);
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: var(--blue);
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  color: var(--pink);
+}
+
+.filter-section {
+  padding: 20px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.filter-section h4 {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--blue);
+  margin-bottom: 12px;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+label {
+  font-size: 14px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+label:hover {
+  color: var(--pink);
+}
+
+.date-picker,
+.time-picker {
+  width: 95%;
+  padding: 10px;
+  border: 2px solid var(--blue);
+  border-radius: 8px;
+  background-color: var(--pink);
+  color: white;
+  font-size: 16px;
+  font-family: 'Arial', sans-serif;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.date-picker:hover,
+.time-picker:hover {
+  border-color: var(--secondary-pink);
+  background-color: var(--blue);
+  color: white;
+}
+
+.date-picker:focus,
+.time-picker:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.date-picker::placeholder,
+.time-picker::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  background-color: var(--pink);
+  color: white;
+  border-radius: 50%;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.filter-footer {
+  margin-top: auto;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-top: 1px solid #e5e5e5;
+  display: flex;
+  justify-content: space-between;
+}
+
+.apply-button,
+.reset-button {
+  width: 48%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.apply-button {
+  background-color: var(--blue);
+  color: white;
+}
+
+.reset-button {
+  background-color: #e5e5e5;
+  color: #333;
+}
+
+.apply-button:hover {
+  background-color: var(--pink);
+}
+
+.reset-button:hover {
+  background-color: #d6d6d6;
+}
+
+.apply-button:active,
+.reset-button:active {
+  transform: scale(0.97);
+}
+
+.filter-section input[type="checkbox"]:checked {
+  accent-color: var(--pink);
+}
+
+/*dropdown style*/
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid var(--blue);
+  border-radius: 5px;
+  background-color: #f8f8f8;
+  color: #333;
+  appearance: none;
+}
+
+select:focus {
+  border-color: var(--pink);
+  outline: none;
+}
+
+option {
+  font-size: 16px;
+}

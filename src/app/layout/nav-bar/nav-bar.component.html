@@ -1,7 +1,21 @@
-<mat-toolbar>
-    <span [routerLink]="['home']">Wine Application</span>
-    <div>
-      <button [routerLink]="['wine']" style="float: right" mat-raised-button>Wines</button>
-      <button [routerLink]="['add']" style="float: right" mat-raised-button>Create</button>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Charm:wght@700&display=swap" rel="stylesheet">
+
+  <nav class="navbar">
+    <div class="navbar__menu">
+      <span class="navbar__icon">☰</span>
+      <span class="navbar__logo">EVENTURE</span>
     </div>
-</mat-toolbar>
+    <div class="navbar__links">
+      <a routerLink="/events" routerLinkActive="active">Events</a>
+      <a routerLink="/offers" routerLinkActive="active">Products and Services</a>
+    </div>
+    <div class="navbar__search">
+      <input type="text" placeholder="Search">
+      <button><i class="fa fa-search"></i></button>
+    </div>
+    <div class="navbar__profile">
+      <i class="fa fa-user-circle"></i>
+    </div>
+  </nav>
+  

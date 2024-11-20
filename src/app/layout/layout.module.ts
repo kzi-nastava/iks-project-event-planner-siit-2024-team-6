@@ -4,19 +4,29 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { MaterialModule } from '../infrastructure/material/material.module';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { FooterComponent } from './footer/footer.component';
+import { EventModule } from '../event/event.module';
+import { OfferModule } from '../offer/offer.module';
 
 
 
 @NgModule({
   declarations: [
     NavBarComponent,
-    HomeComponent
+    HomeComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
+    EventModule,
+    OfferModule
   ],
-  exports: [NavBarComponent]
+  exports: [
+    FooterComponent,
+    NavBarComponent,
+    HomeComponent
+  ]
 })
 export class LayoutModule { }

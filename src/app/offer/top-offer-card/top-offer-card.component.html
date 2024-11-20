@@ -1,0 +1,11 @@
+<div
+  class="top-offer-card"
+  [ngStyle]="{ 'background-image': 'url(' + offer.photos[0] + ')' }">
+  <div class="top-offer-card-overlay">
+    <div class="top-offer-card-content">
+      <h2>{{ offer.name }}</h2>
+      <p>{{ offer.description }}</p>
+      <button class="top-offer-card-button">VIEW</button>
+    </div>
+  </div>
+</div>

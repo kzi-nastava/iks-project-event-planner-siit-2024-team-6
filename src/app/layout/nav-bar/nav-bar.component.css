@@ -1,16 +1,126 @@
-mat-toolbar {
-    background-color: #5656a1;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: var(--blue);
+  color: white;
+  font-family: Arial, sans-serif;
+  position: fixed;
+  top: 0;
+  width: 98%;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-div {
+.navbar__menu {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.navbar__logo {
+  font-family: 'Charm', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  font-style: normal;
+  color: #fff;
+}
+
+.navbar__links {
+  position: absolute; 
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+}
+
+.navbar__links a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.navbar__links a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.navbar__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.navbar__search input {
+  padding: 6px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #bdc3c7;
+  outline: none;
+}
+
+.navbar__search input:focus {
+  border-color: var(--pink);
+}
+
+.navbar__search button {
+  background-color: #fff;
+  color: var(--blue);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.navbar__search button i {
+  font-size: 16px;
+}
+
+.navbar__search button:hover {
+  background-color: var(--pink);
+}
+
+.navbar__profile i {
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.navbar__search {
+  margin-right: 0px;
+}
+
+.navbar__profile {
+  margin-left: 20px;
+}
+
+@media (max-width: 768px) {
+  .navbar__menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .navbar__links {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .navbar__links a {
     width: 100%;
-    justify-content: flex-end;
-}
+    padding: 10px;
+  }
 
-button {
-    margin-right: 10px;
-}
+  .navbar__icon {
+    display: block;
+  }
 
-span {
-    color: white
+  .navbar__menu.active + .navbar__links {
+    display: flex;
+  }
 }
