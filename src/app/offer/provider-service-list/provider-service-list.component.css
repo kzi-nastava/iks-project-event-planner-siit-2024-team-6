@@ -1,0 +1,108 @@
+
+.offer-section {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px; 
+    border-radius: 0px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  .offer-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--blue);
+  }
+  
+  .offer-section-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--blue);
+    margin: 0;
+    letter-spacing: 0.5px;
+  }
+  
+  .filter-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .filter-text {
+    font-size: 16px;
+    color: var(--dark-grey);
+    font-weight: normal;
+  }
+  
+  .filter-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+  
+  .filter-icon svg {
+    height: 26px;
+    width: 26px;
+    fill: var(--dark-grey);
+  }
+  
+  .filter-icon:hover svg {
+    fill: var(--secondary-pink);
+    transform: scale(1.1);
+  }
+  
+  .offer-list {
+    flex: 3;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+  }
+  .fab {
+    position: fixed; /* Makes the button stay in the same position on scroll */
+    bottom: 50px; /* Adjusted to avoid overlap with navigation/footer */
+    right: 40px; /* Increased from 20px to 40px to move the button left */
+    width: 70px; /* Size of the button */
+    height: 70px; /* Size of the button */
+    border-radius: 50%; /* Circular shape */
+    background-color: #8b6a9d; /* Matches your color scheme */
+    display: flex; /* Flexbox for centering */
+    justify-content: center; /* Horizontal centering */
+    align-items: center; /* Vertical centering */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Shadow for elevation */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s ease;
+    z-index: 1000; /* Ensures it stays above other elements */
+  }
+  
+  .fab:hover {
+    background-color: #724c81; /* Slightly darker shade on hover */
+    transform: scale(1.1); /* Enlarges slightly on hover */
+  }
+  
+  .fab:active {
+    transform: scale(0.95); /* Shrinks slightly on click */
+  }
+  
+  .fab-icon {
+    width: 36px; /* Size of the SVG icon */
+    height: 36px;
+  }
+  .fab[disabled] {
+    background-color: #ccc; /* Disabled state color */
+    cursor: not-allowed; /* Change cursor to indicate it's disabled */
+    pointer-events: none; /* Prevent interaction */
+  }
+  
+  .fab[disabled] .fab-icon {
+    opacity: 0.6; /* Make the icon look faded */
+  }
+  

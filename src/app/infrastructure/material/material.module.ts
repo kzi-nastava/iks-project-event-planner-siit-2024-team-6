@@ -27,8 +27,7 @@ import {MatInputModule} from "@angular/material/input";
     MatPaginatorModule,
     MatSortModule,
     MatFormFieldModule,
-    MatInputModule,
-    MatLabel
+    MatInputModule
   ]
 })
 export class MaterialModule { }

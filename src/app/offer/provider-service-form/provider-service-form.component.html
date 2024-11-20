@@ -1,0 +1,223 @@
+<div class="form-page">
+    <!-- Floating Back Button -->
+    <button class="floating-back-btn" (click)="goBack()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        class="back-icon"
+      >
+        <path d="M15.5 19.5 6 12l9.5-7.5v15Z" fill="white" />
+      </svg>
+    </button>
+  
+    <!-- Service Form -->
+    <form class="form" [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
+      <h2>Create New Service</h2>
+  
+      <!-- Service Name -->
+      <div class="form-group">
+        <label for="name">Service Name:</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          placeholder="Enter the service name"
+          required
+        />
+      </div>
+  
+      <!-- Service Description -->
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="4"
+          placeholder="Provide a brief description of the service"
+        ></textarea>
+      </div>
+  
+      <!-- Service Category -->
+      <div class="form-group">
+        <label for="category">Category:</label>
+        <select id="category" formControlName="category">
+          <option
+            *ngFor="let category of categories"
+            [value]="category"
+          >{{ category }}</option>
+        </select>
+        <input
+          id="newCategory"
+          type="text"
+          placeholder="Propose a new category"
+          class="new-category-input"
+          formControlName="newCategory"
+        />
+        <button
+          id="proposeCategory"
+          type="button"
+          (click)="proposeCategory()"
+        >
+          Propose New Category
+        </button>
+      </div>
+  
+      <!-- Specifics -->
+      <div class="form-group">
+        <label for="specifics">Specifics:</label>
+        <textarea
+          id="specifics"
+          formControlName="specifics"
+          rows="2"
+          placeholder="List any specific details about the service"
+        ></textarea>
+      </div>
+  
+      <!-- Price and Discount -->
+      <div class="form-group">
+        <label for="price">Price (€):</label>
+        <input
+          id="price"
+          type="number"
+          formControlName="price"
+          placeholder="Enter the price"
+          required
+        />
+  
+        <label for="discount">Discount Percentage:</label>
+        <input
+          id="discount"
+          type="number"
+          formControlName="discount"
+          placeholder="Enter discount percentage (if any)"
+        />
+      </div>
+  
+      <!-- Service Images -->
+      <div class="form-group">
+        <label for="photos">Upload Images:</label>
+        <input id="photos" type="file" formControlName="photos" multiple />
+      </div>
+  
+      <!-- Event Types -->
+      <div class="form-group">
+        <label>Event Types:</label>
+        <div *ngFor="let eventType of eventTypes; let i = index" class="checkbox-group">
+          <label>
+            <input
+              type="checkbox"
+              [value]="eventType"
+              (change)="onEventTypeChange(eventType, $event)"
+            />
+            {{ eventType }}
+          </label>
+        </div>
+      </div>
+  
+      <!-- Visibility and Availability -->
+      <div class="form-group checkbox-group">
+        <label>
+          <input id="visibility" type="checkbox" formControlName="visibility" />
+          Visibility
+        </label>
+        <label>
+          <input id="availability" type="checkbox" formControlName="availability" />
+          Availability
+        </label>
+      </div>
+  
+      <!-- Service Duration -->
+      <div class="form-group">
+        <label>Duration Type:</label>
+        <div class="checkbox-group">
+          <label>
+            <input
+              type="radio"
+              formControlName="durationType"
+              value="fixed"
+              (change)="onDurationTypeChange('fixed')"
+            />
+            Fixed
+          </label>
+          <label>
+            <input
+              type="radio"
+              formControlName="durationType"
+              value="varied"
+              (change)="onDurationTypeChange('varied')"
+            />
+            Varied
+          </label>
+        </div>
+      </div>
+  
+      <!-- Fixed Duration -->
+      <div *ngIf="isFixedDuration" class="form-group">
+        <label for="duration">Fixed Duration (hours):</label>
+        <input
+          id="duration"
+          type="number"
+          formControlName="duration"
+          placeholder="Enter duration in hours"
+        />
+      </div>
+  
+      <!-- Varied Duration -->
+      <div *ngIf="!isFixedDuration" class="form-group">
+        <label for="minDuration">Min Duration (hours):</label>
+        <input
+          id="minDuration"
+          type="number"
+          formControlName="minDuration"
+          placeholder="Minimum duration"
+        />
+  
+        <label for="maxDuration">Max Duration (hours):</label>
+        <input
+          id="maxDuration"
+          type="number"
+          formControlName="maxDuration"
+          placeholder="Maximum duration"
+        />
+      </div>
+  
+      <!-- Reservation and Cancellation -->
+      <div class="form-group">
+        <label for="reservationDeadline">Reservation Deadline (hours):</label>
+        <input
+          id="reservationDeadline"
+          type="number"
+          formControlName="reservationDeadline"
+          placeholder="Enter reservation deadline in hours"
+        />
+  
+        <label for="cancellationDeadline">Cancellation Deadline (hours):</label>
+        <input
+          id="cancellationDeadline"
+          type="number"
+          formControlName="cancellationDeadline"
+          placeholder="Enter cancellation deadline in hours"
+        />
+      </div>
+  
+      <!-- Reservation Confirmation -->
+      <div class="form-group">
+        <label for="confirmation">Reservation Confirmation:</label>
+        <select
+          id="confirmation"
+          formControlName="confirmation"
+        >
+          <option value="automatic">Automatic</option>
+          <option value="manual">Manual</option>
+        </select>
+      </div>
+  
+      <!-- Submit Button -->
+      <div class="form-actions">
+        <button type="submit" [disabled]="serviceForm.invalid">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+  

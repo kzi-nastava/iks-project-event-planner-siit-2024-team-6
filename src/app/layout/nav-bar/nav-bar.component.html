@@ -3,19 +3,21 @@
 
   <nav class="navbar">
     <div class="navbar__menu">
-      <span class="navbar__icon">☰</span>
+      <div (click)="sidebar.toggleSidebar()">
+      <span class="navbar__icon">☰</span></div>
       <span class="navbar__logo">EVENTURE</span>
     </div>
     <div class="navbar__links">
       <a routerLink="/events" routerLinkActive="active">Events</a>
-      <a routerLink="/offers" routerLinkActive="active">Products and Services</a>
+      <a routerLink="/offers" >Products and Services</a>
     </div>
     <div class="navbar__search">
       <input type="text" placeholder="Search">
       <button><i class="fa fa-search"></i></button>
     </div>
-    <div class="navbar__profile">
+    <div class="navbar__profile" routerLink="/login" routerLinkActive="active">
       <i class="fa fa-user-circle"></i>
     </div>
+    <app-sidebar #sidebar></app-sidebar>
   </nav>
   
