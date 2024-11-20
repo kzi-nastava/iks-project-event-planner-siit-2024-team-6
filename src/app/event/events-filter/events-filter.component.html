@@ -1,0 +1,36 @@
+<div class="overlay" [class.active]="isVisible" (click)="closeFilter()"></div>
+
+<div class="filter-sidebar" [class.active]="isVisible">
+  <div class="filter-header">
+    <h3>Filters</h3>
+    <button class="close-button" (click)="closeFilter()">&times;</button>
+  </div>
+  
+  <div class="filter-section">
+    <h4>Category</h4>
+    <select [(ngModel)]="selectedType">
+      <option *ngFor="let type of types" [value]="type.name">{{ type.name }}</option>
+    </select>
+  </div>
+  <div class="filter-section">
+    <h4>Criteria</h4>
+    <label>
+      <input type="checkbox" value="option1" /> Option 1
+    </label>
+    <label>
+      <input type="checkbox" value="option2" /> Option 2
+    </label>
+  </div>
+  <div class="filter-section">
+    <h4>Date</h4>
+    <input type="date" class="date-picker" />
+  </div>
+  <div class="filter-section">
+    <h4>Time</h4>
+    <input type="time" class="time-picker" />
+  </div>
+  <div class="filter-footer">
+    <button class="apply-button" (click)="applyFilters()">Apply</button>
+    <button class="reset-button" (click)="resetFilters()">Reset</button>
+  </div>
+</div>

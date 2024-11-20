@@ -4,6 +4,9 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { FooterComponent } from './footer/footer.component';
+import { EventModule } from '../event/event.module';
+import { OfferModule } from '../offer/offer.module';
 import { MaterialModule } from '../infrastructure/material/material.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
@@ -13,13 +16,21 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   declarations: [
     NavBarComponent,
     HomeComponent,
+    FooterComponent,
     SidebarComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
+    EventModule,
+    OfferModule
   ],
-  exports: [NavBarComponent, SidebarComponent]
+  exports: [
+    FooterComponent,
+    NavBarComponent,
+    HomeComponent,
+    SidebarComponent
+  ]
 })
 export class LayoutModule { }
