@@ -1,5 +1,5 @@
 .sidebar {
-    background-color: #34495e; /* Синий цвет для остального меню */
+    background-color: #3F4C6D; /* Синий цвет для остального меню */
     width: 250px;
     height: 100%;
     padding: 0;
@@ -73,7 +73,7 @@
     left: -100%; /* Полностью скрыто */
     width: 250px;
     height: 100%;
-    background-color: #35446d;
+    background-color: #3F4C6D;
     color: white;
     z-index: 999; /* Выше, чем backdrop */
     transition: left 0.3s ease;
