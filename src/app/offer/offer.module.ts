@@ -12,6 +12,7 @@ import { ProviderServiceListComponent } from './provider-service-list/provider-s
 import { ProviderServiceViewComponent } from './provider-service-view/provider-service-view.component';
 import { ProviderOfferCardComponent } from './provider-offer-card/provider-offer-card.component';
 import { ProviderServiceFormComponent } from './provider-service-form/provider-service-form.component';
+import { ProviderServiceEditComponent } from './provider-service-edit/provider-service-edit.component';
 
 
 
@@ -27,7 +28,8 @@ import { ProviderServiceFormComponent } from './provider-service-form/provider-s
     ProviderServiceListComponent,
     ProviderServiceViewComponent,
     ProviderOfferCardComponent,
-    ProviderServiceFormComponent
+    ProviderServiceFormComponent,
+    ProviderServiceEditComponent
   ],
   imports: [
     CommonModule,
