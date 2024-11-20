@@ -12,7 +12,7 @@
   
     <!-- Service Form -->
     <form class="form" [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
-      <h2>{{ isEditMode ? 'Edit Service' : 'Create New Service' }}</h2>
+      <h2>Create New Service</h2>
   
       <!-- Service Name -->
       <div class="form-group">
@@ -107,7 +107,7 @@
             <input
               type="checkbox"
               [value]="eventType"
-              (change)="onEventTypeChange($event, i)"
+              (change)="onEventTypeChange(eventType, $event)"
             />
             {{ eventType }}
           </label>
@@ -215,7 +215,7 @@
       <!-- Submit Button -->
       <div class="form-actions">
         <button type="submit" [disabled]="serviceForm.invalid">
-          {{ isEditMode ? 'Update Service' : 'Create Service' }}
+          Submit
         </button>
       </div>
     </form>
