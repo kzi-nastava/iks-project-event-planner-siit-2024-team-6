@@ -30,6 +30,12 @@
   z-index: 1000;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.filter-sidebar::-webkit-scrollbar {
+  display: none;
 }
 
 .filter-sidebar.active {
