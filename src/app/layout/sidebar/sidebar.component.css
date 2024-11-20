@@ -1,5 +1,5 @@
 .sidebar {
-    background-color: #35446d; /* Синий цвет для остального меню */
+    background-color: #34495e; /* Синий цвет для остального меню */
     width: 250px;
     height: 100%;
     padding: 0;
@@ -21,12 +21,12 @@
   
   .sidebar__menu {
     list-style: none;
-    margin: 0;
+    margin-top: 50px;
     padding-left: 15px;
   }
   
   .sidebar__menu li {
-    margin: 15px 0;
+    margin: 30px 20px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -46,7 +46,7 @@
   }
   
   .sidebar__favorites p {
-    margin: 10px 0; /* Расстояние между строками */
+    margin: 30px 20px; /* Расстояние между строками */
     color: white; /* Белый текст */
     font-size: 15px;
     text-align: left; /* Выравнивание текста по левому краю */
