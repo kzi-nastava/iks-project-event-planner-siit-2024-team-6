@@ -71,6 +71,9 @@
     fill: #c55b5b;
 }
 
+.info-item svg {
+    fill: var(--pink)
+}
 .offer-card-image {
     position: relative;
     width: 100%;
