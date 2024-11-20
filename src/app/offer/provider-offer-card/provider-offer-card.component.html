@@ -1,0 +1,56 @@
+<div class="offer-list">
+    <div class="offer-card">
+      <div *ngIf="offer.sale" class="sale-tag">SALE</div>
+  
+      <div class="favorite-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#d3a3b0">
+          <path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z"/>
+        </svg>
+      </div>
+  
+      <div class="offer-card-image">
+        <img [src]="offer.photos[0] || 'https://via.placeholder.com/300x200'" [alt]="offer.name" />
+        <h3 class="offer-card-title">{{ offer.name }}</h3>
+      </div>
+  
+      <div class="offer-card-content">
+        <div class="offer-card-info">x
+          <div class="info-item">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">
+              <path d="m260-520 220-360 220 360H260ZM700-80q-75 0-127.5-52.5T520-260q0-75 52.5-127.5T700-440q75 0 127.5 52.5T880-260q0 75-52.5 127.5T700-80Zm-580-20v-320h320v320H120Zm580-60q42 0 71-29t29-71q0-42-29-71t-71-29q-42 0-71 29t-29 71q0 42 29 71t71 29Zm-500-20h160v-160H200v160Zm202-420h156l-78-126-78 126Zm78 0ZM360-340Zm340 80Z"/>
+            </svg>
+            <span>{{ offer.category?.name || 'No Category' }}</span>
+          </div>
+  
+          <div class="info-item">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">
+              <path d="M856-390 570-104q-12 12-27 18t-30 6q-15 0-30-6t-27-18L103-457q-11-11-17-25.5T80-513v-287q0-33 23.5-56.5T160-880h287q16 0 31 6.5t26 17.5l352 353q12 12 17.5 27t5.5 30q0 15-5.5 29.5T856-390ZM513-160l286-286-353-354H160v286l353 354ZM260-640q25 0 42.5-17.5T320-700q0-25-17.5-42.5T260-760q-25 0-42.5 17.5T200-700q0 25 17.5 42.5T260-640Zm220 160Z"/>
+            </svg>
+            <span *ngIf="offer.sale" class="sale-price">${{ offer.sale }}</span>
+            <span [class.strikethrough]="offer.sale">${{ offer.price }}</span>
+          </div>
+        </div>
+      </div>
+  
+      <div class="offer-card-content">
+        <p class="offer-description">
+          {{ offer.description | slice: 0:150 }}...
+        </p>
+      </div>
+    
+      <div class="offer-footer">
+        <div class="rating">
+          <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#FFD700">
+            <path d="M480-120 372-308 150-336l165-160L272-756l208 120 208-120-43 260 165 160-222 28-108 188Z" />
+          </svg>
+          <span>4.5</span>
+        </div>
+        <div class="offer-actions">
+          <button (click)="editService(offer)" class="btn edit-btn">Edit</button>
+          <button class="btn delete-btn">Delete</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
