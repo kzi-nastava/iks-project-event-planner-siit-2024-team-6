@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { EventsViewComponent } from './event/events-view/events-view.component';
 import { OffersViewComponent } from './offer/offers-view/offers-view.component';
 import { ProviderServiceViewComponent } from './offer/provider-service-view/provider-service-view.component';
-import { ProviderServiceFormComponent } from './offer/provider-service-form/provider-service-form.component';
 
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
