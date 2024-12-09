@@ -7,7 +7,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { WineModule } from './wine/wine.module';
 import { AuthModule } from './infrastructure/auth/auth.module';
 import { LayoutModule } from './layout/layout.module';
-
+import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent
@@ -20,7 +20,8 @@ import { LayoutModule } from './layout/layout.module';
     AuthModule
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    provideHttpClient(withFetch())
   ],
   bootstrap: [AppComponent]
 })
