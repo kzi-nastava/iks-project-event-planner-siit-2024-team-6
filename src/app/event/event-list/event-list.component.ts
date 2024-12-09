@@ -29,7 +29,7 @@ export class EventListComponent implements OnInit {
     this.getPagedEntities()
   }
 
-  pageCHanged(pageEvent: PageEvent){
+  pageChanged(pageEvent: PageEvent){
     this.pageProperties.page = pageEvent.pageIndex;
     this.pageProperties.pageSize = pageEvent.pageSize;
     this.getPagedEntities();

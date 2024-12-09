@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { WineModule } from './wine/wine.module';
 import { AuthModule } from './infrastructure/auth/auth.module';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
 import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 @NgModule({
@@ -17,7 +19,8 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi
     AppRoutingModule,
     LayoutModule,
     WineModule,
-    AuthModule
+    AuthModule,
+    MatPaginatorModule
   ],
   providers: [
     provideAnimationsAsync(),
