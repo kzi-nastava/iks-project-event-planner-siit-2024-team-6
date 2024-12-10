@@ -7,12 +7,13 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { WineModule } from './wine/wine.module';
 import { AuthModule } from './infrastructure/auth/auth.module';
 import { LayoutModule } from './layout/layout.module';
-
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     LayoutModule,
