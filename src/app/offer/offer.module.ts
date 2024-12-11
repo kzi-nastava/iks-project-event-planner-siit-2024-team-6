@@ -13,7 +13,7 @@ import { ProviderServiceViewComponent } from './provider-service-view/provider-s
 import { ProviderOfferCardComponent } from './provider-offer-card/provider-offer-card.component';
 import { ProviderServiceFormComponent } from './provider-service-form/provider-service-form.component';
 import { ProviderServiceEditComponent } from './provider-service-edit/provider-service-edit.component';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -34,7 +34,8 @@ import { ProviderServiceEditComponent } from './provider-service-edit/provider-s
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatPaginatorModule
   ],
   exports: [
     OfferSliderComponent,
