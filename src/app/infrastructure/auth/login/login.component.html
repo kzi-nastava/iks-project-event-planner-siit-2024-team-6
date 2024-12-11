@@ -1,17 +1,17 @@
 <div class="login-container">
     <div class="login-card">
       <h2 class="login-title">LOGIN</h2>
-      <form>
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
         <div class="input-group">
           <label>
             <i class="material-icons">email</i>
-            <input type="email" placeholder="Email" required />
+            <input type="email" placeholder="Email" formControlName="email" required />
           </label>
         </div>
         <div class="input-group">
           <label>
             <i class="material-icons">lock</i>
-            <input type="password" placeholder="Password" required />
+            <input type="password" placeholder="Password" formControlName="password" required/>
           </label>
         </div>
         <button type="submit" class="login-button">LOG IN</button>
