@@ -3,13 +3,13 @@ import { Product } from '../../offer/model/offer.model';
 export interface Event {
     name: string;
     description: string;
-    location: string;
+    place: string;
     maxParticipants: number;
     minParticipants: number;
     public: boolean;
     disabled: boolean;
     date: Date;
-    photo?: string;
+    photos?: string[];
     activities?: Activity[];
     budget?: Budget;
     categories?: Category[];
