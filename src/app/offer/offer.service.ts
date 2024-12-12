@@ -247,6 +247,7 @@ export class OfferService {
   }*/
 
   private apiUrl = environment.apiHost + `/offers/`;
+  private providerApiUrl = environment.apiHost+'/providers/';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -256,6 +257,14 @@ export class OfferService {
       params = params.set('page', pageProperties.page).set('size', pageProperties.pageSize);
     }
     return this.httpClient.get<PagedResponse<Offer>>(this.apiUrl + `all-elements`, { params: params });
+  }
+
+  getAllProviderServices(providerId: number, pageProperties?: any): Observable<PagedResponse<Service>>{
+    let params = new HttpParams();
+    if (pageProperties) {
+      params = params.set('page', pageProperties.page).set('size', pageProperties.pageSize);
+    }
+    return this.httpClient.get<PagedResponse<Service>>(this.apiUrl+providerId + `/my-services`, { params: params });
   }
 
   getTopFive(): Observable<Offer[]> {
@@ -295,5 +304,7 @@ export class OfferService {
   getService(): Offer {
     return this.serviceData;
   }
+
+
   
 }
