@@ -1,137 +1,133 @@
 <div class="registration-container">
-    <div class="registration-card">
-      <h2 class="registration-title">REGISTRATION</h2>
-      <form>
-        <!-- Основные поля -->
-        <div class="row">
-          <div class="input-group">
-            <label>
-              <i class="material-icons">person</i>
-              <input type="text" placeholder="Name" required />
-            </label>
-          </div>
-          <div class="input-group">
-            <label>
-              <i class="material-icons">person_outline</i>
-              <input type="text" placeholder="Surname" required />
-            </label>
-          </div>
+  <div class="registration-card">
+    <h2 class="registration-title">REGISTRATION</h2>
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      <!-- Основные поля -->
+      <div class="row">
+        <div class="input-group">
+          <label>
+            <i class="material-icons">person</i>
+            <input type="text" placeholder="Name" formControlName="name" required />
+          </label>
         </div>
-  
+        <div class="input-group">
+          <label>
+            <i class="material-icons">person_outline</i>
+            <input type="text" placeholder="Surname" formControlName="lastname" required />
+          </label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-group">
+          <label>
+            <i class="material-icons">email</i>
+            <input type="email" placeholder="Email" formControlName="email" required />
+          </label>
+        </div>
+        <div class="input-group">
+          <label>
+            <i class="material-icons">lock</i>
+            <input type="password" placeholder="Password" formControlName="password" required />
+          </label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-group">
+          <label>
+            <i class="material-icons">home</i>
+            <input type="text" placeholder="Address" formControlName="address" />
+          </label>
+        </div>
+        <div class="input-group">
+          <label>
+            <i class="material-icons">phone</i>
+            <input type="text" placeholder="Phone" formControlName="phoneNumber" />
+          </label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-group">
+          <label>
+            <i class="material-icons">photo</i>
+            <input type="text" placeholder="Photo" formControlName="photoUrl" />
+          </label>
+        </div>
+        <div class="radio-group">
+          <label class="custom-radio">
+            <input type="radio" name="registrationType" value="organizer" (change)="toggleProvider(false)" checked />
+            <span class="radio-label">Organizer</span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" name="registrationType" value="provider" (change)="toggleProvider(true)" />
+            <span class="radio-label">Provider</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Поля для Provider -->
+      <div *ngIf="isProvider" class="provider-fields">
+        <h3>PROVIDER</h3>
         <div class="row">
+          <div class="input-group">
+            <label>
+              <i class="material-icons">business</i>
+              <input type="text" placeholder="Company name" formControlName="companyName" />
+            </label>
+          </div>
           <div class="input-group">
             <label>
               <i class="material-icons">email</i>
-              <input type="email" placeholder="Email" required />
-            </label>
-          </div>
-          <div class="input-group">
-            <label>
-              <i class="material-icons">lock</i>
-              <input type="password" placeholder="Password" required />
+              <input type="email" placeholder="Company email" formControlName="companyEmail" />
             </label>
           </div>
         </div>
-  
+
         <div class="row">
           <div class="input-group">
             <label>
-              <i class="material-icons">home</i>
-              <input type="text" placeholder="Address" />
+              <i class="material-icons">location_on</i>
+              <input type="text" placeholder="Company address" formControlName="companyAddress" />
             </label>
           </div>
           <div class="input-group">
             <label>
-              <i class="material-icons">phone</i>
-              <input type="text" placeholder="Phone" />
+              <i class="material-icons">description</i>
+              <input type="text" placeholder="Description" formControlName="description" />
             </label>
           </div>
         </div>
-  
+
         <div class="row">
-            <div class="input-group">
-                <label>
-                    <i class="material-icons">photo</i>
-                    <input type="text" placeholder="Photo" />
-                </label>
-              </div>
-              <div class="radio-group">
-                <label class="custom-radio">
-                  <input type="radio" name="registrationType" value="organizer" (change)="toggleProvider(false)" checked />
-                  <span class="radio-label">Organizer</span>
-                </label>
-                <label class="custom-radio">
-                  <input type="radio" name="registrationType" value="provider" (change)="toggleProvider(true)" />
-                  <span class="radio-label">Provider</span>
-                </label>
-              </div>
+          <div class="input-group">
+            <label>
+              <i class="material-icons">access_time</i>
+              <input type="text" placeholder="Opening time" formControlName="openingTime" />
+            </label>
+          </div>
+          <div class="input-group">
+            <label>
+              <i class="material-icons">access_time</i>
+              <input type="text" placeholder="Closing time" formControlName="closingTime" />
+            </label>
+          </div>
         </div>
-    
-        <!-- Выбор Organizer/Provider -->
-    
-  
-        <!-- Поля для Provider -->
-        <div *ngIf="isProvider" class="provider-fields">
-          <h3>PROVIDER</h3>
-          <div class="row">
-            <div class="input-group">
-              <label>
-                <i class="material-icons">business</i>
-                <input type="text" placeholder="Company name" />
-              </label>
-            </div>
-            <div class="input-group">
-              <label>
-                <i class="material-icons">email</i>
-                <input type="email" placeholder="Company email" />
-              </label>
-            </div>
+
+        <div class="row">
+          <div class="input-group">
+            <label>
+              <i class="material-icons">photo</i>
+              <input type="text" placeholder="Event photo" formControlName="companyPhoto" />
+            </label>
           </div>
-  
-          <div class="row">
-            <div class="input-group">
-              <label>
-                <i class="material-icons">location_on</i>
-                <input type="text" placeholder="Company address" />
-              </label>
-            </div>
-            <div class="input-group">
-              <label>
-                <i class="material-icons">description</i>
-                <input type="text" placeholder="Description" />
-              </label>
-            </div>
-          </div>
-  
-          <div class="row">
-            <div class="input-group">
-              <label>
-                <i class="material-icons">access_time</i>
-                <input type="text" placeholder="Opening time"/>
-              </label>
-            </div>
-            <div class="input-group">
-              <label>
-                <i class="material-icons">access_time</i>
-                <input type="text" placeholder="Closing time"/>
-              </label>
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="input-group">
-                <label>
-                    <i class="material-icons">photo</i>
-                    <input type="text" placeholder="Event photo" />
-                </label>
-            </div>
-          </div>          
         </div>
-  
-        <!-- Кнопка регистрации -->
-        <button type="submit" class="signup-button">SIGN UP</button>
-        <a routerLink="/login" class="login">Login</a>
-      </form>
-    </div>
+      </div>
+
+      <!-- Кнопка регистрации -->
+      <button type="submit" class="signup-button">SIGN UP</button>
+      <a routerLink="/login" class="login">Login</a>
+    </form>
   </div>
-  
+</div>
