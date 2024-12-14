@@ -9,21 +9,18 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class Interceptor implements HttpInterceptor {
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const accessToken: any = localStorage.getItem('user');
     if (req.headers.get('skip')) return next.handle(req);
-
+  
     if (accessToken) {
       const cloned = req.clone({
-        headers: req.headers.set('Authorization', accessToken), // U zavisnosti od implementacije bekenda postaviti req.headers.set('Authorization', "Bearer " + accessToken)
-        // umesto req.headers.set('Authorization', accessToken)
+        headers: req.headers.set('Authorization', `Bearer ${accessToken}`), // Добавляем "Bearer"
       });
       return next.handle(cloned);
     } else {
       return next.handle(req);
     }
   }
+  
 }
