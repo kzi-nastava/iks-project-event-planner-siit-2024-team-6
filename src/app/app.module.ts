@@ -6,8 +6,11 @@ import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { WineModule } from './wine/wine.module';
 import { AuthModule } from './infrastructure/auth/auth.module';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -18,10 +21,12 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     LayoutModule,
     WineModule,
-    AuthModule
+    AuthModule,
+    MatPaginatorModule
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    provideHttpClient(withFetch())
   ],
   bootstrap: [AppComponent]
 })

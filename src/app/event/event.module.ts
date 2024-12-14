@@ -8,6 +8,9 @@ import { TopEventCardComponent } from './top-event-card/top-event-card.component
 import { EventsFilterComponent } from './events-filter/events-filter.component';
 import { EventsViewComponent } from './events-view/events-view.component';
 
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +23,9 @@ import { EventsViewComponent } from './events-view/events-view.component';
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    MatPaginatorModule
+    
   ],
   exports: [
     EventsViewComponent

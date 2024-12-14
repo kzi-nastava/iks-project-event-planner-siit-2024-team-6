@@ -13,8 +13,15 @@ export class OfferSliderComponent implements OnInit{
 
   constructor(private offerService: OfferService) {}
 
-  ngOnInit(): void{
-    this.offers = this.offerService.getAll();
+  ngOnInit(): void {
+    this.offerService.getTopFive().subscribe({
+      next: (data: Offer[]) => {
+        this.offers = data;
+      },
+      error: (err) => {
+        console.error('Error fetching top five offers:', err);
+      },
+    });
   }
 
   slideLeft(): void {
@@ -23,6 +30,7 @@ export class OfferSliderComponent implements OnInit{
     this.currentPosition = Math.min(this.currentPosition + cardWidth, 0);
     content.style.transform = `translateX(${this.currentPosition}px)`;
   }
+
   slideRight(): void {
     const content = document.querySelector('.slider-content') as HTMLElement;
     const cardWidth = content.offsetWidth;

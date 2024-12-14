@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Offer, Product, Service } from './model/offer.model';
-
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../env/environment';
+import { PagedResponse } from '../shared/model/paged-response.model';
 const SERVICES: Service[] = [
   {
     status: 'AVAILABLE',
@@ -215,7 +218,7 @@ export class OfferService {
   private offerList: Offer[] = [];
   private servicesList: Service[] = [...SERVICES];
 
-  constructor() {
+  /*constructor() {
     for (let offerObj of OFFERS) {
       const offer: Offer = {
         status: offerObj.status,
@@ -241,15 +244,40 @@ export class OfferService {
       };
       this.offerList.push(offer);
     }
+  }*/
+
+  private apiUrl = environment.apiHost + `/offers/`;
+
+  constructor(private httpClient: HttpClient) {}
+
+  getAll(pageProperties?: any): Observable<PagedResponse<Offer>> {
+    let params = new HttpParams();
+    if (pageProperties) {
+      params = params.set('page', pageProperties.page).set('size', pageProperties.pageSize);
+    }
+    return this.httpClient.get<PagedResponse<Offer>>(this.apiUrl + `all-elements`, { params: params });
   }
 
-  getAll(): Offer[] {
-    return this.offerList;
+  getTopFive(): Observable<Offer[]> {
+    return this.httpClient.get<Offer[]>(this.apiUrl + `top-five`);
   }
 
-  add(offer: Offer): void {
-    this.offerList.push(offer);
+  getById(id: number): Observable<Offer> {
+    return this.httpClient.get<Offer>(`${this.apiUrl}${id}`);
   }
+
+  createOffer(offer: Offer): Observable<Offer> {
+    return this.httpClient.post<Offer>(this.apiUrl, offer);
+  }
+
+  updateOffer(id: number, offer: Offer): Observable<Offer> {
+    return this.httpClient.put<Offer>(`${this.apiUrl}${id}`, offer);
+  }
+
+  deleteOffer(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiUrl}${id}`);
+  }
+
   getServices(): Service[] {
     return this.servicesList;
   }
