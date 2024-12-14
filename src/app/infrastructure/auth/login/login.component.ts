@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import {AuthService} from "../auth.service";
+import {AuthResponse} from '../model/auth-response.model';
+import {Login} from "../model/login.model";
+
 
 @Component({
   selector: 'app-login',
@@ -14,7 +18,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private authService: AuthService,
+              private router: Router
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -24,24 +29,17 @@ export class LoginComponent {
 
   onLogin(): void {
     if (this.loginForm.valid) {
-      const loginData = this.loginForm.value;
-
-      this.http.post('/api/users/login', loginData).subscribe({
-        next: (response) => {
-          console.log('Login successful:', response);
-
-          this.router.navigate(['/home']);
-        },
-        error: (error) => {
-          if (error.status === 401) {
-            console.error('Invalid credentials');
-          } else if (error.status === 403) {
-            console.error('Account is inactive');
-          } else {
-            console.error('Login failed:', error);
-          }
-        },
-      });
+      const login: Login = {
+        email: this.loginForm.value.email || "",
+        password: this.loginForm.value.password || ""
+      }
+      this.authService.login(login).subscribe({
+        next: (response: AuthResponse) => {
+          localStorage.setItem('user', response.token);
+          this.authService.setUser()
+          this.router.navigate(['home'])
+        }
+      })
     } else {
       console.error('Form is invalid:', this.loginForm.errors);
     }
