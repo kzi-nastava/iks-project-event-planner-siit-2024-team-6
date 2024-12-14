@@ -39,7 +39,7 @@ export class RegistrationComponent {
   onSubmit(): void {
     if (this.registrationForm.valid) {
       const formData = this.registrationForm.value;
-      this.http.post('http://localhost:8080/api/users/', formData).subscribe({
+      this.http.post('/api/users', formData).subscribe({
         next: (response) => console.log('Registration successful!', response),
         error: (error) => console.error('Registration failed.', error),
       });
