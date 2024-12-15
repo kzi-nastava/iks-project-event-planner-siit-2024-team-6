@@ -13,13 +13,13 @@ import {AuthGuard} from './infrastructure/auth/auth.guard';
 
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
-  { path: 'offers', component: OffersViewComponent },
+  { path: 'offers', component: OffersViewComponent},
   { path: 'my-services', component: ProviderServiceViewComponent , canActivate: [AuthGuard],
-    data: {role: ['ROLE_ORGANIZER']}},
+    data: {role: 'ROLE_PROVIDER'}},
   { path: 'service-form', component: ProviderServiceFormComponent , canActivate: [AuthGuard],
-    data: {role: ['ROLE_ORGANIZER']}},
+    data: {role: 'ROLE_PROVIDER'}},
   { path: 'service-edit', component: ProviderServiceEditComponent , canActivate: [AuthGuard],
-    data: {role: ['ROLE_ORGANIZER']}},
+    data: {role: 'ROLE_PROVIDER'}},
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegistrationComponent},
