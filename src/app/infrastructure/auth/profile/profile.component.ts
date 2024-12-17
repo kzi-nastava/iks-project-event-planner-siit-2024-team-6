@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class ProfileComponent implements OnInit {
   user: any = {}; // User data
   updatedUser: any = {}; // Editable data
-
+  newPhotoUrl: string = '';
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
@@ -45,9 +45,28 @@ export class ProfileComponent implements OnInit {
       description: this.user.description || '',
       openingTime: this.user.openingTime || '',
       closingTime: this.user.closingTime || '',
+      companyPhotos: [...(this.user.companyPhotos || [])]
     };
   }
+
+  addPhoto(): void {
+    if (this.newPhotoUrl && this.newPhotoUrl.trim()) {
+      if (!this.updatedUser.companyPhotos) {
+        this.updatedUser.companyPhotos = []; // Инициализируем массив, если его нет
+      }
   
+      this.updatedUser.companyPhotos.push(this.newPhotoUrl.trim());
+      console.log('Photo added:', this.newPhotoUrl); // Проверка в консоли
+      this.newPhotoUrl = ''; // Очищаем поле ввода
+    } else {
+      console.warn('Photo URL is empty'); // Логируем пустой ввод
+    }
+  }
+
+  removePhoto(index: number): void {
+    this.updatedUser.companyPhotos.splice(index, 1);
+  }
+
 
   submitChanges(): void {
     // Send PUT request to update the user profile

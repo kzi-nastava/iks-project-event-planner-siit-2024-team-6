@@ -1,45 +1,103 @@
 <div class="profile">
   <div class="profile__card">
-  <h1>User Profile</h1>
 
   <form>
-    <div class="profile__section">
-      <label>ID:</label>
-      <span>{{ user?.id }}</span>
-    </div>
+    <div class="big-block">
 
-    <div class="profile__section">
-      <label>Email:</label>
-      <span>{{ user?.email }}</span>
-    </div>
+      <div class="half-block pink-bg">
+        <h2 class="profile-title">{{ user?.name }} {{ user?.lastname }}</h2>
+      
+        <div class="profile__section">
+          <label><i class="fa fa-envelope"></i> Email:</label>
+          <span>{{ user?.email }}</span>
+        </div>
+      
+        <div class="profile__section">
+          <label><i class="fa fa-id-card"></i> ID: </label>
+          <span>{{ user?.id }}</span>
+        </div>
+      
+        <div class="profile__section">
+          <label><i class="fa fa-user"></i> Name:</label>
+          <input [(ngModel)]="updatedUser.name" name="name" />
+        </div>
+      
+        <div class="profile__section">
+          <label><i class="fa fa-user-tag"></i> Last Name:</label>
+          <input [(ngModel)]="updatedUser.lastname" name="lastname" />
+        </div>
+      
+        <div class="profile__section">
+          <label><i class="fa fa-home"></i> Address:</label>
+          <input [(ngModel)]="updatedUser.address" name="address" />
+        </div>
+      
+        <div class="profile__section">
+          <label><i class="fa fa-user-cog"></i> User Type:</label>
+          <span>{{ user?.userType }}</span>
+        </div>
+      
+        <div class="profile__section">
+          <label><i class="fa fa-phone"></i> Phone Number:</label>
+          <input [(ngModel)]="updatedUser.phoneNumber" name="phoneNumber" />
+        </div>
+      </div>
+      
+      <div class="half-block">
+        <div class="big-block-skibidi">
+          <div class="half-block">
+              <img [src]="user?.photoUrl" alt="User Photo" class="profile__photo"/>
+          </div>
+          <button type="button" class="submit-button" (click)="submitChanges()">Logout</button>
+          <button type="button" class="submit-button" (click)="submitChanges()">Deactivate</button>
+          <div class="half-block">
+            
+          </div>
+        </div>
+      </div>
 
-    <div class="profile__section">
-      <label>Name:</label>
-      <input [(ngModel)]="updatedUser.name" name="name" />
-    </div>
+  </div>
 
-    <div class="profile__section">
-      <label>Last Name:</label>
-      <input [(ngModel)]="updatedUser.lastname" name="lastname" />
-    </div>
 
-    <div class="profile__section">
-      <label>Address:</label>
-      <input [(ngModel)]="updatedUser.address" name="address" />
-    </div>
 
-    <div class="profile__section">
-      <label>User Type:</label>
-      <span>{{ user?.userType }}</span>
-    </div>
-
-    <div class="profile__section">
-      <label>Phone Number:</label>
-      <input [(ngModel)]="updatedUser.phoneNumber" name="phoneNumber" />
-    </div>
 
     <div *ngIf="user?.userType === 'Provider'">
-      <h2>Company Information</h2>
+      <div class="userTypeShit">
+      <h2>{{ user?.companyName }}</h2>
+      </div>
+      <div class="big-block">
+        <div class="half-block">
+          <div class="big-block-skibidi">
+            <div class="half-block">
+
+              <div class="photo-gallery">
+                <div *ngFor="let photoUrl of updatedUser.companyPhotos; let i = index" class="photo-item">
+                  <img [src]="photoUrl" alt="Company Photo" class="company-photo" />
+                  <button (click)="removePhoto(i)" class="delete-button">X</button>
+                </div>
+              </div>
+            
+              <!-- Поле для добавления нового фото -->
+              <div class="photo-input">
+                <input
+                    [(ngModel)]="newPhotoUrl"
+                    name="newPhotoUrl" 
+                    type="text"
+                    placeholder="Enter photo URL"
+                    class="photo-url-input"
+                  />
+                <button (click)="addPhoto()" class="action-button">Add Photo</button>
+              </div>
+
+
+              </div>
+            <div class="half-block">
+              
+            </div>
+          </div>
+        </div>
+
+        <div class="half-block pink-bg" >
 
       <div class="profile__section">
         <label>Company Email:</label>
@@ -62,19 +120,22 @@
       </div>
 
       <div class="profile__section">
-        <label>Working Hours:</label>
+        <label>Opening Time:</label>
         <input
           [(ngModel)]="updatedUser.openingTime"
           name="openingTime"
-          placeholder="Opening Time"
         />
-        -
+      </div>
+        <div class="profile__section">
+          <label>Closing Time:</label>
         <input
           [(ngModel)]="updatedUser.closingTime"
           name="closingTime"
-          placeholder="Closing Time"
         />
       </div>
+    </div>
+    </div>
+    
     </div>
 
     <button type="button" class="submit-button" (click)="submitChanges()">Submit Changes</button>

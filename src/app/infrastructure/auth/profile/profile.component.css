@@ -5,11 +5,11 @@ body {
     font-family: 'Inter', sans-serif;
     background-color: #d3a3b0;
   }
-  :host {
+  /* :host {
     display: block;
     min-height: 100vh;
-    background-color: #d3a3b0; /* Цвет фона страницы */
-  }
+    background-color: #d3a3b0;
+  } */
   /* Контейнер профиля */
   .profile {
     display: flex;
@@ -20,54 +20,85 @@ body {
     min-height: 100vh;
     box-sizing: border-box;
     padding-top: 80px; /* Отступ сверху, чтобы не перекрывался navbar */
-    max-width: 600px;
     padding-bottom: 20px;
   }
   .profile__card {
+    margin-left: 2%;
+    margin-right: 2%;
     background-color: #edeef1;
     width: 100%;
-    max-width: 650px;
     padding: 25px 30px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     border: 1px solid #ccc;
   }
-  
-  /* Заголовок */
-  .profile__title {
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
+  .profile__photo {
+    width: 300px; /* Размер фото */
+    height: 300px; /* Фиксированная высота для круга */
+    border-radius: 50%; /* Делает фото круглым */
+    object-fit: cover; /* Обрезает изображение, чтобы оно не искажалось */
+    border: 2px solid #d3a3b0; /* Тонкая розовая рамка */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Легкая тень для глубины */
+    margin: 10px auto; /* Центрирование фото */
+    display: block; /* Чтобы работал margin auto */
   }
   
-  /* Поля формы */
+  /* Заголовок */
+  .profile-title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #000; /* Black title */
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Each section */
   .profile__section {
     margin-bottom: 15px;
+    display: flex;
+    align-items: center;
   }
   
   .profile__section label {
-    display: block;
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
   }
   
+  .profile__section label i {
+    margin-right: 8px;
+    font-size: 18px;
+  }
+  
+  .profile__section span,
   .profile__section input {
-    width: 100%;
+    flex-grow: 1;
+    font-size: 16px;
     padding: 8px;
     border: none;
-    border-bottom: 1px solid #aaa;
-    outline: none;
+    border-bottom: 1px solid #333; /* Underline */
     background: transparent;
-    font-size: 14px;
     color: #333;
+    outline: none;
   }
   
-  .profile__section span {
-    font-size: 14px;
-    color: #555;
+  input:focus {
+    border-bottom: 2px solid #000;
+  }
+  
+  /* Icons */
+  .fa {
+    color: #333; /* Icon color */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 500px) {
+    .half-block {
+      width: 90%;
+      padding: 20px;
+    }
   }
   
   .profile__section img {
@@ -82,17 +113,18 @@ body {
     text-align: center;
     font-size: 18px;
     font-weight: bold;
-    color: #333;
+    color: #000000;
     margin-top: 20px;
     margin-bottom: 15px;
   }
   
   /* Кнопка отправки */
   .submit-button {
+
     display: block;
     width: 100%;
     margin-top: 20px;
-    padding: 10px;
+    padding: 10px 24px;
     font-size: 14px;
     background-color: #35446d;
     color: #edeef1;
@@ -134,5 +166,107 @@ body {
     .submit-button {
       font-size: 12px;
     }
+  }
+  .big-block {
+    flex-direction: row; /* Горизонтальное направление */
+    box-sizing: border-box;
+    display: flex; /* Flex-контейнер */
+    padding: 1%;
+  }
+  .half-block {
+    flex: 1; /* Равномерное деление на две части */
+    height: 100%; /* Полная высота */
+    padding: 1%;
+  }
+  .big-block-skibidi{
+    display: flex;
+    flex-direction: column; /* Дочерние элементы в колонку */
+    box-sizing: border-box;
+  }
+  h2{
+    text-align: center;
+  }
+  .pink-bg{
+    background-color: #D3A3B0;
+    border-radius: 10px;
+  }
+  /* Левая и правая части
+  .half-block:nth-child(1) {
+    background-color: #D3A3B0; 
+  }
+
+  .half-block:nth-child(2) {
+    background-color: #A3C4D3; 
+  } */
+  .profile__company-photos {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .photo-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .photo-item {
+    position: relative;
+  }
+  
+  .company-photo {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+  }
+  
+  .company-photo:hover {
+    transform: scale(1.05);
+  }
+  
+  .delete-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  
+  .photo-input {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    gap: 10px;
+  }
+  
+  .photo-url-input {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 250px;
+  }
+  
+  .action-button {
+    background-color: #7b5b8e;
+    color: #edeef1;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .action-button:hover {
+    background-color: #5c4068;
   }
   
