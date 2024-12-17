@@ -1,0 +1,21 @@
+<div class="email-list-container">
+  <h2 class="invite-header">Invite people</h2>
+
+  <mat-form-field class="email-input" appearance="fill">
+    <mat-label>Add email</mat-label>
+    <input matInput placeholder="example@gmail.com" [(ngModel)]="email" (keydown.enter)="addEmail()" />
+    <button mat-icon-button matSuffix (click)="addEmail()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <div class="email-chips">
+    <div class="email-item" *ngFor="let item of emails; let i = index">
+      <mat-chip removable="true" (removed)="removeEmail(i)">
+        {{ item }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </div>
+  </div>
+
+</div>

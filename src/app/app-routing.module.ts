@@ -9,6 +9,7 @@ import { RegistrationComponent } from './infrastructure/auth/registration/regist
 import { QuickRegistrationComponent } from './infrastructure/auth/quick-registration/quick-registration.component';
 import { ProviderServiceFormComponent } from './offer/provider-service-form/provider-service-form.component';
 import { ProviderServiceEditComponent } from './offer/provider-service-edit/provider-service-edit.component';
+import { NewEventComponent } from './event/add-event/new-event/new-event.component';
 import {AuthGuard} from './infrastructure/auth/auth.guard';
 
 const routes: Routes = [
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegistrationComponent},
   {path: 'quick-registration', component: QuickRegistrationComponent},
+  {path: 'new-event', component: NewEventComponent},
   { path: '', redirectTo: '/events', pathMatch: 'full' }
 ];
 
