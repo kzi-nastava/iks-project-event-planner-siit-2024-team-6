@@ -1,0 +1,83 @@
+<div class="profile">
+  <div class="profile__card">
+  <h1>User Profile</h1>
+
+  <form>
+    <div class="profile__section">
+      <label>ID:</label>
+      <span>{{ user?.id }}</span>
+    </div>
+
+    <div class="profile__section">
+      <label>Email:</label>
+      <span>{{ user?.email }}</span>
+    </div>
+
+    <div class="profile__section">
+      <label>Name:</label>
+      <input [(ngModel)]="updatedUser.name" name="name" />
+    </div>
+
+    <div class="profile__section">
+      <label>Last Name:</label>
+      <input [(ngModel)]="updatedUser.lastname" name="lastname" />
+    </div>
+
+    <div class="profile__section">
+      <label>Address:</label>
+      <input [(ngModel)]="updatedUser.address" name="address" />
+    </div>
+
+    <div class="profile__section">
+      <label>User Type:</label>
+      <span>{{ user?.userType }}</span>
+    </div>
+
+    <div class="profile__section">
+      <label>Phone Number:</label>
+      <input [(ngModel)]="updatedUser.phoneNumber" name="phoneNumber" />
+    </div>
+
+    <div *ngIf="user?.userType === 'Provider'">
+      <h2>Company Information</h2>
+
+      <div class="profile__section">
+        <label>Company Email:</label>
+        <span>{{ user?.companyEmail }}</span>
+      </div>
+
+      <div class="profile__section">
+        <label>Company Name:</label>
+        <span>{{ user?.companyName }}</span>
+      </div>
+
+      <div class="profile__section">
+        <label>Company Address:</label>
+        <input [(ngModel)]="updatedUser.companyAddress" name="companyAddress" />
+      </div>
+
+      <div class="profile__section">
+        <label>Description:</label>
+        <textarea [(ngModel)]="updatedUser.description" name="description"></textarea>
+      </div>
+
+      <div class="profile__section">
+        <label>Working Hours:</label>
+        <input
+          [(ngModel)]="updatedUser.openingTime"
+          name="openingTime"
+          placeholder="Opening Time"
+        />
+        -
+        <input
+          [(ngModel)]="updatedUser.closingTime"
+          name="closingTime"
+          placeholder="Closing Time"
+        />
+      </div>
+    </div>
+
+    <button type="button" class="submit-button" (click)="submitChanges()">Submit Changes</button>
+  </form>
+</div>
+</div>

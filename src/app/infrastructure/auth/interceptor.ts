@@ -10,17 +10,29 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class Interceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const accessToken: any = localStorage.getItem('user');
-    if (req.headers.get('skip')) return next.handle(req);
-  
-    if (accessToken) {
-      const cloned = req.clone({
-        headers: req.headers.set('Authorization', `Bearer ${accessToken}`), // Добавляем "Bearer"
-      });
-      return next.handle(cloned);
-    } else {
+    // Получаем токен из localStorage
+    const accessToken = localStorage.getItem('user');
+    
+    // Пропускаем запросы, помеченные заголовком "skip"
+    if (req.headers.get('skip')) {
+      console.log(`[Interceptor] Skipping token for request: ${req.url}`);
       return next.handle(req);
     }
+
+    // Если токен существует, добавляем его в заголовок "Authorization"
+    if (accessToken) {
+      console.log(`[Interceptor] Adding token to request: ${req.url}`);
+      console.log(`[Interceptor] Token: Bearer ${accessToken}`);
+      
+      const cloned = req.clone({
+        headers: req.headers.set('X-Auth-Token', 'Bearer ' + accessToken),
+      });
+      
+      return next.handle(cloned);
+    }
+
+    // Если токена нет, просто отправляем запрос
+    console.log(`[Interceptor] No token found for request: ${req.url}`);
+    return next.handle(req);
   }
-  
 }

@@ -9,6 +9,7 @@ import { RegistrationComponent } from './infrastructure/auth/registration/regist
 import { ProviderServiceFormComponent } from './offer/provider-service-form/provider-service-form.component';
 import { ProviderServiceEditComponent } from './offer/provider-service-edit/provider-service-edit.component';
 import {AuthGuard} from './infrastructure/auth/auth.guard';
+import { ProfileComponent } from './infrastructure/auth/profile/profile.component';
 
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegistrationComponent},
+  {path: 'profile', component: ProfileComponent},
   { path: '', redirectTo: '/events', pathMatch: 'full' }
 ];
 

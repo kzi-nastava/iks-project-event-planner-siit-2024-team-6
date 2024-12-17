@@ -1,0 +1,138 @@
+/* Основные стили */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #d3a3b0;
+  }
+  :host {
+    display: block;
+    min-height: 100vh;
+    background-color: #d3a3b0; /* Цвет фона страницы */
+  }
+  /* Контейнер профиля */
+  .profile {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding-top: 80px; /* Отступ сверху, чтобы не перекрывался navbar */
+    max-width: 600px;
+    padding-bottom: 20px;
+  }
+  .profile__card {
+    background-color: #edeef1;
+    width: 100%;
+    max-width: 650px;
+    padding: 25px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+  }
+  
+  /* Заголовок */
+  .profile__title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Поля формы */
+  .profile__section {
+    margin-bottom: 15px;
+  }
+  
+  .profile__section label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+  }
+  
+  .profile__section input {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid #aaa;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .profile__section span {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .profile__section img {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 5px;
+  }
+  
+  /* Раздел Provider */
+  .provider h2 {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 15px;
+  }
+  
+  /* Кнопка отправки */
+  .submit-button {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #35446d;
+    color: #edeef1;
+    border: none;
+    border-radius: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-button:hover {
+    background-color: #283653;
+  }
+  
+  /* Радио-кнопки */
+  .radio-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+  }
+  
+  .radio-group label {
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+  }
+  
+  /* Медиа-запросы */
+  @media (max-width: 600px) {
+    .profile__card {
+      padding: 20px;
+    }
+  
+    .profile__title {
+      font-size: 18px;
+    }
+  
+    .profile__section input,
+    .submit-button {
+      font-size: 12px;
+    }
+  }
+  
