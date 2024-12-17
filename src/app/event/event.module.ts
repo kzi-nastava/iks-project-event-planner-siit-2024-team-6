@@ -7,6 +7,7 @@ import { EventSliderComponent } from './event-slider/event-slider.component';
 import { TopEventCardComponent } from './top-event-card/top-event-card.component';
 import { EventsFilterComponent } from './events-filter/events-filter.component';
 import { EventsViewComponent } from './events-view/events-view.component';
+import { AddEventModule } from './add-event/add-event.module';
 
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,6 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     CommonModule,
     FormsModule,
+    AddEventModule,
     MatPaginatorModule
     
   ],
