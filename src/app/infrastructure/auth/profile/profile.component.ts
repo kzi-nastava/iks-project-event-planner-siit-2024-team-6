@@ -40,6 +40,7 @@ export class ProfileComponent implements OnInit {
       phoneNumber: this.user.phoneNumber || '',
       userType: this.user.userType,
       isActive: this.user.isActive,
+      photoUrl: this.user.photoUrl,
       suspendedSince: this.user.suspendedSince,
       companyEmail: this.user.companyEmail,
       companyName: this.user.companyName,
@@ -69,6 +70,19 @@ export class ProfileComponent implements OnInit {
     this.updatedUser.companyPhotos.splice(index, 1);
   }
 
+updatePhotoSmall(): void {
+    if (this.newPhotoUrl.trim()) {
+      this.updatedUser.photoUrl = this.newPhotoUrl.trim();
+      console.log('Photo URL updated:', this.newPhotoUrl);
+      this.newPhotoUrl = ''; // Очищаем поле
+    }
+  }
+
+  // Удаляем URL фото
+  removePhotoSmall(): void {
+    this.updatedUser.photoUrl = null;
+    console.log('Photo URL removed');
+  }
 
   submitChanges(): void {
     // Send PUT request to update the user profile

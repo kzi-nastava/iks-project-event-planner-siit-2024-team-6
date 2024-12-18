@@ -46,8 +46,32 @@
       <div class="half-block">
         <div class="big-block-skibidi">
           <div class="half-block">
-              <img [src]="user?.photoUrl" alt="User Photo" class="profile__photo"/>
-          </div>
+
+
+            <div class="profile__photo-container">
+              <!-- Фото пользователя -->
+              <img
+                [src]="user.photoUrl || 'assets/default-avatar.png'"
+                alt="User Photo"
+                class="profile__photo"
+              />
+            
+              <!-- Поле ввода нового URL -->
+              <div class="photo-actions">
+                <input
+                  [(ngModel)]="newPhotoUrl"
+                  name="photoUrl"
+                  type="text"
+                  placeholder="Enter photo URL"
+                  class="photo-url-input"
+                />
+                <button (click)="updatePhotoSmall()" class="action-button">Save Photo</button>
+                <button (click)="removePhotoSmall()" class="action-button remove-button">Remove Photo</button>
+              </div>
+            </div>     
+          
+
+            </div>
           <button type="button" class="submit-button" (click)="logout()">Logout</button>
           <button type="button" class="submit-button" (click)="deactivate()">Deactivate</button>
           <div class="half-block">

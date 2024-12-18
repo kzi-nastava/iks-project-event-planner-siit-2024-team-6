@@ -12,6 +12,7 @@ body {
   } */
   /* Контейнер профиля */
   .profile {
+    overflow: scroll;
     display: flex;
     margin-left: auto;
     margin-right: auto;
@@ -269,4 +270,179 @@ body {
   .action-button:hover {
     background-color: #5c4068;
   }
+  .profile__photo-container {
+    text-align: center;
+    margin-top: 20px;
+  }
   
+  .profile__photo {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
+  }
+  
+  .photo-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .photo-url-input {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 250px;
+  }
+  
+  .action-button {
+    background-color: #7b5b8e;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .action-button:hover {
+    background-color: #5c4068;
+  }
+  
+  .remove-button {
+    background-color: #ff4d4d;
+  }
+  
+  .remove-button:hover {
+    background-color: #cc0000;
+  }
+  /* Основные стили */
+
+
+/* Заголовок */
+.profile-title, .provider-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Секция профиля */
+.profile__section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.profile__section label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.profile__section span, 
+.profile__section input, 
+.profile__section textarea {
+  font-size: 14px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: none;
+}
+
+/* Фото */
+.profile__photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 10px;
+}
+
+.photo-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Кнопки */
+.action-button {
+  background-color: #7b5b8e;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.action-button:hover {
+  background-color: #5c4068;
+}
+
+.remove-button {
+  background-color: #ff4d4d;
+}
+
+.remove-button:hover {
+  background-color: #cc0000;
+}
+
+/* Галерея фото */
+.photo-gallery {
+  margin-top: 20px;
+}
+
+.photo-item {
+  position: relative;
+  display: inline-block;
+}
+
+.company-photo {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.delete-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .profile__card {
+    padding: 15px;
+  }
+
+  .profile__section label {
+    font-size: 14px;
+  }
+
+  .profile__section span, 
+  .profile__section input, 
+  .profile__section textarea {
+    font-size: 12px;
+  }
+}
