@@ -57,7 +57,7 @@ body {
   .profile__section {
     margin-bottom: 15px;
     display: flex;
-    align-items: center;
+    align-items: left;
   }
   
   .profile__section label {
@@ -65,7 +65,7 @@ body {
     font-weight: bold;
     margin-right: 10px;
     display: flex;
-    align-items: center;
+    align-items: left;
   }
   
   .profile__section label i {
@@ -173,6 +173,7 @@ body {
     box-sizing: border-box;
     display: flex; /* Flex-контейнер */
     padding: 1%;
+
   }
   .half-block {
     flex: 1; /* Равномерное деление на две части */
@@ -323,7 +324,7 @@ body {
   /* Основные стили */
 
 
-/* Заголовок */
+/* Заголовок ZAS*/
 .profile-title, .provider-title {
   font-size: 24px;
   font-weight: bold;
@@ -336,6 +337,7 @@ body {
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
+  
 }
 
 .profile__section label {
@@ -349,8 +351,7 @@ body {
 .profile__section textarea {
   font-size: 14px;
   padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border-bottom: 1px solid #000000;
   width: 100%;
   box-sizing: border-box;
 }

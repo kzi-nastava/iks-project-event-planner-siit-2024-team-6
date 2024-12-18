@@ -23,7 +23,7 @@
         </div>
       
         <div class="profile__section">
-          <label><i class="fa fa-user-tag"></i>Last Name:</label>
+          <label><i class="fa fa-user-tag"></i>Last name:</label>
           <input [(ngModel)]="updatedUser.lastname" name="lastname" />
         </div>
       
@@ -33,12 +33,12 @@
         </div>
       
         <div class="profile__section">
-          <label><i class="fa fa-user-cog"></i> User Type:</label>
+          <label><i class="fa fa-user-cog"></i> Role:</label>
           <span>{{ user?.userType }}</span>
         </div>
       
         <div class="profile__section">
-          <label><i class="fa fa-phone"></i> Phone Number:</label>
+          <label><i class="fa fa-phone"></i> Phone number:</label>
           <input [(ngModel)]="updatedUser.phoneNumber" name="phoneNumber" />
         </div>
       </div>
@@ -72,6 +72,7 @@
           
 
             </div>
+            <button type="button" class="submit-button" (click)="changePassword()">Change password</button>
           <button type="button" class="submit-button" (click)="logout()">Logout</button>
           <button type="button" class="submit-button" (click)="deactivate()">Deactivate</button>
           <div class="half-block">

@@ -7,11 +7,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './profile/profile.component';
 import { FormsModule } from '@angular/forms';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 @NgModule({
   declarations: [
     LoginComponent,
     RegistrationComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule, 
@@ -23,7 +25,8 @@ import { FormsModule } from '@angular/forms';
   exports: [
     LoginComponent,
     RegistrationComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChangePasswordComponent
   ]
 })
 export class AuthModule { }
