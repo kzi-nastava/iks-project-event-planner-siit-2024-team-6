@@ -51,4 +51,10 @@ export class AuthService {
   setUser(): void {
     this.user$.next(this.getRole());
   }
+
+  logout(): void {
+    console.log('[AuthService] Logging out user...');
+    localStorage.removeItem('user'); // Удаляем токен из localStorage
+    this.user$.next(null); // Сбрасываем роль пользователя
+  }
 }

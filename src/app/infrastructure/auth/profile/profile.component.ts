@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -10,7 +12,7 @@ export class ProfileComponent implements OnInit {
   user: any = {}; // User data
   updatedUser: any = {}; // Editable data
   newPhotoUrl: string = '';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.loadUserProfile();
@@ -77,6 +79,27 @@ export class ProfileComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error updating profile:', err);
+      },
+    });
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+
+  deactivate(): void {
+    this.http.delete('/api/users/profile').subscribe({
+      next: () => {
+        console.log('[ProfileComponent] Account successfully deactivated.');
+        this.logout(); // Logout после успешной деактивации
+      },
+      error: (err) => {
+        if (err.status === 400) {
+          alert('Cannot deactivate account: Active services or future events exist.');
+        } else {
+          console.error('[ProfileComponent] Error deactivating account:', err);
+        }
       },
     });
   }

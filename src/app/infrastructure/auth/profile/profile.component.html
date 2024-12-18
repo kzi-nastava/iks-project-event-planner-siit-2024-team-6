@@ -48,8 +48,8 @@
           <div class="half-block">
               <img [src]="user?.photoUrl" alt="User Photo" class="profile__photo"/>
           </div>
-          <button type="button" class="submit-button" (click)="submitChanges()">Logout</button>
-          <button type="button" class="submit-button" (click)="submitChanges()">Deactivate</button>
+          <button type="button" class="submit-button" (click)="logout()">Logout</button>
+          <button type="button" class="submit-button" (click)="deactivate()">Deactivate</button>
           <div class="half-block">
             
           </div>
@@ -100,34 +100,34 @@
         <div class="half-block pink-bg" >
 
       <div class="profile__section">
-        <label>Company Email:</label>
+        <label><i class="fa fa-envelope"></i>Company Email:</label>
         <span>{{ user?.companyEmail }}</span>
       </div>
 
       <div class="profile__section">
-        <label>Company Name:</label>
+        <label><i class="fa fa-user"></i>Company Name:</label>
         <span>{{ user?.companyName }}</span>
       </div>
 
       <div class="profile__section">
-        <label>Company Address:</label>
+        <label><i class="fa fa-location-dot"></i>Company Address:</label>
         <input [(ngModel)]="updatedUser.companyAddress" name="companyAddress" />
       </div>
 
       <div class="profile__section">
-        <label>Description:</label>
+        <label><i class="fa-solid fa-align-justify"></i>Description:</label>
         <textarea [(ngModel)]="updatedUser.description" name="description"></textarea>
       </div>
 
       <div class="profile__section">
-        <label>Opening Time:</label>
+        <label><i class="fa-regular fa-clock"></i>Opening Time:</label>
         <input
           [(ngModel)]="updatedUser.openingTime"
           name="openingTime"
         />
       </div>
         <div class="profile__section">
-          <label>Closing Time:</label>
+          <label><i class="fa-regular fa-clock"></i>Closing Time:</label>
         <input
           [(ngModel)]="updatedUser.closingTime"
           name="closingTime"
