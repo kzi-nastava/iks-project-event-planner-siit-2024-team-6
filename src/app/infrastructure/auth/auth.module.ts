@@ -5,22 +5,30 @@ import { RegistrationComponent } from './registration/registration.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ProfileComponent } from './profile/profile.component';
+import { FormsModule } from '@angular/forms';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 import { QuickRegistrationComponent } from './quick-registration/quick-registration.component';
 @NgModule({
   declarations: [
     LoginComponent,
     RegistrationComponent,
+    ProfileComponent,
+    ChangePasswordComponent,
     QuickRegistrationComponent
   ],
   imports: [
     CommonModule, 
     ReactiveFormsModule,
     RouterModule,
-    HttpClientModule
+    HttpClientModule, 
+    FormsModule
   ],
   exports: [
     LoginComponent,
     RegistrationComponent,
+    ProfileComponent,
+    ChangePasswordComponent,
     QuickRegistrationComponent
   ]
 })

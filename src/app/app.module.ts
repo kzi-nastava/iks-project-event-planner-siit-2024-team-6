@@ -11,6 +11,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
 import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
+import { Interceptor } from './infrastructure/auth/interceptor';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -24,11 +26,17 @@ import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient, withFetch, with
     WineModule,
     EventModule,
     AuthModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    CommonModule
   ],
   providers: [
     provideAnimationsAsync(),
-    provideHttpClient(withFetch())
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: Interceptor,
+      multi: true,
+    },
+    provideHttpClient(withFetch(), withInterceptorsFromDi())
   ],
   bootstrap: [AppComponent]
 })

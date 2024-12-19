@@ -11,6 +11,8 @@ import { ProviderServiceFormComponent } from './offer/provider-service-form/prov
 import { ProviderServiceEditComponent } from './offer/provider-service-edit/provider-service-edit.component';
 import { NewEventComponent } from './event/add-event/new-event/new-event.component';
 import {AuthGuard} from './infrastructure/auth/auth.guard';
+import { ProfileComponent } from './infrastructure/auth/profile/profile.component';
+import { ChangePasswordComponent } from './infrastructure/auth/change-password/change-password.component';
 
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
@@ -24,6 +26,10 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegistrationComponent},
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard],
+    data: {auser: 'Auth user'}},
+  {path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard],
+    data: {auser: 'Auth user'}},
   {path: 'quick-registration', component: QuickRegistrationComponent},
   {path: 'new-event', component: NewEventComponent},
   { path: '', redirectTo: '/events', pathMatch: 'full' }

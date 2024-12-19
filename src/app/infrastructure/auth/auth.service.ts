@@ -38,10 +38,23 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return localStorage.getItem('user') != null;
+    const accessToken: any = localStorage.getItem('user');
+    const helper = new JwtHelperService();
+    if(localStorage.getItem('user') != null){
+      if (!helper.isTokenExpired(accessToken)){
+        return true;
+      }
+    }
+    return false;
   }
 
   setUser(): void {
     this.user$.next(this.getRole());
+  }
+
+  logout(): void {
+    console.log('[AuthService] Logging out user...');
+    localStorage.removeItem('user'); // Удаляем токен из localStorage
+    this.user$.next(null); // Сбрасываем роль пользователя
   }
 }

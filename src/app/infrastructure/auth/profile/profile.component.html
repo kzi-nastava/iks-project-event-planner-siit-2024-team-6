@@ -1,0 +1,169 @@
+<div class="profile">
+  <div class="profile__card">
+
+  <form>
+    <div class="big-block">
+
+      <div class="half-block pink-bg">
+        <h2 class="profile-title">{{ user?.name }} {{ user?.lastname }}</h2>
+      
+        <div class="profile__section">
+          <label><i class="fa fa-envelope"></i> Email:</label>
+          <span>{{ user?.email }}</span>
+        </div>
+      
+        <div class="profile__section">
+          <label><i class="fa fa-id-card"></i> ID: </label>
+          <span>{{ user?.id }}</span>
+        </div>
+      
+        <div class="profile__section">
+          <label><i class="fa fa-user"></i> Name:</label>
+          <input [(ngModel)]="updatedUser.name" name="name" />
+        </div>
+      
+        <div class="profile__section">
+          <label><i class="fa fa-user-tag"></i>Last name:</label>
+          <input [(ngModel)]="updatedUser.lastname" name="lastname" />
+        </div>
+      
+        <div class="profile__section">
+          <label><i class="fa fa-home"></i> Address:</label>
+          <input [(ngModel)]="updatedUser.address" name="address" />
+        </div>
+      
+        <div class="profile__section">
+          <label><i class="fa fa-user-cog"></i> Role:</label>
+          <span>{{ user?.userType }}</span>
+        </div>
+      
+        <div class="profile__section">
+          <label><i class="fa fa-phone"></i> Phone number:</label>
+          <input [(ngModel)]="updatedUser.phoneNumber" name="phoneNumber" />
+        </div>
+      </div>
+      
+      <div class="half-block">
+        <div class="big-block-skibidi">
+          <div class="half-block">
+
+
+            <div class="profile__photo-container">
+              <!-- Фото пользователя -->
+              <img
+                [src]="user.photoUrl || 'assets/default-avatar.png'"
+                alt="User Photo"
+                class="profile__photo"
+              />
+            
+              <!-- Поле ввода нового URL -->
+              <div class="photo-actions">
+                <input
+                  [(ngModel)]="newPhotoUrl"
+                  name="photoUrl"
+                  type="text"
+                  placeholder="Enter photo URL"
+                  class="photo-url-input"
+                />
+                <button (click)="updatePhotoSmall()" class="action-button">Save Photo</button>
+                <button (click)="removePhotoSmall()" class="action-button remove-button">Remove Photo</button>
+              </div>
+            </div>     
+          
+
+            </div>
+            <button type="button" class="submit-button" (click)="changePassword()">Change password</button>
+          <button type="button" class="submit-button" (click)="logout()">Logout</button>
+          <button type="button" class="submit-button" (click)="deactivate()">Deactivate</button>
+          <div class="half-block">
+            
+          </div>
+        </div>
+      </div>
+
+  </div>
+
+
+
+
+    <div *ngIf="user?.userType === 'Provider'">
+      <div class="userTypeShit">
+      <h2>{{ user?.companyName }}</h2>
+      </div>
+      <div class="big-block">
+        <div class="half-block">
+          <div class="big-block-skibidi">
+            <div class="half-block">
+
+              <div class="photo-gallery">
+                <div *ngFor="let photoUrl of updatedUser.companyPhotos; let i = index" class="photo-item">
+                  <img [src]="photoUrl" alt="Company Photo" class="company-photo" />
+                  <button (click)="removePhoto(i)" class="delete-button">X</button>
+                </div>
+              </div>
+            
+              <!-- Поле для добавления нового фото -->
+              <div class="photo-input">
+                <input
+                    [(ngModel)]="newPhotoUrl"
+                    name="newPhotoUrl" 
+                    type="text"
+                    placeholder="Enter photo URL"
+                    class="photo-url-input"
+                  />
+                <button (click)="addPhoto()" class="action-button">Add Photo</button>
+              </div>
+
+
+              </div>
+            <div class="half-block">
+              
+            </div>
+          </div>
+        </div>
+
+        <div class="half-block pink-bg" >
+
+      <div class="profile__section">
+        <label><i class="fa fa-envelope"></i>Company Email:</label>
+        <span>{{ user?.companyEmail }}</span>
+      </div>
+
+      <div class="profile__section">
+        <label><i class="fa fa-user"></i>Company Name:</label>
+        <span>{{ user?.companyName }}</span>
+      </div>
+
+      <div class="profile__section">
+        <label><i class="fa fa-location-dot"></i>Company Address:</label>
+        <input [(ngModel)]="updatedUser.companyAddress" name="companyAddress" />
+      </div>
+
+      <div class="profile__section">
+        <label><i class="fa-solid fa-align-justify"></i>Description:</label>
+        <textarea [(ngModel)]="updatedUser.description" name="description"></textarea>
+      </div>
+
+      <div class="profile__section">
+        <label><i class="fa-regular fa-clock"></i>Opening Time:</label>
+        <input
+          [(ngModel)]="updatedUser.openingTime"
+          name="openingTime"
+        />
+      </div>
+        <div class="profile__section">
+          <label><i class="fa-regular fa-clock"></i>Closing Time:</label>
+        <input
+          [(ngModel)]="updatedUser.closingTime"
+          name="closingTime"
+        />
+      </div>
+    </div>
+    </div>
+    
+    </div>
+
+    <button type="button" class="submit-button" (click)="submitChanges()">Submit Changes</button>
+  </form>
+</div>
+</div>

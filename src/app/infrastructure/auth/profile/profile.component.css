@@ -1,0 +1,449 @@
+/* Основные стили */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #d3a3b0;
+  }
+  /* :host {
+    display: block;
+    min-height: 100vh;
+    background-color: #d3a3b0;
+  } */
+  /* Контейнер профиля */
+  .profile {
+    overflow: scroll;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding-top: 80px; /* Отступ сверху, чтобы не перекрывался navbar */
+    padding-bottom: 20px;
+  }
+  .profile__card {
+    margin-left: 2%;
+    margin-right: 2%;
+    background-color: #edeef1;
+    width: 100%;
+    padding: 25px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+  }
+  .profile__photo {
+    width: 300px; /* Размер фото */
+    height: 300px; /* Фиксированная высота для круга */
+    border-radius: 50%; /* Делает фото круглым */
+    object-fit: cover; /* Обрезает изображение, чтобы оно не искажалось */
+    border: 2px solid #d3a3b0; /* Тонкая розовая рамка */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Легкая тень для глубины */
+    margin: 10px auto; /* Центрирование фото */
+    display: block; /* Чтобы работал margin auto */
+  }
+  
+  /* Заголовок */
+  .profile-title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #000; /* Black title */
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Each section */
+  .profile__section {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: left;
+  }
+  
+  .profile__section label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+    display: flex;
+    align-items: left;
+  }
+  
+  .profile__section label i {
+    margin-right: 8px;
+    font-size: 18px;
+  }
+  
+  .profile__section span,
+  .profile__section input {
+    flex-grow: 1;
+    font-size: 16px;
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid #333; /* Underline */
+    background: transparent;
+    color: #333;
+    outline: none;
+  }
+  
+  input:focus {
+    border-bottom: 2px solid #000;
+  }
+  
+  /* Icons */
+  .fa {
+    color: #333; /* Icon color */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 500px) {
+    .half-block {
+      width: 90%;
+      padding: 20px;
+    }
+  }
+  
+  .profile__section img {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 5px;
+  }
+  
+  /* Раздел Provider */
+  .provider h2 {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000;
+    margin-top: 20px;
+    margin-bottom: 15px;
+  }
+  
+  /* Кнопка отправки */
+  .submit-button {
+
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px 24px;
+    font-size: 14px;
+    background-color: #35446d;
+    color: #edeef1;
+    border: none;
+    border-radius: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-button:hover {
+    background-color: #283653;
+  }
+  
+  /* Радио-кнопки */
+  .radio-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+  }
+  
+  .radio-group label {
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+  }
+  
+  /* Медиа-запросы */
+  @media (max-width: 600px) {
+    .profile__card {
+      padding: 20px;
+    }
+  
+    .profile__title {
+      font-size: 18px;
+    }
+  
+    .profile__section input,
+    .submit-button {
+      font-size: 12px;
+    }
+  }
+  .big-block {
+    flex-direction: row; /* Горизонтальное направление */
+    box-sizing: border-box;
+    display: flex; /* Flex-контейнер */
+    padding: 1%;
+
+  }
+  .half-block {
+    flex: 1; /* Равномерное деление на две части */
+    height: 100%; /* Полная высота */
+    padding: 1%;
+  }
+  .big-block-skibidi{
+    display: flex;
+    flex-direction: column; /* Дочерние элементы в колонку */
+    box-sizing: border-box;
+  }
+  h2{
+    text-align: center;
+  }
+  .pink-bg{
+    background-color: #D3A3B0;
+    border-radius: 10px;
+  }
+  /* Левая и правая части
+  .half-block:nth-child(1) {
+    background-color: #D3A3B0; 
+  }
+
+  .half-block:nth-child(2) {
+    background-color: #A3C4D3; 
+  } */
+  .profile__company-photos {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .photo-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .photo-item {
+    position: relative;
+  }
+  
+  .company-photo {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+  }
+  
+  .company-photo:hover {
+    transform: scale(1.05);
+  }
+  
+  .delete-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  
+  .photo-input {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    gap: 10px;
+  }
+  
+  .photo-url-input {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 250px;
+  }
+  
+  .action-button {
+    background-color: #7b5b8e;
+    color: #edeef1;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .action-button:hover {
+    background-color: #5c4068;
+  }
+  .profile__photo-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .profile__photo {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
+  }
+  
+  .photo-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .photo-url-input {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 250px;
+  }
+  
+  .action-button {
+    background-color: #7b5b8e;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .action-button:hover {
+    background-color: #5c4068;
+  }
+  
+  .remove-button {
+    background-color: #ff4d4d;
+  }
+  
+  .remove-button:hover {
+    background-color: #cc0000;
+  }
+  /* Основные стили */
+
+
+/* Заголовок ZAS*/
+.profile-title, .provider-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Секция профиля */
+.profile__section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  
+}
+
+.profile__section label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.profile__section span, 
+.profile__section input, 
+.profile__section textarea {
+  font-size: 14px;
+  padding: 8px;
+  border-bottom: 1px solid #000000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: none;
+}
+
+/* Фото */
+.profile__photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 10px;
+}
+
+.photo-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Кнопки */
+.action-button {
+  background-color: #7b5b8e;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.action-button:hover {
+  background-color: #5c4068;
+}
+
+.remove-button {
+  background-color: #ff4d4d;
+}
+
+.remove-button:hover {
+  background-color: #cc0000;
+}
+
+/* Галерея фото */
+.photo-gallery {
+  margin-top: 20px;
+}
+
+.photo-item {
+  position: relative;
+  display: inline-block;
+}
+
+.company-photo {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.delete-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .profile__card {
+    padding: 15px;
+  }
+
+  .profile__section label {
+    font-size: 14px;
+  }
+
+  .profile__section span, 
+  .profile__section input, 
+  .profile__section textarea {
+    font-size: 12px;
+  }
+}
