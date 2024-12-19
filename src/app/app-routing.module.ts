@@ -6,8 +6,10 @@ import { ProviderServiceViewComponent } from './offer/provider-service-view/prov
 import { HomeComponent } from './layout/home/home.component';
 import { LoginComponent } from './infrastructure/auth/login/login.component';
 import { RegistrationComponent } from './infrastructure/auth/registration/registration.component';
+import { QuickRegistrationComponent } from './infrastructure/auth/quick-registration/quick-registration.component';
 import { ProviderServiceFormComponent } from './offer/provider-service-form/provider-service-form.component';
 import { ProviderServiceEditComponent } from './offer/provider-service-edit/provider-service-edit.component';
+import { NewEventComponent } from './event/add-event/new-event/new-event.component';
 import {AuthGuard} from './infrastructure/auth/auth.guard';
 import { ProfileComponent } from './infrastructure/auth/profile/profile.component';
 import { ChangePasswordComponent } from './infrastructure/auth/change-password/change-password.component';
@@ -28,6 +30,8 @@ const routes: Routes = [
     data: {auser: 'Auth user'}},
   {path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard],
     data: {auser: 'Auth user'}},
+  {path: 'quick-registration', component: QuickRegistrationComponent},
+  {path: 'new-event', component: NewEventComponent},
   { path: '', redirectTo: '/events', pathMatch: 'full' }
 ];
 

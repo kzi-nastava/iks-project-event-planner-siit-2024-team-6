@@ -1,0 +1,39 @@
+<div class="registration-container">
+    <div class="registration-card">
+      <h2 class="registration-title">QUICK REGISTRATION</h2>
+      <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="input-group">
+            <label>
+              <i class="material-icons">person</i>
+              <input type="text" placeholder="Name" formControlName="name" required />
+            </label>
+          </div>
+          <div class="input-group">
+            <label>
+              <i class="material-icons">person_outline</i>
+              <input type="text" placeholder="Surname" formControlName="lastname" required />
+            </label>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="input-group">
+            <label>
+              <i class="material-icons">email</i>
+              <input type="email" placeholder="Email" formControlName="email" required />
+            </label>
+          </div>
+          <div class="input-group">
+            <label>
+              <i class="material-icons">lock</i>
+              <input type="password" placeholder="Password" formControlName="password" required />
+            </label>
+          </div>
+        </div>
+  
+        <button type="submit" class="signup-button">SIGN UP</button>
+      </form>
+    </div>
+  </div>
+  

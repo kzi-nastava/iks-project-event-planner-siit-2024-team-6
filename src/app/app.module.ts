@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { WineModule } from './wine/wine.module';
+import { EventModule } from './event/event.module';
 import { AuthModule } from './infrastructure/auth/auth.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,6 +24,7 @@ import { CommonModule } from '@angular/common';
     AppRoutingModule,
     LayoutModule,
     WineModule,
+    EventModule,
     AuthModule,
     MatPaginatorModule,
     CommonModule

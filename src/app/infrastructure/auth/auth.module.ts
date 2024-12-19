@@ -8,12 +8,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './profile/profile.component';
 import { FormsModule } from '@angular/forms';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { QuickRegistrationComponent } from './quick-registration/quick-registration.component';
 @NgModule({
   declarations: [
     LoginComponent,
     RegistrationComponent,
     ProfileComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    QuickRegistrationComponent
   ],
   imports: [
     CommonModule, 
@@ -26,7 +28,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     LoginComponent,
     RegistrationComponent,
     ProfileComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    QuickRegistrationComponent
   ]
 })
 export class AuthModule { }
