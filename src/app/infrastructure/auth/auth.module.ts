@@ -9,6 +9,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { FormsModule } from '@angular/forms';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { QuickRegistrationComponent } from './quick-registration/quick-registration.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 @NgModule({
   declarations: [
     LoginComponent,
@@ -22,7 +24,8 @@ import { QuickRegistrationComponent } from './quick-registration/quick-registrat
     ReactiveFormsModule,
     RouterModule,
     HttpClientModule, 
-    FormsModule
+    FormsModule,
+    MatSnackBarModule
   ],
   exports: [
     LoginComponent,
