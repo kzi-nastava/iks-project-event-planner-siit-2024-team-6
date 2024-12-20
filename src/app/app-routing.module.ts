@@ -13,6 +13,8 @@ import { NewEventComponent } from './event/add-event/new-event/new-event.compone
 import {AuthGuard} from './infrastructure/auth/auth.guard';
 import { ProfileComponent } from './infrastructure/auth/profile/profile.component';
 import { ChangePasswordComponent } from './infrastructure/auth/change-password/change-password.component';
+import { EventTypeListComponent } from './event/event-type-list/event-type-list.component';
+import { EventTypeAddComponent } from './event/event-type-add/event-type-add.component';
 
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
@@ -32,7 +34,11 @@ const routes: Routes = [
     data: {auser: 'Auth user'}},
   {path: 'quick-registration', component: QuickRegistrationComponent},
   {path: 'new-event', component: NewEventComponent},
-  { path: '', redirectTo: '/events', pathMatch: 'full' }
+  { path: '', redirectTo: '/events', pathMatch: 'full' },
+  { path: 'event-types', component: EventTypeListComponent , canActivate: [AuthGuard],
+    data: {role: 'ROLE_ADMIN'}},
+    { path: 'event-types/add', component: EventTypeAddComponent , canActivate: [AuthGuard],
+      data: {role: 'ROLE_ADMIN'}},
 ];
 
 @NgModule({
