@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="offer-list">
-      <app-provider-offer-card *ngFor="let offer of offers" [offer]="offer"></app-provider-offer-card>
+      <app-provider-offer-card *ngFor="let offer of offers" [offer]="offer" (deleteOfferEvent)="removeOfferFromList($event)"></app-provider-offer-card>
     </div>
     <mat-paginator
   [pageSize]="pageProperties.pageSize"

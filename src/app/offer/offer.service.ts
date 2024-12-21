@@ -97,11 +97,6 @@ export class OfferService {
   updateOffer(id: number, offer: Offer): Observable<Offer> {
     return this.httpClient.put<Offer>(`${this.apiUrl}${id}`, offer);
   }
-
-  deleteOffer(id: number): Observable<void> {
-    return this.httpClient.delete<void>(`${this.apiUrl}${id}`);
-  }
-
   
   updateService(id: number, offer: OfferDTO): Observable<Offer> {
     // Retrieve the token (assuming it's stored in localStorage)
@@ -137,7 +132,7 @@ export class OfferService {
     });
 
     // Construct the request URL
-    const url = `${this.apiUrlProvider}/${name}/category`;
+    const url = `${this.apiUrlProvider}${name}/category`;
 
     // Send the GET request
     return this.httpClient.get<Category>(url, { headers });
@@ -151,5 +146,16 @@ export class OfferService {
     this.setService(null);
     return x;
   }
+
+  deleteOffer(offerId: number): Observable<void> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    
+    const url = `${this.apiUrlProvider}${offerId}`;
+    return this.httpClient.delete<void>(url, { headers });
+  }
+  
 }
   
