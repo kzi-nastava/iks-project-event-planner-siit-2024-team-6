@@ -2,15 +2,17 @@ import { Category } from "../../event/model/event.model";
 import { EventType } from "../../event/model/event.model";
 
 export interface Offer {
+  id: number;
   status: string;
   name: string;
   description: string;
   price: number;
   sale?: number;
   photos: string[];
-  category: Category;
+  category: string;
   isAvailable: boolean;
   isDeleted: boolean;
+  isVisible: boolean;
   lastChanged: Date;
   eventTypes: EventType[];
 }
@@ -25,7 +27,7 @@ export interface Service extends Offer {
   preciseDuration: number;
   latestReservation: number;
   latestCancelation: number;
-  reservations: Reservation[];
+  isReservationAutoApproved: boolean;
 }
 
 export interface Reservation {
