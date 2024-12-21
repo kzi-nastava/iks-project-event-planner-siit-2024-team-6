@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from '../offer.service';
+import { Service } from '../model/offer.model';
+import { OfferDTO } from '../model/offer.dto';
+import { EventService } from '../../event/event.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-provider-service-edit',
@@ -9,84 +13,83 @@ import { OfferService } from '../offer.service';
   styleUrls: ['./provider-service-edit.component.css']
 })
 export class ProviderServiceEditComponent implements OnInit {
-  goBack() {
-    this.router.navigate(['/my-services']);
-  }
   serviceForm!: FormGroup;
-  serviceId: string | null = null;
-  categories: string[] = ['Catering', 'Decoration', 'Photography'];
-  eventTypes: string[] = ['Wedding', 'Birthday', 'Corporate'];
-  selectedEventTypes: string[] = []; // Pre-selected event types
-  isFixedDuration: boolean = null; 
+  offer: Service | null = null;
+  eventTypes: string[] = [];
+  selectedEventTypes: string[] = [];
+  photos: string[] = []
+  isFixedDuration: boolean = true; // Default to fixed duration
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private offerService: OfferService
+    private offerService: OfferService,
+    private eventService: EventService
   ) {}
 
   ngOnInit(): void {
-    // Initialize form with empty values
-    this.serviceForm = this.fb.group({
-      name: ['', Validators.required],
-      description: [''],
-      category: ['', Validators.required],
-      specifics: [''],
-      price: ['', [Validators.required, Validators.min(0)]],
-      discount: ['', [Validators.min(0)]],
-      visibility: [false],
-      availability: [true],
-      durationType: ['fixed'],
-      duration: [''],
-      minDuration: [''],
-      maxDuration: [''],
-      reservationDeadline: [''],
-      cancellationDeadline: [''],
-      confirmation: ['manual']
-    });
+    // Retrieve the offer object passed via Router State
+    const navigation = this.router.getCurrentNavigation();
+    this.offer = this.offerService.getService();
 
-    this.loadServiceForEdit();
-  }
-
-  // Load the service to populate the form
-  loadServiceForEdit(): void {
-    const service = this.offerService.getService(); // Fetch by ID from your service
-    if (service) {
-      this.populateForm(service);
-      this.offerService.setService(null);
-    } else {
-      console.error('Service not found!');
-      this.router.navigate(['/my-services']); // Redirect if not found
+    if (!this.offer) {
+      console.error('No offer found, redirecting to my-services');
+      this.router.navigate(['/my-services']);
+      return;
     }
-  }
 
-  // Populate the form fields with existing service data
-  populateForm(service: any): void {
-    this.serviceForm.patchValue({
-      name: service.name,
-      description: service.description,
-      category: service.category,
-      specifics: service.specifics,
-      price: service.price,
-      discount: service.discount,
-      visibility: service.visibility,
-      availability: service.availability,
-      durationType: service.durationType,
-      duration: service.duration,
-      minDuration: service.minDuration,
-      maxDuration: service.maxDuration,
-      reservationDeadline: service.reservationDeadline,
-      cancellationDeadline: service.cancellationDeadline,
-      confirmation: service.confirmation
+    this.fetchEventTypes();
+
+     // Set initial duration type state
+     this.isFixedDuration = this.offer.preciseDuration != 0 && this.offer.preciseDuration != null;
+
+     // Pre-select event types if available
+    this.selectedEventTypes = [];
+    this.offer.eventTypes.forEach(eventType => {this.selectedEventTypes.push(eventType.name)});
+
+    // Initialize the form with default values
+    this.serviceForm = this.fb.group({
+      name: [this.offer.name, Validators.required],
+      description: [this.offer.description, Validators.required],
+      specifics: [this.offer.specifics],
+      price: [this.offer.price, [Validators.required, Validators.min(0.1)]],
+      discount: [this.offer.sale, [Validators.min(0)]],
+      visibility: [this.offer.isVisible],
+      availability: [this.offer.isAvailable],
+      durationType: [this.isFixedDuration ? 'fixed' : 'varied'],
+      duration: [this.offer.preciseDuration, [Validators.required, Validators.min(0.1)]],
+      minDuration: [this.offer.minDuration, [Validators.required, Validators.min(0.1)]],
+      maxDuration: [this.offer.maxDuration, [Validators.required, Validators.min(0.1)]],
+      reservationDeadline: [this.offer.latestReservation, [Validators.required, Validators.min(0.1)]],
+      cancellationDeadline: [this.offer.latestCancelation, [Validators.required, Validators.min(0.1)]],
+      confirmation: [this.offer.isReservationAutoApproved ? 'automatic' : 'manual'],
+      eventTypes: [this.selectedEventTypes, this.validateEventTypes()]
     });
 
-    // Pre-select event types
-    this.selectedEventTypes = service.eventTypes || [];
+    this.photos = this.offer.photos;
+
+    this.onDurationTypeChange(this.isFixedDuration ? 'fixed' : 'varied');
   }
+
+  onPhotoError(event: Event): void {
+    const target = event.target as HTMLImageElement;
+    target.src = 'https://via.placeholder.com/300x200.png?text=404+Not+Found';
+  }
+  
+
+  // Navigate back to the services list
+  goBack(): void {
+    this.router.navigate(['/my-services']);
+  }
+
+  // Handle duration type change
   onDurationTypeChange(type: string): void {
     this.isFixedDuration = type === 'fixed';
+    this.toggleDurationFields();
+  }
 
+  toggleDurationFields(): void {
     if (this.isFixedDuration) {
       // Enable Fixed Duration, Disable Min/Max Duration
       this.serviceForm.get('duration')?.enable();
@@ -100,36 +103,150 @@ export class ProviderServiceEditComponent implements OnInit {
       this.serviceForm.get('maxDuration')?.enable();
       this.serviceForm.get('confirmation')?.disable();
     }
+    this.updateDurationValidation();
   }
 
-  // Update the service
-  onSubmit(): void {
-    if (this.serviceForm.valid && this.serviceId) {
-      const updatedService = {
-        ...this.serviceForm.value,
-        id: this.serviceId,
-        eventTypes: this.selectedEventTypes // Attach selected event types
-      };
-      //this.offerService.updateService(updatedService);
-      console.log('Service Updated:', updatedService);
-      this.router.navigate(['/my-services']);
-    } else {
-      console.error('Form is invalid or Service ID is missing!');
-    }
-  }
-
-  // Event Type Selection
-    onEventTypeChange(eventType: string, event: Event): void {
-    const checkbox = event.target as HTMLInputElement;
-    const isChecked = checkbox.checked;
+  updateDurationValidation(): void {
+    const isFixed = this.isFixedDuration;
   
-    if (isChecked) {
+    if (isFixed) {
+      this.serviceForm.get('duration')?.setValidators([Validators.required, Validators.min(1)]);
+      this.serviceForm.get('minDuration')?.clearValidators();
+      this.serviceForm.get('maxDuration')?.clearValidators();
+    } else {
+      this.serviceForm.get('duration')?.clearValidators();
+      this.serviceForm.get('minDuration')?.setValidators([Validators.required, Validators.min(1)]);
+      this.serviceForm.get('maxDuration')?.setValidators([Validators.required, Validators.min(1)]);
+    }
+  
+    // Update validation state
+    this.serviceForm.get('duration')?.updateValueAndValidity();
+    this.serviceForm.get('minDuration')?.updateValueAndValidity();
+    this.serviceForm.get('maxDuration')?.updateValueAndValidity();
+  }
+  
+
+  // Handle event type checkbox changes
+  onEventTypeChange(eventType: string, event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+
+    if (checkbox.checked) {
       this.selectedEventTypes.push(eventType);
     } else {
-      const index = this.selectedEventTypes.indexOf(eventType);
-      if (index > -1) {
-        this.selectedEventTypes.splice(index, 1);
-      }
+      this.selectedEventTypes = this.selectedEventTypes.filter(type => type !== eventType);
+    }
+    // Update the value and validity of the eventTypes control
+    this.serviceForm.get('eventTypes')?.setValue(this.selectedEventTypes);
+    this.serviceForm.get('eventTypes')?.updateValueAndValidity();
+  }
+
+  onSubmit(): void {
+    if (this.serviceForm.valid && this.offer) {
+      // Fetch event types based on selected names
+      const eventTypeObservables = this.selectedEventTypes.map(name =>
+        this.eventService.getEventTypeByName(name)
+      );
+  
+      forkJoin(eventTypeObservables).subscribe({
+        next: (eventTypes) => {
+          // Create the updated offer payload
+          const updatedOffer: OfferDTO = {
+            name: this.serviceForm.value.name,
+            description: this.serviceForm.value.description,
+            specifics: this.serviceForm.value.specifics,
+            price: this.serviceForm.value.price,
+            sale: this.serviceForm.value.discount,
+            isVisible: this.serviceForm.value.visibility,
+            isAvailable: this.serviceForm.value.availability,
+            type: "Service",
+            preciseDuration: this.serviceForm.value.duration || 0,
+            minDuration: this.serviceForm.value.minDuration || 0,
+            maxDuration: this.serviceForm.value.maxDuration || 0,
+            latestReservation: this.serviceForm.value.reservationDeadline,
+            latestCancelation: this.serviceForm.value.cancellationDeadline,
+            isReservationAutoApproved: this.serviceForm.value.isFixedDuration !== "fixed" && this.serviceForm.value.confirmation === "automatic",
+            eventTypes: eventTypes, // Add the fetched event types
+            photos: this.photos,
+            status: this.offer.status,
+            isDeleted: false,
+            category: this.offer.category,
+          };
+  
+          // Call the service to update the offer
+          this.offerService.updateService(this.offer.id, updatedOffer).subscribe({
+            next: (response) => {
+              console.log('Offer updated successfully:', response);
+              this.router.navigate(['/my-services']);
+            },
+            error: (err) => {
+              console.error('Error updating offer:', err);
+            },
+          });
+        },
+        error: (err) => {
+          console.error('Error fetching event types:', err);
+        },
+      });
+    } else {
+      console.error('Form is invalid or offer data is missing!');
     }
   }
+
+  validateDuration(): Validators {
+    return (control: AbstractControl) => {
+      const duration = control.value;
+      const minDuration = this.serviceForm?.get('minDuration')?.value;
+      const maxDuration = this.serviceForm?.get('maxDuration')?.value;
+  
+      if (
+        (duration === null || duration === 0) &&
+        (!minDuration || minDuration <= 0 || !maxDuration || maxDuration <= 0)
+      ) {
+        return { invalidDuration: true };
+      }
+      return null;
+    };
+  }
+  
+
+  fetchEventTypes(): void {
+    this.eventService.getAllNames().subscribe({
+      next: (data) => {
+        this.eventTypes = data;
+      },
+      error: (err) => {
+        console.error('Error fetching strings:', err);
+      }
+    });
+  }
+
+  onPhotosSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      Array.from(input.files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          if (e.target && e.target.result) {
+            this.photos.push(e.target.result as string);
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  }
+
+  removePhoto(index: number): void {
+    this.photos.splice(index, 1);
+  }
+
+  validateEventTypes(): Validators {
+    return (control: AbstractControl) => {
+      const selectedTypes = control.value;
+      if (!selectedTypes || selectedTypes.length === 0) {
+        return { noEventTypesSelected: true }; // Return error if no types are selected
+      }
+      return null; // Valid if at least one is selected
+    };
+  }
+  
 }
