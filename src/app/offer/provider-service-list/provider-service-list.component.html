@@ -11,8 +11,14 @@
       </div>
     </div>
     <div class="offer-list">
-      <app-provider-offer-card *ngFor="let service of services" [offer]="service"></app-provider-offer-card>
+      <app-provider-offer-card *ngFor="let offer of offers" [offer]="offer"></app-provider-offer-card>
     </div>
+    <mat-paginator
+  [pageSize]="pageProperties.pageSize"
+  [pageSizeOptions]="pageProperties.pageSizeOptions"
+  [length]="pageProperties.totalCount"
+  (page)="pageChanged($event)">
+</mat-paginator>
   </div>
   <app-provider-service-filter
   [isVisible]="isFilterVisible" 
