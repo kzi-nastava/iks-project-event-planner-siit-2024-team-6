@@ -123,19 +123,16 @@ export class OfferService {
     this.servicesList.push(service);
   }
 
-  getCategoryByName(name: string): Observable<Category> {
-    const token = localStorage.getItem('user'); // Assuming the token is stored in localStorage
-
-    // Set the Authorization header with the JWT token
+  getAllCategories(): Observable<string[]> {
+    // Retrieve the token (assuming it's stored in localStorage)
+    const token = localStorage.getItem('user');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
+    const url = `${this.apiUrlProvider}categories`;
 
-    // Construct the request URL
-    const url = `${this.apiUrlProvider}${name}/category`;
-
-    // Send the GET request
-    return this.httpClient.get<Category>(url, { headers });
+    // Perform the HTTP GET request to retrieve categories
+    return this.httpClient.get<string[]>(url, { headers });
   }
 
   setService(service: Service): void{
@@ -156,6 +153,24 @@ export class OfferService {
     const url = `${this.apiUrlProvider}${offerId}`;
     return this.httpClient.delete<void>(url, { headers });
   }
-  
+  createService(newOffer: OfferDTO): Observable<OfferDTO> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+
+    return this.httpClient.post<OfferDTO>(`${this.apiUrlProvider}`, newOffer, { headers });
+  }
+  searchOffers(name: string, page: number, size: number): Observable<any> {
+    const token = localStorage.getItem('user'); // Retrieve token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    let params = new HttpParams().set('name', name || '').set('page', page).set('size', size);
+
+    return this.httpClient.get<any>(`${this.apiUrlProvider}search`, { headers, params });
+  }
 }
   
