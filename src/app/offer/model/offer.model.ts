@@ -2,6 +2,7 @@ import { Category } from "../../event/model/event.model";
 import { EventType } from "../../event/model/event.model";
 
 export interface Offer {
+  id: number;
   status: string;
   name: string;
   description: string;
@@ -13,12 +14,15 @@ export interface Offer {
   isDeleted: boolean;
   lastChanged: Date;
   eventTypes: EventType[];
+  type?: 'Service' | 'Product';
 }
 
 export interface Product extends Offer {
+  type: 'Product';
 }
 
 export interface Service extends Offer {
+  type: 'Service';
   specifics: string;
   minDuration: number;
   maxDuration: number;

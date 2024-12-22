@@ -7,6 +7,7 @@ import { OffersViewComponent } from './offers-view/offers-view.component';
 import { OfferCardComponent } from './offer-card/offer-card.component';
 import { OfferListComponent } from './offer-list/offer-list.component';
 import { OffersFilterComponent } from './offers-filter/offers-filter.component';
+import { OfferDetailsModule } from './offer-details/offer-details.module';
 import { ProviderServiceFilterComponent } from './provider-service-filter/provider-service-filter.component';
 import { ProviderServiceListComponent } from './provider-service-list/provider-service-list.component';
 import { ProviderServiceViewComponent } from './provider-service-view/provider-service-view.component';
@@ -35,7 +36,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    OfferDetailsModule
   ],
   exports: [
     OfferSliderComponent,
