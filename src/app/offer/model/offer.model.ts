@@ -15,12 +15,15 @@ export interface Offer {
   isVisible: boolean;
   lastChanged: Date;
   eventTypes: EventType[];
+  type?: 'Service' | 'Product';
 }
 
 export interface Product extends Offer {
+  type: 'Product';
 }
 
 export interface Service extends Offer {
+  type: 'Service';
   specifics: string;
   minDuration: number;
   maxDuration: number;

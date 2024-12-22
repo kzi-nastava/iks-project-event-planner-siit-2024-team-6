@@ -13,7 +13,7 @@ import { NewEventComponent } from './event/add-event/new-event/new-event.compone
 import {AuthGuard} from './infrastructure/auth/auth.guard';
 import { ProfileComponent } from './infrastructure/auth/profile/profile.component';
 import { ChangePasswordComponent } from './infrastructure/auth/change-password/change-password.component';
-
+import { OfferInfoComponent } from './offer/offer-details/offer-info/offer-info.component';
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
   { path: 'offers', component: OffersViewComponent},
@@ -32,6 +32,7 @@ const routes: Routes = [
     data: {auser: 'Auth user'}},
   {path: 'quick-registration', component: QuickRegistrationComponent},
   {path: 'new-event', component: NewEventComponent},
+  { path: 'offer/:id', component: OfferInfoComponent },
   { path: '', redirectTo: '/events', pathMatch: 'full' }
 ];
 
