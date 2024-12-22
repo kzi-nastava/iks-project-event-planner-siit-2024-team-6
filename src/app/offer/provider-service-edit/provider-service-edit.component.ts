@@ -167,7 +167,6 @@ export class ProviderServiceEditComponent implements OnInit {
             isReservationAutoApproved: this.serviceForm.value.isFixedDuration !== "fixed" && this.serviceForm.value.confirmation === "automatic",
             eventTypes: eventTypes, // Add the fetched event types
             photos: this.photos,
-            status: this.offer.status,
             isDeleted: false,
             category: this.offer.category,
           };
@@ -223,14 +222,8 @@ export class ProviderServiceEditComponent implements OnInit {
   onPhotosSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      Array.from(input.files).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          if (e.target && e.target.result) {
-            this.photos.push(e.target.result as string);
-          }
-        };
-        reader.readAsDataURL(file);
+      Array.from(input.files).forEach((file) => {
+        this.photos.push(URL.createObjectURL(file)); // Store the temporary URL
       });
     }
   }
