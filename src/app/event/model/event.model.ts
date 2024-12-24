@@ -1,19 +1,20 @@
 import { Offer } from '../../offer/model/offer.model';
 import { Product } from '../../offer/model/offer.model';
+import { EventTypeDTO } from '../event-type.service';
 export interface Event {
     name: string;
     description: string;
     place: string;
     maxParticipants: number;
     minParticipants: number;
-    public: boolean;
+    isPublic: boolean;
     disabled: boolean;
     date: Date;
     photos?: string[];
     activities?: Activity[];
     budget?: Budget;
     categories?: Category[];
-    eventType?: EventType;
+    eventType?: EventTypeDTO;
     reservedOffers?: Offer[];
     boughtProducts?: Product[];
   }
@@ -33,11 +34,4 @@ export interface Event {
     name: string;
     description: string;
   }
-  
-  export interface EventType {
-    name: string;
-    description: string;
-    isDisabled: boolean;
-  }
-  
   

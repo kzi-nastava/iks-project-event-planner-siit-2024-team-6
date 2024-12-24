@@ -18,6 +18,10 @@ export class EventTypeService {
 
   constructor(private http: HttpClient) {}
 
+  createEvent(eventData: FormData): Observable<any> {
+    return this.http.post(this.apiUrl, eventData);
+  }
+  
   getAllEventTypes(): Observable<EventTypeDTO[]> {
     return this.http.get<EventTypeDTO[]>(this.apiUrl);
   }

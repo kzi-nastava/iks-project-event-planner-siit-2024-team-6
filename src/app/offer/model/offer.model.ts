@@ -1,5 +1,5 @@
+import { EventTypeDTO } from "../../event/event-type.service";
 import { Category } from "../../event/model/event.model";
-import { EventType } from "../../event/model/event.model";
 
 export interface Offer {
   status: string;
@@ -12,7 +12,7 @@ export interface Offer {
   isAvailable: boolean;
   isDeleted: boolean;
   lastChanged: Date;
-  eventTypes: EventType[];
+  eventTypes: EventTypeDTO[];
 }
 
 export interface Product extends Offer {
