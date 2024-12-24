@@ -1,214 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Offer, Product, Service } from './model/offer.model';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../env/environment';
 import { PagedResponse } from '../shared/model/paged-response.model';
-const SERVICES: Service[] = [
-  {
-    status: 'AVAILABLE',
-    name: 'Event Decoration Service',
-    description: 'Professional decoration service for weddings, parties, and more.',
-    price: 500,
-    photos: ['https://static.wixstatic.com/media/cd8c84_2b2a5e93744a46678743bb950173ad63~mv2.jpg/v1/fill/w_1792,h_960,al_c/cd8c84_2b2a5e93744a46678743bb950173ad63~mv2.jpg'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-02-15'),
-    eventTypes: [],
-    category: { name: 'Decoration', description: 'Birthday and wedding decoration' },
-    minDuration: 120,
-    maxDuration: 480,
-    preciseDuration: 240,
-    latestReservation: 60,
-    latestCancelation: 24,
-    reservations: [
-      {
-        isCanceled: false,
-        reservedAt: new Date('2024-03-01'),
-        timeSlot: { time: new Date('2024-03-15T10:00:00'), duration: 240 },
-      },
-    ],
-  } as Service,
-  {
-    status: 'AVAILABLE',
-    name: 'Photography Service',
-    description: 'Capture your special moments with our professional photography service.',
-    price: 250,
-    photos: ['https://www.indiafilings.com/learn/wp-content/uploads/2017/07/GST-Rate-for-Photography-Services.jpg'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-03-10'),
-    eventTypes: [],
-    category: { name: 'Photography', description: 'Event photography services' },
-    minDuration: 60,
-    maxDuration: 360,
-    preciseDuration: 180,
-    latestReservation: 48,
-    latestCancelation: 12,
-    reservations: [],
-  } as Service,
-  {
-    status: 'AVAILABLE',
-    name: 'Catering Service',
-    description: 'Delicious catering for events, including appetizers, main courses, and desserts.',
-    price: 1200,
-    sale: 1000,
-    photos: ['https://www.randstad.cl/s3fs-media/cl/public/styles/blog_article/public/migration/blog_page/images/blog_image_5A58832C-CE41-4678-B855-8425FA675F6C.jpeg?itok=6AxHwI2D'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-04-01'),
-    eventTypes: [],
-    category: { name: 'Food', description: 'Event catering services' },
-    minDuration: 240,
-    maxDuration: 720,
-    preciseDuration: 480,
-    latestReservation: 72,
-    latestCancelation: 48,
-    reservations: [],
-  } as Service,
-  {
-    status: 'AVAILABLE',
-    name: 'Wedding Filming',
-    description: 'Capture your special moments with our professional photography service.',
-    price: 300,
-    photos: ['https://www.indiafilings.com/learn/wp-content/uploads/2017/07/GST-Rate-for-Photography-Services.jpg'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-03-10'),
-    eventTypes: [],
-    category: { name: 'Photography', description: 'Event photography services' },
-    minDuration: 60,
-    maxDuration: 360,
-    preciseDuration: 180,
-    latestReservation: 48,
-    latestCancelation: 12,
-    reservations: [],
-  } as Service,
-  {
-    status: 'AVAILABLE',
-    name: 'Luna Sweets',
-    description: 'Delicious catering for events, including appetizers, main courses, and desserts.',
-    price: 1200,
-    sale: 160,
-    photos: ['https://www.randstad.cl/s3fs-media/cl/public/styles/blog_article/public/migration/blog_page/images/blog_image_5A58832C-CE41-4678-B855-8425FA675F6C.jpeg?itok=6AxHwI2D'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-04-01'),
-    eventTypes: [],
-    category: { name: 'Food', description: 'Event catering services' },
-    minDuration: 240,
-    maxDuration: 720,
-    preciseDuration: 480,
-    latestReservation: 72,
-    latestCancelation: 48,
-    reservations: [],
-  } as Service
-]
-
-const OFFERS: (Product | Service)[] = [
-  // Products
-  {
-    status: 'AVAILABLE',
-    name: 'Pizza Margherita',
-    description: 'Delicious stone-baked pizza with fresh mozzarella, basil, and tomato sauce.',
-    price: 12.99,
-    sale: 8.99,
-    photos: ['https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Supreme_pizza.jpg/1200px-Supreme_pizza.jpg'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-01-01'),
-    eventTypes: [],
-    category: { name: 'Food', description: 'Delicious meals and snacks' },
-  } as Product,
-  {
-    status: 'AVAILABLE',
-    name: 'Wireless Headphones',
-    description: 'High-quality wireless headphones with noise-canceling features and deep bass.',
-    price: 149.99,
-    sale: 129.99,
-    photos: ['https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MQTQ3?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1687660671363'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-01-15'),
-    eventTypes: [],
-    category: { name: 'Electronics', description: 'Gadgets and tech accessories' },
-  } as Product,
-  {
-    status: 'AVAILABLE',
-    name: 'Custom Mug',
-    description: 'Personalized ceramic mug with your design or text printed on it.',
-    price: 15.99,
-    photos: ['https://cms.cloudinary.vpsvc.com/images/c_scale,dpr_auto,f_auto,q_auto:best,t_productPageHeroGalleryTransformation_v2,w_auto/legacy_dam/en-us/S001683929/NPIB-8347-Mugs-Lifestyle-Callouts-Business-Consumer-PDP-Hero-001?cb=21b1a464ee1896c60a41e5b29e152e769309c0d7'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-01-20'),
-    eventTypes: [],
-    category: { name: 'Gifts', description: 'Personalized gift items' },
-  } as Product,
-
-  // Services
-  {
-    status: 'AVAILABLE',
-    name: 'Event Decoration Service',
-    description: 'Professional decoration service for weddings, parties, and more.',
-    price: 500,
-    photos: ['https://static.wixstatic.com/media/cd8c84_2b2a5e93744a46678743bb950173ad63~mv2.jpg/v1/fill/w_1792,h_960,al_c/cd8c84_2b2a5e93744a46678743bb950173ad63~mv2.jpg'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-02-15'),
-    eventTypes: [],
-    category: { name: 'Decoration', description: 'Birthday and wedding decoration' },
-    minDuration: 120,
-    maxDuration: 480,
-    preciseDuration: 240,
-    latestReservation: 60,
-    latestCancelation: 24,
-    reservations: [
-      {
-        isCanceled: false,
-        reservedAt: new Date('2024-03-01'),
-        timeSlot: { time: new Date('2024-03-15T10:00:00'), duration: 240 },
-      },
-    ],
-  } as Service,
-  {
-    status: 'AVAILABLE',
-    name: 'Photography Service',
-    description: 'Capture your special moments with our professional photography service.',
-    price: 250,
-    photos: ['https://www.indiafilings.com/learn/wp-content/uploads/2017/07/GST-Rate-for-Photography-Services.jpg'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-03-10'),
-    eventTypes: [],
-    category: { name: 'Photography', description: 'Event photography services' },
-    minDuration: 60,
-    maxDuration: 360,
-    preciseDuration: 180,
-    latestReservation: 48,
-    latestCancelation: 12,
-    reservations: [],
-  } as Service,
-  {
-    status: 'AVAILABLE',
-    name: 'Catering Service',
-    description: 'Delicious catering for events, including appetizers, main courses, and desserts.',
-    price: 1200,
-    sale: 1000,
-    photos: ['https://www.randstad.cl/s3fs-media/cl/public/styles/blog_article/public/migration/blog_page/images/blog_image_5A58832C-CE41-4678-B855-8425FA675F6C.jpeg?itok=6AxHwI2D'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-04-01'),
-    eventTypes: [],
-    category: { name: 'Food', description: 'Event catering services' },
-    minDuration: 240,
-    maxDuration: 720,
-    preciseDuration: 480,
-    latestReservation: 72,
-    latestCancelation: 48,
-    reservations: [],
-  } as Service
-];
+import { OfferDTO } from './model/offer.dto';
+import { Category } from '../event/model/event.model';
 
 
 @Injectable({
@@ -216,7 +13,8 @@ const OFFERS: (Product | Service)[] = [
 })
 export class OfferService {
   private offerList: Offer[] = [];
-  private servicesList: Service[] = [...SERVICES];
+  private servicesList: Service[] = [];
+  private editService: Service = null;
 
   /*constructor() {
     for (let offerObj of OFFERS) {
@@ -247,7 +45,7 @@ export class OfferService {
   }*/
 
   private apiUrl = environment.apiHost + `/offers/`;
-
+  private apiUrlProvider = environment.apiHost+'/providers/';
   constructor(private httpClient: HttpClient) {}
 
   getAll(pageProperties?: any): Observable<PagedResponse<Offer>> {
@@ -256,6 +54,32 @@ export class OfferService {
       params = params.set('page', pageProperties.page).set('size', pageProperties.pageSize);
     }
     return this.httpClient.get<PagedResponse<Offer>>(this.apiUrl + `all-elements`, { params: params });
+  }
+
+  getAllProviderServices(pageProperties?: { page: number; pageSize: number }): Observable<PagedResponse<Service>> {
+    let params = new HttpParams();
+  
+    if (pageProperties) {
+      params = params
+        .set('page', pageProperties.page.toString())
+        .set('size', pageProperties.pageSize.toString());
+    }
+  
+    // Retrieve the token (assuming it's stored in localStorage)
+    const token = localStorage.getItem('user');
+    console.log("TOKEN");
+    console.log(token);
+  
+    // Set the Authorization header with the JWT token
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    });
+  
+    const url = `${this.apiUrlProvider}my-services`; // Ensure no extra slash
+    console.log("Request URL:", url);
+
+    return this.httpClient.get<PagedResponse<Service>>(url, { params, headers }
+    );
   }
 
   getTopFive(): Observable<Offer[]> {
@@ -273,9 +97,22 @@ export class OfferService {
   updateOffer(id: number, offer: Offer): Observable<Offer> {
     return this.httpClient.put<Offer>(`${this.apiUrl}${id}`, offer);
   }
+  
+  updateService(id: number, offer: OfferDTO): Observable<Offer> {
+    // Retrieve the token (assuming it's stored in localStorage)
+    const token = localStorage.getItem('user');
+    console.log("TOKEN");
+    console.log(token);
+  
+    // Set the Authorization header with the JWT token
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    });
+  
+    const url = `${this.apiUrlProvider}${id}`; // Ensure no extra slash
+    console.log("Request URL:", url);
 
-  deleteOffer(id: number): Observable<void> {
-    return this.httpClient.delete<void>(`${this.apiUrl}${id}`);
+    return this.httpClient.put<Offer>(url, offer, { headers });
   }
 
   getServices(): Service[] {
@@ -286,14 +123,54 @@ export class OfferService {
     this.servicesList.push(service);
   }
 
-  private serviceData: Offer;
+  getAllCategories(): Observable<string[]> {
+    // Retrieve the token (assuming it's stored in localStorage)
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    const url = `${this.apiUrlProvider}categories`;
 
-  setService(service: Offer): void {
-    this.serviceData = service;
+    // Perform the HTTP GET request to retrieve categories
+    return this.httpClient.get<string[]>(url, { headers });
   }
 
-  getService(): Offer {
-    return this.serviceData;
+  setService(service: Service): void{
+      this.editService = service;
   }
-  
+  getService(): Service{
+    const x = this.editService;
+    this.setService(null);
+    return x;
+  }
+
+  deleteOffer(offerId: number): Observable<void> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    
+    const url = `${this.apiUrlProvider}${offerId}`;
+    return this.httpClient.delete<void>(url, { headers });
+  }
+  createService(newOffer: OfferDTO): Observable<OfferDTO> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+
+    return this.httpClient.post<OfferDTO>(`${this.apiUrlProvider}`, newOffer, { headers });
+  }
+  searchOffers(name: string, page: number, size: number): Observable<any> {
+    const token = localStorage.getItem('user'); // Retrieve token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    let params = new HttpParams().set('name', name || '').set('page', page).set('size', size);
+
+    return this.httpClient.get<any>(`${this.apiUrlProvider}search`, { headers, params });
+  }
 }
+  

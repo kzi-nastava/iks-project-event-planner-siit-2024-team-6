@@ -1,0 +1,34 @@
+<div class="booking-container">
+    <h2>Book a Reservation</h2>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Select Event</mat-label>
+      <mat-select [(ngModel)]="selectedEvent">
+        <mat-option *ngFor="let event of events" [value]="event">
+          {{ event.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Select Date</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" [min]="minDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker startView="month"></mat-datepicker>
+    </mat-form-field>
+  
+    <div class="time-inputs">
+      <mat-form-field appearance="fill">
+        <mat-label>From Time</mat-label>
+        <input matInput type="time" [(ngModel)]="fromTime" (change)="onFromTimeChange()">
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>To Time</mat-label>
+        <input matInput type="time" [(ngModel)]="toTime" [disabled]="isPreciseDurationDefined">
+      </mat-form-field>
+    </div>
+  
+    <button mat-raised-button color="primary" (click)="book()">Book</button>
+  </div>
+  

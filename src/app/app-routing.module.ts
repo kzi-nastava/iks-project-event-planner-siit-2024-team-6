@@ -15,7 +15,7 @@ import { ProfileComponent } from './infrastructure/auth/profile/profile.componen
 import { ChangePasswordComponent } from './infrastructure/auth/change-password/change-password.component';
 import { EventTypeListComponent } from './event/event-type-list/event-type-list.component';
 import { EventTypeAddComponent } from './event/event-type-add/event-type-add.component';
-
+import { OfferInfoComponent } from './offer/offer-details/offer-info/offer-info.component';
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
   { path: 'offers', component: OffersViewComponent},
@@ -40,6 +40,8 @@ const routes: Routes = [
     data: {role: 'ROLE_ADMIN'}},
     { path: 'event-types/add', component: EventTypeAddComponent , canActivate: [AuthGuard],
       data: {role: 'ROLE_ADMIN'}},
+  { path: 'offer/:id', component: OfferInfoComponent },
+  { path: '', redirectTo: '/events', pathMatch: 'full' }
 ];
 
 @NgModule({

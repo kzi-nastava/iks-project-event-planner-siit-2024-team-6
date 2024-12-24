@@ -1,0 +1,13 @@
+
+<div class="offer-section" *ngIf="offer">
+    <h2>{{ offer.name }}</h2>
+        <p>{{ offer.description }}</p>
+        <p><strong>Type:</strong> {{ offer.type }}</p>
+        <p *ngIf="isService(offer)">
+            <strong>Precise:</strong> {{ offer.preciseDuration }}
+          </p>
+        <p><strong>Status:</strong> {{ offer.status }}</p>
+        <p><strong>Price:</strong> ${{ offer.price }}</p>
+    
+        <app-reservation *ngIf="isService(offer)"  [service]="offer"></app-reservation>
+</div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Event } from './model/event.model';
+import { Event, EventType } from './model/event.model';
 import { Status } from '../enums/status.enum';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {environment} from '../../env/environment';
@@ -31,6 +31,15 @@ export class EventService {
   getTopFive(): Observable<Event[]> {
     return this.httpClient.get<Event[]>(this.apiUrl+`top-five`);
   }
+
+  getAllNames(): Observable<string[]>{
+      return this.httpClient.get<string[]>(this.apiUrl+"event-types");
+  }
+
+  getEventTypeByName(name: String): Observable<EventType>{
+    return this.httpClient.get<EventType>(`${this.apiUrl}${name}/event-type`);
+  }
+  
 }
 
 
