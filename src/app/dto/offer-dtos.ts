@@ -1,6 +1,6 @@
-import { EventType } from "../../event/model/event.model";
+import { NewEventTypeDTO } from "./event-tyoe-dtos";
 
-export interface OfferDTO {
+export interface NewOfferDTO {
     name: string;
     description: string;
     price: number;
@@ -11,7 +11,7 @@ export interface OfferDTO {
     isDeleted: boolean;
     category: string;
     categorySuggestion?: string; // Adjust the type based on your frontend needs
-    eventTypes: EventType[];
+    eventTypes: NewEventTypeDTO[];
     type: string; // "Product" or "Service"
   
     // Service-specific fields

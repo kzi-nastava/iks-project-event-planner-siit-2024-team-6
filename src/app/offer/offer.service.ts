@@ -4,8 +4,7 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../env/environment';
 import { PagedResponse } from '../shared/model/paged-response.model';
-import { OfferDTO } from './model/offer.dto';
-import { Category } from '../event/model/event.model';
+import { NewOfferDTO } from '../dto/offer-dtos';
 
 
 @Injectable({
@@ -98,7 +97,7 @@ export class OfferService {
     return this.httpClient.put<Offer>(`${this.apiUrl}${id}`, offer);
   }
   
-  updateService(id: number, offer: OfferDTO): Observable<Offer> {
+  updateService(id: number, offer: NewOfferDTO): Observable<Offer> {
     // Retrieve the token (assuming it's stored in localStorage)
     const token = localStorage.getItem('user');
     console.log("TOKEN");
@@ -153,14 +152,14 @@ export class OfferService {
     const url = `${this.apiUrlProvider}${offerId}`;
     return this.httpClient.delete<void>(url, { headers });
   }
-  createService(newOffer: OfferDTO): Observable<OfferDTO> {
+  createService(newOffer: NewOfferDTO): Observable<NewOfferDTO> {
     const token = localStorage.getItem('user');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     });
 
-    return this.httpClient.post<OfferDTO>(`${this.apiUrlProvider}`, newOffer, { headers });
+    return this.httpClient.post<NewOfferDTO>(`${this.apiUrlProvider}`, newOffer, { headers });
   }
   searchOffers(name: string, page: number, size: number): Observable<any> {
     const token = localStorage.getItem('user'); // Retrieve token from localStorage
