@@ -1,0 +1,90 @@
+<div class="container">
+    <div class="header">
+      <h2>Event Types</h2>
+      <button class="add-offer-button" button (click)="addNewEventType()">Add New Event Type</button>
+    </div>
+    <div class="card-container">
+      <div
+        *ngFor="let eventType of eventTypes"
+        class="card"
+        (click)="startEditing(eventType)"
+      >
+        <img
+          class="card-image"
+          src="https://pinkcaviar.com.au/wp-content/uploads/2022/09/Professional-and-Stress-Free-Event-Management-Banner-1-1024x571.jpg.webp"
+          alt="Event Image"
+        />
+        <h3 class="card-title">{{ eventType.name }}</h3>
+        <p class="card-description">{{ eventType.description }}</p>
+        <div class="card-actions">
+          <button
+            class="edit-button"
+            (click)="startEditing(eventType); $event.stopPropagation()"
+          >
+            Edit
+          </button>
+          <button
+            class="delete-button"
+            (click)="deleteEventType(eventType.id); $event.stopPropagation()"
+          >
+            Change status
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Modal -->
+    <div *ngIf="editingEventType" class="modal">
+      <div class="modal-content">
+        <h3>Edit Event Type</h3>
+    
+        <!-- Description -->
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea id="description" [(ngModel)]="editingEventType.description"></textarea>
+        </div>
+    
+        <!-- isDeleted -->
+        <div class="form-group">
+          <label>Status:</label>
+          <span class="status-badge" [ngClass]="editingEventType.isDeleted ? 'deleted' : 'active'">
+            {{ editingEventType.isDeleted ? 'Deleted' : 'Active' }}
+          </span>
+        </div>
+    
+        <!-- Categories -->
+        <div class="form-group">
+          <label>Categories:</label>
+          <ul class="category-list">
+            <li *ngFor="let category of editingEventType.categories">
+              {{ category.name }}
+              <button class="remove-button" (click)="removeCategory(category)">Remove</button>
+            </li>
+          </ul>
+        </div>
+    
+        <!-- Add Category -->
+        <div class="form-group">
+          <label for="add-category">Add Category:</label>
+          <select id="add-category" [(ngModel)]="selectedCategoryId" name="categorySelect">
+            <option [value]="null" disabled selected>Select a category</option>
+            <option *ngFor="let category of allCategories" [value]="category.id">
+              {{ category.name }}
+            </option>
+          </select>
+          <button class="add-button" (click)="addCategory()">Add Category</button>
+        </div>
+    
+        <!-- Actions -->
+        <div class="modal-actions">
+          <button class="save-button" (click)="saveChanges()">Save</button>
+          <button class="cancel-button" (click)="cancelEditing()">Cancel</button>
+        </div>
+      </div>
+    </div>
+    
+      
+
+
+  </div>
+  

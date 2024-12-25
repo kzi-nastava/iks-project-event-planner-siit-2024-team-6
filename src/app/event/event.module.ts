@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { EventCardComponent } from './event-card/event-card.component';
 import { EventListComponent } from './event-list/event-list.component';
 import { EventSliderComponent } from './event-slider/event-slider.component';
@@ -11,6 +11,9 @@ import { AddEventModule } from './add-event/add-event.module';
 
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EventTypeListComponent } from './event-type-list/event-type-list.component';
+import { EventTypeAddComponent } from './event-type-add/event-type-add.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -20,17 +23,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     EventSliderComponent,
     TopEventCardComponent,
     EventsFilterComponent,
-    EventsViewComponent
+    EventsViewComponent,
+    EventTypeListComponent,
+    EventTypeAddComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     AddEventModule,
-    MatPaginatorModule
-    
+    MatPaginatorModule,
+    ReactiveFormsModule,
+    RouterModule
   ],
   exports: [
-    EventsViewComponent
+    EventsViewComponent,
+    EventTypeListComponent,
+    EventTypeAddComponent
   ]
 })
 export class EventModule { }

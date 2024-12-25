@@ -13,6 +13,8 @@ import { NewEventComponent } from './event/add-event/new-event/new-event.compone
 import {AuthGuard} from './infrastructure/auth/auth.guard';
 import { ProfileComponent } from './infrastructure/auth/profile/profile.component';
 import { ChangePasswordComponent } from './infrastructure/auth/change-password/change-password.component';
+import { EventTypeListComponent } from './event/event-type-list/event-type-list.component';
+import { EventTypeAddComponent } from './event/event-type-add/event-type-add.component';
 import { OfferInfoComponent } from './offer/offer-details/offer-info/offer-info.component';
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
@@ -31,7 +33,13 @@ const routes: Routes = [
   {path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard],
     data: {auser: 'Auth user'}},
   {path: 'quick-registration', component: QuickRegistrationComponent},
-  {path: 'new-event', component: NewEventComponent},
+  {path: 'new-event', component: NewEventComponent , canActivate: [AuthGuard],
+    data: {role: 'ROLE_ORGANIZER'}},
+  { path: '', redirectTo: '/events', pathMatch: 'full' },
+  { path: 'event-types', component: EventTypeListComponent , canActivate: [AuthGuard],
+    data: {role: 'ROLE_ADMIN'}},
+    { path: 'event-types/add', component: EventTypeAddComponent , canActivate: [AuthGuard],
+      data: {role: 'ROLE_ADMIN'}},
   { path: 'offer/:id', component: OfferInfoComponent },
   { path: '', redirectTo: '/events', pathMatch: 'full' }
 ];
