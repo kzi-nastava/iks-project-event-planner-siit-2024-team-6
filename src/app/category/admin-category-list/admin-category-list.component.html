@@ -1,0 +1,26 @@
+<div class="offer-section">
+    <div class="offer-section-header">
+      <h2 class="offer-section-title">Categories</h2>
+    </div>
+    <div class="offer-list">
+      <app-category-card *ngFor="let category of categories" [category]="category" (deleteCategory)="removeCategoryFromList($event)"></app-category-card>
+    </div>
+    <mat-paginator
+  [pageSize]="pageProperties.pageSize"
+  [pageSizeOptions]="pageProperties.pageSizeOptions"
+  [length]="pageProperties.totalCount"
+  (page)="pageChanged($event)">
+</mat-paginator>
+  </div>
+<button
+      class="fab" 
+      (click)="onAddClick()"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        class="fab-icon"
+      >
+        <path d="M12 5v14M5 12h14" stroke="white" stroke-width="2" stroke-linecap="round" />
+      </svg>
+    </button>

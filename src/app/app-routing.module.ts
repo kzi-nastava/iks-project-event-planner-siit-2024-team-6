@@ -14,6 +14,7 @@ import {AuthGuard} from './infrastructure/auth/auth.guard';
 import { ProfileComponent } from './infrastructure/auth/profile/profile.component';
 import { ChangePasswordComponent } from './infrastructure/auth/change-password/change-password.component';
 import { OfferInfoComponent } from './offer/offer-details/offer-info/offer-info.component';
+import { AdminCategoryListComponent } from './category/admin-category-list/admin-category-list.component';
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
   { path: 'offers', component: OffersViewComponent},
@@ -33,6 +34,7 @@ const routes: Routes = [
   {path: 'quick-registration', component: QuickRegistrationComponent},
   {path: 'new-event', component: NewEventComponent},
   { path: 'offer/:id', component: OfferInfoComponent },
+  {path: 'categories', component: AdminCategoryListComponent},
   { path: '', redirectTo: '/events', pathMatch: 'full' }
 ];
 
