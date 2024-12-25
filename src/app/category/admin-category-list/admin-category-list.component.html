@@ -3,7 +3,7 @@
       <h2 class="offer-section-title">Categories</h2>
     </div>
     <div class="offer-list">
-      <app-category-card *ngFor="let category of categories" [category]="category" (deleteCategory)="removeCategoryFromList($event)"></app-category-card>
+      <app-category-card *ngFor="let category of categories" [category]="category"  (updateCategory)="onCategoryUpdated($event)" (deleteCategory)="removeCategoryFromList($event)"></app-category-card>
     </div>
     <mat-paginator
   [pageSize]="pageProperties.pageSize"
