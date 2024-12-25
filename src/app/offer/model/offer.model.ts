@@ -1,4 +1,3 @@
-import { Category } from "../../event/model/event.model";
 import { EventType } from "../../event/model/event.model";
 
 export interface Offer {

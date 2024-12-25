@@ -1,3 +1,4 @@
+import { Category } from '../../category/model/category.model';
 import { Offer } from '../../offer/model/offer.model';
 import { Product } from '../../offer/model/offer.model';
 export interface Event {
@@ -27,11 +28,6 @@ export interface Event {
   
   interface Budget {
     maxPrices: number;
-  }
-  
-  export interface Category {
-    name: string;
-    description: string;
   }
   
   export interface EventType {
