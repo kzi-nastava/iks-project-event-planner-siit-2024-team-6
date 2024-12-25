@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PagedResponse } from '../shared/model/paged-response.model';
 import { Category } from './model/category.model';
+import { NewCategoryDTO } from '../dto/category-dtos';
 
 @Injectable({
   providedIn: 'root'
@@ -27,15 +28,32 @@ export class CategoryService {
     return this.http.get<PagedResponse<Category>>(`${this.apiUrl}/categories`, { headers, params });
   }
 
-  deleteCategory(categoryId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/category/${categoryId}`);
+  deleteCategory(categoryId: number): Observable<string> {
+    const token = localStorage.getItem('user'); // Retrieve the JWT token from local storage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+  
+    return this.http.delete<string>(`${this.apiUrl}/category/${categoryId}`, { headers });
   }
 
-  addCategory(category: any): Observable<any> {
-    return this.http.post(this.apiUrl, category);
+  addCategory(category: { name: string; description: string }): Observable<Category> {
+    const token = localStorage.getItem('user'); // Retrieve the JWT token from local storage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+  
+    return this.http.post<Category>(`${this.apiUrl}/category`, category, { headers });
   }
+  
 
-  updateCategory(category: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/category/${category.id}`, category);
+  updateCategory(id: number, updatedCategory: NewCategoryDTO): Observable<Category> {
+    const token = localStorage.getItem('user'); // Assuming token is stored in localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.put<Category>(`${this.apiUrl}/category/${id}`, updatedCategory, { headers });
   }
 }
