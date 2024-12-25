@@ -34,7 +34,7 @@ const routes: Routes = [
   {path: 'quick-registration', component: QuickRegistrationComponent},
   {path: 'new-event', component: NewEventComponent},
   { path: 'offer/:id', component: OfferInfoComponent },
-  {path: 'categories', component: AdminCategoryListComponent},
+  {path: 'categories', component: AdminCategoryListComponent, canActivate: [AuthGuard], data: {role: 'ROLE_ADMIN' }},
   { path: '', redirectTo: '/events', pathMatch: 'full' }
 ];
 
