@@ -6,10 +6,10 @@
       <p>{{ category.description }}</p>
     </div>
     <div class="category-footer">
-      <button (click)="onEdit()" class="btn-edit">
+      <button (click)="openCategoryDialog(category)" class="btn-edit">
         <i class="fa fa-edit"></i> Edit
       </button>
-      <button (click)="onDelete(category.id)" class="btn-delete">
+      <button (click)="onDeleteCategory(category.id)" class="btn-delete">
         <i class="fa fa-trash"></i> Delete
       </button>
     </div>
