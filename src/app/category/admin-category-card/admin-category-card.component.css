@@ -1,0 +1,80 @@
+.category-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: none;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #ffffff; /* White background color */
+    color: #555; /* Dark gray text color for body */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    height: 250px; /* Slightly taller for larger elements */
+  }
+  
+  .category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .category-header h2 {
+    margin: 0;
+    font-size: 30px; /* Larger font size for category name */
+    color: #D3A3B0; /* Pink color for the name */
+    text-align: center;
+  }
+  
+  .category-body {
+    flex-grow: 1; /* Fills available space */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .category-body p {
+    margin: 0; /* Remove extra margins for compact look */
+    font-size: 14px; /* Slightly larger text */
+    color: #555; /* Ensure text is readable */
+    line-height: 1.6;
+  }
+  
+  .category-footer {
+    display: flex;
+    justify-content: center; /* Center the buttons */
+    gap: 15px; /* Add spacing between buttons */
+    margin-top: 10px;
+  }
+  
+  .btn-edit,
+  .btn-delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Adds spacing between icon and text */
+    padding: 10px 20px; /* Larger padding for bigger buttons */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px; /* Larger button text */
+    transition: background-color 0.3s ease;
+    color: white;
+  }
+  
+  .btn-edit {
+    background-color: #8B6A9D; /* Updated edit button color */
+  }
+  
+  .btn-edit:hover {
+    background-color: #7A5B89; /* Slightly darker hover color */
+  }
+  
+  .btn-delete {
+    background-color: #3F4C6D; /* Updated delete button color */
+  }
+  
+  .btn-delete:hover {
+    background-color: #354055; /* Slightly darker hover color */
+  }
+  
