@@ -1,0 +1,82 @@
+<div class="event-view">
+    <div class="grid-container">
+      <!-- Block 1: Photos and Add to Favorites -->
+      <div class="block block-1">
+        <div class="event-image">
+          <div class="image-carousel">
+            <button (click)="prevPhoto()" class="carousel-button prev">&lt;</button>
+            <img [src]="event?.photos[currentPhotoIndex]" alt="Event Image" />
+            <button (click)="nextPhoto()" class="carousel-button next">&gt;</button>
+          </div>
+        </div>
+
+        <div class="organizer-container">
+          <div class="organizer-info">
+            <div class="organizer-icon">
+              <!-- <span class="icon">👤</span> -->
+              <i class="fa fa-user-circle icon"></i>
+            </div>
+            <div class="organizer-details">
+              <p>{{ organizer?.name || 'Organizer' }}</p>
+              <p>{{ organizer?.phoneNumber || 'Phone number not available' }}</p>
+            </div>
+          </div>
+          <div class="organizer-action">
+            <button (click)="addToFavorites()" class="favorite-button">
+              Add to favorites <span>&hearts;</span>
+            </button>
+          </div>
+        </div>
+        
+
+
+        
+      </div>
+  
+      <!-- Block 2: Festival Details -->
+      <div class="block block-2">
+        <h1 class="event-title">{{ event?.name }}</h1>
+        <div class="event-info">
+          <p style="font-weight: bold; font-style: italic;"><i class="fa-solid fa-align-justify"></i> Description</p>
+          <p> {{ event?.description }}</p>
+          <p style="font-weight: bold; font-style: italic;"><i class="fa-solid fa-location-dot"></i> Where</p>
+          <p> {{ event?.place }}</p>
+          <p style="font-weight: bold; font-style: italic;"><i class="fa-regular fa-calendar"></i> When</p>
+          <p> {{ event?.date|date:'fullDate' }}</p>
+        </div>
+        <div>
+          <p>This event is public,
+            you are welcome to join! {{event?.isPublic}}</p>
+        </div>
+        <div>
+          <p>If you have any questions contact us</p>
+        </div>
+      </div>
+  
+      <!-- Block 3: Agenda and Reviews -->
+      <div class="block block-3">
+        <h3>Festival agenda</h3>
+        <p>Details coming soon...</p>
+        <div class="review-section">
+          <h3 class="review-title">Write your review here!</h3>
+          <textarea [(ngModel)]="reviewText" class="review-textarea" placeholder="Opinion"></textarea>
+          <input type="number" [(ngModel)]="reviewRating" class="review-rating" placeholder="Rating" />
+          <button (click)="submitReview()" class="submit-review">Submit</button>
+        </div>
+      </div>
+  
+      <!-- Block 4: Map -->
+      <div class="block block-4">
+        <h3 class="map-title">Show on map</h3>
+        <iframe
+          width="100%"
+          height="350"
+          [src]="mapUrl"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+  

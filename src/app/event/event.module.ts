@@ -14,6 +14,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EventTypeListComponent } from './event-type-list/event-type-list.component';
 import { EventTypeAddComponent } from './event-type-add/event-type-add.component';
 import { RouterModule } from '@angular/router';
+import { EventViewComponent } from './event-view/event-view.component';
+import { OrganizerEventsComponent } from './organizer-events/organizer-events.component';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { RouterModule } from '@angular/router';
     EventsFilterComponent,
     EventsViewComponent,
     EventTypeListComponent,
-    EventTypeAddComponent
+    EventTypeAddComponent,
+    EventViewComponent,
+    OrganizerEventsComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +42,8 @@ import { RouterModule } from '@angular/router';
   exports: [
     EventsViewComponent,
     EventTypeListComponent,
-    EventTypeAddComponent
+    EventTypeAddComponent,
+    EventViewComponent
   ]
 })
 export class EventModule { }

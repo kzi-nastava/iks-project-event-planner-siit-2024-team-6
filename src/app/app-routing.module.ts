@@ -15,6 +15,8 @@ import { ProfileComponent } from './infrastructure/auth/profile/profile.componen
 import { ChangePasswordComponent } from './infrastructure/auth/change-password/change-password.component';
 import { EventTypeListComponent } from './event/event-type-list/event-type-list.component';
 import { EventTypeAddComponent } from './event/event-type-add/event-type-add.component';
+import { EventViewComponent } from './event/event-view/event-view.component';
+import { OrganizerEventsComponent } from './event/organizer-events/organizer-events.component';
 
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
@@ -40,6 +42,9 @@ const routes: Routes = [
     data: {role: 'ROLE_ADMIN'}},
     { path: 'event-types/add', component: EventTypeAddComponent , canActivate: [AuthGuard],
       data: {role: 'ROLE_ADMIN'}},
+      { path: 'my_events', component: OrganizerEventsComponent , canActivate: [AuthGuard],
+        data: {role: 'ROLE_ORGANIZER'}},
+  { path: 'event/:id', component: EventViewComponent }
 ];
 
 @NgModule({
