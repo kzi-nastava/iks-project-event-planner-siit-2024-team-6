@@ -2,13 +2,14 @@ import { Offer } from '../../offer/model/offer.model';
 import { Product } from '../../offer/model/offer.model';
 import { EventTypeDTO } from '../event-type.service';
 export interface Event {
+    id: number;
     name: string;
     description: string;
     place: string;
     maxParticipants: number;
     minParticipants: number;
     isPublic: boolean;
-    disabled: boolean;
+    isDeleted: boolean;
     date: Date;
     photos?: string[];
     activities?: Activity[];

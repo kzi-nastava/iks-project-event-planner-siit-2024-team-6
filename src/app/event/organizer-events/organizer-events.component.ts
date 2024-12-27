@@ -3,6 +3,7 @@ import { EventService } from '../event.service';
 import { Event } from '../model/event.model';
 import { PageEvent } from '@angular/material/paginator';
 import {PagedResponse} from '../../shared/model/paged-response.model';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,34 +15,26 @@ export class OrganizerEventsComponent implements OnInit {
   
   events: Event[] = [];
 
-  pageProperties = {
-    page: 0,
-    pageSize: 8,
-    totalCount: 0,
-    pageSizeOptions: [4, 8, 12]
- };
-
   isFilterVisible = false;
 
-  constructor(private eventService: EventService) {}
+  constructor(private eventService: EventService, private router: Router) {}
 
   ngOnInit(): void {
-    this.getPagedEntities()
+    this.init()
   }
 
-  pageChanged(pageEvent: PageEvent){
-    this.pageProperties.page = pageEvent.pageIndex;
-    this.pageProperties.pageSize = pageEvent.pageSize;
-    this.getPagedEntities();
+
+  private init(){
+    this.eventService.getAllByOrganizer().subscribe((events)=>{
+      this.events = events;
+    });
   }
 
-  private getPagedEntities(){
-    this.eventService.getAll(this.pageProperties).subscribe({next: (response: PagedResponse<Event>)=>{
-      this.events = response.content;
-      this.pageProperties.totalCount = response.totalElements;
-    }});
-  }
   toggleFilter() {
     this.isFilterVisible = !this.isFilterVisible;
+  }
+
+  navigateToOrganizerPage(id: number) {
+    this.router.navigate([`/event/${id}/organizer-page`]);
   }
 }

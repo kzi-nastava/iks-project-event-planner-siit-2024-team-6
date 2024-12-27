@@ -17,6 +17,7 @@ import { EventTypeListComponent } from './event/event-type-list/event-type-list.
 import { EventTypeAddComponent } from './event/event-type-add/event-type-add.component';
 import { EventViewComponent } from './event/event-view/event-view.component';
 import { OrganizerEventsComponent } from './event/organizer-events/organizer-events.component';
+import { EventViewOrgaizerComponent } from './event/event-view-orgaizer/event-view-orgaizer.component';
 
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
@@ -44,7 +45,9 @@ const routes: Routes = [
       data: {role: 'ROLE_ADMIN'}},
       { path: 'my_events', component: OrganizerEventsComponent , canActivate: [AuthGuard],
         data: {role: 'ROLE_ORGANIZER'}},
-  { path: 'event/:id', component: EventViewComponent }
+  { path: 'event/:id', component: EventViewComponent },
+  { path: 'event/:id/organizer-page', component: EventViewOrgaizerComponent, canActivate: [AuthGuard],
+    data: {role: 'ROLE_ORGANIZER'} }
 ];
 
 @NgModule({

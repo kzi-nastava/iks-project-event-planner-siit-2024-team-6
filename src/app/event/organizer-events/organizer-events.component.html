@@ -11,14 +11,18 @@
       </div>
     </div>
     <div class="event-list">
-      <app-event-card *ngFor="let event of events" [event]="event"></app-event-card>
+      <app-event-card
+      *ngFor="let event of events"
+      [event]="event"
+      (click)="navigateToOrganizerPage(event.id)">
+    </app-event-card>
     </div>
-    <mat-paginator
+    <!-- <mat-paginator
     [pageSize]="pageProperties.pageSize"
     [pageSizeOptions]="pageProperties.pageSizeOptions"
     [length]="pageProperties.totalCount"
     (page)="pageChanged($event)">
-  </mat-paginator>
+  </mat-paginator> -->
   </div>
   
   <app-events-filter 

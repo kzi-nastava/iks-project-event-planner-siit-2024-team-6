@@ -16,6 +16,8 @@ import { EventTypeAddComponent } from './event-type-add/event-type-add.component
 import { RouterModule } from '@angular/router';
 import { EventViewComponent } from './event-view/event-view.component';
 import { OrganizerEventsComponent } from './organizer-events/organizer-events.component';
+import { EventViewOrgaizerComponent } from './event-view-orgaizer/event-view-orgaizer.component';
+import { AddAgendaComponent } from './add-agenda/add-agenda.component';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import { OrganizerEventsComponent } from './organizer-events/organizer-events.co
     EventTypeListComponent,
     EventTypeAddComponent,
     EventViewComponent,
-    OrganizerEventsComponent
+    OrganizerEventsComponent,
+    EventViewOrgaizerComponent,
+    AddAgendaComponent
   ],
   imports: [
     CommonModule,

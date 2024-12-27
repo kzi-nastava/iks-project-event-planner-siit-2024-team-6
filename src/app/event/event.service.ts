@@ -42,4 +42,10 @@ export class EventService {
     return this.httpClient.get<Event>(`${this.apiUrl}${id}`);
   }
 
+  updateEvent(event: any): Observable<any> {
+    return this.httpClient.put(`/api/organizers/events/${event.id}`, event);
+  }
+  deleteEvent(id: number): Observable<any> {
+    return this.httpClient.delete(`/api/organizers/events/${id}`);
+  }
 }
