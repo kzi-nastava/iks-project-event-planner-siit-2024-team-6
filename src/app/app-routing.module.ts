@@ -54,7 +54,7 @@ const routes: Routes = [
       { path: 'event/:id/add-activity', component: ActivityFormComponent, canActivate: [AuthGuard],
         data: {role: 'ROLE_ORGANIZER'} },
   { path: 'event/:id/edit-activity/:activityId', component: ActivityFormComponent, canActivate: [AuthGuard],
-    data: {role: 'ROLE_ORGANIZER'} }
+    data: {role: 'ROLE_ORGANIZER'} },
   { path: 'offer/:id', component: OfferInfoComponent },
   { path: '', redirectTo: '/events', pathMatch: 'full' }
 ];

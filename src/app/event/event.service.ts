@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Event, OrganizerDTO, EventType } from './model/event.model';
-import { Status } from '../enums/status.enum';
+import { Event, OrganizerDTO } from './model/event.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {environment} from '../../env/environment';
 import {Observable} from 'rxjs';
 import {PagedResponse} from '../shared/model/paged-response.model';
+import { EventTypeDTO } from './event-type.service';
 
 
 @Injectable({
@@ -42,10 +42,20 @@ export class EventService {
       return this.httpClient.get<string[]>(this.apiUrl+"event-types");
   }
 
-  getEventTypeByName(name: String): Observable<EventType>{
-    return this.httpClient.get<EventType>(`${this.apiUrl}${name}/event-type`);
+  getEventTypeByName(name: String): Observable<EventTypeDTO>{
+    return this.httpClient.get<EventTypeDTO>(`${this.apiUrl}${name}/event-type`);
   }
-  
+
+  getEventById(id: number): Observable<Event> {
+    return this.httpClient.get<Event>(`${this.apiUrl}${id}`);
+  }
+
+  updateEvent(event: any): Observable<any> {
+    return this.httpClient.put(`/api/organizers/events/${event.id}`, event);
+  }
+  deleteEvent(id: number): Observable<any> {
+    return this.httpClient.delete(`/api/organizers/events/${id}`);
+  }
 }
 
 
@@ -278,15 +288,3 @@ export class EventService {
   
 
 // ];
-
-  getEventById(id: number): Observable<Event> {
-    return this.httpClient.get<Event>(`${this.apiUrl}${id}`);
-  }
-
-  updateEvent(event: any): Observable<any> {
-    return this.httpClient.put(`/api/organizers/events/${event.id}`, event);
-  }
-  deleteEvent(id: number): Observable<any> {
-    return this.httpClient.delete(`/api/organizers/events/${id}`);
-  }
-}
