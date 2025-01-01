@@ -120,4 +120,43 @@
   }
   
   
+  .fab {
+    position: fixed; /* Makes the button stay in the same position on scroll */
+    bottom: 50px; /* Adjusted to avoid overlap with navigation/footer */
+    right: 40px; /* Increased from 20px to 40px to move the button left */
+    width: 70px; /* Size of the button */
+    height: 70px; /* Size of the button */
+    border-radius: 50%; /* Circular shape */
+    background-color: #8b6a9d; /* Matches your color scheme */
+    display: flex; /* Flexbox for centering */
+    justify-content: center; /* Horizontal centering */
+    align-items: center; /* Vertical centering */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Shadow for elevation */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s ease;
+    z-index: 1000; /* Ensures it stays above other elements */
+  }
   
+  .fab:hover {
+    background-color: #724c81; /* Slightly darker shade on hover */
+    transform: scale(1.1); /* Enlarges slightly on hover */
+  }
+  
+  .fab:active {
+    transform: scale(0.95); /* Shrinks slightly on click */
+  }
+  
+  .fab-icon {
+    width: 36px; /* Size of the SVG icon */
+    height: 36px;
+  }
+  .fab[disabled] {
+    background-color: #ccc; /* Disabled state color */
+    cursor: not-allowed; /* Change cursor to indicate it's disabled */
+    pointer-events: none; /* Prevent interaction */
+  }
+  
+  .fab[disabled] .fab-icon {
+    opacity: 0.6; /* Make the icon look faded */
+  }

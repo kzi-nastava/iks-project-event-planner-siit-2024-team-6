@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   styleUrl: './organizer-events.component.css'
 })
 export class OrganizerEventsComponent implements OnInit {
-  
+  isButtonDisabled: boolean = false;
   events: Event[] = [];
 
   isFilterVisible = false;
@@ -30,8 +30,12 @@ export class OrganizerEventsComponent implements OnInit {
     });
   }
 
-  toggleFilter() {
+  toggleFilter(): void {
     this.isFilterVisible = !this.isFilterVisible;
+    this.isButtonDisabled = this.isFilterVisible;
+  }
+  onAddClick(): void {
+    this.router.navigate(['/new-event']);
   }
 
   navigateToOrganizerPage(id: number) {
