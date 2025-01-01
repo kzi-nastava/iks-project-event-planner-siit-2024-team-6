@@ -1,0 +1,10 @@
+.offer-section {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 70px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }

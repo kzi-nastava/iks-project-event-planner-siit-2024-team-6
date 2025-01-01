@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { Offer } from '../model/offer.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-offer-card',
@@ -8,4 +9,10 @@ import { Offer } from '../model/offer.model';
 })
 export class OfferCardComponent {
   @Input() offer!: Offer;
+
+  constructor(private router: Router) {}
+
+  onCardClick() {
+    this.router.navigate(['/offer', this.offer.id]);
+  }
 }
