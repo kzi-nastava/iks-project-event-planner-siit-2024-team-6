@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Event, EventType } from './model/event.model';
+import { Event, OrganizerDTO, EventType } from './model/event.model';
 import { Status } from '../enums/status.enum';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {environment} from '../../env/environment';
@@ -12,16 +12,22 @@ import {PagedResponse} from '../shared/model/paged-response.model';
 })
 export class EventService {
 
+
   private apiUrl = environment.apiHost+`/events/`; 
   constructor(private httpClient: HttpClient){}
   
-
+  getEventOrganizer(eventId: number): Observable<OrganizerDTO> {
+    return this.httpClient.get<OrganizerDTO>(`${this.apiUrl}${eventId}/getOrganizer`);
+  }
   getAll(pageProperties?: any): Observable<PagedResponse<Event>> {
     let params = new HttpParams();
     if(pageProperties){
       params = params.set('page',pageProperties.page).set('size',pageProperties.pageSize)
     }
     return this.httpClient.get<PagedResponse<Event>>(this.apiUrl+`all-elements`, {params:params});
+  }
+  getAllByOrganizer(): Observable<Event[]> {
+    return this.httpClient.get<Event[]>("/api/organizers/events");
   }
 
   createEvent(event: any): Observable<any> {
@@ -273,4 +279,14 @@ export class EventService {
 
 // ];
 
+  getEventById(id: number): Observable<Event> {
+    return this.httpClient.get<Event>(`${this.apiUrl}${id}`);
+  }
 
+  updateEvent(event: any): Observable<any> {
+    return this.httpClient.put(`/api/organizers/events/${event.id}`, event);
+  }
+  deleteEvent(id: number): Observable<any> {
+    return this.httpClient.delete(`/api/organizers/events/${id}`);
+  }
+}

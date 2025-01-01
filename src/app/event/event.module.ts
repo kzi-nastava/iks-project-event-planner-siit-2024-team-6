@@ -10,14 +10,20 @@ import { EventsViewComponent } from './events-view/events-view.component';
 import { AddEventModule } from './add-event/add-event.module';
 
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EventTypeListComponent } from './event-type-list/event-type-list.component';
 import { EventTypeAddComponent } from './event-type-add/event-type-add.component';
 import { RouterModule } from '@angular/router';
+import { EventViewComponent } from './event-view/event-view.component';
+import { OrganizerEventsComponent } from './organizer-events/organizer-events.component';
+import { EventViewOrgaizerComponent } from './event-view-orgaizer/event-view-orgaizer.component';
+import { AgendaComponent } from './agenda/agenda.component';
+import { ActivityFormComponent } from './activity-form/activity-form.component';
+import { AddActivityComponent } from './add-activity/add-activity.component';
 
 
 @NgModule({
   declarations: [
+    
     EventCardComponent,
     EventListComponent,
     EventSliderComponent,
@@ -25,12 +31,18 @@ import { RouterModule } from '@angular/router';
     EventsFilterComponent,
     EventsViewComponent,
     EventTypeListComponent,
-    EventTypeAddComponent
+    EventTypeAddComponent,
+    EventViewComponent,
+    OrganizerEventsComponent,
+    EventViewOrgaizerComponent,
+    AgendaComponent,
+    ActivityFormComponent,
+    AddActivityComponent
   ],
   imports: [
+    MatPaginatorModule,
     CommonModule,
     FormsModule,
-    AddEventModule,
     MatPaginatorModule,
     ReactiveFormsModule,
     RouterModule
@@ -38,7 +50,13 @@ import { RouterModule } from '@angular/router';
   exports: [
     EventsViewComponent,
     EventTypeListComponent,
-    EventTypeAddComponent
+    EventTypeAddComponent,
+    EventViewComponent,
+    OrganizerEventsComponent,
+    EventViewOrgaizerComponent,
+    AgendaComponent,
+    ActivityFormComponent,
+    AddActivityComponent
   ]
 })
 export class EventModule { }
