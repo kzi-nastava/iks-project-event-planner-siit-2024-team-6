@@ -18,6 +18,8 @@ import { EventTypeAddComponent } from './event/event-type-add/event-type-add.com
 import { EventViewComponent } from './event/event-view/event-view.component';
 import { OrganizerEventsComponent } from './event/organizer-events/organizer-events.component';
 import { EventViewOrgaizerComponent } from './event/event-view-orgaizer/event-view-orgaizer.component';
+import { AgendaComponent } from './event/agenda/agenda.component';
+import { ActivityFormComponent } from './event/activity-form/activity-form.component';
 
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
@@ -47,9 +49,15 @@ const routes: Routes = [
         data: {role: 'ROLE_ORGANIZER'}},
   { path: 'event/:id', component: EventViewComponent },
   { path: 'event/:id/organizer-page', component: EventViewOrgaizerComponent, canActivate: [AuthGuard],
+    data: {role: 'ROLE_ORGANIZER'} },
+    { path: 'event/:id/agenda', component: AgendaComponent, canActivate: [AuthGuard],
+      data: {role: 'ROLE_ORGANIZER'} },
+      { path: 'event/:id/add-activity', component: ActivityFormComponent, canActivate: [AuthGuard],
+        data: {role: 'ROLE_ORGANIZER'} },
+  { path: 'event/:id/edit-activity/:activityId', component: ActivityFormComponent, canActivate: [AuthGuard],
     data: {role: 'ROLE_ORGANIZER'} }
 ];
-
+///event/${this.eventId}/agenda
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

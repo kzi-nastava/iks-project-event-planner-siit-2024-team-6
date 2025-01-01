@@ -11,6 +11,7 @@ import { EventTypeDTO, EventTypeService } from '../event-type.service';
 })
 export class EventViewOrgaizerComponent  implements OnInit{
 
+
   event: Event | undefined;
   reviewText: string = '';
   reviewRating: number = 0;
@@ -108,6 +109,9 @@ loadOrganizer(id: number): void{
     this.update();
     this.router.navigate([`my_events`]);
     // Реализуйте логику отправки данных на сервер
-    // Например: this.eventService.updateEvent(this.event).subscribe();
+    // Например: this.eventService.updateEvent(this.event).subscribe();event/:id/agenda
   }
+  openAgengda(): void {
+    this.router.navigate([`event/${this.event.id}/agenda`])
+}
 }
