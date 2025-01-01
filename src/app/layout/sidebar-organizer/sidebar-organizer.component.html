@@ -1,0 +1,21 @@
+<ul class="sidebar__menu">
+    <li>
+      <i class="fa fa-bell"></i> notifications
+    </li>
+    <li>
+      <i class="fa fa-envelope"></i> messages
+    </li>
+  </ul>
+  <div class="sidebar__favorites">
+    <p routerLink="/home">favourite events</p>
+    <p routerLink="/home">favourite products</p>
+    <p routerLink="/home">favourite services</p>
+  </div>
+  <ul class="sidebar__menu">
+    <li routerLink="/my_events" (click)="closeSidebar()">
+        <i class="fa-regular fa-square-plus"></i> my events
+    </li>     
+    <li>
+      <i class="fa fa-calendar-alt"></i> my calendar
+    </li>     
+  </ul>

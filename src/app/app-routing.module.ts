@@ -20,7 +20,7 @@ import { OrganizerEventsComponent } from './event/organizer-events/organizer-eve
 import { EventViewOrgaizerComponent } from './event/event-view-orgaizer/event-view-orgaizer.component';
 import { AgendaComponent } from './event/agenda/agenda.component';
 import { ActivityFormComponent } from './event/activity-form/activity-form.component';
-
+import { OfferInfoComponent } from './offer/offer-details/offer-info/offer-info.component';
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
   { path: 'offers', component: OffersViewComponent},
@@ -40,7 +40,6 @@ const routes: Routes = [
   {path: 'quick-registration', component: QuickRegistrationComponent},
   {path: 'new-event', component: NewEventComponent , canActivate: [AuthGuard],
     data: {role: 'ROLE_ORGANIZER'}},
-  { path: '', redirectTo: '/events', pathMatch: 'full' },
   { path: 'event-types', component: EventTypeListComponent , canActivate: [AuthGuard],
     data: {role: 'ROLE_ADMIN'}},
     { path: 'event-types/add', component: EventTypeAddComponent , canActivate: [AuthGuard],
@@ -55,7 +54,9 @@ const routes: Routes = [
       { path: 'event/:id/add-activity', component: ActivityFormComponent, canActivate: [AuthGuard],
         data: {role: 'ROLE_ORGANIZER'} },
   { path: 'event/:id/edit-activity/:activityId', component: ActivityFormComponent, canActivate: [AuthGuard],
-    data: {role: 'ROLE_ORGANIZER'} }
+    data: {role: 'ROLE_ORGANIZER'} },
+  { path: 'offer/:id', component: OfferInfoComponent },
+  { path: '', redirectTo: '/events', pathMatch: 'full' }
 ];
 ///event/${this.eventId}/agenda
 @NgModule({
