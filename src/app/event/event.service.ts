@@ -19,6 +19,7 @@ export class EventService {
   getEventOrganizer(eventId: number): Observable<OrganizerDTO> {
     return this.httpClient.get<OrganizerDTO>(`${this.apiUrl}${eventId}/getOrganizer`);
   }
+  
   getAll(pageProperties?: any): Observable<PagedResponse<Event>> {
     let params = new HttpParams();
     if(pageProperties){
@@ -26,6 +27,7 @@ export class EventService {
     }
     return this.httpClient.get<PagedResponse<Event>>(this.apiUrl+`all-elements`, {params:params});
   }
+
   getAllByOrganizer(): Observable<Event[]> {
     return this.httpClient.get<Event[]>("/api/organizers/events");
   }

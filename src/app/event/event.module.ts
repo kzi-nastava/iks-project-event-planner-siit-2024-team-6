@@ -18,7 +18,7 @@ import { OrganizerEventsComponent } from './organizer-events/organizer-events.co
 import { EventViewOrgaizerComponent } from './event-view-orgaizer/event-view-orgaizer.component';
 import { AgendaComponent } from './agenda/agenda.component';
 import { ActivityFormComponent } from './activity-form/activity-form.component';
-import { AddActivityComponent } from './add-activity/add-activity.component';
+
 
 
 @NgModule({
@@ -36,8 +36,7 @@ import { AddActivityComponent } from './add-activity/add-activity.component';
     OrganizerEventsComponent,
     EventViewOrgaizerComponent,
     AgendaComponent,
-    ActivityFormComponent,
-    AddActivityComponent
+    ActivityFormComponent
   ],
   imports: [
     MatPaginatorModule,
@@ -55,8 +54,7 @@ import { AddActivityComponent } from './add-activity/add-activity.component';
     OrganizerEventsComponent,
     EventViewOrgaizerComponent,
     AgendaComponent,
-    ActivityFormComponent,
-    AddActivityComponent
+    ActivityFormComponent
   ]
 })
 export class EventModule { }
