@@ -36,6 +36,15 @@ export class AuthService {
     }
     return null;
   }
+  getUserId(): number | null {
+    if (this.isLoggedIn()) {
+      const accessToken: any = localStorage.getItem('user');
+      const helper = new JwtHelperService();
+      const decodedToken = helper.decodeToken(accessToken);
+      return decodedToken.userId ? Number(decodedToken.userId) : null;
+    }
+    return null;
+  }
 
   isLoggedIn(): boolean {
     const accessToken: any = localStorage.getItem('user');
