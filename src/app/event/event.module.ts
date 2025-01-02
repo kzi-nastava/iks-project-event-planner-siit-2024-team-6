@@ -18,6 +18,8 @@ import { OrganizerEventsComponent } from './organizer-events/organizer-events.co
 import { EventViewOrgaizerComponent } from './event-view-orgaizer/event-view-orgaizer.component';
 import { AgendaComponent } from './agenda/agenda.component';
 import { ActivityFormComponent } from './activity-form/activity-form.component';
+import { FavoriteEventsComponent } from './favorite-events/favorite-events.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -36,7 +38,8 @@ import { ActivityFormComponent } from './activity-form/activity-form.component';
     OrganizerEventsComponent,
     EventViewOrgaizerComponent,
     AgendaComponent,
-    ActivityFormComponent
+    ActivityFormComponent,
+    FavoriteEventsComponent
   ],
   imports: [
     MatPaginatorModule,
@@ -44,7 +47,8 @@ import { ActivityFormComponent } from './activity-form/activity-form.component';
     FormsModule,
     MatPaginatorModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    MatSnackBarModule
   ],
   exports: [
     EventsViewComponent,

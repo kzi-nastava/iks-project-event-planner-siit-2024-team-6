@@ -58,6 +58,16 @@ export class EventService {
   deleteEvent(id: number): Observable<any> {
     return this.httpClient.delete(`/api/organizers/events/${id}`);
   }
+
+  addToFavorites(id: number): Observable<any>{
+    return this.httpClient.post(`${this.apiUrl}${id}/favorite`, {});
+  }
+  removeFromFavorites(id: number): Observable<any>{
+    return this.httpClient.delete(`${this.apiUrl}${id}/favorite`);
+  }
+  getFavorites(): Observable<Event[]>{
+    return this.httpClient.get<Event[]>(`${this.apiUrl}favorites`);
+  }
 }
 
 

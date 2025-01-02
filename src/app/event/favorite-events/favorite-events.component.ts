@@ -1,17 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { EventService } from '../event.service';
 import { Event } from '../model/event.model';
-import { PageEvent } from '@angular/material/paginator';
-import {PagedResponse} from '../../shared/model/paged-response.model';
 import { Router } from '@angular/router';
 
-
 @Component({
-  selector: 'app-organizer-events',
-  templateUrl: './organizer-events.component.html',
-  styleUrl: './organizer-events.component.css'
+  selector: 'app-favorite-events',
+  templateUrl: './favorite-events.component.html',
+  styleUrl: './favorite-events.component.css'
 })
-export class OrganizerEventsComponent implements OnInit {
+export class FavoriteEventsComponent {
   isButtonDisabled: boolean = false;
   events: Event[] = [];
 
@@ -23,9 +20,8 @@ export class OrganizerEventsComponent implements OnInit {
     this.init()
   }
 
-
   private init(){
-    this.eventService.getAllByOrganizer().subscribe((events)=>{
+    this.eventService.getFavorites().subscribe((events)=>{
       this.events = events;
     });
   }
@@ -33,9 +29,6 @@ export class OrganizerEventsComponent implements OnInit {
   toggleFilter(): void {
     this.isFilterVisible = !this.isFilterVisible;
     this.isButtonDisabled = this.isFilterVisible;
-  }
-  onAddClick(): void {
-    this.router.navigate(['/new-event']);
   }
 
 }

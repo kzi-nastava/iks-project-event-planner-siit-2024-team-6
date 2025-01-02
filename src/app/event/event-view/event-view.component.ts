@@ -50,7 +50,7 @@ loadOrganizer(id: number): void{
   });
 }
   addToFavorites(): void {
-    console.log('Added to favorites');
+    this.eventService.addToFavorites(this.event.id).subscribe();
   }
 
   submitReview(): void {
