@@ -62,20 +62,21 @@ export class EventTypeListComponent implements OnInit {
   }
 
   addCategory(): void {
+    console.error('No zzz selected');
     if (this.selectedCategoryId === null) {
       console.error('No category selected');
       return;
     }
-  
+    console.error('No category11 selected');
     const categoryToAdd = this.allCategories.find(
       (c) => c.id === +this.selectedCategoryId
     );
-  
+    console.error('No category22 selected');
     if (!categoryToAdd) {
       console.error('Category not found in allCategories:', this.allCategories);
       return;
     }
-  
+    console.error('No category333 selected');
     if (
       !this.editingEventType.categories.some((c: any) => c.id === categoryToAdd.id)
     ) {

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EventService } from '../../event.service';
 import { Event } from '../../model/event.model';
 import { EventTypeDTO, EventTypeService } from '../../event-type.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-event',
@@ -14,11 +15,13 @@ export class NewEventComponent implements OnInit {
   eventTypes: EventTypeDTO[] = [];
   photos: string[] = []; // Массив для хранения URL фотографий
   isPublic: boolean = true;
-  
+  selectedCategories: { id: number; name: string }[] = [];
+
   constructor(
     private fb: FormBuilder,
     private eventTypeService: EventTypeService,
-    private eventService: EventService
+    private eventService: EventService,
+    private router: Router
   ) {
     this.eventForm = this.fb.group({
       name: ['', Validators.required],
@@ -36,6 +39,28 @@ export class NewEventComponent implements OnInit {
   ngOnInit(): void {
     this.loadEventTypes();
   }
+
+  loadCategories(): void {
+    this.eventForm.get('eventType')?.valueChanges.subscribe((eventTypeId) => {
+      console.log('Selected EventType ID (raw):', eventTypeId);
+  
+      const parsedEventTypeId = Number(eventTypeId);
+      console.log('Parsed EventType ID:', parsedEventTypeId);
+  
+      const selectedType = this.eventTypes.find(type => type.id === parsedEventTypeId);
+      console.log('Selected EventType:', selectedType);
+  
+      if (selectedType) {
+        this.selectedCategories = selectedType.categories;
+        console.log('Loaded Categories:', this.selectedCategories);
+      } else {
+        this.selectedCategories = [];
+        console.log('No categories found for the selected EventType');
+      }
+    });
+  }
+  
+
 
   loadEventTypes(): void {
     this.eventTypeService.getAllEventTypes().subscribe(
@@ -64,6 +89,7 @@ export class NewEventComponent implements OnInit {
     this.isPublic = isPublic;
   }
 
+
   onSubmit(): void {
     if (this.eventForm.valid) {
       // Формирование данных для отправки
@@ -89,6 +115,7 @@ export class NewEventComponent implements OnInit {
       // Отправка данных на сервер
       this.eventService.createEvent(eventData).subscribe(
         (response) => {
+          this.router.navigate([`my_events`]);
           console.log('Event created successfully:', response);
           
         },
