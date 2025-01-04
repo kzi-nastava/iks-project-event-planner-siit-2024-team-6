@@ -13,8 +13,7 @@
     <div class="event-list">
       <app-event-card
       *ngFor="let event of events"
-      [event]="event"
-      [context]="'organizer'">
+      [event]="event">
     </app-event-card>
     </div>
     <!-- <mat-paginator
@@ -29,18 +28,3 @@
     [isVisible]="isFilterVisible" 
     (close)="toggleFilter()">
   </app-events-filter>
-
-  <button
-      class="fab" 
-      *ngIf="!isFilterVisible"
-      [disabled]="isButtonDisabled"
-      (click)="onAddClick()"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        class="fab-icon"
-      >
-        <path d="M12 5v14M5 12h14" stroke="white" stroke-width="2" stroke-linecap="round" />
-      </svg>
-    </button>

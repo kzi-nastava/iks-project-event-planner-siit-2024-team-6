@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../event.service';
 import { Event, OrganizerDTO } from '../model/event.model';
 import { EventTypeDTO, EventTypeService } from '../event-type.service';
+import { Chart, registerables } from 'chart.js';
 
 @Component({
   selector: 'app-event-view-orgaizer',
   templateUrl: './event-view-orgaizer.component.html',
   styleUrl: './event-view-orgaizer.component.css'
 })
-export class EventViewOrgaizerComponent  implements OnInit{
+export class EventViewOrgaizerComponent  implements OnInit, AfterViewInit{
 
 
   event: Event | undefined;
@@ -19,18 +20,26 @@ export class EventViewOrgaizerComponent  implements OnInit{
   organizer: OrganizerDTO | undefined;
   currentPhotoIndex: number = 0; // Текущий индекс фотографии
   newPhotoUrl: string = '';
+  chart: Chart | undefined;
+  statisticsReady: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private eventService: EventService,
     private router: Router
-  ) {}
+  ) {
+    Chart.register(...registerables);
+  }
 
   ngOnInit(): void {
     const eventId = Number(this.route.snapshot.paramMap.get('id'));
     if (eventId) {
       this.loadEvent(eventId);
       this.loadOrganizer(eventId);
+
+      setTimeout(() => {
+        this.statisticsReady = true; // Имитация завершения подготовки
+      }, 1000); // Задержка в 1 секунду
     }
   }
 
@@ -41,19 +50,75 @@ export class EventViewOrgaizerComponent  implements OnInit{
     }
   }
 
-  removePhoto(index: number): void {
-    this.event.photos.splice(index, 1);
+  downloadEventStatisticsPDF(): void {
+    this.eventService.downloadEventStatisticsPDF(this.event.id);
   }
 
   loadEvent(id: number): void {
     this.eventService.getEventById(id).subscribe((event) => {
       if(event){
       this.event = event;
-
       } else {
         console.error('Event not found');
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    // Построение графика после загрузки DOM
+    this.buildChart();
+  }
+
+  buildChart(): void {
+    // Убедитесь, что canvas элемент существует
+    const canvas = document.getElementById('eventChart') as HTMLCanvasElement | null;
+  
+    if (!canvas) {
+      console.error('Canvas element not found!');
+      return;
+    }
+  
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      console.error('Failed to get canvas context');
+      return;
+    }
+  
+    this.chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Participants', 'Max Participants', 'Rating'],
+        datasets: [
+          {
+            label: 'Event Stats',
+            data: [25, 50, 4.5], // Пример данных
+            backgroundColor: [
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
+              'rgba(153, 102, 255, 0.2)'
+            ],
+            borderColor: [
+              'rgba(75, 192, 192, 1)',
+              'rgba(255, 159, 64, 1)',
+              'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+  
+  removePhoto(index: number): void {
+    this.event.photos.splice(index, 1);
   }
 loadOrganizer(id: number): void{
   this.eventService.getEventOrganizer(id).subscribe((organizer) => {

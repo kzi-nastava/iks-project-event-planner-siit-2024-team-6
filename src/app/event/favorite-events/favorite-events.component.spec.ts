@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddActivityComponent } from './add-activity.component';
+import { FavoriteEventsComponent } from './favorite-events.component';
 
-describe('AddActivityComponent', () => {
-  let component: AddActivityComponent;
-  let fixture: ComponentFixture<AddActivityComponent>;
+describe('FavoriteEventsComponent', () => {
+  let component: FavoriteEventsComponent;
+  let fixture: ComponentFixture<FavoriteEventsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AddActivityComponent]
+      declarations: [FavoriteEventsComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AddActivityComponent);
+    fixture = TestBed.createComponent(FavoriteEventsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,120 @@
+
+.event-section {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 0px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  .event-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--blue);
+  }
+  
+  .event-section-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--blue);
+    margin: 0;
+    letter-spacing: 0.5px;
+  }
+  
+  .filter-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .filter-text {
+    font-size: 16px;
+    color: var(--dark-grey);
+    font-weight: normal;
+  }
+  
+  .filter-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+  
+  .filter-icon svg {
+    height: 26px;
+    width: 26px;
+    fill: var(--dark-grey);
+  }
+  
+  .filter-icon:hover svg {
+    fill: var(--secondary-pink);
+    transform: scale(1.1);
+  }
+  
+  .event-list {
+    flex: 3;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+  }
+  
+  
+  
+  mat-paginator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .mat-paginator-container {
+    justify-content: center;
+    padding: 10px 20px;
+    color: var(--dark-grey);
+    font-size: 14px;
+  }
+  
+  .mat-paginator-navigation-previous,
+  .mat-paginator-navigation-next {
+    color: var(--secondary-pink);
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+  
+  .mat-paginator-navigation-previous:hover,
+  .mat-paginator-navigation-next:hover {
+    color: var(--secondary-pink);
+    transform: scale(1.1);
+  }
+  
+  .mat-paginator-page-size {
+    margin-right: 20px;
+    font-size: 14px;
+    color: var(--dark-grey);
+  }
+  
+  .mat-paginator-range-label {
+    font-weight: 500;
+    color: var(--dark-grey);
+  }
+  
+  .mat-paginator-icon {
+    fill: var(--secondary-pink);
+  }
+  
+  .mat-paginator-navigation-previous:hover .mat-paginator-icon,
+  .mat-paginator-navigation-next:hover .mat-paginator-icon {
+    fill: var(--secondary-pink);
+  }

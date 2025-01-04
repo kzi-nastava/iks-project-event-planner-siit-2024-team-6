@@ -21,6 +21,7 @@ import { EventViewOrgaizerComponent } from './event/event-view-orgaizer/event-vi
 import { AgendaComponent } from './event/agenda/agenda.component';
 import { ActivityFormComponent } from './event/activity-form/activity-form.component';
 import { OfferInfoComponent } from './offer/offer-details/offer-info/offer-info.component';
+import { FavoriteEventsComponent } from './event/favorite-events/favorite-events.component';
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
   { path: 'offers', component: OffersViewComponent},
@@ -56,6 +57,8 @@ const routes: Routes = [
   { path: 'event/:id/edit-activity/:activityId', component: ActivityFormComponent, canActivate: [AuthGuard],
     data: {role: 'ROLE_ORGANIZER'} },
   { path: 'offer/:id', component: OfferInfoComponent },
+  { path: 'favorite/events', component: FavoriteEventsComponent, canActivate: [AuthGuard],
+    data: {auser: 'Auth user'} },
   { path: '', redirectTo: '/events', pathMatch: 'full' }
 ];
 ///event/${this.eventId}/agenda

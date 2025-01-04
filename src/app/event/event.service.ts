@@ -19,6 +19,7 @@ export class EventService {
   getEventOrganizer(eventId: number): Observable<OrganizerDTO> {
     return this.httpClient.get<OrganizerDTO>(`${this.apiUrl}${eventId}/getOrganizer`);
   }
+  
   getAll(pageProperties?: any): Observable<PagedResponse<Event>> {
     let params = new HttpParams();
     if(pageProperties){
@@ -26,6 +27,7 @@ export class EventService {
     }
     return this.httpClient.get<PagedResponse<Event>>(this.apiUrl+`all-elements`, {params:params});
   }
+
   getAllByOrganizer(): Observable<Event[]> {
     return this.httpClient.get<Event[]>("/api/organizers/events");
   }
@@ -55,6 +57,39 @@ export class EventService {
   }
   deleteEvent(id: number): Observable<any> {
     return this.httpClient.delete(`/api/organizers/events/${id}`);
+  }
+
+  addToFavorites(id: number): Observable<any>{
+    return this.httpClient.post(`${this.apiUrl}${id}/favorite`, {});
+  }
+  removeFromFavorites(id: number): Observable<any>{
+    return this.httpClient.delete(`${this.apiUrl}${id}/favorite`);
+  }
+  getFavorites(): Observable<Event[]>{
+    return this.httpClient.get<Event[]>(`${this.apiUrl}favorites`);
+  }
+  downloadInfoPdf(eventId: number): void {
+    this.httpClient.get(`${this.apiUrl}${eventId}/getInfoPDF`, { responseType: 'blob' })
+      .subscribe(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'event.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      });
+  }
+
+  downloadEventStatisticsPDF(eventId: number): void {
+    this.httpClient.get(`${this.apiUrl}${eventId}/getEventStatisticsPDF`, { responseType: 'blob' })
+      .subscribe(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'event-statistics.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      });
   }
 }
 
