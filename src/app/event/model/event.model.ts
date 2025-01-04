@@ -7,9 +7,10 @@ export interface Event {
     description: string;
     place: string;
     maxParticipants: number;
-    minParticipants: number;
+    participants: number;
     isPublic: boolean;
     isDeleted: boolean;
+    rating: number;
     date: Date;
     photos?: string[];
     activities?: Activity[];

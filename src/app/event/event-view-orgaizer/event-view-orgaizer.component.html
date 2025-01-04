@@ -92,8 +92,23 @@
       <!-- Block 3: Agenda and Reviews -->
       <div class="block block-3">
         <h3>Festival agenda</h3>
-        <p >Details coming soon...</p>
         <button (click)="openAgengda()" class="delete-button">Manage agenda</button>
+        
+        <div *ngIf="event">
+          <p>Statistics graph for "{{ event.name }}"</p>
+          <div>
+            <canvas id="eventChart"></canvas>
+          </div>
+        </div>
+        <p *ngIf="!statisticsReady" class="loading-text">Generating statistics PDF...</p>
+        <button
+          *ngIf="statisticsReady"
+          (click)="downloadEventStatisticsPDF()"
+          class="download-btn"
+        >
+          Download statistics
+        </button>
+
       </div>
   
       <!-- Block 4: Map -->

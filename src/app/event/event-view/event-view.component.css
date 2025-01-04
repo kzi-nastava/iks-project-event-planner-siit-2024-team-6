@@ -209,3 +209,37 @@
   .favorite-button:hover {
     background-color: #ff3b3b;
   }
+  /* Стиль текста загрузки */
+.loading-text {
+  font-size: 14px;
+  font-style: italic;
+  color: #6c757d;
+}
+
+/* Стиль кнопки */
+.download-btn {
+  display: inline-block;
+  background-color: #007bff; /* Синий фон */
+  color: #fff; /* Белый текст */
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px; /* Скругленные края */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень */
+  cursor: pointer;
+  transition: all 0.3s ease; /* Анимация */
+}
+
+/* Эффект при наведении */
+.download-btn:hover {
+  background-color: #0056b3; /* Более темный синий */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Более глубокая тень */
+}
+
+/* Эффект при нажатии */
+.download-btn:active {
+  background-color: #003d80; /* Еще более темный синий */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Меньшая тень */
+  transform: scale(0.98); /* Легкое уменьшение кнопки */
+}

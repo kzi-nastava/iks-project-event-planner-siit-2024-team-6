@@ -51,12 +51,17 @@
         <div>
           <p>If you have any questions contact us</p>
         </div>
+        <div>
+          <p *ngIf="!infoReady" class="loading-text">Generating pdfInformation...</p>
+        <button *ngIf="infoReady" (click)="downloadInfo()" class="download-btn">Download Festival Info</button>
+        </div>
       </div>
   
       <!-- Block 3: Agenda and Reviews -->
       <div class="block block-3">
         <h3>Festival agenda</h3>
-        <p>Details coming soon...</p>
+        <p *ngIf="!agendaReady" class="loading-text">Generating agenda...</p>
+        <button *ngIf="agendaReady" (click)="downloadAgenda()" class="download-btn">Download Festival Agenda</button>
         <div class="review-section">
           <h3 class="review-title">Write your review here!</h3>
           <textarea [(ngModel)]="reviewText" class="review-textarea" placeholder="Opinion"></textarea>

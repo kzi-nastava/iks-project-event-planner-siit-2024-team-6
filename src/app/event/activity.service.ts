@@ -38,4 +38,16 @@ export class ActivityService {
   getActivityById(eventId: number, activityId: number): Observable<Activity> {
     return this.http.get<Activity>(`${this.baseUrl}/events/${eventId}/activity/${activityId}`);
   }  
+
+  downloadAgendaPdf(eventId: number): void {
+    this.http.get(`${this.baseUrl}/events/${eventId}/getAgendaPDF`, { responseType: 'blob' })
+      .subscribe(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'agenda.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      });
+  }
 }

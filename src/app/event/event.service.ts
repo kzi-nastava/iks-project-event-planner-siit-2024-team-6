@@ -68,6 +68,29 @@ export class EventService {
   getFavorites(): Observable<Event[]>{
     return this.httpClient.get<Event[]>(`${this.apiUrl}favorites`);
   }
+  downloadInfoPdf(eventId: number): void {
+    this.httpClient.get(`${this.apiUrl}${eventId}/getInfoPDF`, { responseType: 'blob' })
+      .subscribe(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'event.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      });
+  }
+
+  downloadEventStatisticsPDF(eventId: number): void {
+    this.httpClient.get(`${this.apiUrl}${eventId}/getEventStatisticsPDF`, { responseType: 'blob' })
+      .subscribe(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'event-statistics.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      });
+  }
 }
 
 
