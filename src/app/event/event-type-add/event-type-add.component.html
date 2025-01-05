@@ -1,0 +1,44 @@
+<div class="event-type-container">
+    <div class="event-type-card">
+      <h2 class="event-type-title">Add New Event Type</h2>
+      <form [formGroup]="eventTypeForm" (ngSubmit)="onEventType()">
+        <div class="input-group">
+          <label>
+            <i class="material-icons">person</i>
+            <input
+              type="text"
+              placeholder="Name"
+              formControlName="name"
+              required
+            />
+          </label>
+        </div>
+        <div class="input-group">
+          <label>
+            <i class="material-icons">description</i>
+            <input
+              type="text"
+              placeholder="Description"
+              formControlName="description"
+              required
+            />
+          </label>
+        </div>
+        <div class="input-group">
+          <label>
+            <i class="material-icons">category</i>
+            <select formControlName="category" required>
+              <option *ngFor="let category of categories" [value]="category.id">
+                {{ category.name }}
+              </option>
+            </select>
+          </label>
+        </div>
+        <button type="submit" class="event-type-button" [disabled]="eventTypeForm.invalid">
+          Add
+        </button>
+      </form>
+      <a routerLink="/event-types" class="registation">Back</a>
+    </div>
+  </div>
+  

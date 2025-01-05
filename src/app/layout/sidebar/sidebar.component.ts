@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../infrastructure/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,8 +8,17 @@ import { Component } from '@angular/core';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
+  role: string = '';
   isOpen: boolean = false;
+  constructor(private authService: AuthService, private router: Router) {
+  }
 
+  ngOnInit(): void {
+    this.authService.userState.subscribe((result) => {
+      this.role = result;
+    })
+  }
+  
   toggleSidebar(): void {
     this.isOpen = !this.isOpen;
   };

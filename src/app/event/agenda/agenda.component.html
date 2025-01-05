@@ -1,0 +1,31 @@
+<div class="agenda-container">
+  <h2 class="agenda-title">Agenda</h2>
+  <div class="button-container">
+    <button class="btn-add" (click)="navigateToAddActivity()">Add Activity</button>
+  </div>
+  <table class="agenda-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Location</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let activity of activities">
+        <td>{{ activity.name }}</td>
+        <td>{{ activity.description }}</td>
+        <td>{{ activity.location }}</td>
+        <td>{{ activity.startTime | date: 'short' }}</td>
+        <td>{{ activity.endTime | date: 'short' }}</td>
+        <td>
+          <button class="btn-edit" (click)="navigateToEditActivity(activity.id!)">Edit</button>
+          <button class="btn-delete" (click)="deleteActivity(activity.id!)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -13,6 +13,7 @@ import { LayoutModule } from './layout/layout.module';
 import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { Interceptor } from './infrastructure/auth/interceptor';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { CategoryModule } from './category/category.module';
 
 @NgModule({
@@ -29,7 +30,8 @@ import { CategoryModule } from './category/category.module';
     AuthModule,
     CategoryModule,
     MatPaginatorModule,
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   providers: [
     provideAnimationsAsync(),

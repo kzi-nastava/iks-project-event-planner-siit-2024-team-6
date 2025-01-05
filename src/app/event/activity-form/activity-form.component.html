@@ -1,0 +1,38 @@
+<div class="activity-form-container">
+  <h2 class="form-title">{{ isEdit ? 'Edit' : 'Add' }} Activity</h2>
+  <form (ngSubmit)="saveActivity()" class="activity-form">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input id="name" [(ngModel)]="activity.name" name="name" required />
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea id="description" [(ngModel)]="activity.description" name="description" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="location">Location:</label>
+      <input id="location" [(ngModel)]="activity.location" name="location" required />
+    </div>
+    <div class="form-group">
+      <label for="startTime">Start Time:</label>
+      <input
+        id="startTime"
+        type="datetime-local"
+        [(ngModel)]="activity.startTime"
+        name="startTime"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="endTime">End Time:</label>
+      <input
+        id="endTime"
+        type="datetime-local"
+        [(ngModel)]="activity.endTime"
+        name="endTime"
+        required
+      />
+    </div>
+    <button type="submit" class="btn-save">Save</button>
+  </form>
+</div>
