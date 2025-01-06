@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component , OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-quick-registration',
@@ -11,7 +13,7 @@ export class QuickRegistrationComponent {
 
   registrationForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private route: ActivatedRoute, private router: Router) {
     this.registrationForm = this.fb.group({
       name: ['', Validators.required],
       lastname: ['', Validators.required],
@@ -20,13 +22,35 @@ export class QuickRegistrationComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      const email = params['email'] || '';
+      if (email) {
+        this.registrationForm.patchValue({ email });
+        this.registrationForm.get('email')?.disable();
+      }
+    });
+  }
+
+
   onSubmit(): void {
     if (this.registrationForm.valid) {
-      const formData = this.registrationForm.value;
+      const formData = {
+        ...this.registrationForm.getRawValue(),
+        email: this.registrationForm.get('email')?.value
+      };
       console.log(formData);
-      this.http.post('/api/users/quick-register', formData).subscribe({
-        next: (response) => console.log('Registration successful!', response),
-        error: (error) => console.error('Registration failed.', error),
+      this.http.post<string>('/api/users/quick-register', formData).subscribe({
+        next: (response: string) => {
+          console.log('Registration successful!', response);
+          alert('Registration successful!');
+          const email = this.registrationForm.get('email')?.value;
+          this.router.navigate(['/login'], { queryParams: { email } });
+        },
+        error: (error) => {
+          console.error('Registration failed.', error);
+          alert(error.error);
+        }
       });
     } else {
       console.log('Form is invalid', this.registrationForm.errors);
