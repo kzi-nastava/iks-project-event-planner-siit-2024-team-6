@@ -1,4 +1,4 @@
-import { NewEventTypeDTO } from "./event-tyoe-dtos";
+import { NewEventTypeDTO } from "./event-type-dtos";
 
 export interface NewOfferDTO {
     name: string;
