@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EventService } from '../../event.service';
+import { InvitationsComponent } from '../invitations/invitations.component';
 import { Event } from '../../model/event.model';
 import { EventTypeDTO, EventTypeService } from '../../event-type.service';
 import { Router } from '@angular/router';
@@ -16,6 +17,7 @@ export class NewEventComponent implements OnInit {
   photos: string[] = []; // Массив для хранения URL фотографий
   isPublic: boolean = true;
   selectedCategories: { id: number; name: string }[] = [];
+  @ViewChild(InvitationsComponent) invitationsComponent?: InvitationsComponent;
 
   constructor(
     private fb: FormBuilder,
@@ -92,7 +94,14 @@ export class NewEventComponent implements OnInit {
 
   onSubmit(): void {
     if (this.eventForm.valid) {
+
+      const emails = !this.isPublic && this.invitationsComponent 
+      ? this.invitationsComponent.getEmails() 
+      : [];
+
       // Формирование данных для отправки
+      console.log(this.eventTypes[this.eventForm.value.eventType]);
+
       const eventData = {
         name: this.eventForm.value.name,
         description: this.eventForm.value.description,
@@ -102,12 +111,12 @@ export class NewEventComponent implements OnInit {
         date: this.eventForm.value.date instanceof Date
           ? this.eventForm.value.date.toISOString()
           : this.eventForm.value.date,
-        eventType: {
-          name: this.eventTypes[this.eventForm.value.eventType].name, // Передаем только имя this.eventForm.value.eventType
-        },
+
+        eventType: this.eventTypes[this.eventForm.value.eventType].name,
         photos: this.photos, // Добавляем массив URL фотографий
-        minParticipants: this.eventForm.value.minParticipants || 0,
+        participants: this.eventForm.value.minParticipants || 0,
         disabled: this.eventForm.value.disabled || false,
+        emails: emails
       };
   
       console.log('Prepared Event Data:', eventData);

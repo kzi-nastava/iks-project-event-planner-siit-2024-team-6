@@ -1,0 +1,13 @@
+<div class="notifications-container">
+    <h2 class="notifications-title">Your Notifications</h2>
+    <div *ngFor="let notification of notifications" class="notification-card" [ngClass]="notification.type.toLowerCase()">
+      <div class="notification-content">
+        <p class="notification-text">{{ notification.text }}</p>
+        <span class="notification-type">{{ notification.type }}</span>
+      </div>
+      <div class="notification-footer">
+        <span class="notification-date">{{ notification.timestamp | date:'short' }}</span>
+      </div>
+    </div>
+  </div>
+  

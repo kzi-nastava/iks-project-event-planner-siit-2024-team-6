@@ -14,6 +14,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient, withFetch, with
 import { Interceptor } from './infrastructure/auth/interceptor';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NotificationModule } from './notification/notification.module';
 import { CategoryModule } from './category/category.module';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { CategoryModule } from './category/category.module';
     LayoutModule,
     WineModule,
     EventModule,
+    NotificationModule,
     AuthModule,
     CategoryModule,
     MatPaginatorModule,

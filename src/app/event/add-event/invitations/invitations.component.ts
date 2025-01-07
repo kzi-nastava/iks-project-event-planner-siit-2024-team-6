@@ -26,4 +26,8 @@ export class InvitationsComponent {
     return emailRegex.test(email);
   }
 
+  getEmails(): string[] {
+    return this.emails;
+  }
+
 }
