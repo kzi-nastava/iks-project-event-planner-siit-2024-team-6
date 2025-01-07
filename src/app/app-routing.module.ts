@@ -22,6 +22,7 @@ import { AgendaComponent } from './event/agenda/agenda.component';
 import { ActivityFormComponent } from './event/activity-form/activity-form.component';
 import { OfferInfoComponent } from './offer/offer-details/offer-info/offer-info.component';
 import { FavoriteEventsComponent } from './event/favorite-events/favorite-events.component';
+import { NotificationListComponent } from './notification/notification-list/notification-list.component';
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
   { path: 'offers', component: OffersViewComponent},
@@ -59,7 +60,9 @@ const routes: Routes = [
   { path: 'offer/:id', component: OfferInfoComponent },
   { path: 'favorite/events', component: FavoriteEventsComponent, canActivate: [AuthGuard],
     data: {auser: 'Auth user'} },
-  { path: '', redirectTo: '/events', pathMatch: 'full' }
+  { path: '', redirectTo: '/events', pathMatch: 'full' },
+  {path: 'notifications', component: NotificationListComponent},
+
 ];
 ///event/${this.eventId}/agenda
 @NgModule({
