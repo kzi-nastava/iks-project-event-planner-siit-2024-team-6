@@ -1,5 +1,4 @@
 import { EventTypeDTO } from "../../event/event-type.service";
-import { Category } from "../../event/model/event.model";
 
 export interface Offer {
   id: number;
