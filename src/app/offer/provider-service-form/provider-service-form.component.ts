@@ -2,9 +2,9 @@ import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OfferService } from '../offer.service';
-import { OfferDTO } from '../model/offer.dto';
 import { forkJoin } from 'rxjs';
 import { EventService } from '../../event/event.service';
+import { NewOfferDTO } from '../../dto/offer-dtos';
 
 @Component({
   selector: 'app-provider-service-form',
@@ -125,7 +125,7 @@ export class ProviderServiceFormComponent implements OnInit {
 
       forkJoin(eventTypeObservables).subscribe({
         next: (eventTypes) => {
-          const createdOffer: OfferDTO = {
+          const createdOffer: NewOfferDTO = {
             name: this.serviceForm.value.name,
             description: this.serviceForm.value.description,
             specifics: this.serviceForm.value.specifics,

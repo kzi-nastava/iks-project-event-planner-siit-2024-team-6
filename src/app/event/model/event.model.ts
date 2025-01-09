@@ -1,3 +1,4 @@
+import { Category } from '../../category/model/category.model';
 import { Offer } from '../../offer/model/offer.model';
 import { Product } from '../../offer/model/offer.model';
 import { EventTypeDTO } from '../event-type.service';
@@ -32,10 +33,6 @@ export interface Event {
     maxPrices: number;
   }
   
-  export interface Category {
-    name: string;
-    description: string;
-  }
   
   export interface OrganizerDTO {
     id: number;

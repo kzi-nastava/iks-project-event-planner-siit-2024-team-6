@@ -23,6 +23,7 @@ import { ActivityFormComponent } from './event/activity-form/activity-form.compo
 import { OfferInfoComponent } from './offer/offer-details/offer-info/offer-info.component';
 import { FavoriteEventsComponent } from './event/favorite-events/favorite-events.component';
 import { NotificationListComponent } from './notification/notification-list/notification-list.component';
+import { AdminCategoryListComponent } from './category/admin-category-list/admin-category-list.component';
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
   { path: 'offers', component: OffersViewComponent},
@@ -60,6 +61,7 @@ const routes: Routes = [
   { path: 'offer/:id', component: OfferInfoComponent },
   { path: 'favorite/events', component: FavoriteEventsComponent, canActivate: [AuthGuard],
     data: {auser: 'Auth user'} },
+  {path: 'categories', component: AdminCategoryListComponent, canActivate: [AuthGuard], data: {role: 'ROLE_ADMIN' }},
   { path: '', redirectTo: '/events', pathMatch: 'full' },
   {path: 'notifications', component: NotificationListComponent},
 

@@ -3,9 +3,9 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from '../offer.service';
 import { Service } from '../model/offer.model';
-import { OfferDTO } from '../model/offer.dto';
 import { EventService } from '../../event/event.service';
 import { forkJoin } from 'rxjs';
+import { NewOfferDTO } from '../../dto/offer-dtos';
 
 @Component({
   selector: 'app-provider-service-edit',
@@ -150,7 +150,7 @@ export class ProviderServiceEditComponent implements OnInit {
       forkJoin(eventTypeObservables).subscribe({
         next: (eventTypes) => {
           // Create the updated offer payload
-          const updatedOffer: OfferDTO = {
+          const updatedOffer: NewOfferDTO = {
             name: this.serviceForm.value.name,
             description: this.serviceForm.value.description,
             specifics: this.serviceForm.value.specifics,

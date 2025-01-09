@@ -15,6 +15,7 @@ import { Interceptor } from './infrastructure/auth/interceptor';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NotificationModule } from './notification/notification.module';
+import { CategoryModule } from './category/category.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { NotificationModule } from './notification/notification.module';
     EventModule,
     NotificationModule,
     AuthModule,
+    CategoryModule,
     MatPaginatorModule,
     CommonModule,
     FormsModule
