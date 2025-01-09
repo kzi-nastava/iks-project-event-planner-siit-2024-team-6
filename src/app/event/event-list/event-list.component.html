@@ -23,5 +23,6 @@
 
 <app-events-filter 
   [isVisible]="isFilterVisible" 
-  (close)="toggleFilter()">
+  (close)="toggleFilter()"
+  (apply)="onFiltersApplied($event)">
 </app-events-filter>

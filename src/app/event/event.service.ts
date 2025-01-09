@@ -91,6 +91,11 @@ export class EventService {
         window.URL.revokeObjectURL(url);
       });
   }
+
+  getFilteredEvents(params: any): Observable<PagedResponse<Event>> {
+    return this.httpClient.get<PagedResponse<Event>>('/api/events/search', { params });
+  }
+  
 }
 
 
