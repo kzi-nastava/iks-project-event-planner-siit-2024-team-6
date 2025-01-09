@@ -7,28 +7,27 @@
   </div>
   
   <div class="filter-section">
-    <h4>Category</h4>
+    <h4>Choose Event Type</h4>
     <select [(ngModel)]="selectedType">
       <option *ngFor="let type of types" [value]="type.name">{{ type.name }}</option>
     </select>
   </div>
+  
   <div class="filter-section">
-    <h4>Criteria</h4>
-    <label>
-      <input type="checkbox" value="option1" /> Option 1
-    </label>
-    <label>
-      <input type="checkbox" value="option2" /> Option 2
-    </label>
+    <h4>Choose Dates</h4>
+    <div class="date-range">
+      <div class="date-field">
+        <label>From:</label>
+        <input type="date" [(ngModel)]="fromDate" class="date-picker" />
+      </div>
+      <div class="date-field">
+        <label>To:</label>
+        <input type="date" [(ngModel)]="toDate" class="date-picker" />
+      </div>
+    </div>
   </div>
-  <div class="filter-section">
-    <h4>Date</h4>
-    <input type="date" class="date-picker" />
-  </div>
-  <div class="filter-section">
-    <h4>Time</h4>
-    <input type="time" class="time-picker" />
-  </div>
+  
+
   <div class="filter-footer">
     <button class="apply-button" (click)="applyFilters()">Apply</button>
     <button class="reset-button" (click)="resetFilters()">Reset</button>
