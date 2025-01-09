@@ -206,3 +206,21 @@ select:focus {
 option {
   font-size: 16px;
 }
+
+
+
+.date-range {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.date-field {
+  display: flex;
+  flex-direction: column;
+}
+.date-range label {
+  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--blue);
+}
