@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { EventService } from '../event.service';
 import { Event } from '../model/event.model';
 import { PageEvent } from '@angular/material/paginator';
 import {PagedResponse} from '../../shared/model/paged-response.model';
+import { MatPaginator } from '@angular/material/paginator';
 
 
 @Component({
@@ -14,12 +15,15 @@ export class EventListComponent implements OnInit {
   
   events: Event[] = [];
   filters: any = {};
+  searchQuery: string = '';
   pageProperties = {
     page: 0,
     pageSize: 8,
     totalCount: 0,
     pageSizeOptions: [4, 8, 12]
  };
+ @ViewChild(MatPaginator) paginator: MatPaginator;
+
 
   isFilterVisible = false;
 
@@ -44,6 +48,7 @@ export class EventListComponent implements OnInit {
 
 
   private getPagedEntities() {
+    console.log("Page ",this.pageProperties.page);
     const params = {
       ...this.pageProperties,
       ...this.filters,
@@ -52,13 +57,21 @@ export class EventListComponent implements OnInit {
     console.log(this.filters);
 
     this.eventService.getFilteredEvents(params).subscribe({
-      next: (response: PagedResponse<Event>) => {
-        this.events = response.content;
-        this.pageProperties.totalCount = response.totalElements;
-        console.log('Paged and filtered events:', response);
+      next: (response: PagedResponse<Event> | null) => {
+        if (response && response.content) {
+          this.events = response.content;
+          this.pageProperties.totalCount = response.totalElements;
+          console.log('Paged and filtered events:', response);
+        } else {
+          this.events = [];
+          this.pageProperties.totalCount = 0;
+          console.warn('No events found or response is null');
+        }
       },
       error: (error) => {
         console.error('Error fetching paged entities:', error);
+        this.events = [];
+        this.pageProperties.totalCount = 0;
       },
     });
   }
@@ -70,8 +83,20 @@ export class EventListComponent implements OnInit {
     console.log('Received filters:', filters);
     this.filters = filters;
     this.pageProperties.page = 0;
+    this.paginator.firstPage();
     this.getPagedEntities();
   }
 
+  onSearch() {
+    this.filters = {
+      name: this.searchQuery,
+      description: this.searchQuery,
+      place: this.searchQuery,
+    };
+    this.pageProperties.page = 0;
+    this.paginator.firstPage();
+    console.log(this.pageProperties.page);
+    this.getPagedEntities();
+  }
 
 }

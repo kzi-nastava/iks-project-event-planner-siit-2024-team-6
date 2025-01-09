@@ -3,8 +3,8 @@
     <h2 class="event-section-title">Events</h2>
     <div class="filter-container">
       <div class="search">
-        <input type="text" placeholder="Search">
-        <button><i class="fa fa-search"></i></button>
+        <input type="text" [(ngModel)]="searchQuery" placeholder="Search">
+        <button (click)="onSearch()"><i class="fa fa-search"></i></button>
       </div>
       <span class="filter-text">Filter</span>
       <button class="filter-icon" (click)="toggleFilter()">
@@ -15,8 +15,17 @@
     </div>
   </div>
   <div class="event-list">
-    <app-event-card *ngFor="let event of events" [event]="event"></app-event-card>
+    <ng-container *ngIf="events.length > 0; else noEvents">
+      <app-event-card *ngFor="let event of events" [event]="event"></app-event-card>
+    </ng-container>
+    <ng-template #noEvents>
+      <div class="no-events-message">
+        <i class="fa fa-calendar-times"></i>
+        <p>No events available. Please try adjusting your search or filter criteria.</p>
+      </div>
+    </ng-template>
   </div>
+  
   <mat-paginator
   [pageSize]="pageProperties.pageSize"
   [pageSizeOptions]="pageProperties.pageSizeOptions"
