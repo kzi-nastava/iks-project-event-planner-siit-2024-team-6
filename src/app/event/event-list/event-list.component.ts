@@ -48,13 +48,11 @@ export class EventListComponent implements OnInit {
 
 
   private getPagedEntities() {
-    console.log("Page ",this.pageProperties.page);
     const params = {
       ...this.pageProperties,
       ...this.filters,
     };
-    console.log("Get paged entities called");
-    console.log(this.filters);
+    console.log("Params: ",params);
 
     this.eventService.getFilteredEvents(params).subscribe({
       next: (response: PagedResponse<Event> | null) => {
