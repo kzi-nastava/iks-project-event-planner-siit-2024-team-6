@@ -187,5 +187,9 @@ export class OfferService {
       return this.httpClient.get<PagedResponse<Offer>>('/api/offers/search', { params });
   }
 
+  getAllCategoriesNames(): Observable<string[]> {
+    return this.httpClient.get<string[]>(`${this.apiUrl}categories`);
+  }
+
 }
   
