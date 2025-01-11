@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminCategoryListComponent } from './admin-category-list/admin-category-list.component';
-import { AdminCategoryCardComponent } from './admin-category-card/admin-category-card.component';
+import { CategoryListComponent } from './category-list/category-list.component';
+import { CategoryCardComponent } from './category-card/category-card.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CategoryDialogComponent } from './category-dialog/category-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -9,13 +9,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CategorySuggestionCardComponent } from './category-suggestion-card/category-suggestion-card.component';
+import { CategorySuggestionListComponent } from './category-suggestion-list/category-suggestion-list.component';
 
 
 @NgModule({
   declarations: [
-    AdminCategoryListComponent,
-    AdminCategoryCardComponent,
-    CategoryDialogComponent
+    CategoryListComponent,
+    CategoryCardComponent,
+    CategoryDialogComponent,
+    CategorySuggestionCardComponent,
+    CategorySuggestionListComponent
   ],
   imports: [
     CommonModule,
@@ -27,8 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule
   ],
   exports:[
-    AdminCategoryListComponent,
-    AdminCategoryCardComponent,
+    CategoryListComponent,
+    CategoryCardComponent,
     CategoryDialogComponent
   ]
 })
