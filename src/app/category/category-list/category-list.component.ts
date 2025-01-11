@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Category } from '../model/category.model';
 import { CategoryService } from '../category.service';
-import { Router } from '@angular/router';
 import { PagedResponse } from '../../shared/model/paged-response.model';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,10 +9,10 @@ import { CategoryDialogComponent } from '../category-dialog/category-dialog.comp
 
 @Component({
   selector: 'app-admin-category-list',
-  templateUrl: './admin-category-list.component.html',
-  styleUrls: ['./admin-category-list.component.css']
+  templateUrl: './category-list.component.html',
+  styleUrls: ['./category-list.component.css']
 })
-export class AdminCategoryListComponent {
+export class CategoryListComponent {
   categories: Category[] = [];
 
   pageProperties = {

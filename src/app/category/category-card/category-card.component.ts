@@ -7,10 +7,10 @@ import { CategoryDialogComponent } from '../category-dialog/category-dialog.comp
 
 @Component({
   selector: 'app-category-card',
-  templateUrl: './admin-category-card.component.html',
-  styleUrls: ['./admin-category-card.component.css'],
+  templateUrl: './category-card.component.html',
+  styleUrls: ['./category-card.component.css'],
 })
-export class AdminCategoryCardComponent {
+export class CategoryCardComponent {
   @Input() category!: Category; // Input to receive category data
   @Output() deleteCategory = new EventEmitter<number>(); // Output for deleting a category
   @Output() updateCategory = new EventEmitter<Category>(); // Output for updating a category
