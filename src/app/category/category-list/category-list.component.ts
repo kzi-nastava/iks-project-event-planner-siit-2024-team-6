@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CategoryDialogComponent } from '../category-dialog/category-dialog.component';
 
 @Component({
-  selector: 'app-admin-category-list',
+  selector: 'app-category-list',
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.css']
 })

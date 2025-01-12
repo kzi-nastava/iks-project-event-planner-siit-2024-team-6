@@ -1,5 +1,5 @@
 /* Add a margin-top to ensure the list is below the navbar */
-.offer-section {
+.category-section {
     margin-top: 100px; /* Adjust this value based on your navbar's height */
     display: flex;
     flex-direction: column;
@@ -13,7 +13,7 @@
   }
   
   /* Optional: Add a slight margin to the top of the filter container */
-  .offer-section-header {
+  .category-section-header {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
@@ -24,7 +24,7 @@
   }
   
   
-  .offer-section-title {
+  .category-section-title {
     font-size: 36px;
     font-weight: 700;
     color: var(--blue);
@@ -66,7 +66,7 @@
     transform: scale(1.1);
   }
   
-  .offer-list {
+  .category-list {
     flex: 3;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
