@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CategorySuggestionCardComponent } from './category-suggestion-card/category-suggestion-card.component';
 import { CategorySuggestionListComponent } from './category-suggestion-list/category-suggestion-list.component';
+import { AdminViewComponent } from './admin-view/admin-view.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { CategorySuggestionListComponent } from './category-suggestion-list/cate
     CategoryCardComponent,
     CategoryDialogComponent,
     CategorySuggestionCardComponent,
-    CategorySuggestionListComponent
+    CategorySuggestionListComponent,
+    AdminViewComponent
   ],
   imports: [
     CommonModule,
