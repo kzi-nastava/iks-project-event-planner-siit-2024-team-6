@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PagedResponse } from '../shared/model/paged-response.model';
-import { Category } from './model/category.model';
+import { Category, CategorySuggestion } from './model/category.model';
 import { NewCategoryDTO } from '../dto/category-dtos';
 
 @Injectable({
@@ -26,6 +26,21 @@ export class CategoryService {
 
     // Make the GET request with headers and params
     return this.http.get<PagedResponse<Category>>(`${this.apiUrl}/categories`, { headers, params });
+  }
+
+  getPagedSuggestions(page: number, pageSize: number): Observable<PagedResponse<CategorySuggestion>> {
+    const token = localStorage.getItem('user'); // Assuming the JWT token is stored in localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`, // Set the Authorization header with the token
+    });
+
+    // Set query parameters for pagination
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', pageSize.toString());
+
+    // Make the GET request with headers and params
+    return this.http.get<PagedResponse<CategorySuggestion>>(`${this.apiUrl}/suggestions`, { headers, params });
   }
 
   deleteCategory(categoryId: number): Observable<string> {
