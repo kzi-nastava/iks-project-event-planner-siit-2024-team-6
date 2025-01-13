@@ -183,6 +183,13 @@ export class OfferService {
   getFavorites(): Observable<Offer[]>{
     return this.httpClient.get<Offer[]>(`${this.apiUrl}favorites`);
   }
+  getFilteredOffers(params: any): Observable<PagedResponse<Offer>> {
+      return this.httpClient.get<PagedResponse<Offer>>('/api/offers/search', { params });
+  }
+
+  getAllCategoriesNames(): Observable<string[]> {
+    return this.httpClient.get<string[]>(`${this.apiUrl}categories`);
+  }
 
 }
   
