@@ -2,12 +2,18 @@
   <div class="category-section-header">
     <h2 class="category-section-title">Categories</h2>
   </div>
-  <div class="category-list">
+  <div  *ngIf="categories && categories.length > 0; else noCategories"  class="category-list">
     <app-category-card *ngFor="let category of categories" [category]="category"
       (updateCategory)="onCategoryUpdated($event)"
       (deleteCategory)="removeCategoryFromList($event)"></app-category-card>
   </div>
-  <mat-paginator [pageSize]="pageProperties.pageSize" [pageSizeOptions]="pageProperties.pageSizeOptions"
+  <ng-template #noCategories>
+    <div class="no-categories-message">
+      <i class="fa fa-times" aria-hidden="true"></i>
+      <p>No categories available.</p>
+    </div>
+  </ng-template>
+  <mat-paginator *ngIf="categories && categories.length > 0" [pageSize]="pageProperties.pageSize" [pageSizeOptions]="pageProperties.pageSizeOptions"
     [length]="pageProperties.totalCount" (page)="pageChanged($event)">
   </mat-paginator>
 </div>

@@ -123,6 +123,14 @@
   .mat-paginator-navigation-next:hover .mat-paginator-icon {
   fill: var(--secondary-pink);
   }
+
+  .no-categories-message {
+    text-align: center;
+    width: 100%;
+    color: #555;
+    font-size: 18px;
+    font-weight: 500;
+  }
   
   
   .fab {
