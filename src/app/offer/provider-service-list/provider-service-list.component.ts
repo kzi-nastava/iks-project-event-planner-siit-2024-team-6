@@ -51,7 +51,7 @@ export class ProviderServiceListComponent {
   onAddClick(): void {
     this.router.navigate(['/service-form']);
   }
-  removeOfferFromList(offerId: number): void {
-    this.offers = this.offers.filter(offer => offer.id !== offerId);
+  removeOfferFromList(): void {
+    this.getPagedEntities();
   }  
 }
