@@ -84,6 +84,21 @@ export class CategoryService {
       { headers }
     );
   }
+
+  rejectCategorySuggestion(id: number, categoryName: string): Observable<CategorySuggestion> {
+    const token = localStorage.getItem('user'); // Assuming JWT token is stored in localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.put<CategorySuggestion>(
+      `${this.apiUrl}/suggestion/reject/${id}?categoryName=${encodeURIComponent(categoryName)}`,
+      null, // No request body needed
+      { headers }
+    );
+  }
+
   getAllCategories(): Observable<string[]> {
     // Retrieve the token (assuming it's stored in localStorage)
     const token = localStorage.getItem('user');
