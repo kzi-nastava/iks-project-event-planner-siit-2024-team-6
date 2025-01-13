@@ -19,8 +19,8 @@
   
   .suggestion-header h2 {
     margin: 0;
-    font-size: 24px; /* Adjusted font size for suggestion name */
-    color: #6B9D8B; /* Greenish color for suggestion name */
+    font-size: 30px; /* Adjusted font size for suggestion name */
+    color: #D3A3B0; /* Greenish color for suggestion name */
     text-align: center;
   }
   
@@ -64,18 +64,18 @@
   }
   
   .btn-edit {
-    background-color: #4A90E2; /* Blue color for edit button */
+    background-color: #8B6A9D; /* Blue color for edit button */
   }
   
   .btn-edit:hover {
-    background-color: #3B7BC1; /* Slightly darker blue on hover */
+    background-color: #7A5B89; /* Slightly darker blue on hover */
   }
   
   .btn-approve {
-    background-color: #5CB85C; /* Green color for approve button */
+    background-color: #D3A3B0; /* Green color for approve button */
   }
   
   .btn-approve:hover {
-    background-color: #4BAF4B; /* Slightly darker green on hover */
+    background-color: #BA8E9A; /* Slightly darker green on hover */
   }
   
