@@ -23,8 +23,8 @@ export class SuggestionEditDialogComponent {
   ) {
     // Initialize form with the existing suggestion data
     this.suggestionForm = this.fb.group({
-      name: [data.suggestion.name, [Validators.required, Validators.minLength(3)]],
-      description: [data.suggestion.description, [Validators.required, Validators.minLength(10)]]
+      name: [data.suggestion.name, [Validators.required, Validators.minLength(1)]],
+      description: [data.suggestion.description, [Validators.required, Validators.minLength(1)]]
     });
   }
 
