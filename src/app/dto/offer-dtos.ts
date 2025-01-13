@@ -1,3 +1,4 @@
+import { NewCategoryDTO } from "./category-dtos";
 import { NewEventTypeDTO } from "./event-type-dtos";
 
 export interface NewOfferDTO {
@@ -10,7 +11,7 @@ export interface NewOfferDTO {
     isAvailable: boolean;
     isDeleted: boolean;
     category: string;
-    categorySuggestion?: string; // Adjust the type based on your frontend needs
+    categorySuggestion?: NewCategoryDTO; // Adjust the type based on your frontend needs
     eventTypes: NewEventTypeDTO[];
     type: string; // "Product" or "Service"
   

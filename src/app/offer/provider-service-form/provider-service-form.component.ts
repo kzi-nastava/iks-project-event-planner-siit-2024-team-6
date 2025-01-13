@@ -5,6 +5,9 @@ import { OfferService } from '../offer.service';
 import { forkJoin } from 'rxjs';
 import { EventService } from '../../event/event.service';
 import { NewOfferDTO } from '../../dto/offer-dtos';
+import { MatDialog } from '@angular/material/dialog';
+import { NewCategoryDTO } from '../../dto/category-dtos';
+import { CategoryDialogComponent } from '../../category/category-dialog/category-dialog.component';
 
 @Component({
   selector: 'app-provider-service-form',
@@ -16,7 +19,7 @@ export class ProviderServiceFormComponent implements OnInit {
   categories: string[] = [];
   eventTypes: string[] = [];
   isFixedDuration: boolean = true; // Default to fixed duration
-  newCategory: string = null;
+  newCategory: NewCategoryDTO = null;
   selectedEventTypes: string[] = [];
   selectedCategory: string = null;
   photos: string[] = [];
@@ -26,7 +29,8 @@ export class ProviderServiceFormComponent implements OnInit {
     private router: Router,
     private offerService: OfferService,
     private eventService: EventService,
-    private cdr: ChangeDetectorRef,  // Inject ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -215,12 +219,15 @@ export class ProviderServiceFormComponent implements OnInit {
     };
   }
   proposeCategory(): void {
-    this.newCategory = this.serviceForm.get('newCategory')?.value;
-    if (this.newCategory.trim()) {
-      console.log('Proposed Category:', this.newCategory);
-      // Add logic to save the new category
-    } else {
-      console.error('New category is empty!');
-    }
+    const dialogRef = this.dialog.open(CategoryDialogComponent, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Proposed Category:', result);
+        this.newCategory = result;
+      }
+    });
   }
 }

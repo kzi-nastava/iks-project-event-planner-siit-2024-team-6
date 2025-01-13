@@ -7,7 +7,8 @@ export interface Category {
 
 export interface CategorySuggestion {
   id: number;
-  suggestion: string;
+  name: string;
+  description: string;
   offerName: string;
   offerDescription: string;
 }
