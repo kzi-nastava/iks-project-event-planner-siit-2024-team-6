@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CategoryService } from '../category.service';
 import { Category } from '../model/category.model';
 import { CategoryDialogComponent } from '../category-dialog/category-dialog.component';
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-category-card',
@@ -19,7 +20,7 @@ export class CategoryCardComponent {
     private snackBar: MatSnackBar,
     private categoryService: CategoryService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   /**
    * Opens a dialog for editing the category.
@@ -39,14 +40,14 @@ export class CategoryCardComponent {
             console.log('Category updated successfully.');
             this.updateCategory.emit(updatedCategory); // Emit updated category to parent
             this.snackBar.open('Category updated successfully!', 'Close', {
-              duration: 3000,
+              duration: 5000,
               verticalPosition: 'top',
             });
           },
           error: (err) => {
             console.error('Error updating category:', err);
             this.snackBar.open('Failed to update category.', 'Close', {
-              duration: 3000,
+              duration: 5000,
               verticalPosition: 'top',
             });
           },
@@ -54,40 +55,37 @@ export class CategoryCardComponent {
       }
     });
   }
-
   /**
    * Handles the deletion of a category.
    * Emits the category ID to the parent component after confirmation.
    */
   onDeleteCategory(id: number): void {
-    const snackBarRef = this.snackBar.open(
-      'Are you sure you want to delete this category?',
-      'Confirm',
-      {
-        duration: 5000,
-        verticalPosition: 'top',
-        horizontalPosition: 'center',
-      }
-    );
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: { question: 'Are you sure you want to delete this category?' }
+    });
 
-    snackBarRef.onAction().subscribe(() => {
-      this.categoryService.deleteCategory(id).subscribe({
-        next: () => {
-          console.log('Category deleted successfully.');
-          this.deleteCategory.emit(id); // Emit ID to parent for list update
-          this.snackBar.open('Category deleted successfully!', 'Close', {
-            duration: 3000,
-            verticalPosition: 'top',
-          });
-        },
-        error: (err) => {
-          console.error('Error deleting category:', err);
-          this.snackBar.open('Failed to delete category.', 'Close', {
-            duration: 3000,
-            verticalPosition: 'top',
-          });
-        },
-      });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('User confirmed the action');
+        this.categoryService.deleteCategory(id).subscribe({
+          next: (response) => {
+            this.deleteCategory.emit(id); // Emit ID to parent for list update
+            this.snackBar.open('Category deleted successfully!', 'Close', {
+              duration: 5000,
+              verticalPosition: 'top',
+            });
+          },
+          error: (err) => {
+            this.snackBar.open('Failed to delete category. There are offers still using it.', 'Close', {
+              duration: 5000,
+              verticalPosition: 'top',
+            });
+          }
+        });
+      } else {
+        console.log('User cancelled the action');
+      }
     });
   }
 }
