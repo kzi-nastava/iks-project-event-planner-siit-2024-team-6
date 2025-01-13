@@ -1,0 +1,85 @@
+/* Dialog container */
+.dialog-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers content vertically */
+    align-items: center; /* Centers content horizontally */
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Dialog title */
+  .dialog-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #4a4a4a;
+  }
+  
+  /* Dialog question text */
+  .dialog-question {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  
+  /* Dialog actions */
+  .dialog-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px; /* Adds space between buttons */
+    margin-top: 20px;
+  }
+  
+  /* Confirm button */
+  .dialog-actions .btn-confirm {
+    background-color: #8b6a9d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dialog-actions .btn-confirm:hover {
+    background-color: #7a5989; /* Slightly darker shade for hover */
+  }
+  
+  /* Cancel button */
+  .dialog-actions .btn-cancel {
+    background-color: #3f4c6d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dialog-actions .btn-cancel:hover {
+    background-color: #354259; /* Slightly darker shade for hover */
+  }
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 600px) {
+    .dialog-container {
+      padding: 15px;
+    }
+  
+    .dialog-actions {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .dialog-actions .btn-confirm,
+    .dialog-actions .btn-cancel {
+      width: 100%;
+    }
+  }
+  

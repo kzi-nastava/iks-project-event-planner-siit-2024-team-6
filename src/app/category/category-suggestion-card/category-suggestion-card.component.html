@@ -1,0 +1,17 @@
+<div class="suggestion-card">
+    <div class="suggestion-header">
+        <h2>{{ suggestion.name }} : {{suggestion.description}}</h2>
+    </div>
+    <div class="suggestion-body">
+        <p>Offer name: {{ suggestion.offerName }}</p>
+        <p>Offer desc: {{ suggestion.offerDescription }}</p>
+    </div>
+    <div class="suggestion-footer">
+        <button (click)="openSuggestionDialog()" class="btn-edit">
+            <i class="fa fa-edit"></i> Edit
+        </button>
+        <button (click)="onApproveSuggestion(suggestion.id)" class="btn-approve">
+            <i class="fa fa-check"></i> Approve
+        </button>
+    </div>
+</div>

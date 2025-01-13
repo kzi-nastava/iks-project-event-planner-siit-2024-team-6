@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminCategoryCardComponent } from './admin-category-card.component';
+import { CategoryCardComponent } from './category-card.component';
 
 describe('AdminCategoryCardComponent', () => {
-  let component: AdminCategoryCardComponent;
-  let fixture: ComponentFixture<AdminCategoryCardComponent>;
+  let component: CategoryCardComponent;
+  let fixture: ComponentFixture<CategoryCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AdminCategoryCardComponent]
+      declarations: [CategoryCardComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AdminCategoryCardComponent);
+    fixture = TestBed.createComponent(CategoryCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

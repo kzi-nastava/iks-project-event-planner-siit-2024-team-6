@@ -16,10 +16,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NotificationModule } from './notification/notification.module';
 import { CategoryModule } from './category/category.module';
+import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     HttpClientModule,

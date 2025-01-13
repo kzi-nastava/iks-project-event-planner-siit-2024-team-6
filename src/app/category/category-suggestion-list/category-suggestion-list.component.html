@@ -1,0 +1,18 @@
+<div class="suggestion-section">
+    <div class="suggestion-section-header">
+        <h2 class="suggestion-section-title">Suggestions</h2>
+    </div>
+    <div  *ngIf="suggestions && suggestions.length > 0; else noSuggestions" class="suggestion-list">
+        <app-category-suggestion-card *ngFor="let suggestion of suggestions" [suggestion]="suggestion"
+            (approvedSuggestion)="removeSuggestionFromList($event)"></app-category-suggestion-card>
+    </div>
+    <ng-template #noSuggestions>
+        <div class="no-suggestions-message">
+          <i class="fa fa-times" aria-hidden="true"></i>
+          <p>No suggestions.</p>
+        </div>
+      </ng-template>
+    <mat-paginator *ngIf="suggestions && suggestions.length > 0" [pageSize]="pageProperties.pageSize" [pageSizeOptions]="pageProperties.pageSizeOptions"
+        [length]="pageProperties.totalCount" (page)="pageChanged($event)">
+    </mat-paginator>
+</div>
