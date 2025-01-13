@@ -84,4 +84,24 @@ export class CategoryService {
       { headers }
     );
   }
+  getAllCategories(): Observable<string[]> {
+    // Retrieve the token (assuming it's stored in localStorage)
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    const url = `${this.apiUrl}/category-names`;
+
+    // Perform the HTTP GET request to retrieve categories
+    return this.http.get<string[]>(url, { headers });
+  }
+  updateCategorySuggestion(id: number, dto: NewCategoryDTO): Observable<CategorySuggestion> {
+    const token = localStorage.getItem('user'); // Assuming JWT token is stored in localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`, // Set Authorization header
+      'Content-Type': 'application/json' // Ensure correct content type
+    });
+
+    return this.http.put<CategorySuggestion>(`${this.apiUrl}/suggestion/${id}`, dto, { headers });
+  }
 }

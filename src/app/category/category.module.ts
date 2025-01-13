@@ -8,10 +8,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CategorySuggestionCardComponent } from './category-suggestion-card/category-suggestion-card.component';
 import { CategorySuggestionListComponent } from './category-suggestion-list/category-suggestion-list.component';
 import { AdminViewComponent } from './admin-view/admin-view.component';
+import { SuggestionEditDialogComponent } from './suggestion-edit-dialog/suggestion-edit-dialog.component';
 
 
 @NgModule({
@@ -21,7 +25,8 @@ import { AdminViewComponent } from './admin-view/admin-view.component';
     CategoryDialogComponent,
     CategorySuggestionCardComponent,
     CategorySuggestionListComponent,
-    AdminViewComponent
+    AdminViewComponent,
+    SuggestionEditDialogComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +35,10 @@ import { AdminViewComponent } from './admin-view/admin-view.component';
     MatInputModule,
     MatFormFieldModule,
     MatDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelect,
+    MatOption,
+    MatProgressSpinnerModule
   ],
   exports:[
     CategoryListComponent,

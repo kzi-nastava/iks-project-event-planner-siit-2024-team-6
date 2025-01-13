@@ -1,0 +1,42 @@
+<h2 mat-dialog-title class="dialog-title">Review Suggestion</h2>
+
+<div mat-dialog-content class="dialog-container">
+  <!-- Show a loading spinner while categories are being fetched -->
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Loading categories...</p>
+  </div>
+
+  <!-- Category selection dropdown -->
+  <div *ngIf="!isLoading">
+    <form [formGroup]="suggestionForm" class="dialog-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Select Existing Category</mat-label>
+        <mat-select [(value)]="selectedCategory">
+          <mat-option *ngFor="let category of categories" [value]="category">
+            {{ category }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="divider">OR</div>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Category Name</mat-label>
+        <input matInput formControlName="name" placeholder="Enter category name" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" placeholder="Enter description"></textarea>
+      </mat-form-field>
+    </form>
+  </div>
+</div>
+
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-button class="btn-cancel" (click)="onCancel()">Cancel</button>
+  <button mat-button class="btn-save" (click)="onSubmit()" [disabled]="!formIsValid()">
+    Save
+  </button>
+</div>
