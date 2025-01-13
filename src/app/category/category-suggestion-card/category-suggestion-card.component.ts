@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CategoryService } from '../category.service';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
+import { SuggestionEditDialogComponent } from '../suggestion-edit-dialog/suggestion-edit-dialog.component';
+import { ReloadService } from '../../shared/services/reload.service';
 
 @Component({
   selector: 'app-category-suggestion-card',
@@ -12,13 +14,13 @@ import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dial
 })
 export class CategorySuggestionCardComponent {
   @Input() suggestion!: CategorySuggestion; // Input to receive category data
-  @Output() approvedSuggestion = new EventEmitter<number>(); // Output for deleting a category
-  @Output() updateSuggestion = new EventEmitter<CategorySuggestion>(); // Output for updating a category
+  @Output() approvedSuggestion = new EventEmitter<number>(); // Output for removing suggestion
 
   constructor(
     private snackBar: MatSnackBar,
     private categoryService: CategoryService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private reloadService: ReloadService
   ) { }
 
   onApproveSuggestion(id: number): void {
@@ -32,11 +34,16 @@ export class CategorySuggestionCardComponent {
         console.log('User confirmed the action');
         this.categoryService.approveSuggestion(id).subscribe({
           next: (response) => {
-            console.log('Suggestion approved:', response);
             this.approvedSuggestion.emit(id);
+            this.reloadService.emitReload('admin-categories');
+            this.snackBar.open("You have successfully approved the category suggestion.", 'Close', {
+              duration: 5000, // Duration in milliseconds
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+              panelClass: ['success-snackbar'] // Custom style for error
+            });
           },
           error: (err) => {
-            console.error('Error approving suggestion:', err);
             this.snackBar.open(err, 'Close', {
               duration: 5000, // Duration in milliseconds
               horizontalPosition: 'center',
@@ -51,69 +58,56 @@ export class CategorySuggestionCardComponent {
     });
   
   }
-  openSuggestionDialog(arg0: CategorySuggestion) {
-    throw new Error('Method not implemented.');
-  }
-  /*
-    openSuggestionDialog(suggestion: CategorySuggestion): void {
-      const dialogRef = this.dialog.open(CategoryDialogComponent, {
-        width: '400px',
-        data: { category },
-      });
-  
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          const updatedCategory = { ...category, ...result };
-          this.categoryService.updateCategory(category.id, updatedCategory).subscribe({
-            next: () => {
-              console.log('Category updated successfully.');
-              this.updateCategory.emit(updatedCategory); // Emit updated category to parent
-              this.snackBar.open('Category updated successfully!', 'Close', {
-                duration: 3000,
+  openSuggestionDialog() {
+    const dialogRef = this.dialog.open(SuggestionEditDialogComponent, {
+      width: '500px',
+      data: { suggestion: this.suggestion }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        if (result.selectedCategory) {
+          this.categoryService.rejectCategorySuggestion(this.suggestion.id, result.selectedCategory).subscribe({
+            next: (response) => {
+              this.approvedSuggestion.emit(this.suggestion.id);
+              this.snackBar.open('Suggestion rejected successfully.', 'Close', {
+                duration: 5000,
+                verticalPosition: 'top'
+              });
+              // Optionally reload the list or remove the rejected suggestion from the list
+            },
+            error: (err) => {
+              console.error('Failed to reject suggestion:', err);
+              this.snackBar.open('Failed to reject suggestion. Please try again.', 'Close', {
+                duration: 5000,
+                verticalPosition: 'top'
+              });
+            }
+          });
+        } else if (result.updatedSuggestion) {
+          console.log('Updated suggestion:', result.updatedSuggestion);
+          this.categoryService.updateCategorySuggestion(this.suggestion.id, result.updatedSuggestion).subscribe({
+            next: (response) => {
+              this.approvedSuggestion.emit(this.suggestion.id);
+              this.reloadService.emitReload('admin-categories');
+              this.snackBar.open("Suggestion updated and approved successfully!", 'Close', {
+                duration: 5000, // Duration in milliseconds
+                horizontalPosition: 'center',
                 verticalPosition: 'top',
+                panelClass: ['success-snackbar'] // Custom style for error
               });
             },
             error: (err) => {
-              console.error('Error updating category:', err);
-              this.snackBar.open('Failed to update category.', 'Close', {
-                duration: 3000,
+              this.snackBar.open("Failed to update the suggestion. Please try again.", 'Close', {
+                duration: 5000, // Duration in milliseconds
+                horizontalPosition: 'center',
                 verticalPosition: 'top',
+                panelClass: ['error-snackbar'] // Custom style for error
               });
-            },
+            }
           });
         }
-      });
-    }
-  
-    onApproveSuggestion(id: number): void {
-      const snackBarRef = this.snackBar.open(
-        'Are you sure you want to delete this category?',
-        'Confirm',
-        {
-          duration: 5000,
-          verticalPosition: 'top',
-          horizontalPosition: 'center',
-        }
-      );
-  
-      snackBarRef.onAction().subscribe(() => {
-        this.categoryService.deleteCategory(id).subscribe({
-          next: () => {
-            console.log('Category deleted successfully.');
-            this.deleteCategory.emit(id); // Emit ID to parent for list update
-            this.snackBar.open('Category deleted successfully!', 'Close', {
-              duration: 3000,
-              verticalPosition: 'top',
-            });
-          },
-          error: (err) => {
-            console.error('Error deleting category:', err);
-            this.snackBar.open('Failed to delete category.', 'Close', {
-              duration: 3000,
-              verticalPosition: 'top',
-            });
-          },
-        });
-      });
-    }*/
+      }
+    });
+  }
 }

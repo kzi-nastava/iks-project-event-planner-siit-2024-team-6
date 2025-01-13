@@ -44,13 +44,6 @@ export class CategorySuggestionListComponent {
       error: (err) => console.error(err),
     });
   }
-  onSuggestionUpdated(updated: CategorySuggestion): void {
-    /*
-    const index = this.categories.findIndex((cat) => cat.id === updatedCategory.id);
-    if (index > -1) {
-      this.categories[index] = updatedCategory;
-    }*/
-  }
 
   removeSuggestionFromList(id: number): void {
     this.suggestions = this.suggestions.filter(suggestion => suggestion.id !== id);
