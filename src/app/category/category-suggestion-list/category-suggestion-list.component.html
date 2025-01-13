@@ -5,7 +5,7 @@
     <div  *ngIf="suggestions && suggestions.length > 0; else noSuggestions" class="suggestion-list">
         <app-category-suggestion-card *ngFor="let suggestion of suggestions" [suggestion]="suggestion"
             (updateSuggestion)="onSuggestionUpdated($event)"
-            (approveSuggestion)="removeSuggestionFromList($event)"></app-category-suggestion-card>
+            (approvedSuggestion)="removeSuggestionFromList($event)"></app-category-suggestion-card>
     </div>
     <ng-template #noSuggestions>
         <div class="no-suggestions-message">

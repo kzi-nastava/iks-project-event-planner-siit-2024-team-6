@@ -71,4 +71,17 @@ export class CategoryService {
 
     return this.http.put<Category>(`${this.apiUrl}/category/${id}`, updatedCategory, { headers });
   }
+
+  approveSuggestion(id: number): Observable<CategorySuggestion> {
+    const token = localStorage.getItem('user'); // Assuming the JWT token is stored in localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`, // Set the Authorization header with the token
+    });
+
+    return this.http.put<CategorySuggestion>(
+      `${this.apiUrl}/suggestion/approve/${id}`, 
+      {}, // No request body needed
+      { headers }
+    );
+  }
 }

@@ -3,6 +3,7 @@ import { CategorySuggestion } from '../model/category.model';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CategoryService } from '../category.service';
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-category-suggestion-card',
@@ -11,7 +12,7 @@ import { CategoryService } from '../category.service';
 })
 export class CategorySuggestionCardComponent {
   @Input() suggestion!: CategorySuggestion; // Input to receive category data
-  @Output() approveSuggestion = new EventEmitter<number>(); // Output for deleting a category
+  @Output() approvedSuggestion = new EventEmitter<number>(); // Output for deleting a category
   @Output() updateSuggestion = new EventEmitter<CategorySuggestion>(); // Output for updating a category
 
   constructor(
@@ -19,9 +20,36 @@ export class CategorySuggestionCardComponent {
     private categoryService: CategoryService,
     private dialog: MatDialog
   ) { }
+
+  onApproveSuggestion(id: number): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: { question: 'Are you sure you want to approve this suggestion?' }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('User confirmed the action');
+        this.categoryService.approveSuggestion(id).subscribe({
+          next: (response) => {
+            console.log('Suggestion approved:', response);
+            this.approvedSuggestion.emit(id);
+          },
+          error: (err) => {
+            console.error('Error approving suggestion:', err);
+            this.snackBar.open(err, 'Close', {
+              duration: 5000, // Duration in milliseconds
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+              panelClass: ['error-snackbar'] // Custom style for error
+            });
+          }
+        });
+      } else {
+        console.log('User cancelled the action');
+      }
+    });
   
-  onApproveSuggestion(arg0: number) {
-    throw new Error('Method not implemented.');
   }
   openSuggestionDialog(arg0: CategorySuggestion) {
     throw new Error('Method not implemented.');
