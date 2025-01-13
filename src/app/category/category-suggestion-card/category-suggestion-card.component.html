@@ -7,7 +7,7 @@
         <p>Offer desc: {{ suggestion.offerDescription }}</p>
     </div>
     <div class="suggestion-footer">
-        <button (click)="openSuggestionDialog(suggestion)" class="btn-edit">
+        <button (click)="openSuggestionDialog()" class="btn-edit">
             <i class="fa fa-edit"></i> Edit
         </button>
         <button (click)="onApproveSuggestion(suggestion.id)" class="btn-approve">
