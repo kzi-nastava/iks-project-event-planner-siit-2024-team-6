@@ -15,6 +15,14 @@ import { ProviderOfferCardComponent } from './provider-offer-card/provider-offer
 import { ProviderServiceFormComponent } from './provider-service-form/provider-service-form.component';
 import { ProviderServiceEditComponent } from './provider-service-edit/provider-service-edit.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ProductCardComponent } from './product/product-card/product-card.component';
+import { ProductListComponent } from './product/product-list/product-list.component';
+import { ProductsViewComponent } from './product/products-view/products-view.component';
+import { ProductDetailsComponent } from './product/product-details/product-details.component';
+import { ProviderProductCardComponent } from './product/provider/provider-product-card/provider-product-card.component';
+import { ProviderProductEditComponent } from './product/provider/provider-product-edit/provider-product-edit.component';
+import { ProviderProductFilterComponent } from './product/provider/provider-product-filter/provider-product-filter.component';
+import { ProviderProductFormComponent } from './product/provider/provider-product-form/provider-product-form.component';
 
 
 @NgModule({
@@ -30,7 +38,15 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ProviderServiceViewComponent,
     ProviderOfferCardComponent,
     ProviderServiceFormComponent,
-    ProviderServiceEditComponent
+    ProviderServiceEditComponent,
+    ProductCardComponent,
+    ProductListComponent,
+    ProductsViewComponent,
+    ProductDetailsComponent,
+    ProviderProductCardComponent,
+    ProviderProductEditComponent,
+    ProviderProductFilterComponent,
+    ProviderProductFormComponent
   ],
   imports: [
     CommonModule,
