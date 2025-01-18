@@ -25,11 +25,14 @@ import { FavoriteEventsComponent } from './event/favorite-events/favorite-events
 import { NotificationListComponent } from './notification/notification-list/notification-list.component';
 import { CategoryListComponent } from './category/category-list/category-list.component';
 import { AdminViewComponent } from './category/admin-view/admin-view.component';
+import { ProviderProductViewComponent } from './offer/provider-product-view/provider-product-view.component';
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
   { path: 'offers', component: OffersViewComponent},
   { path: 'my-services', component: ProviderServiceViewComponent , canActivate: [AuthGuard],
     data: {role: 'ROLE_PROVIDER'}},
+    { path: 'my-products', component: ProviderProductViewComponent , canActivate: [AuthGuard],
+      data: {role: 'ROLE_PROVIDER'}},
   { path: 'service-form', component: ProviderServiceFormComponent , canActivate: [AuthGuard],
     data: {role: 'ROLE_PROVIDER'}},
   { path: 'service-edit', component: ProviderServiceEditComponent , canActivate: [AuthGuard],

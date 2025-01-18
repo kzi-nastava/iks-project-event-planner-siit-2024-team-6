@@ -13,7 +13,9 @@ import { NewOfferDTO } from '../dto/offer-dtos';
 export class OfferService {
   private offerList: Offer[] = [];
   private servicesList: Service[] = [];
+  private productsList: Product[] = [];
   private editService: Service = null;
+  private editProduct: Product = null;
 
   /*constructor() {
     for (let offerObj of OFFERS) {
@@ -80,6 +82,21 @@ export class OfferService {
     return this.httpClient.get<PagedResponse<Service>>(url, { params, headers }
     );
   }
+  
+  getAllProviderProducts(pageProperties?: { page: number; pageSize: number }): Observable<PagedResponse<Product>> {
+    let params = new HttpParams();
+  
+    if (pageProperties) {
+      params = params
+        .set('page', pageProperties.page.toString())
+        .set('size', pageProperties.pageSize.toString());
+    }
+
+    const url = `${this.apiUrlProvider}my-services`; // Ensure no extra slash
+
+    return this.httpClient.get<PagedResponse<Product>>(url, { params }
+    );
+  }
 
   getTopFive(): Observable<Offer[]> {
     return this.httpClient.get<Offer[]>(this.apiUrl + `top-five`);
@@ -114,12 +131,34 @@ export class OfferService {
     return this.httpClient.put<Offer>(url, offer, { headers });
   }
 
+  updateProduct(id: number, offer: NewOfferDTO): Observable<Offer> {
+    // Retrieve the token (assuming it's stored in localStorage)
+    const token = localStorage.getItem('user');
+    console.log("TOKEN");
+    console.log(token);
+  
+    // Set the Authorization header with the JWT token
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    });
+  
+    const url = `${this.apiUrlProvider}${id}`; // Ensure no extra slash
+    console.log("Request URL:", url);
+
+    return this.httpClient.put<Offer>(url, offer, { headers });
+  }
   getServices(): Service[] {
     return this.servicesList;
   }
-  
+  getProducts(): Product[] {
+    return this.productsList;
+  }
   addService(service: Service): void{
     this.servicesList.push(service);
+  }
+
+  addProduct(product: Product): void{
+    this.productsList.push(product);
   }
 
   getAllCategories(): Observable<string[]> {
@@ -137,9 +176,20 @@ export class OfferService {
   setService(service: Service): void{
       this.editService = service;
   }
+
+  setProduct(product: Product): void{
+    this.editProduct = product;
+}
+
   getService(): Service{
     const x = this.editService;
     this.setService(null);
+    return x;
+  }
+
+  getProduct(): Product{
+    const x = this.editProduct;
+    this.setProduct(null);
     return x;
   }
 
@@ -161,6 +211,16 @@ export class OfferService {
 
     return this.httpClient.post<NewOfferDTO>(`${this.apiUrlProvider}`, newOffer, { headers });
   }
+
+  createProduct(newOffer: NewOfferDTO): Observable<NewOfferDTO> {
+    return this.httpClient.post<NewOfferDTO>(`${this.apiUrlProvider}`, newOffer);
+  }
+
+  deleteProduct(offerId: number): Observable<void> {
+    const url = `${this.apiUrlProvider}${offerId}`;
+    return this.httpClient.delete<void>(url);
+  }
+  
   searchOffers(name: string, page: number, size: number): Observable<any> {
     const token = localStorage.getItem('user'); // Retrieve token from localStorage
     const headers = new HttpHeaders({

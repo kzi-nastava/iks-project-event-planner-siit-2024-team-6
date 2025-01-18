@@ -15,13 +15,12 @@ import { ProviderOfferCardComponent } from './provider-offer-card/provider-offer
 import { ProviderServiceFormComponent } from './provider-service-form/provider-service-form.component';
 import { ProviderServiceEditComponent } from './provider-service-edit/provider-service-edit.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { ProductCardComponent } from './product/product-card/product-card.component';
-import { ProductListComponent } from './product/product-list/product-list.component';
-import { ProductsViewComponent } from './product/products-view/products-view.component';
-import { ProviderProductCardComponent } from './product/provider/provider-product-card/provider-product-card.component';
-import { ProviderProductEditComponent } from './product/provider/provider-product-edit/provider-product-edit.component';
-import { ProviderProductFilterComponent } from './product/provider/provider-product-filter/provider-product-filter.component';
-import { ProviderProductFormComponent } from './product/provider/provider-product-form/provider-product-form.component';
+import { ProviderProductCardComponent } from './provider-product-card/provider-product-card.component';
+import { ProviderProductEditComponent } from './provider-product-edit/provider-product-edit.component';
+import { ProviderProductFilterComponent } from './provider-product-filter/provider-product-filter.component';
+import { ProviderProductFormComponent } from './provider-product-form/provider-product-form.component';
+import { ProviderProductViewComponent } from './provider-product-view/provider-product-view.component';
+import { ProviderProductListComponent } from './provider-product-list/provider-product-list.component';
 
 
 @NgModule({
@@ -38,13 +37,12 @@ import { ProviderProductFormComponent } from './product/provider/provider-produc
     ProviderOfferCardComponent,
     ProviderServiceFormComponent,
     ProviderServiceEditComponent,
-    ProductCardComponent,
-    ProductListComponent,
-    ProductsViewComponent,
     ProviderProductCardComponent,
     ProviderProductEditComponent,
     ProviderProductFilterComponent,
-    ProviderProductFormComponent
+    ProviderProductFormComponent,
+    ProviderProductViewComponent,
+    ProviderProductListComponent
   ],
   imports: [
     CommonModule,

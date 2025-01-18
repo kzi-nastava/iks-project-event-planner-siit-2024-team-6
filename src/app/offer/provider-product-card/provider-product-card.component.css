@@ -1,7 +1,8 @@
-.product-card {
+/* Offer Card */
+.offer-card {
     position: relative;
     width: 270px;
-    height: 400px;
+    height: 430px;
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
@@ -10,19 +11,22 @@
     transition: transform 0.3s, box-shadow 0.3s;
     background-color: #fff;
     margin-bottom: 30px;
-}
-
-.product-card:hover {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .offer-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-}
-
-.product-card:hover .product-card-title {
+  }
+  
+  .offer-card:hover .offer-card-title {
     background-color: var(--pink);
     color: #fff;
-}
-
-.sale-tag {
+  }
+  
+  /* Sale Tag */
+  .sale-tag {
     position: absolute;
     top: 10px;
     left: 10px;
@@ -33,9 +37,10 @@
     padding: 6px 8px;
     border-radius: 4px;
     z-index: 2;
-}
-
-.favorite-icon {
+  }
+  
+  /* Favorite Icon */
+  .favorite-icon {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -49,44 +54,37 @@
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
     z-index: 2;
-}
-
-.favorite-icon:hover {
+  }
+  
+  .favorite-icon:hover {
     background: rgba(211, 163, 176, 0.8);
     transform: scale(1.1);
-}
-
-.favorite-icon i {
-    font-size: 16px;
-    color: var(--pink);
-}
-
-.favorite-icon svg {
+  }
+  
+  .favorite-icon svg {
     width: 30px;
     height: 30px;
     fill: var(--pink);
-}
-
-.favorite-icon svg:hover {
+  }
+  
+  .favorite-icon svg:hover {
     fill: #c55b5b;
-}
-
-.info-item svg {
-    fill: var(--pink)
-}
-.product-card-image {
+  }
+  
+  /* Offer Image */
+  .offer-card-image {
     position: relative;
     width: 100%;
     height: 200px;
-}
-
-.product-card-image img {
+  }
+  
+  .offer-card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.product-card-title {
+  }
+  
+  .offer-card-title {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -99,49 +97,59 @@
     padding: 8px 0;
     margin: 0;
     transition: background-color 0.3s;
-}
-
-.product-card-content {
+  }
+  
+  /* Offer Content */
+  .offer-card-content {
     padding: 15px;
-    text-align: left;
-}
-
-.product-card-info {
+    display: flex;
+    flex-direction: column;/* Allows content to take available space */
+  }
+  
+  .offer-card-info {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-top: 10px;
-}
-
-.info-item {
+  }
+  
+  /* Info Item */
+  .info-item {
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 14px;
     color: var(--dark-grey);
-}
-
-.info-item span {
+  }
+  
+  .info-item svg {
+    fill: var(--pink);
+  }
+  
+  .info-item span {
     font-weight: bold;
     color: var(--dark-grey);
-}
-
-.sale-price {
+  }
+  
+  /* Sale Price */
+  .sale-price {
     color: var(--pink);
     font-weight: bold;
     margin-right: 8px;
     font-size: 18px;
-}
-
-.strikethrough {
+  }
+  
+  /* Strikethrough Price */
+  .strikethrough {
     text-decoration: line-through;
     color: #999;
-}
-
-.product-description {
+  }
+  
+  /* Offer Description */
+  .offer-description {
     font-size: 14px;
     color: #555;
-    margin: -5px 25px;
+    margin: 0 15px;
     line-height: 1.6;
     max-height: 3.2em;
     overflow: hidden;
@@ -149,27 +157,73 @@
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-}
-
-.rating {
+  }
+  
+  /* Rating */
+  .rating {
     position: absolute;
-    bottom: 30px;
-    right: 30px;
+    bottom: 60px;
+    right: 15px;
     display: flex;
     align-items: center;
     gap: 5px;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     color: var(--dark-grey);
-}
-
-.rating svg {
-    width: 25px;
-    height: 25px;
-    fill: var(--dark-grey);
-}
-
-.rating span {
-    font-size: 17px;
+  }
+  
+  .rating svg {
+    width: 20px;
+    height: 20px;
+    fill: #FFD700; /* Gold color for the star */
+  }
+  
+  .rating span {
+    font-size: 16px;
     color: var(--dark-grey);
-}
+  }
+  
+  /* Offer Footer */
+  .offer-footer {
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    margin-top: auto; /* Pushes the footer to the bottom */
+  }
+  
+  /* Button Container */
+  .offer-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Space between buttons */
+  }
+  
+  /* Common Button Styles */
+  .offer-actions .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Edit Button */
+  .offer-actions .edit-btn {
+    background-color: #8B6A9D;
+  }
+  
+  .offer-actions .edit-btn:hover {
+    background-color: #7A5A8B;
+  }
+  
+  /* Delete Button */
+  .offer-actions .delete-btn {
+    background-color: #3F4C6D;
+  }
+  
+  .offer-actions .delete-btn:hover {
+    background-color: #37425A;
+  }
+  
