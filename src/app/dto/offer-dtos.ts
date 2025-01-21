@@ -22,6 +22,18 @@ export interface NewOfferDTO {
     preciseDuration?: number;
     latestReservation?: number;
     latestCancelation?: number;
-    isReservationAutoApproved: boolean;
+    isReservationAutoApproved?: boolean;
   }
-  
+  export interface NewProductDTO {
+    name: string;
+    description: string;
+    price: number;
+    sale?: number;
+    photos: string[];
+    isVisible: boolean;
+    isAvailable: boolean;
+    isDeleted: boolean;
+    category: string;
+    categorySuggestion?: NewCategoryDTO; // Adjust the type based on your frontend needs
+    eventTypes: NewEventTypeDTO[];
+  }

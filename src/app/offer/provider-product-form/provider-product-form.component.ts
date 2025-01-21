@@ -8,6 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { CategoryDialogComponent } from '../../category/category-dialog/category-dialog.component';
 import { forkJoin } from 'rxjs';
 import { NewOfferDTO } from '../../dto/offer-dtos';
+import { CategoryService } from '../../category/category.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-provider-product-form',
@@ -23,39 +25,63 @@ export class ProviderProductFormComponent {
   selectedEventTypes: string[] = [];
   selectedCategory: string = null;
   photos: string[] = [];
+  allCategories: { id: number; name: string }[] = [];
 
   constructor(
+    private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
     private offerService: OfferService,
     private eventService: EventService,
     private cdr: ChangeDetectorRef,
     private dialog: MatDialog,
+    private categoryService: CategoryService
   ) {}
 
   ngOnInit(): void {
-    this.fetchEventTypes();
     this.fetchCategories();
+    this.loadAllCategories();
     this.productForm = this.fb.group({
       name: [null, Validators.required],
       description: [null, Validators.required],
       price: [null, [Validators.required, Validators.min(0.1)]],
       discount: [null, [Validators.min(0)]],
-      reservationDeadline: [null, [Validators.required, Validators.min(0.1)]],
-      cancellationDeadline: [null, [Validators.required, Validators.min(0.1)]],
-      eventTypes: [this.selectedEventTypes, this.validateEventTypes()],
+      eventTypes: [this.selectedEventTypes],
       confirmation: ['automatic'],
-      durationType: ['fixed'], // Initialize to 'fixed'
       visibility: [false],
       availability: [false],
-      specifics: [''],
       photos:[[]],
       newCategory: [''],
       category: [Validators.required]
     });
-    this.isFixedDuration = true;
-    this.toggleDurationFields();
   }
+
+  loadAllCategories(): void {
+    this.http
+      .get<{ content: { id: number; name: string }[] }>('/api/admins/categories')
+      .subscribe({
+        next: (data) => {
+          this.allCategories = data.content; // Извлекаем массив из ключа content
+          console.log('Loaded categories:', this.allCategories);
+          this.initCategSelect();
+        },
+        error: (err) => {
+          console.error('Failed to load categories:', err);
+        }
+      });
+  }
+
+  initCategSelect(){
+    this.selectedCategory = this.allCategories[0].name;
+    const c = this.allCategories.find(cat => cat.name == this.selectedCategory);
+    console.log('z:', this.selectedCategory);
+    this.fetchEventTypes(c.id);
+  }
+  onCategorySelect() {
+    this.selectedCategory = this.productForm.value.category;
+    const c = this.allCategories.find(cat => cat.name == this.selectedCategory);
+    this.fetchEventTypes(c.id);
+    }
 
   onPhotoError(event: Event): void {
     const target = event.target as HTMLImageElement;
@@ -64,38 +90,6 @@ export class ProviderProductFormComponent {
 
   goBack(): void {
     this.router.navigate(['/my-products']);
-  }
-
-  onDurationTypeChange(type: string): void {
-    this.isFixedDuration = type === 'fixed';
-    this.toggleDurationFields();
-  }
-
-  toggleDurationFields(): void {
-    if (this.isFixedDuration) {
-      this.productForm.get('confirmation')?.enable();
-    } else {
-      this.productForm.get('confirmation')?.disable();
-    }
-    this.updateDurationValidation();
-  }
-
-  updateDurationValidation(): void {
-    const isFixed = this.isFixedDuration;
-
-    if (isFixed) {
-      this.productForm.get('duration')?.setValidators([Validators.required, Validators.min(1)]);
-      this.productForm.get('minDuration')?.clearValidators();
-      this.productForm.get('maxDuration')?.clearValidators();
-    } else {
-      this.productForm.get('duration')?.clearValidators();
-      this.productForm.get('minDuration')?.setValidators([Validators.required, Validators.min(1)]);
-      this.productForm.get('maxDuration')?.setValidators([Validators.required, Validators.min(1)]);
-    }
-
-    this.productForm.get('duration')?.updateValueAndValidity();
-    this.productForm.get('minDuration')?.updateValueAndValidity();
-    this.productForm.get('maxDuration')?.updateValueAndValidity();
   }
 
   onEventTypeChange(eventType: string, event: Event): void {
@@ -123,18 +117,11 @@ export class ProviderProductFormComponent {
           const createdOffer: NewOfferDTO = {
             name: this.productForm.value.name,
             description: this.productForm.value.description,
-            specifics: this.productForm.value.specifics,
             price: this.productForm.value.price,
             sale: this.productForm.value.discount,
             isVisible: this.productForm.value.visibility,
             isAvailable: this.productForm.value.availability,
             type: 'product',
-            preciseDuration: this.productForm.value.duration || 0,
-            minDuration: this.productForm.value.minDuration || 0,
-            maxDuration: this.productForm.value.maxDuration || 0,
-            latestReservation: this.productForm.value.reservationDeadline,
-            latestCancelation: this.productForm.value.cancellationDeadline,
-            isReservationAutoApproved: this.productForm.value.isFixedDuration !== 'fixed' && this.productForm.value.confirmation === 'automatic',
             eventTypes: eventTypes,
             photos: this.photos,
             isDeleted: false,
@@ -162,10 +149,10 @@ export class ProviderProductFormComponent {
     }
   }
 
-  fetchEventTypes(): void {
-    this.eventService.getAllNames().subscribe({
+  fetchEventTypes(categoryId: number): void {
+    this.eventService.getEventTypesByCategory(categoryId).subscribe({
       next: (data) => {
-        this.eventTypes = data; 
+        this.eventTypes = data.map(event => event.name);; 
       },
       error: (err) => {
         console.error('Error fetching event types:', err);

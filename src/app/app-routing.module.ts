@@ -26,6 +26,7 @@ import { NotificationListComponent } from './notification/notification-list/noti
 import { CategoryListComponent } from './category/category-list/category-list.component';
 import { AdminViewComponent } from './category/admin-view/admin-view.component';
 import { ProviderProductViewComponent } from './offer/provider-product-view/provider-product-view.component';
+import { ProviderProductFormComponent } from './offer/provider-product-form/provider-product-form.component';
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
   { path: 'offers', component: OffersViewComponent},
@@ -35,6 +36,8 @@ const routes: Routes = [
       data: {role: 'ROLE_PROVIDER'}},
   { path: 'service-form', component: ProviderServiceFormComponent , canActivate: [AuthGuard],
     data: {role: 'ROLE_PROVIDER'}},
+    { path: 'product-form', component: ProviderProductFormComponent , canActivate: [AuthGuard],
+      data: {role: 'ROLE_PROVIDER'}},
   { path: 'service-edit', component: ProviderServiceEditComponent , canActivate: [AuthGuard],
     data: {role: 'ROLE_PROVIDER'}},
   {path: 'home', component: HomeComponent},

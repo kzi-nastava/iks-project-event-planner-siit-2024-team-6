@@ -24,15 +24,17 @@ export class EventTypeListComponent implements OnInit {
     this.router.navigate(['/event-types/add']);
     }
     loadAllCategories(): void {
-      this.http.get<{ id: number; name: string }[]>('/api/admins/categories').subscribe({
-        next: (data) => {
-          this.allCategories = data;
-          console.log('Loaded categories:', this.allCategories);
-        },
-        error: (err) => {
-          console.error('Failed to load categories:', err);
-        }
-      });
+      this.http
+        .get<{ content: { id: number; name: string }[] }>('/api/admins/categories')
+        .subscribe({
+          next: (data) => {
+            this.allCategories = data.content; // Извлекаем массив из ключа content
+            console.log('Loaded categories:', this.allCategories);
+          },
+          error: (err) => {
+            console.error('Failed to load categories:', err);
+          }
+        });
     }
     
 

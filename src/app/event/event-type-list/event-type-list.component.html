@@ -66,12 +66,14 @@
       <!-- Add Category -->
       <div class="form-group">
         <label for="add-category">Add Category:</label>
+        
         <select id="add-category" [(ngModel)]="selectedCategoryId" name="categorySelect">
           <option [value]="null" disabled selected>Select a category</option>
           <option *ngFor="let category of allCategories" [value]="category.id">
             {{ category.name }}
           </option>
         </select>
+        
         <button class="add-button" (click)="addCategory()">Add Category</button>
       </div>
   

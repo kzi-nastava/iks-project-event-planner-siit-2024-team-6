@@ -92,7 +92,7 @@ export class OfferService {
         .set('size', pageProperties.pageSize.toString());
     }
 
-    const url = `${this.apiUrlProvider}my-services`; // Ensure no extra slash
+    const url = `${this.apiUrlProvider}my-products`; // Ensure no extra slash
 
     return this.httpClient.get<PagedResponse<Product>>(url, { params }
     );
@@ -213,7 +213,7 @@ export class OfferService {
   }
 
   createProduct(newOffer: NewOfferDTO): Observable<NewOfferDTO> {
-    return this.httpClient.post<NewOfferDTO>(`${this.apiUrlProvider}`, newOffer);
+    return this.httpClient.post<NewOfferDTO>(`${this.apiUrlProvider}product`, newOffer);
   }
 
   deleteProduct(offerId: number): Observable<void> {
