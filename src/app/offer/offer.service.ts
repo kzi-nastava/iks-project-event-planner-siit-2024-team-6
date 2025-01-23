@@ -231,7 +231,6 @@ export class OfferService {
   removeFromFavorites(id: number): Observable<any>{
     return this.httpClient.delete(`${this.apiUrl}${id}/favorite`);
   }
-
   getFavorites(): Observable<Offer[]>{
     return this.httpClient.get<Offer[]>(`${this.apiUrl}favorites`);
   }

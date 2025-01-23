@@ -21,6 +21,8 @@ import { ProviderProductFilterComponent } from './provider-product-filter/provid
 import { ProviderProductFormComponent } from './provider-product-form/provider-product-form.component';
 import { ProviderProductViewComponent } from './provider-product-view/provider-product-view.component';
 import { ProviderProductListComponent } from './provider-product-list/provider-product-list.component';
+import { FavoriteProductsComponent } from './favorite-products/favorite-products.component';
+import { FavoriteServicesComponent } from './favorite-services/favorite-services.component';
 
 
 @NgModule({
@@ -42,7 +44,9 @@ import { ProviderProductListComponent } from './provider-product-list/provider-p
     ProviderProductFilterComponent,
     ProviderProductFormComponent,
     ProviderProductViewComponent,
-    ProviderProductListComponent
+    ProviderProductListComponent,
+    FavoriteProductsComponent,
+    FavoriteServicesComponent
   ],
   imports: [
     CommonModule,
