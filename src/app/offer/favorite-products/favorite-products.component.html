@@ -1,7 +1,11 @@
-<div class="event-section">
-    <div class="event-section-header">
-      <h2 class="event-section-title">Events</h2>
+<div class="offer-section">
+    <div class="offer-section-header">
+      <h2 class="offer-section-title">Favorite products</h2>
       <div class="filter-container">
+        <div class="search">
+          <input type="text" [(ngModel)]="searchQuery" placeholder="Search">
+          <button (click)="onSearch()"><i class="fa fa-search"></i></button>
+        </div>
         <span class="filter-text">Filter</span>
         <button class="filter-icon" (click)="toggleFilter()">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
@@ -10,21 +14,18 @@
         </button>
       </div>
     </div>
-    <div class="event-list">
-      <app-event-card
-      *ngFor="let event of events"
-      [event]="event">
-    </app-event-card>
+    <div class="offer-list">
+      <app-offer-card *ngFor="let offer of offers" [offer]="offer"></app-offer-card>
     </div>
     <mat-paginator
     [pageSize]="pageProperties.pageSize"
     [pageSizeOptions]="pageProperties.pageSizeOptions"
     [length]="pageProperties.totalCount"
     (page)="pageChanged($event)">
-  </mat-paginator>
-  </div>
-  
-  <app-events-filter 
+    </mat-paginator>
+    </div>
+    <app-offers-filter 
     [isVisible]="isFilterVisible" 
-    (close)="toggleFilter()">
-  </app-events-filter>
+    (close)="toggleFilter()"
+    (apply)="onFiltersApplied($event)">
+  </app-offers-filter>

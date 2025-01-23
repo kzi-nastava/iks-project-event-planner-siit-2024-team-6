@@ -4,6 +4,7 @@ import { EventService } from '../event.service';
 import { Event, OrganizerDTO } from '../model/event.model';
 import { EventTypeDTO, EventTypeService } from '../event-type.service';
 import { ActivityService } from '../activity.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class EventViewComponent implements OnInit{
   constructor(
     private route: ActivatedRoute,
     private eventService: EventService,
-    private activityService: ActivityService
+    private activityService: ActivityService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -68,7 +70,23 @@ loadOrganizer(id: number): void{
   });
 }
   addToFavorites(): void {
-    this.eventService.addToFavorites(this.event.id).subscribe();
+    this.eventService.getFavorites().subscribe((favorites) => {
+      const isFavorite = favorites.some(event => event.id === this.event.id);
+  
+      if (isFavorite) {
+        this.eventService.removeFromFavorites(this.event.id).subscribe(() => {
+          this.snackBar.open(`Event ${this.event.name} removed from favorites`, 'Close', {
+            duration: 3000,
+          });
+        });
+      } else {
+        this.eventService.addToFavorites(this.event.id).subscribe(() => {
+          this.snackBar.open(`Event ${this.event.name} added to favorites`, 'Close', {
+            duration: 3000,
+          });
+        });
+      }
+    });
   }
 
   submitReview(): void {

@@ -20,6 +20,12 @@ export class EventService {
     return this.httpClient.get<OrganizerDTO>(`${this.apiUrl}${eventId}/getOrganizer`);
   }
   
+  getEventTypesByCategory(categoryId: number): Observable<EventTypeDTO[]>{
+    return this.httpClient.get<EventTypeDTO[]>(this.apiUrl+`${categoryId}/event-types-by-category`);
+  }
+  getEventTypesByCategoryName(categoryName: string): Observable<EventTypeDTO[]>{
+    return this.httpClient.get<EventTypeDTO[]>(this.apiUrl+`${categoryName}/event-types-by-category-name`);
+  }
   getAll(pageProperties?: any): Observable<PagedResponse<Event>> {
     let params = new HttpParams();
     if(pageProperties){
@@ -68,6 +74,11 @@ export class EventService {
   getFavorites(): Observable<Event[]>{
     return this.httpClient.get<Event[]>(`${this.apiUrl}favorites`);
   }
+
+  getFilteredFavorites(params: any): Observable<PagedResponse<Event>>{
+    return this.httpClient.get<PagedResponse<Event>>('/api/events/favorites', { params });
+  }
+  
   downloadInfoPdf(eventId: number): void {
     this.httpClient.get(`${this.apiUrl}${eventId}/getInfoPDF`, { responseType: 'blob' })
       .subscribe(blob => {

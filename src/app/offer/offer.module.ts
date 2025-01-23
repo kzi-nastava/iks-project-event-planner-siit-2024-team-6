@@ -15,6 +15,14 @@ import { ProviderOfferCardComponent } from './provider-offer-card/provider-offer
 import { ProviderServiceFormComponent } from './provider-service-form/provider-service-form.component';
 import { ProviderServiceEditComponent } from './provider-service-edit/provider-service-edit.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ProviderProductCardComponent } from './provider-product-card/provider-product-card.component';
+import { ProviderProductEditComponent } from './provider-product-edit/provider-product-edit.component';
+import { ProviderProductFilterComponent } from './provider-product-filter/provider-product-filter.component';
+import { ProviderProductFormComponent } from './provider-product-form/provider-product-form.component';
+import { ProviderProductViewComponent } from './provider-product-view/provider-product-view.component';
+import { ProviderProductListComponent } from './provider-product-list/provider-product-list.component';
+import { FavoriteProductsComponent } from './favorite-products/favorite-products.component';
+import { FavoriteServicesComponent } from './favorite-services/favorite-services.component';
 
 
 @NgModule({
@@ -30,7 +38,15 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ProviderServiceViewComponent,
     ProviderOfferCardComponent,
     ProviderServiceFormComponent,
-    ProviderServiceEditComponent
+    ProviderServiceEditComponent,
+    ProviderProductCardComponent,
+    ProviderProductEditComponent,
+    ProviderProductFilterComponent,
+    ProviderProductFormComponent,
+    ProviderProductViewComponent,
+    ProviderProductListComponent,
+    FavoriteProductsComponent,
+    FavoriteServicesComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +57,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
   ],
   exports: [
     OfferSliderComponent,
-    ProviderServiceViewComponent
+    ProviderServiceViewComponent,
+    ProviderProductEditComponent
   ]
 })
 export class OfferModule { }

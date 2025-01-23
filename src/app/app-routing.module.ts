@@ -25,15 +25,26 @@ import { FavoriteEventsComponent } from './event/favorite-events/favorite-events
 import { NotificationListComponent } from './notification/notification-list/notification-list.component';
 import { CategoryListComponent } from './category/category-list/category-list.component';
 import { AdminViewComponent } from './category/admin-view/admin-view.component';
+import { ProviderProductViewComponent } from './offer/provider-product-view/provider-product-view.component';
+import { ProviderProductFormComponent } from './offer/provider-product-form/provider-product-form.component';
+import { ProviderProductEditComponent } from './offer/provider-product-edit/provider-product-edit.component';
+import { FavoriteProductsComponent } from './offer/favorite-products/favorite-products.component';
+import { FavoriteServicesComponent } from './offer/favorite-services/favorite-services.component';
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
   { path: 'offers', component: OffersViewComponent},
   { path: 'my-services', component: ProviderServiceViewComponent , canActivate: [AuthGuard],
     data: {role: 'ROLE_PROVIDER'}},
+    { path: 'my-products', component: ProviderProductViewComponent , canActivate: [AuthGuard],
+      data: {role: 'ROLE_PROVIDER'}},
   { path: 'service-form', component: ProviderServiceFormComponent , canActivate: [AuthGuard],
     data: {role: 'ROLE_PROVIDER'}},
+    { path: 'product-form', component: ProviderProductFormComponent , canActivate: [AuthGuard],
+      data: {role: 'ROLE_PROVIDER'}},
   { path: 'service-edit', component: ProviderServiceEditComponent , canActivate: [AuthGuard],
     data: {role: 'ROLE_PROVIDER'}},
+    { path: 'product-edit', component: ProviderProductEditComponent , canActivate: [AuthGuard],
+      data: {role: 'ROLE_PROVIDER'}},
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegistrationComponent},
@@ -62,12 +73,18 @@ const routes: Routes = [
   { path: 'offer/:id', component: OfferInfoComponent },
   { path: 'favorite/events', component: FavoriteEventsComponent, canActivate: [AuthGuard],
     data: {auser: 'Auth user'} },
+    {path: 'favorite/products', component: FavoriteProductsComponent, canActivate: [AuthGuard],
+      data: {auser: 'Auth user'}},
+      {path: 'favorite/services', component: FavoriteServicesComponent, canActivate: [AuthGuard],
+        data: {auser: 'Auth user'}},
+      {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard],
+        data: {auser: 'Auth user'}},
   {path: 'categories', component: AdminViewComponent, canActivate: [AuthGuard], data: {role: 'ROLE_ADMIN' }},
   { path: '', redirectTo: '/events', pathMatch: 'full' },
   {path: 'notifications', component: NotificationListComponent},
 
 ];
-///event/${this.eventId}/agenda
+// /favorite/products
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
