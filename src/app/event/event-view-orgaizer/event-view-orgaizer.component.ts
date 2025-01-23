@@ -4,6 +4,7 @@ import { EventService } from '../event.service';
 import { Event, OrganizerDTO } from '../model/event.model';
 import { EventTypeDTO, EventTypeService } from '../event-type.service';
 import { Chart, registerables } from 'chart.js';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-event-view-orgaizer',
@@ -26,7 +27,8 @@ export class EventViewOrgaizerComponent  implements OnInit, AfterViewInit{
   constructor(
     private route: ActivatedRoute,
     private eventService: EventService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {
     Chart.register(...registerables);
   }
@@ -130,7 +132,23 @@ loadOrganizer(id: number): void{
   });
 }
   addToFavorites(): void {
-    console.log('Added to favorites');
+    this.eventService.getFavorites().subscribe((favorites) => {
+      const isFavorite = favorites.some(event => event.id === this.event.id);
+  
+      if (isFavorite) {
+        this.eventService.removeFromFavorites(this.event.id).subscribe(() => {
+          this.snackBar.open(`Event ${this.event.name} removed from favorites`, 'Close', {
+            duration: 3000,
+          });
+        });
+      } else {
+        this.eventService.addToFavorites(this.event.id).subscribe(() => {
+          this.snackBar.open(`Event ${this.event.name} added to favorites`, 'Close', {
+            duration: 3000,
+          });
+        });
+      }
+    });
   }
 
   submitReview(): void {
