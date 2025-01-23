@@ -1,5 +1,5 @@
 <div class="offer-list">
-    <div class="offer-card" (click)="onCardClick()">
+    <div class="offer-card">
       <div *ngIf="offer.sale" class="sale-tag">SALE</div>
   
       <div class="favorite-icon" (click)="manageFavorites(offer.id)">
@@ -13,7 +13,7 @@
         <h3 class="offer-card-title">{{ offer.name }}</h3>
       </div>
   
-      <div class="offer-card-content">
+      <div class="offer-card-content" (click)="onCardClick()">
         <div class="offer-card-info">
           <div class="info-item">
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">

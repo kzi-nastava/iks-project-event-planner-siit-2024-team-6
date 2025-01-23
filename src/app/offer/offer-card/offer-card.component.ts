@@ -25,13 +25,13 @@ export class OfferCardComponent {
   
       if (isFavorite) {
         this.offerService.removeFromFavorites(id).subscribe(() => {
-          this.snackBar.open(`Event ${this.offer.name} removed from favorites`, 'Close', {
+          this.snackBar.open(`Offer ${this.offer.name} removed from favorites`, 'Close', {
             duration: 3000,
           });
         });
       } else {
         this.offerService.addToFavorites(id).subscribe(() => {
-          this.snackBar.open(`Event ${this.offer.name} added to favorites`, 'Close', {
+          this.snackBar.open(`Offer ${this.offer.name} added to favorites`, 'Close', {
             duration: 3000,
           });
         });

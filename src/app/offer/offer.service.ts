@@ -237,10 +237,24 @@ export class OfferService {
   getFilteredOffers(params: any): Observable<PagedResponse<Offer>> {
       return this.httpClient.get<PagedResponse<Offer>>('/api/offers/search', { params });
   }
-
+  getFilteredFavoriteProducts(params: any): Observable<PagedResponse<Offer>> {
+    return this.httpClient.get<PagedResponse<Offer>>('/api/offers/favoriteProducts', { params });
+}
+getFilteredFavoriteServices(params: any): Observable<PagedResponse<Offer>> {
+  return this.httpClient.get<PagedResponse<Offer>>('/api/offers/favoriteServices', { params });
+}
   getAllCategoriesNames(): Observable<string[]> {
     return this.httpClient.get<string[]>(`${this.apiUrl}categories`);
   }
+
+  getFavoriteProducts(pageProperties?: any): Observable<PagedResponse<Offer>> {
+    let params = new HttpParams();
+    if (pageProperties) {
+      params = params.set('page', pageProperties.page).set('size', pageProperties.pageSize);
+    }
+    return this.httpClient.get<PagedResponse<Offer>>(this.apiUrl + `all-elements`, { params: params });
+  }
+
 
 }
   

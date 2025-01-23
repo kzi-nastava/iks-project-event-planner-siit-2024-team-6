@@ -28,6 +28,8 @@ import { AdminViewComponent } from './category/admin-view/admin-view.component';
 import { ProviderProductViewComponent } from './offer/provider-product-view/provider-product-view.component';
 import { ProviderProductFormComponent } from './offer/provider-product-form/provider-product-form.component';
 import { ProviderProductEditComponent } from './offer/provider-product-edit/provider-product-edit.component';
+import { FavoriteProductsComponent } from './offer/favorite-products/favorite-products.component';
+import { FavoriteServicesComponent } from './offer/favorite-services/favorite-services.component';
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
   { path: 'offers', component: OffersViewComponent},
@@ -71,12 +73,18 @@ const routes: Routes = [
   { path: 'offer/:id', component: OfferInfoComponent },
   { path: 'favorite/events', component: FavoriteEventsComponent, canActivate: [AuthGuard],
     data: {auser: 'Auth user'} },
+    {path: 'favorite/products', component: FavoriteProductsComponent, canActivate: [AuthGuard],
+      data: {auser: 'Auth user'}},
+      {path: 'favorite/services', component: FavoriteServicesComponent, canActivate: [AuthGuard],
+        data: {auser: 'Auth user'}},
+      {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard],
+        data: {auser: 'Auth user'}},
   {path: 'categories', component: AdminViewComponent, canActivate: [AuthGuard], data: {role: 'ROLE_ADMIN' }},
   { path: '', redirectTo: '/events', pathMatch: 'full' },
   {path: 'notifications', component: NotificationListComponent},
 
 ];
-///event/${this.eventId}/agenda
+// /favorite/products
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
