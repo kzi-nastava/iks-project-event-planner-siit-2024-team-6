@@ -85,7 +85,19 @@
       </div>
   
       <div class="form-group">
-        <label>Uploaded Images:</label>
+        <label for="photo-url">Add Photo URL:</label>
+        <div class="photo-url-input-group">
+          <input
+            id="photo-url"
+            type="text"
+            class="form-control"
+            placeholder="Enter image URL"
+            #photoUrlInput
+          />
+          <button type="button" class="btn btn-primary" (click)="addPhotoUrl(photoUrlInput.value); photoUrlInput.value = ''">
+            Add
+          </button>
+        </div>
         <div class="photo-preview-container">
           <div class="photo-preview" *ngFor="let photo of photos; let i = index">
             <img [src]="photo" alt="Offer Photo" (error)="onPhotoError($event)" />
@@ -94,13 +106,6 @@
             </button>
           </div>
         </div>
-      </div>
-  
-      <div class="form-group">
-        <label class="add-photos-label">
-          <input id="photos" type="file" formControlName="photos" multiple hidden (change)="onPhotosSelected($event)" />
-          <span class="add-photos-btn">Add Photos</span>
-        </label>
       </div>
   
       <!-- Visibility and Availability -->

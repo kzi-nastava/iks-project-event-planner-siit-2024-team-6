@@ -133,19 +133,11 @@ export class OfferService {
 
   updateProduct(id: number, offer: NewOfferDTO): Observable<Offer> {
     // Retrieve the token (assuming it's stored in localStorage)
-    const token = localStorage.getItem('user');
-    console.log("TOKEN");
-    console.log(token);
-  
-    // Set the Authorization header with the JWT token
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-    });
   
     const url = `${this.apiUrlProvider}${id}`; // Ensure no extra slash
     console.log("Request URL:", url);
 
-    return this.httpClient.put<Offer>(url, offer, { headers });
+    return this.httpClient.put<Offer>(`${url}/product`, offer);
   }
   getServices(): Service[] {
     return this.servicesList;

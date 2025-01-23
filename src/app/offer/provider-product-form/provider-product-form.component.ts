@@ -82,7 +82,12 @@ export class ProviderProductFormComponent {
     const c = this.allCategories.find(cat => cat.name == this.selectedCategory);
     this.fetchEventTypes(c.id);
     }
-
+    addPhotoUrl(url: string): void {
+      if (url) {
+        this.photos.push(url);
+        this.productForm.get('photos')?.setValue(this.photos);
+      }
+    }
   onPhotoError(event: Event): void {
     const target = event.target as HTMLImageElement;
     target.src = 'https://via.placeholder.com/300x200.png?text=404+Not+Found';

@@ -20,10 +20,6 @@ export class ProviderProductCardComponent {
     private offerService: OfferService,
     private dialog: MatDialog
   ) { }
-  editService(service: Service): void {
-    this.offerService.setService(service);
-    this.router.navigate(['/service-edit']);
-  }
 
   editProduct(product: Product): void {
     this.offerService.setProduct(product);

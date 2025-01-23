@@ -53,7 +53,8 @@ import { ProviderProductListComponent } from './provider-product-list/provider-p
   ],
   exports: [
     OfferSliderComponent,
-    ProviderServiceViewComponent
+    ProviderServiceViewComponent,
+    ProviderProductEditComponent
   ]
 })
 export class OfferModule { }

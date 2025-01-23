@@ -63,17 +63,6 @@
       </div>
   
   
-      <!-- Specifics -->
-      <div class="form-group">
-        <label for="specifics">Specifics:</label>
-        <textarea
-          id="specifics"
-          formControlName="specifics"
-          rows="2"
-          placeholder="List any specific details about the product"
-        ></textarea>
-      </div>
-  
       <!-- Price and Discount -->
       <div class="form-group">
         <label for="price">Price (€):</label>
@@ -104,7 +93,19 @@
       </div>
 
       <div class="form-group">
-        <label>Uploaded Images:</label>
+        <label for="photo-url">Add Photo URL:</label>
+        <div class="photo-url-input-group">
+          <input
+            id="photo-url"
+            type="text"
+            class="form-control"
+            placeholder="Enter image URL"
+            #photoUrlInput
+          />
+          <button type="button" class="btn btn-primary" (click)="addPhotoUrl(photoUrlInput.value); photoUrlInput.value = ''">
+            Add
+          </button>
+        </div>
         <div class="photo-preview-container">
           <div class="photo-preview" *ngFor="let photo of photos; let i = index">
             <img [src]="photo" alt="Offer Photo" (error)="onPhotoError($event)" />
@@ -113,13 +114,6 @@
             </button>
           </div>
         </div>
-      </div>      
-  
-      <div class="form-group">
-        <label class="add-photos-label">
-          <input id="photos" type="file" formControlName="photos" multiple hidden (change)="onPhotosSelected($event)" />
-          <span class="add-photos-btn">Add Photos</span>
-        </label>
       </div>
   
       <!-- Visibility and Availability -->
@@ -134,50 +128,6 @@
         </label>
       </div>
   
-
-  
-      <!-- Reservation and Cancellation -->
-      <div class="form-group">
-        <label for="reservationDeadline">Reservation Deadline (hours):</label>
-        <input
-          id="reservationDeadline"
-          type="number"
-          formControlName="reservationDeadline"
-          placeholder="Enter reservation deadline in hours"
-        />
-        <div *ngIf="productForm.get('reservationDeadline')?.touched && productForm.get('reservationDeadline')?.errors?.['required']" class="error-message">
-          Reservation deadline is required.
-        </div>
-        <div *ngIf="productForm.get('reservationDeadline')?.touched && productForm.get('reservationDeadline')?.errors?.['min']" class="error-message">
-          Reservation deadline must be greater than 0.
-        </div>
-  
-        <label for="cancellationDeadline">Cancellation Deadline (hours):</label>
-        <input
-          id="cancellationDeadline"
-          type="number"
-          formControlName="cancellationDeadline"
-          placeholder="Enter cancellation deadline in hours"
-        />
-        <div *ngIf="productForm.get('cancellationDeadline')?.touched && productForm.get('cancellationDeadline')?.errors?.['required']" class="error-message">
-          Cancellation deadline is required.
-        </div>
-        <div *ngIf="productForm.get('cancellationDeadline')?.touched && productForm.get('cancellationDeadline')?.errors?.['min']" class="error-message">
-          Cancellation deadline must be greater than 0.
-        </div>
-      </div>
-  
-      <!-- Reservation Confirmation -->
-      <div class="form-group">
-        <label for="confirmation">Reservation Confirmation:</label>
-        <select
-          id="confirmation"
-          formControlName="confirmation"
-        >
-          <option value="automatic">Automatic</option>
-          <option value="manual">Manual</option>
-        </select>
-      </div>  
   
       <!-- Submit Button -->
       <div class="form-actions">

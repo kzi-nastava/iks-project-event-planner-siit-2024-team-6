@@ -27,6 +27,7 @@ import { CategoryListComponent } from './category/category-list/category-list.co
 import { AdminViewComponent } from './category/admin-view/admin-view.component';
 import { ProviderProductViewComponent } from './offer/provider-product-view/provider-product-view.component';
 import { ProviderProductFormComponent } from './offer/provider-product-form/provider-product-form.component';
+import { ProviderProductEditComponent } from './offer/provider-product-edit/provider-product-edit.component';
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
   { path: 'offers', component: OffersViewComponent},
@@ -40,6 +41,8 @@ const routes: Routes = [
       data: {role: 'ROLE_PROVIDER'}},
   { path: 'service-edit', component: ProviderServiceEditComponent , canActivate: [AuthGuard],
     data: {role: 'ROLE_PROVIDER'}},
+    { path: 'product-edit', component: ProviderProductEditComponent , canActivate: [AuthGuard],
+      data: {role: 'ROLE_PROVIDER'}},
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegistrationComponent},

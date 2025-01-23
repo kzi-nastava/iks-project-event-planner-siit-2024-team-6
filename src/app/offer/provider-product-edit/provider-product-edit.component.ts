@@ -107,13 +107,11 @@ export class ProviderProductEditComponent {
           const updatedOffer: NewOfferDTO = {
             name: this.productForm.value.name,
             description: this.productForm.value.description,
-            specifics: this.productForm.value.specifics,
             price: this.productForm.value.price,
             sale: this.productForm.value.discount,
             isVisible: this.productForm.value.visibility,
             isAvailable: this.productForm.value.availability,
             type: "product",
-            isReservationAutoApproved: this.productForm.value.isFixedDuration !== "fixed" && this.productForm.value.confirmation === "automatic",
             eventTypes: eventTypes, // Add the fetched event types
             photos: this.photos,
             isDeleted: false,
@@ -139,16 +137,32 @@ export class ProviderProductEditComponent {
       console.error('Form is invalid or offer data is missing!');
     }
   }
-  
+  addPhotoUrl(url: string): void {
+    if (url) {
+      this.photos.push(url);
+      this.productForm.get('photos')?.setValue(this.photos);
+    }
+  }
+
+  // fetchEventTypes(): void {
+  //   this.eventService.getAllNames().subscribe({
+  //     next: (data) => {
+  //       this.eventTypes = data;
+  //     },
+  //     error: (err) => {
+  //       console.error('Error fetching strings:', err);
+  //     }
+  //   });
+  // }
 
   fetchEventTypes(): void {
-    this.eventService.getAllNames().subscribe({
+    this.eventService.getEventTypesByCategoryName(this.offer.category).subscribe({
       next: (data) => {
-        this.eventTypes = data;
+        this.eventTypes = data.map(event => event.name);; 
       },
       error: (err) => {
-        console.error('Error fetching strings:', err);
-      }
+        console.error('Error fetching event types:', err);
+      },
     });
   }
 
