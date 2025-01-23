@@ -74,6 +74,11 @@ export class EventService {
   getFavorites(): Observable<Event[]>{
     return this.httpClient.get<Event[]>(`${this.apiUrl}favorites`);
   }
+
+  getFilteredFavorites(params: any): Observable<PagedResponse<Event>>{
+    return this.httpClient.get<PagedResponse<Event>>('/api/events/favorites', { params });
+  }
+  
   downloadInfoPdf(eventId: number): void {
     this.httpClient.get(`${this.apiUrl}${eventId}/getInfoPDF`, { responseType: 'blob' })
       .subscribe(blob => {
