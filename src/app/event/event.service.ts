@@ -72,7 +72,7 @@ export class EventService {
     return this.httpClient.delete(`${this.apiUrl}${id}/favorite`);
   }
   getFavorites(): Observable<Event[]>{
-    return this.httpClient.get<Event[]>(`${this.apiUrl}favorites`);
+    return this.httpClient.get<Event[]>(`${this.apiUrl}unPagedFavorites`);
   }
 
   getFilteredFavorites(params: any): Observable<PagedResponse<Event>>{
