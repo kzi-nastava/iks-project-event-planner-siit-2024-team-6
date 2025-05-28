@@ -124,9 +124,8 @@ export class NewEventComponent implements OnInit {
       // Отправка данных на сервер
       this.eventService.createEvent(eventData).subscribe(
         (response) => {
-          this.router.navigate([`my_events`]);
           console.log('Event created successfully:', response);
-          
+          this.router.navigate(['/budget-planning', response.id]);
         },
         (error) => {
           console.error('Error creating event:', error);
