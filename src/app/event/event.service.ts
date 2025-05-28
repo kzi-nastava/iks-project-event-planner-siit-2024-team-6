@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Event, OrganizerDTO } from './model/event.model';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {environment} from '../../env/environment';
 import {Observable} from 'rxjs';
 import {PagedResponse} from '../shared/model/paged-response.model';
@@ -105,6 +105,18 @@ export class EventService {
 
   getFilteredEvents(params: any): Observable<PagedResponse<Event>> {
     return this.httpClient.get<PagedResponse<Event>>('/api/events/search', { params });
+  }
+  
+  getRecommendedCategories(eventId: number): Observable<string[]> {
+    // Retrieve the token (assuming it's stored in localStorage)
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    const url = `${this.apiUrl}${eventId}/getCategories`;
+
+    // Perform the HTTP GET request to retrieve categories
+    return this.httpClient.get<string[]>(url, { headers });
   }
   
 }
