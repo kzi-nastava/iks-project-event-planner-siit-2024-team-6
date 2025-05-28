@@ -1,0 +1,139 @@
+.budget-section {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    margin-top: 100px;
+    background: #f9f9f9;
+    border-radius: 0px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.budget-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--blue);
+}
+
+.budget-section-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--blue);
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.budget-container{
+    display: flex;
+    gap: 20px;
+    min-height: 200px;
+}
+
+.user-section,
+.recommended-section {
+    flex: 1;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    overflow-y: auto;
+}
+
+.recommended-section {
+    background-color: #D3A3B0;
+}
+
+.budget-header {
+  display: flex;
+  justify-content: center; /* Center both items together */
+  align-items: center;      /* Center vertically */
+  gap: 30%;                /* Moderate space between the texts */
+  font-weight: bolder;
+  color: #8B6A9D;
+  font-size: larger;
+  margin-bottom: 1rem;
+  border-bottom: 1.5px solid  #8B6A9D;
+}
+
+
+.budget-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.choose-button {
+    background-color: #3b4664;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.7rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.recommended-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.recommended-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.popup-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-modal {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+}
+
+.popup-modal input {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.popup-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.popup-actions button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.popup-actions button:first-child {
+    background-color: #3b4664;
+    color: white;
+}
+
+.popup-actions button:last-child {
+    background-color: #ccc;
+}

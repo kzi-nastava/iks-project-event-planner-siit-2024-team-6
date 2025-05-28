@@ -1,0 +1,50 @@
+<div class="budget-section">
+    <div class="budget-section-header">
+        <h2 class="budget-section-title">Budget Planning</h2>
+    </div>
+
+    <div class="budget-container">
+        <div class="user-section">
+            <!-- User-selected budget items go here -->
+            <div class="budget-header">
+                <span>Category</span>
+                <span>Amount</span>
+            </div>
+
+            <div class="budget-row" *ngFor="let item of budget.items">
+                <span>item.category</span>
+                <span>item.maxPrice</span>
+            </div>
+        </div>
+        <div class="recommended-section">
+            <!-- Recommended categories go here -->
+            <h5>Recommendation</h5>
+
+            <div class="recommended-box">
+                <div *ngFor="let cat of recommendedCategories" class="recommended-row">
+                    <span>{{cat}}</span>
+                    <button class="choose-button" (click)="openPopup(cat)">Choose</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup-backdrop" *ngIf="popupVisible">
+        <div class="popup-modal">
+            <h4>Add "{{ selectedCategory }}"</h4>
+            <input type="number" [(ngModel)]="enteredMaxAmount" placeholder="Enter maximal amount" />
+            <div class="popup-actions">
+                <button (click)="confirmPopup()">Confirm</button>
+                <button (click)="closePopup()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!--Products and services section-->
+    <div class="products-services-section">
+        <h2>PRODUCTS AND SERVICES</h2>
+        <div class="products-services-grid">
+
+        </div>
+    </div>
+</div>
