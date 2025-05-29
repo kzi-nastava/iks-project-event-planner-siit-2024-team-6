@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Category } from '../../category/model/category.model';
 import { Budget, BudgetItem } from '../model/event.model'
@@ -8,6 +8,10 @@ import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dial
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CategoryService } from '../../category/category.service';
 import { NewBudgetDTO } from '../../dto/budget-dtos';
+import { Offer } from '../../offer/model/offer.model';
+import { OfferService } from '../../offer/offer.service';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { PagedResponse } from '../../shared/model/paged-response.model';
 @Component({
   selector: 'app-budget-planning',
   templateUrl: './budget-planning.component.html',
@@ -15,7 +19,7 @@ import { NewBudgetDTO } from '../../dto/budget-dtos';
 })
 export class BudgetPlanningComponent {
   eventId!: string;
-  eventName: string;
+  filteredOffers: Offer[] = [];
   budget: Budget;
   recommendedCategories: string[];
   selectedRecomendations: Set<string> = new Set();
@@ -28,7 +32,16 @@ export class BudgetPlanningComponent {
   enteredMaxAmount: number = 0;
   savedCurrPrice: number = 0;
 
-  constructor(private categoryService: CategoryService, private route: ActivatedRoute, private eventService: EventService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
+  pageProperties = {
+    page: 0,
+    pageSize: 8,
+    totalCount: 0,
+    pageSizeOptions: [4, 8, 12]
+  };
+
+  constructor(private categoryService: CategoryService, private route: ActivatedRoute, private eventService: EventService, private dialog: MatDialog, private snackBar: MatSnackBar, private offerService: OfferService) { }
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit(): void {
     this.eventId = this.route.snapshot.paramMap.get('eventId')
@@ -176,9 +189,39 @@ export class BudgetPlanningComponent {
       }
     });
   }
-  onSearch(): void {
 
+  onSearch(): void {
+    const params = {
+      ...this.pageProperties
+    };
+    const dto = this.toNewBudgetDTO(this.budget);
+    // Replace with your actual filtering logic based on budget items or user input
+    this.offerService.getFilteredOffersByBudget(dto, params).subscribe({
+      next: (response: PagedResponse<Offer> | null) => {
+        if (response && response.content) {
+          this.filteredOffers = response.content;
+          this.pageProperties.totalCount = response.totalElements;
+          console.log('Paged and filtered offers:', response);
+        } else {
+          this.filteredOffers = [];
+          this.pageProperties.totalCount = 0;
+          console.warn('No offers found or response is null');
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching offers:', err);
+        this.filteredOffers = [];
+        this.pageProperties.totalCount = 0;
+      }
+    });
   }
+
+  pageChanged(pageEvent: PageEvent) {
+    this.pageProperties.page = pageEvent.pageIndex;
+    this.pageProperties.pageSize = pageEvent.pageSize;
+    this.onSearch();
+  }
+
   private recalculateBudget(): void {
     this.budget.total = this.budget.budgetItems.reduce((sum, item) => sum + item.maxPrice, 0);
     this.budget.left = this.budget.total - this.budget.budgetItems.reduce((sum, item) => sum + item.currPrice, 0); // adjust if you subtract used money elsewhere
