@@ -30,12 +30,13 @@ export interface Event {
   }
   
   export interface Budget {
+    id: number;
     total: number;
     left: number;
-    items: BudgetItem[];
+    budgetItems: BudgetItem[];
   }
 
-  interface BudgetItem {
+  export interface BudgetItem {
     maxPrice: number;
     currPrice: number;
     category: string;
