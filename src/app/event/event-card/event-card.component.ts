@@ -43,10 +43,6 @@ export class EventCardComponent {
       this.router.navigate([`event/${id}`]);
     }
   }
-
-  openBudgetPlanning():void{
-    this.router.navigate(['/budget-planning', this.event.id]);
-  }
 }
 
 
