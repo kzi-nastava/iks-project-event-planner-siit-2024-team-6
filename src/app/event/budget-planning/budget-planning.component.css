@@ -35,36 +35,46 @@
 
 .user-section,
 .recommended-section {
-    flex: 1;
     padding: 16px;
     border-radius: 8px;
     background-color: #f9f9f9;
     overflow-y: auto;
+    scroll-behavior: smooth;
+    max-height: 400px;
+    min-height: 200px;
+}
+
+.user-section{
+    flex: 2;
+}
+
+.recommended-section{
+    flex: 1;
 }
 
 .recommended-section {
     background-color: #D3A3B0;
 }
 
-.budget-header {
-  display: flex;
-  justify-content: center; /* Center both items together */
-  align-items: center;      /* Center vertically */
-  gap: 30%;                /* Moderate space between the texts */
+.budget-header, 
+.budget-row {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1fr 1fr;   
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;           /* Moderate space between the texts */
   font-weight: bolder;
+  color: #3b4664;
+  font-size: larger;
+}
+
+.budget-header{
   color: #8B6A9D;
   font-size: larger;
   margin-bottom: 1rem;
   border-bottom: 1.5px solid  #8B6A9D;
 }
 
-
-.budget-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.8rem;
-}
 
 .choose-button {
     background-color: #3b4664;
@@ -83,9 +93,11 @@
 
 .recommended-row {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-evenly;
 }
+
+
 
 .popup-backdrop {
     position: fixed;
@@ -136,4 +148,95 @@
 
 .popup-actions button:last-child {
     background-color: #ccc;
+}
+
+.no-recommendations-message {
+    text-align: center;
+    width: 100%;
+    color: #555;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.edit-button, .delete-button {
+  padding: 5px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-button {
+  background-color: #D3A3B0;
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #8B6A9D;
+}
+
+.delete-button {
+  background-color: #d9534f;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #c9302c;
+}
+
+.new-item-button{
+background-color: #8B6A9D;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.new-item-button:hover {
+  background-color: #7A5A8B;
+}
+.budget-summary {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: #f3f3f3;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #3b4664;
+  max-width: 1200px;
+  margin-left: 0%;
+  margin-right: auto;
+
+  display: flex;
+  justify-content: flex-start;
+  gap: 45px; /* space between the two values */
+  align-items: center;
+}
+
+.total-amount {
+  color: #d9534f; 
+}
+
+.leftover-amount {
+  color: #3b4664;
+}
+
+.search-button {
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  background-color: #3b4664;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.search-button i {
+  font-size: 16px;
 }
