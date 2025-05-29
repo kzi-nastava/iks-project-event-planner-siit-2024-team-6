@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../env/environment';
 import { PagedResponse } from '../shared/model/paged-response.model';
 import { NewOfferDTO } from '../dto/offer-dtos';
+import { NewBudgetDTO } from '../dto/budget-dtos';
 
 
 @Injectable({
@@ -46,8 +47,8 @@ export class OfferService {
   }*/
 
   private apiUrl = environment.apiHost + `/offers/`;
-  private apiUrlProvider = environment.apiHost+'/providers/';
-  constructor(private httpClient: HttpClient) {}
+  private apiUrlProvider = environment.apiHost + '/providers/';
+  constructor(private httpClient: HttpClient) { }
 
   getAll(pageProperties?: any): Observable<PagedResponse<Offer>> {
     let params = new HttpParams();
@@ -59,33 +60,33 @@ export class OfferService {
 
   getAllProviderServices(pageProperties?: { page: number; pageSize: number }): Observable<PagedResponse<Service>> {
     let params = new HttpParams();
-  
+
     if (pageProperties) {
       params = params
         .set('page', pageProperties.page.toString())
         .set('size', pageProperties.pageSize.toString());
     }
-  
+
     // Retrieve the token (assuming it's stored in localStorage)
     const token = localStorage.getItem('user');
     console.log("TOKEN");
     console.log(token);
-  
+
     // Set the Authorization header with the JWT token
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
     });
-  
+
     const url = `${this.apiUrlProvider}my-services`; // Ensure no extra slash
     console.log("Request URL:", url);
 
     return this.httpClient.get<PagedResponse<Service>>(url, { params, headers }
     );
   }
-  
+
   getAllProviderProducts(pageProperties?: { page: number; pageSize: number }): Observable<PagedResponse<Product>> {
     let params = new HttpParams();
-  
+
     if (pageProperties) {
       params = params
         .set('page', pageProperties.page.toString())
@@ -113,18 +114,18 @@ export class OfferService {
   updateOffer(id: number, offer: Offer): Observable<Offer> {
     return this.httpClient.put<Offer>(`${this.apiUrl}${id}`, offer);
   }
-  
+
   updateService(id: number, offer: NewOfferDTO): Observable<Offer> {
     // Retrieve the token (assuming it's stored in localStorage)
     const token = localStorage.getItem('user');
     console.log("TOKEN");
     console.log(token);
-  
+
     // Set the Authorization header with the JWT token
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
     });
-  
+
     const url = `${this.apiUrlProvider}${id}`; // Ensure no extra slash
     console.log("Request URL:", url);
 
@@ -133,7 +134,7 @@ export class OfferService {
 
   updateProduct(id: number, offer: NewOfferDTO): Observable<Offer> {
     // Retrieve the token (assuming it's stored in localStorage)
-  
+
     const url = `${this.apiUrlProvider}${id}`; // Ensure no extra slash
     console.log("Request URL:", url);
 
@@ -145,11 +146,11 @@ export class OfferService {
   getProducts(): Product[] {
     return this.productsList;
   }
-  addService(service: Service): void{
+  addService(service: Service): void {
     this.servicesList.push(service);
   }
 
-  addProduct(product: Product): void{
+  addProduct(product: Product): void {
     this.productsList.push(product);
   }
 
@@ -165,21 +166,21 @@ export class OfferService {
     return this.httpClient.get<string[]>(url, { headers });
   }
 
-  setService(service: Service): void{
-      this.editService = service;
+  setService(service: Service): void {
+    this.editService = service;
   }
 
-  setProduct(product: Product): void{
+  setProduct(product: Product): void {
     this.editProduct = product;
-}
+  }
 
-  getService(): Service{
+  getService(): Service {
     const x = this.editService;
     this.setService(null);
     return x;
   }
 
-  getProduct(): Product{
+  getProduct(): Product {
     const x = this.editProduct;
     this.setProduct(null);
     return x;
@@ -190,7 +191,7 @@ export class OfferService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    
+
     const url = `${this.apiUrlProvider}${offerId}`;
     return this.httpClient.delete<void>(url, { headers });
   }
@@ -212,7 +213,7 @@ export class OfferService {
     const url = `${this.apiUrlProvider}${offerId}`;
     return this.httpClient.delete<void>(url);
   }
-  
+
   searchOffers(name: string, page: number, size: number): Observable<any> {
     const token = localStorage.getItem('user'); // Retrieve token from localStorage
     const headers = new HttpHeaders({
@@ -224,25 +225,39 @@ export class OfferService {
     return this.httpClient.get<any>(`${this.apiUrlProvider}search`, { headers, params });
   }
 
-  addToFavorites(id: number): Observable<any>{
+  addToFavorites(id: number): Observable<any> {
     return this.httpClient.post(`${this.apiUrl}${id}/favorite`, {});
   }
 
-  removeFromFavorites(id: number): Observable<any>{
+  removeFromFavorites(id: number): Observable<any> {
     return this.httpClient.delete(`${this.apiUrl}${id}/favorite`);
   }
-  getFavorites(): Observable<Offer[]>{
+  getFavorites(): Observable<Offer[]> {
     return this.httpClient.get<Offer[]>(`${this.apiUrl}favorites`);
   }
   getFilteredOffers(params: any): Observable<PagedResponse<Offer>> {
-      return this.httpClient.get<PagedResponse<Offer>>('/api/offers/search', { params });
+    return this.httpClient.get<PagedResponse<Offer>>('/api/offers/search', { params });
   }
+  getFilteredOffersByBudget(budgetDTO: NewBudgetDTO, params: any): Observable<PagedResponse<Offer>> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.post<PagedResponse<Offer>>(
+      '/api/offers/searchByBudget',
+      budgetDTO,
+      { headers, params }
+    );
+  }
+
+
   getFilteredFavoriteProducts(params: any): Observable<PagedResponse<Offer>> {
     return this.httpClient.get<PagedResponse<Offer>>('/api/offers/favoriteProducts', { params });
-}
-getFilteredFavoriteServices(params: any): Observable<PagedResponse<Offer>> {
-  return this.httpClient.get<PagedResponse<Offer>>('/api/offers/favoriteServices', { params });
-}
+  }
+  getFilteredFavoriteServices(params: any): Observable<PagedResponse<Offer>> {
+    return this.httpClient.get<PagedResponse<Offer>>('/api/offers/favoriteServices', { params });
+  }
   getAllCategoriesNames(): Observable<string[]> {
     return this.httpClient.get<string[]>(`${this.apiUrl}categories`);
   }
@@ -257,4 +272,4 @@ getFilteredFavoriteServices(params: any): Observable<PagedResponse<Offer>> {
 
 
 }
-  
+
