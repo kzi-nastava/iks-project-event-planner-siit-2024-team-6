@@ -1,0 +1,14 @@
+<div class="offer-section">
+    <div class="offer-section-header">
+        <h2 class="offer-section-title">Products and Services</h2>
+    </div>
+    <div class="offer-list" *ngIf="offers?.length > 0; else noOffers">
+        <app-offer-card *ngFor="let offer of offers" [offer]="offer"></app-offer-card>
+    </div>
+    <ng-template #noOffers>
+        <div class="no-offers-message">
+            <i class="fa fa-times" aria-hidden="true"></i>
+            <p>No matching offers.</p>
+        </div>
+    </ng-template>
+</div>
