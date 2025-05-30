@@ -10,6 +10,7 @@
   padding: 20px;
   border-radius: 0px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-height: 75%;
 }
 
 /* Optional: Add a slight margin to the top of the filter container */
@@ -164,4 +165,69 @@ fill: var(--secondary-pink);
 
 .fab[disabled] .fab-icon {
   opacity: 0.6; /* Make the icon look faded */
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  padding-right: 35px;
+}
+
+.search input {
+  padding: 6px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #bdc3c7;
+  outline: none;
+}
+
+.search input:focus {
+  border-color: var(--pink);
+}
+
+.search button {
+  background-color: #fff;
+  color: var(--blue);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search button i {
+  font-size: 16px;
+}
+
+.search button:hover {
+  background-color: var(--pink);
+}
+
+.no-offers-message {
+    text-align: center;
+    width: 100%;
+    color: #555;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* Add button styling */
+.btn-add-service {
+  background-color: #8b6a9d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-add-service i {
+  margin-right: 8px;
+}
+
+.btn-add-service:hover {
+  background-color: #7a5989;
 }
