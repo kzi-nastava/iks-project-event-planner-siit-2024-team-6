@@ -30,6 +30,7 @@ import { ProviderProductFormComponent } from './offer/provider-product-form/prov
 import { ProviderProductEditComponent } from './offer/provider-product-edit/provider-product-edit.component';
 import { FavoriteProductsComponent } from './offer/favorite-products/favorite-products.component';
 import { FavoriteServicesComponent } from './offer/favorite-services/favorite-services.component';
+import { BudgetPlanningComponent } from './event/budget-planning/budget-planning.component';
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
   { path: 'offers', component: OffersViewComponent},
@@ -54,6 +55,8 @@ const routes: Routes = [
     data: {auser: 'Auth user'}},
   {path: 'quick-registration', component: QuickRegistrationComponent},
   {path: 'new-event', component: NewEventComponent , canActivate: [AuthGuard],
+    data: {role: 'ROLE_ORGANIZER'}},
+   { path: 'budget-planning/:eventId', component: BudgetPlanningComponent, canActivate: [AuthGuard],
     data: {role: 'ROLE_ORGANIZER'}},
   { path: 'event-types', component: EventTypeListComponent , canActivate: [AuthGuard],
     data: {role: 'ROLE_ADMIN'}},

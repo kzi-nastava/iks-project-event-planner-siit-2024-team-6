@@ -111,6 +111,18 @@ export class CategoryService {
     return this.http.get<string[]>(url, { headers });
   }
 
+  getAllCategoriesOrganizer(): Observable<string[]> {
+    // Retrieve the token (assuming it's stored in localStorage)
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    const url = `/api/organizers/category-names`;
+
+    // Perform the HTTP GET request to retrieve categories
+    return this.http.get<string[]>(url, { headers });
+  }
+
   // getAllFullCategories(): Observable<Category[]> {
   //   // Retrieve the token (assuming it's stored in localStorage)
   //   const token = localStorage.getItem('user');

@@ -20,7 +20,10 @@ import { AgendaComponent } from './agenda/agenda.component';
 import { ActivityFormComponent } from './activity-form/activity-form.component';
 import { FavoriteEventsComponent } from './favorite-events/favorite-events.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
+import { BudgetPlanningComponent } from './budget-planning/budget-planning.component';
+import { LayoutModule } from "../layout/layout.module";
+import { OfferModule } from '../offer/offer.module';
+import { BudgetOfferListComponent } from './budget-offer-list/budget-offer-list.component';
 
 
 @NgModule({
@@ -39,7 +42,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     EventViewOrgaizerComponent,
     AgendaComponent,
     ActivityFormComponent,
-    FavoriteEventsComponent
+    FavoriteEventsComponent,
+    BudgetPlanningComponent,
+    BudgetOfferListComponent
   ],
   imports: [
     MatPaginatorModule,
@@ -48,8 +53,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatPaginatorModule,
     ReactiveFormsModule,
     RouterModule,
-    MatSnackBarModule
-  ],
+    MatSnackBarModule,
+    OfferModule
+],
   exports: [
     EventsViewComponent,
     EventTypeListComponent,

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Event, OrganizerDTO } from './model/event.model';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { Budget, Event, OrganizerDTO } from './model/event.model';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {environment} from '../../env/environment';
 import {Observable} from 'rxjs';
 import {PagedResponse} from '../shared/model/paged-response.model';
 import { EventTypeDTO } from './event-type.service';
+import { NewBudgetDTO } from '../dto/budget-dtos';
 
 
 @Injectable({
@@ -58,6 +59,22 @@ export class EventService {
     return this.httpClient.get<Event>(`${this.apiUrl}${id}`);
   }
 
+  getBudgetByEventId(id:number): Observable<Budget> {
+    // Retrieve the token (assuming it's stored in localStorage)
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    const url = `${this.apiUrl}${id}/budget`;
+
+    // Perform the HTTP GET request to retrieve categories
+    return this.httpClient.get<Budget>(url, { headers });
+  }
+
+  updateBudget(id: number, budgetDTO: NewBudgetDTO): Observable<Budget> {
+    return this.httpClient.put<Budget>(`/api/organizers/budget/${id}`, budgetDTO);
+  }
+
   updateEvent(event: any): Observable<any> {
     return this.httpClient.put(`/api/organizers/events/${event.id}`, event);
   }
@@ -105,6 +122,18 @@ export class EventService {
 
   getFilteredEvents(params: any): Observable<PagedResponse<Event>> {
     return this.httpClient.get<PagedResponse<Event>>('/api/events/search', { params });
+  }
+  
+  getRecommendedCategories(eventId: number): Observable<string[]> {
+    // Retrieve the token (assuming it's stored in localStorage)
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    const url = `${this.apiUrl}${eventId}/getCategories`;
+
+    // Perform the HTTP GET request to retrieve categories
+    return this.httpClient.get<string[]>(url, { headers });
   }
   
 }

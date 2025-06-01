@@ -58,7 +58,8 @@ import { FavoriteServicesComponent } from './favorite-services/favorite-services
   exports: [
     OfferSliderComponent,
     ProviderServiceViewComponent,
-    ProviderProductEditComponent
+    ProviderProductEditComponent,
+    OfferCardComponent
   ]
 })
 export class OfferModule { }

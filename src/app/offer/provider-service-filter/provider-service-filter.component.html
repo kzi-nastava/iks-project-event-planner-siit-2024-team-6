@@ -6,13 +6,15 @@
     <button class="close-button" (click)="closeFilter()">&times;</button>
   </div>
 
+  <!-- Category Section -->
   <div class="filter-section">
     <h4>Category</h4>
     <select [(ngModel)]="selectedCategory">
-      <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+      <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
     </select>
   </div>
 
+  <!-- EventType Section -->
   <div class="filter-section">
     <h4>Event type</h4>
     <select [(ngModel)]="selectedEventType">
@@ -20,19 +22,29 @@
     </select>
   </div>
 
+  <!-- On Sale Section -->
+  <div class="filter-section">
+    <h4>On Sale</h4>
+    <label>
+      <input type="checkbox" [(ngModel)]="isOnSale" />
+      Show only services on sale
+    </label>
+  </div>
+
+  <!-- Price Range Section -->
   <div class="filter-section">
     <h4>Price Range</h4>
-    <input type="range" min="0" max="1000" step="10" [(ngModel)]="priceRange" />
+    <input type="range" min="0" max="3000" step="10" [(ngModel)]="maxPrice" />
     <div class="price-display">
-        <div class="price-item">
-          <span>Min:</span>
-          <strong>$0</strong>
-        </div>
-        <div class="price-item">
-          <span>Max:</span>
-          <strong>${{ priceRange }}</strong>
-        </div>
+      <div class="price-item">
+        <span>Min:</span>
+        <strong>$0</strong>
       </div>
+      <div class="price-item">
+        <span>Max:</span>
+        <strong>${{ maxPrice }}</strong>
+      </div>
+    </div>
   </div>
 
   <div class="filter-section">
@@ -41,7 +53,7 @@
       <input type="checkbox" [(ngModel)]="isAvailableSelected" />
       Available
     </label>
-    </div>
+  </div>
 
   <div class="filter-footer">
     <button class="apply-button" (click)="applyFilters()">Apply</button>
