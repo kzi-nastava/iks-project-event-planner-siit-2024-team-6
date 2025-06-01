@@ -64,7 +64,7 @@ export class OfferService {
     if (pageProperties) {
       params = params
         .set('page', pageProperties.page.toString())
-        .set('size', pageProperties.pageSize.toString());
+        .set('pageSize', pageProperties.pageSize.toString()); // <-- match backend
     }
 
     // Retrieve the token (assuming it's stored in localStorage)
@@ -238,6 +238,14 @@ export class OfferService {
   getFilteredOffers(params: any): Observable<PagedResponse<Offer>> {
     return this.httpClient.get<PagedResponse<Offer>>('/api/offers/search', { params });
   }
+  getFilteredProviderServices(params: any): Observable<PagedResponse<Service>> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.get<PagedResponse<Service>>('/api/offers/search-services', { headers, params });
+  }
+
   getFilteredOffersByBudget(budgetDTO: NewBudgetDTO, params: any): Observable<PagedResponse<Offer>> {
     const token = localStorage.getItem('user');
     const headers = new HttpHeaders({

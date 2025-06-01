@@ -31,7 +31,7 @@ export class ProviderServiceFormComponent implements OnInit {
     private eventService: EventService,
     private cdr: ChangeDetectorRef,
     private dialog: MatDialog,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.fetchEventTypes();
@@ -52,7 +52,7 @@ export class ProviderServiceFormComponent implements OnInit {
       visibility: [false],
       availability: [false],
       specifics: [''],
-      photos:[[]],
+      photos: [[]],
       newCategory: [''],
       category: [Validators.required]
     });
@@ -174,7 +174,7 @@ export class ProviderServiceFormComponent implements OnInit {
   fetchEventTypes(): void {
     this.eventService.getAllNames().subscribe({
       next: (data) => {
-        this.eventTypes = data; 
+        this.eventTypes = data;
       },
       error: (err) => {
         console.error('Error fetching event types:', err);
@@ -182,13 +182,13 @@ export class ProviderServiceFormComponent implements OnInit {
     });
   }
 
-  fetchCategories(): void{
+  fetchCategories(): void {
     this.offerService.getAllCategories().subscribe({
       next: (data) => {
-          this.categories = data;
-          if (this.categories.length > 0) {
-            this.serviceForm.get('category')?.setValue(this.categories[0]);
-          }
+        this.categories = data;
+        if (this.categories.length > 0) {
+          this.serviceForm.get('category')?.setValue(this.categories[0]);
+        }
       },
       error: (err) => {
         console.error('Error fetching categories:', err);
