@@ -26,7 +26,7 @@ export class EventTypeAddComponent implements OnInit {
   }
 
   loadCategories(): void {
-    this.http.get<{ id: number; name: string }[]>('/api/admins/categories').subscribe({
+    this.http.get<{ id: number; name: string }[]>('/api/admins/categoriesNonPaged').subscribe({
       next: (data) => {
         this.categories = data;
       },
