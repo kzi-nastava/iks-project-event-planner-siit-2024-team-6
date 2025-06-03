@@ -16,7 +16,7 @@ import { NewReservationDTO } from '../../../dto/reservation-dtos';
   styleUrl: './reservation.component.css'
 })
 export class ReservationComponent {
-
+  userRole: string = '';
   selectedDate: Date | null = null;
   fromTime: string = '';
   toTime: string = '';
@@ -30,6 +30,11 @@ export class ReservationComponent {
   constructor(private http: HttpClient, private router: Router, private authService: AuthService, private snackBar: MatSnackBar ) {}
 
   ngOnInit() {
+    this.userRole = this.authService.getRole();
+    console.log("ULOGAA ",this.userRole);
+    if(this.userRole != "ROLE_ORGANIZER"){
+      return;
+    }
     this.calculateMinDate();
     this.isPreciseDurationDefined = this.service.preciseDuration !== 0;
     this.organizerId = this.authService.getUserId();
@@ -53,7 +58,7 @@ export class ReservationComponent {
   }
 
   fetchEvents(): Observable<OrganizersEventDTO[]> {
-    return this.http.get<OrganizersEventDTO[]>(`/api/organizers/events/${this.organizerId}`);
+    return this.http.get<OrganizersEventDTO[]>(`/api/organizers/${this.organizerId}/events`);
   }
 
   onFromTimeChange() {

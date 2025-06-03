@@ -1,4 +1,4 @@
-<div class="booking-container">
+<div class="booking-container" *ngIf="userRole === 'ROLE_ORGANIZER'">
     <h2>Book a Reservation</h2>
   
     <mat-form-field appearance="fill">
