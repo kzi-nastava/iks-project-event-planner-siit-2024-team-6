@@ -1,10 +1,213 @@
 .offer-section {
-    display: flex;
-    flex-direction: column;
-    max-width: 1200px;
-    margin: 70px auto;
-    padding: 20px;
-    background: #f9f9f9;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-height: max-content;
+  background: #f9f9f9;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "carousel details";
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 55px auto;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "carousel"
+      "details";
   }
+}
+
+.carousel-container {
+  grid-area: carousel;
+  width: 100%;
+}
+
+.carousel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .carousel-slide {
+    width: 100%;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 400px;
+      /* fixed height, adjust as needed */
+      object-fit: cover;
+      /* cover fills the area, cropping if needed */
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: transform 0.5s ease;
+    }
+
+
+  }
+
+  .nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    padding: 0.3rem 0.8rem;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+
+    &.prev {
+      left: 0.5rem;
+    }
+
+    &.next {
+      right: 0.5rem;
+    }
+  }
+}
+
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+
+  span {
+    height: 10px;
+    width: 10px;
+    margin: 0 4px;
+    background-color: #ccc;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &.active {
+      background-color: #555;
+    }
+  }
+}
+
+.offer-section h2 {
+  grid-column: span 2;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.offer-section>div:not(.carousel-container) {
+  grid-area: details;
+}
+
+.offer-section strong {
+  display: block;
+  margin-top: 1rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.offer-section p {
+  margin: 0.25rem 0;
+  line-height: 1.5;
+}
+
+.text-available {
+  color: #D3A3B0;
+  font-weight: bold;
+}
+
+.btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  &.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+}
+
+.discount-price {
+  color: #D3A3B0;
+  /* Bootstrap's red */
+  font-size: large;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-buy {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: #D3A3B0;
+  color: #fff;
+}
+
+.provider-info {
+  margin-top: 1rem;
+  text-align: left;
+
+  .provider-name {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .btn {
+    padding: 0.4rem 1rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+}
+.btn-floating-back {
+  position: fixed;
+  top: 50px;
+  left: 50px;
+  z-index: 1000;
+  color: #fff;
+  background-color: #8B6A9D;
+  color: #333;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #7A5B89;
+  }
+}

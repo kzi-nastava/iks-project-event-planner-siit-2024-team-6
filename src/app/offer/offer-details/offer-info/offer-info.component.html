@@ -1,13 +1,61 @@
-
 <div class="offer-section" *ngIf="offer">
-    <h2>{{ offer.name }}</h2>
-        <p>{{ offer.description }}</p>
-        <p><strong>Type:</strong> {{ offer.type }}</p>
-        <p *ngIf="isService(offer)">
-            <strong>Precise:</strong> {{ offer.preciseDuration }}
-          </p>
-        <p><strong>Status:</strong> {{ offer.status }}</p>
-        <p><strong>Price:</strong> ${{ offer.price }}</p>
-    
-        <app-reservation *ngIf="isService(offer)"  [service]="offer"></app-reservation>
+  <button class="btn-floating-back" (click)="goBack()">←</button>
+  <div class="carousel-container">
+    <div class="carousel">
+      <button class="nav prev" *ngIf="offer.photos?.length > 1" (click)="prevSlide()">❮</button>
+
+      <div class="carousel-slide">
+        <img [src]="offer.photos?.[currentSlide] || ''" alt="Offer image" (error)="onImageError($event)" />
+
+      </div>
+
+      <button class="nav next" *ngIf="offer.photos?.length > 1" (click)="nextSlide()">❯</button>
+    </div>
+
+    <div class="carousel-indicators" *ngIf="offer.photos?.length > 1">
+      <span *ngFor="let photo of offer.photos; let i = index" [class.active]="i === currentSlide"
+        (click)="goToSlide(i)"></span>
+    </div>
+    <div class="provider-info">
+      <p class="provider-name"  (click)="openCompanyDialog()"> <strong><i class="fa fa-user" style="color: #8B6A9D;" aria-hidden="true"></i> {{'     '+ company?.companyName }}</strong></p>
+      <button class="btn btn-secondary" (click)="contactProvider()">Contact Us</button>
+    </div>
+  </div>
+
+  <div>
+    <h1>{{ offer.name }}</h1>
+    <strong>Details and Specifics</strong>
+    <p>{{ offer.description }}</p>
+    <p *ngIf="isService(offer)">{{offer.specifics}}</p>
+
+    <strong>Event types</strong>
+    <p *ngFor="let type of offer.eventTypes">{{ type.name || type }}</p>
+
+    <strong>Category</strong>
+    <p>{{ offer.category }}</p>
+
+    <strong>Price</strong>
+    <p>
+      <span *ngIf="offer.sale; else noSale">
+        <del>{{ offer.price }} $</del>
+        <span class="discount-price">{{ offer.sale }} $</span>
+      </span>
+      <ng-template #noSale>
+        {{ offer.price }} $
+      </ng-template>
+    </p>
+
+    <strong *ngIf="isService(offer)">Duration</strong>
+    <p *ngIf="isService(offer)">{{offer.preciseDuration ? offer.preciseDuration + ' minutes': offer.minDuration+' - '+offer.maxDuration+' minutes'}}</p>
+
+    <strong *ngIf="isService(offer)">{{'Cancelation available until '+offer.latestCancelation + 'h before the booking.'}}</strong>
+    <pre></pre>
+    <p *ngIf="offer.isAvailable === true" class="text-available">Available.</p>
+    <p *ngIf="offer.isAvailable === false" class="text-available">Currently unavailable</p>
+    <button class="btn-buy" *ngIf="isProduct(offer)" (click)="buyProduct(offer)">
+      Buy
+    </button>
+    <app-reservation  *ngIf="isService(offer) && offer.isAvailable === true" [service]="offer"></app-reservation>
+  </div>
+
 </div>
