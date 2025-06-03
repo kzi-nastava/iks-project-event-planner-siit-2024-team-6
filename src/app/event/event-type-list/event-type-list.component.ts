@@ -17,25 +17,32 @@ export class EventTypeListComponent implements OnInit {
   constructor(private http: HttpClient, private eventTypeService: EventTypeService, private router: Router) {}
 
   ngOnInit(): void {
-    this.loadAllCategories();
-    this.loadEventTypes();
-  }
+  console.log('ngOnInit called');
+  this.loadAllCategories();
+  this.loadEventTypes();
+}
+
+
   addNewEventType() {
     this.router.navigate(['/event-types/add']);
     }
-    loadAllCategories(): void {
-      this.http
-        .get<{ content: { id: number; name: string }[] }>('/api/admins/categories')
-        .subscribe({
-          next: (data) => {
-            this.allCategories = data.content; // Извлекаем массив из ключа content
-            console.log('Loaded categories:', this.allCategories);
-          },
-          error: (err) => {
-            console.error('Failed to load categories:', err);
-          }
-        });
-    }
+
+loadAllCategories(): void {
+  console.log('Start loading categories...');
+  this.http
+    .get<{ id: number; name: string }[]>('/api/admins/categoriesNonPaged')
+    .subscribe({
+      next: (data) => {
+        console.log('Categories response:', data);
+        this.allCategories = data; // напрямую присваиваем массив
+        console.log('Loaded categories:', this.allCategories);
+      },
+      error: (err) => {
+        console.error('Failed to load categories:', err);
+      }
+    });
+}
+
     
 
   loadEventTypes(): void {
@@ -64,7 +71,8 @@ export class EventTypeListComponent implements OnInit {
   }
 
   addCategory(): void {
-    console.error('No zzz selected');
+    console.log('Current allCategories:', this.allCategories);
+  console.log('Selected category ID:', this.selectedCategoryId);
     if (this.selectedCategoryId === null) {
       console.error('No category selected');
       return;

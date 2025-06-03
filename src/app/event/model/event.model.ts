@@ -29,9 +29,19 @@ export interface Event {
     time: Date;
   }
   
-  interface Budget {
-    maxPrices: number;
+  export interface Budget {
+    id: number;
+    total: number;
+    left: number;
+    budgetItems: BudgetItem[];
   }
+
+  export interface BudgetItem {
+    maxPrice: number;
+    currPrice: number;
+    category: string;
+  }
+
   
   
   export interface OrganizerDTO {

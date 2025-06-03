@@ -196,5 +196,8 @@ loadOrganizer(id: number): void{
   }
   openAgengda(): void {
     this.router.navigate([`event/${this.event.id}/agenda`])
-}
+  }
+  openBudgetPlanning():void{
+    this.router.navigate(['/budget-planning', this.event.id]);
+  }
 }
