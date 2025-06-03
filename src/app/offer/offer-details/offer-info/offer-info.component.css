@@ -191,25 +191,40 @@
     cursor: pointer;
   }
 }
- /* Floating Back Button */
-  .floating-back-btn {
-    position: fixed;
-    top: 60px;
-    left: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%; /* Circular button */
-    background-color: #8b6a9d; /* Purple color */
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    z-index: 1000;
-  }
+
+/* Floating Back Button */
+.floating-back-btn {
+  position: fixed;
+  top: 60px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  /* Circular button */
+  background-color: #8b6a9d;
+  /* Purple color */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+}
+
+.floating-back-btn:hover {
+  background-color: #724c81;
+  /* Darker shade of purple on hover */
+  transform: scale(1.1);
+  /* Slight enlargement on hover */
+}
+
+.floating-back-btn:active {
+  transform: scale(0.95);
+  /* Slight shrink on click */
+}
 
 .offer-header {
   display: flex;
@@ -234,5 +249,3 @@
   width: 35px;
   height: 35px;
 }
-
-
