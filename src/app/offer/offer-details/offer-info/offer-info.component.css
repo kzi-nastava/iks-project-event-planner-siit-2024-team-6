@@ -211,3 +211,29 @@
     background-color: #7A5B89;
   }
 }
+
+.offer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.offer-title {
+  margin: 0;
+}
+
+.add-fav {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+
+.heart-icon {
+  width: 35px;
+  height: 35px;
+}
+
+

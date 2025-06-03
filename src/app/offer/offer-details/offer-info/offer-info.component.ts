@@ -7,6 +7,8 @@ import { Product } from '../../model/offer.model';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { CompanyDialogComponent } from '../company-dialog/company-dialog.component';
+import { AuthService } from '../../../infrastructure/auth/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-offer-info',
   templateUrl: './offer-info.component.html',
@@ -16,18 +18,27 @@ export class OfferInfoComponent {
   bookOffer() {
     throw new Error('Method not implemented.');
   }
-
+  userRole: string = '';
   offer: Offer | null = null;
   currentSlide: number = 0;
   showReservation = false;
   company: ProviderCompany = null;
+  isFavorite = false;
 
-  constructor(private route: ActivatedRoute, private offerService: OfferService, private location: Location, private dialog: MatDialog) { }
+  constructor(private route: ActivatedRoute, private offerService: OfferService, private location: Location, private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     const offerId = Number(this.route.snapshot.paramMap.get('id'));
     this.fetchOffer(offerId);
     this.fetchProviderCompany(offerId);
+    this.userRole = this.authService.getRole();
+  }
+
+  checkFavourite() {
+    this.offerService.isFavourited(this.offer.id).subscribe({
+      next: (fav) => (this.isFavorite = fav),
+      error: (err) => this.showSnack('Failed to load favourite status', true),
+    });
   }
 
   fetchProviderCompany(offerId: number) {
@@ -51,6 +62,7 @@ export class OfferInfoComponent {
   fetchOffer(id: number) {
     this.offerService.getById(id).subscribe((offerData) => {
       this.offer = offerData as Offer & { type: string }; // Assert the additional type property
+       this.checkFavourite();
     });
   }
 
@@ -61,6 +73,13 @@ export class OfferInfoComponent {
   // Type guard to check if offer is a Product
   isProduct(offer: Offer): offer is Product {
     return offer.type === 'Product';
+  }
+
+  showSnack(message: string, isError: boolean = false) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      panelClass: isError ? 'snack-error' : 'snack-success'
+    });
   }
 
   nextSlide() {
@@ -84,6 +103,25 @@ export class OfferInfoComponent {
     // You could open a dialog, send a message, or route to contact form
     console.log('Contacting provider:', this.offer?.name);
     // Example: this.dialog.open(ContactDialogComponent, { data: this.offer.provider });  
+  }
+
+  toggleFavorite() {
+    if(!this.authService.isLoggedIn()){
+      this.showSnack('You need to be logged in to add to favourites', true);
+      return;
+    }
+    this.isFavorite = !this.isFavorite;
+    if (!this.isFavorite) {
+      this.offerService.removeFromFavourites(this.offer.id).subscribe({
+        next: () => {this.isFavorite = false; this.showSnack('Removed from favourites');},
+        error: (err) => this.showSnack('Failed to remove from favourites', true),
+      });
+    } else {
+      this.offerService.addToFavourites(this.offer.id).subscribe({
+        next: () => {this.isFavorite = true;this.showSnack('Added to favourites');},
+        error: (err) => this.showSnack('Failed to add to favourites', true),
+      });
+    }
   }
 
 
