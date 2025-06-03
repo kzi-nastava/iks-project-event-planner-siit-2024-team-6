@@ -1,5 +1,13 @@
 <div class="offer-section" *ngIf="offer">
-  <button class="btn-floating-back" (click)="goBack()">←</button>
+  <button class="floating-back-btn" (click)="goBack()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        class="back-icon"
+      >
+        <path d="M15.5 19.5 6 12l9.5-7.5v15Z" fill="white" />
+      </svg>
+    </button>
   <div class="carousel-container">
     <div class="carousel">
       <button class="nav prev" *ngIf="offer.photos?.length > 1" (click)="prevSlide()">❮</button>
