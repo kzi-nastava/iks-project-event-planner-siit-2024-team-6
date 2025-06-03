@@ -84,6 +84,38 @@ export class OfferService {
     );
   }
 
+  addToFavourites(offerId: number): Observable<void> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.post<void>(
+      `${this.apiUrl}${offerId}/add-favour`,{},
+      {headers}
+    );
+  }
+
+  removeFromFavourites(offerId: number): Observable<void> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.post<void>(
+      `${this.apiUrl}${offerId}/remove-favour`,{},
+      {headers}
+    );
+  }
+
+  isFavourited(offerId: number): Observable<boolean> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.get<boolean>(
+      `${this.apiUrl}${offerId}/is-favourited`,{headers}
+    );
+  }
+
   getAllProviderProducts(pageProperties?: { page: number; pageSize: number }): Observable<PagedResponse<Product>> {
     let params = new HttpParams();
 
