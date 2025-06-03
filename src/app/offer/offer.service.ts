@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Offer, Product, Service } from './model/offer.model';
+import { Offer, Product, ProviderCompany, Service } from './model/offer.model';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../env/environment';
@@ -97,6 +97,11 @@ export class OfferService {
 
     return this.httpClient.get<PagedResponse<Product>>(url, { params }
     );
+  }
+
+  getProviderByOfferId(offerId: number): Observable<ProviderCompany> {
+    const url = `${this.apiUrl}${offerId}/provider`;
+    return this.httpClient.get<ProviderCompany>(url);
   }
 
   getTopFive(): Observable<Offer[]> {
