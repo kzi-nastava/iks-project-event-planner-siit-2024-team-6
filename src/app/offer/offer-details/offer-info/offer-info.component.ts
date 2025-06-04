@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CompanyDialogComponent } from '../company-dialog/company-dialog.component';
 import { AuthService } from '../../../infrastructure/auth/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { BuyDialogComponent } from '../buy-dialog/buy-dialog.component';
 @Component({
   selector: 'app-offer-info',
   templateUrl: './offer-info.component.html',
@@ -62,7 +63,7 @@ export class OfferInfoComponent {
   fetchOffer(id: number) {
     this.offerService.getById(id).subscribe((offerData) => {
       this.offer = offerData as Offer & { type: string }; // Assert the additional type property
-       this.checkFavourite();
+      this.checkFavourite();
     });
   }
 
@@ -96,7 +97,23 @@ export class OfferInfoComponent {
   }
   buyProduct(offer: any) {
     console.log('Buying product:', offer);
-    // You can later replace this with your actual purchase logic
+    const dialogRef = this.dialog.open(BuyDialogComponent, {
+      width: '400px',
+      data: offer.id
+    });
+
+    dialogRef.afterClosed().subscribe(eventId => {
+      if (eventId) {
+        this.offerService.buyProduct(offer.id, eventId).subscribe({
+          next: () => {
+            this.snackBar.open('Product successfully added to budget!', 'Close', { duration: 3000 });
+          },
+          error: () => {
+            this.snackBar.open('Failed to buy product. Check if you have eb Try again later.', 'Close', { duration: 3000 });
+          }
+        });
+      }
+    });
   }
 
   contactProvider() {
@@ -106,19 +123,19 @@ export class OfferInfoComponent {
   }
 
   toggleFavorite() {
-    if(!this.authService.isLoggedIn()){
+    if (!this.authService.isLoggedIn()) {
       this.showSnack('You need to be logged in to add to favourites', true);
       return;
     }
     this.isFavorite = !this.isFavorite;
     if (!this.isFavorite) {
       this.offerService.removeFromFavourites(this.offer.id).subscribe({
-        next: () => {this.isFavorite = false; this.showSnack('Removed from favourites');},
+        next: () => { this.isFavorite = false; this.showSnack('Removed from favourites'); },
         error: (err) => this.showSnack('Failed to remove from favourites', true),
       });
     } else {
       this.offerService.addToFavourites(this.offer.id).subscribe({
-        next: () => {this.isFavorite = true;this.showSnack('Added to favourites');},
+        next: () => { this.isFavorite = true; this.showSnack('Added to favourites'); },
         error: (err) => this.showSnack('Failed to add to favourites', true),
       });
     }
