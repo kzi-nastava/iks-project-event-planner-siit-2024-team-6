@@ -3,7 +3,7 @@
       <h2 class="offer-section-title">Products and Services</h2>
       <div class="filter-container">
         <div class="search">
-          <input type="text" [(ngModel)]="searchQuery" placeholder="Search">
+          <input type="text" [(ngModel)]="searchQuery"  (ngModelChange)="onSearchChange($event)" placeholder="Search">
           <button (click)="onSearch()"><i class="fa fa-search"></i></button>
         </div>
         <span class="filter-text">Filter</span>

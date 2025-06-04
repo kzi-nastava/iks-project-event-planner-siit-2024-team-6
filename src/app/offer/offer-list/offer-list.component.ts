@@ -11,8 +11,12 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class OfferListComponent implements OnInit {
   offers: Offer[] = [];
-  filters: any = {};
+  filters: any = {
+    isProduct: true,
+    isService: true
+  };
   searchQuery: string = '';
+  isFiltered: boolean = false;
   pageProperties = {
     page: 0,
     pageSize: 8,
@@ -36,15 +40,16 @@ export class OfferListComponent implements OnInit {
     this.getPagedEntities();
   }
 
- /*  private getPagedEntities(){
+   private getPagedEntities(){
     this.offerService.getAll(this.pageProperties).subscribe({next: (response: PagedResponse<Offer>)=>{
+      console.log('Fetch all :', response);
       this.offers = response.content;
       console.log(this.offers[0]);
       this.pageProperties.totalCount = response.totalElements;
     }});
   }
- */
-  private getPagedEntities(): void {
+ 
+  private getFilteredEntities(): void {
     const params = {
       ...this.pageProperties,
       ...this.filters,
@@ -54,6 +59,7 @@ export class OfferListComponent implements OnInit {
     this.offerService.getFilteredOffers(params).subscribe({
       next: (response: PagedResponse<Offer> | null) => {
         if (response && response.content) {
+          console.log('Fetch filter :', response);
           this.offers = response.content;
           this.pageProperties.totalCount = response.totalElements;
           console.log('Paged and filtered offers:', response);
@@ -78,17 +84,46 @@ export class OfferListComponent implements OnInit {
     };
     this.pageProperties.page = 0;
     this.paginator.firstPage();
-    this.getPagedEntities();
+    this.getFilteredEntities();
   }
 
   onFiltersApplied(filters: any): void {
     console.log('Received filters:', filters);
+    if (filters.isProduct === undefined) filters.isProduct = true;
+    if (filters.isService === undefined) filters.isService = true;
+    
+    this.isFiltered = !!filters.category ||
+                    !!filters.eventType ||
+                    filters.onSale === true ||
+                    filters.isProduct === false ||
+                    filters.isService === false ||
+                    (filters.minPrice != null && filters.minPrice !== 0) ||
+                    (filters.maxPrice != null && filters.maxPrice !== 3000);
+
     this.filters = filters;
     this.pageProperties.page = 0;
     this.paginator.firstPage();
-    this.getPagedEntities();
+
+    if (this.isFiltered) {
+    this.getFilteredEntities();
+    } else {
+      this.getPagedEntities();
+    }
   }
   toggleFilter(): void {
     this.isFilterVisible = !this.isFilterVisible;
   }
+
+  onSearchChange(query: string) {
+  if (!query || query.trim() === '') {
+    this.searchQuery = '';
+    this.filters = {
+      isProduct: true,
+      isService: true
+    };
+    this.pageProperties.page = 0;
+    this.paginator.firstPage();
+    this.getPagedEntities();
+  }
+}
 }
