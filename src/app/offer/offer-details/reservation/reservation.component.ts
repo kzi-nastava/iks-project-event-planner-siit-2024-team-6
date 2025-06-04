@@ -58,7 +58,7 @@ export class ReservationComponent {
   }
 
   fetchEvents(): Observable<OrganizersEventDTO[]> {
-    return this.http.get<OrganizersEventDTO[]>(`/api/organizers/${this.organizerId}/events`);
+    return this.http.get<OrganizersEventDTO[]>(`/api/organizers/${this.organizerId}/future-events`);
   }
 
   onFromTimeChange() {
@@ -87,22 +87,14 @@ export class ReservationComponent {
     if (!this.validateFields()) {
       return;
     }
-    
+    const dateString = `${this.selectedDate!.getFullYear()}-${String(this.selectedDate!.getMonth() + 1).padStart(2,'0')}-${String(this.selectedDate!.getDate()).padStart(2,'0')}`;
+
+    const startDateTimeStr = `${dateString}T${this.fromTime}:00`;
+    const endDateTimeStr = `${dateString}T${this.toTime}:00`;
+
     const dto : NewReservationDTO = {
-      startTime: new Date(
-        this.selectedDate!.getFullYear(),
-        this.selectedDate!.getMonth(),
-        this.selectedDate!.getDate(),
-        +this.fromTime.split(':')[0],
-        +this.fromTime.split(':')[1]
-      ),
-      endTime: new Date(
-        this.selectedDate!.getFullYear(),
-        this.selectedDate!.getMonth(),
-        this.selectedDate!.getDate(),
-        +this.toTime.split(':')[0],
-        +this.toTime.split(':')[1]
-      ),
+      startTime: startDateTimeStr,
+      endTime: endDateTimeStr,
       serviceId: this.service.id,
       eventId: this.selectedEvent.id
     };
@@ -137,15 +129,15 @@ export class ReservationComponent {
     this.http.post('/api/reservations/', dto).subscribe({
       next: (response) => {
         this.snackBar.open('Reservation confirmed!', 'Close', {
-          duration: 3000,
+          duration: 5000,
         });
       },
       error: (error) => {
         const errorMessage =
-          error.error?.message || 'An unexpected error occurred.';
+        error.error?.message || 'An unexpected error occurred.';
         this.snackBar.open(errorMessage, 'Close', {
-          duration: 3000,
-        });
+        duration: 5000,
+      });
       },
     });
   }
