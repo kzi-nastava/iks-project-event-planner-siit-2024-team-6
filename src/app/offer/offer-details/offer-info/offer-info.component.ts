@@ -10,6 +10,7 @@ import { CompanyDialogComponent } from '../company-dialog/company-dialog.compone
 import { AuthService } from '../../../infrastructure/auth/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BuyDialogComponent } from '../buy-dialog/buy-dialog.component';
+import { ReservationComponent } from '../reservation/reservation.component';
 @Component({
   selector: 'app-offer-info',
   templateUrl: './offer-info.component.html',
@@ -53,6 +54,13 @@ export class OfferInfoComponent {
       },
     });
   }
+  openReservationDialog(): void {
+    this.dialog.open(ReservationComponent, {
+      width: '500px',
+      data: { service: this.offer }
+    });
+  }
+
   openCompanyDialog() {
     this.dialog.open(CompanyDialogComponent, {
       width: '400px',

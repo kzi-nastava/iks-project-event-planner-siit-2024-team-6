@@ -1,13 +1,9 @@
 <div class="offer-section" *ngIf="offer">
   <button class="floating-back-btn" (click)="goBack()">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        class="back-icon"
-      >
-        <path d="M15.5 19.5 6 12l9.5-7.5v15Z" fill="white" />
-      </svg>
-    </button>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="back-icon">
+      <path d="M15.5 19.5 6 12l9.5-7.5v15Z" fill="white" />
+    </svg>
+  </button>
   <div class="carousel-container">
     <div class="carousel">
       <button class="nav prev" *ngIf="offer.photos?.length > 1" (click)="prevSlide()">❮</button>
@@ -41,22 +37,25 @@
   </div>
 
   <div>
-  <div class="offer-header">
-    <h1 class="offer-title">{{ offer.name }}</h1>
-    <div class="add-fav" (click)="toggleFavorite()">
+    <div class="offer-header">
+      <h1 class="offer-title">{{ offer.name }}</h1>
+      <div class="add-fav" (click)="toggleFavorite()">
 
-          <!-- Outlined heart SVG -->
-          <svg *ngIf="!isFavorite" class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-            stroke="#8B6A9D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/>
-          </svg>
+        <!-- Outlined heart SVG -->
+        <svg *ngIf="!isFavorite" class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+          stroke="#8B6A9D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z" />
+        </svg>
 
-          <!-- Filled heart SVG -->
-          <svg *ngIf="isFavorite === true" class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#8B6A9D">
-            <path d="M19.3,5.71C18.841,5.246 18.294,4.878 17.692,4.627C17.089,4.377 16.443,4.248 15.79,4.25C15.137,4.248 14.491,4.377 13.888,4.627C13.286,4.878 12.739,5.246 12.28,5.71L12,6L11.72,5.72C10.792,4.792 9.533,4.27 8.22,4.27C6.907,4.27 5.648,4.792 4.72,5.72C3.804,6.655 3.291,7.911 3.291,9.22C3.291,10.529 3.804,11.785 4.72,12.72L11.49,19.51C11.631,19.65 11.821,19.729 12.02,19.729C12.219,19.729 12.409,19.65 12.55,19.51L19.32,12.72C20.236,11.782 20.748,10.522 20.744,9.211C20.74,7.9 20.222,6.642 19.3,5.71Z"/>
-          </svg>
-        </div>
-  </div>
+        <!-- Filled heart SVG -->
+        <svg *ngIf="isFavorite === true" class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+          fill="#8B6A9D">
+          <path
+            d="M19.3,5.71C18.841,5.246 18.294,4.878 17.692,4.627C17.089,4.377 16.443,4.248 15.79,4.25C15.137,4.248 14.491,4.377 13.888,4.627C13.286,4.878 12.739,5.246 12.28,5.71L12,6L11.72,5.72C10.792,4.792 9.533,4.27 8.22,4.27C6.907,4.27 5.648,4.792 4.72,5.72C3.804,6.655 3.291,7.911 3.291,9.22C3.291,10.529 3.804,11.785 4.72,12.72L11.49,19.51C11.631,19.65 11.821,19.729 12.02,19.729C12.219,19.729 12.409,19.65 12.55,19.51L19.32,12.72C20.236,11.782 20.748,10.522 20.744,9.211C20.74,7.9 20.222,6.642 19.3,5.71Z" />
+        </svg>
+      </div>
+    </div>
     <strong>Details and Specifics</strong>
     <p>{{ offer.description }}</p>
     <p *ngIf="isService(offer)">{{offer.specifics}}</p>
@@ -86,9 +85,11 @@
     <p *ngIf="offer.isAvailable === true" class="text-available">Available.</p>
     <p *ngIf="offer.isAvailable === false" class="text-available">Currently unavailable</p>
     <button class="btn-buy" *ngIf="isProduct(offer) && userRole === 'ROLE_ORGANIZER'" (click)="buyProduct(offer)">
-      Buy
+      BUY NOW
     </button>
-    <app-reservation *ngIf="isService(offer) && offer.isAvailable === true" [service]="offer"></app-reservation>
+    <button class="btn-buy" *ngIf="isService(offer) && offer.isAvailable === true" (click)="openReservationDialog()">
+      BOOK IT
+    </button>
   </div>
 
 </div>
