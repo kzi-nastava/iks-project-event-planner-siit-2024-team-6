@@ -58,6 +58,13 @@ export class OfferService {
     return this.httpClient.get<PagedResponse<Offer>>(this.apiUrl + `all-elements`, { params: params });
   }
 
+    getAccepted(pageProperties?: any): Observable<PagedResponse<Offer>> {
+    let params = new HttpParams();
+    if (pageProperties) {
+      params = params.set('page', pageProperties.page).set('size', pageProperties.pageSize);
+    }
+    return this.httpClient.get<PagedResponse<Offer>>(this.apiUrl + `accepted`, { params: params });
+  }
   getAllProviderServices(pageProperties?: { page: number; pageSize: number }): Observable<PagedResponse<Service>> {
     let params = new HttpParams();
 
