@@ -16,6 +16,7 @@ export class EventListComponent implements OnInit {
   events: Event[] = [];
   filters: any = {};
   searchQuery: string = '';
+  isFiltered: boolean = false;
   pageProperties = {
     page: 0,
     pageSize: 8,
@@ -39,24 +40,25 @@ export class EventListComponent implements OnInit {
     this.getPagedEntities();
   }
 
-  /* private getPagedEntities(){
+  private getPagedEntities(){
     this.eventService.getAll(this.pageProperties).subscribe({next: (response: PagedResponse<Event>)=>{
+      console.log('Fetch all :', response);
       this.events = response.content;
       this.pageProperties.totalCount = response.totalElements;
     }});
-  } */
+  }
 
 
-  private getPagedEntities() {
+  private getFilteredEntities() {
     const params = {
       ...this.pageProperties,
       ...this.filters,
     };
     console.log("Params: ",params);
-
     this.eventService.getFilteredEvents(params).subscribe({
       next: (response: PagedResponse<Event> | null) => {
         if (response && response.content) {
+          console.log('Fetch filter :', response);
           this.events = response.content;
           this.pageProperties.totalCount = response.totalElements;
           console.log('Paged and filtered events:', response);
@@ -79,10 +81,16 @@ export class EventListComponent implements OnInit {
 
   onFiltersApplied(filters: any) {
     console.log('Received filters:', filters);
+    this.isFiltered = !!filters.eventType || !!filters.startDate || !!filters.endDate;
     this.filters = filters;
     this.pageProperties.page = 0;
     this.paginator.firstPage();
+
+    if (this.isFiltered) {
+    this.getFilteredEntities();
+  } else {
     this.getPagedEntities();
+  }
   }
 
   onSearch() {
@@ -94,7 +102,17 @@ export class EventListComponent implements OnInit {
     this.pageProperties.page = 0;
     this.paginator.firstPage();
     console.log(this.pageProperties.page);
+    this.getFilteredEntities();
+  }
+  onSearchChange(query: string) {
+  if (!query || query.trim() === '') {
+    this.searchQuery = '';
+    this.filters = {};
+    this.pageProperties.page = 0;
+    this.paginator.firstPage();
     this.getPagedEntities();
   }
+}
+
 
 }
