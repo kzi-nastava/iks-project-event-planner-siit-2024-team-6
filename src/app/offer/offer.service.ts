@@ -90,8 +90,8 @@ export class OfferService {
       Authorization: `Bearer ${token}`,
     });
     return this.httpClient.post<void>(
-      `${this.apiUrl}${offerId}/add-favour`,{},
-      {headers}
+      `${this.apiUrl}${offerId}/add-favour`, {},
+      { headers }
     );
   }
 
@@ -101,8 +101,8 @@ export class OfferService {
       Authorization: `Bearer ${token}`,
     });
     return this.httpClient.post<void>(
-      `${this.apiUrl}${offerId}/remove-favour`,{},
-      {headers}
+      `${this.apiUrl}${offerId}/remove-favour`, {},
+      { headers }
     );
   }
 
@@ -112,7 +112,7 @@ export class OfferService {
       Authorization: `Bearer ${token}`,
     });
     return this.httpClient.get<boolean>(
-      `${this.apiUrl}${offerId}/is-favourited`,{headers}
+      `${this.apiUrl}${offerId}/is-favourited`, { headers }
     );
   }
 
@@ -315,6 +315,9 @@ export class OfferService {
     return this.httpClient.get<PagedResponse<Offer>>(this.apiUrl + `all-elements`, { params: params });
   }
 
+  buyProduct(productId: number, eventId: number) {
+    return this.httpClient.post(`/api/offers/${productId}/buy?eventId=${eventId}`, null);
+  }
 
 }
 
