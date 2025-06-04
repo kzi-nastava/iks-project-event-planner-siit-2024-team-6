@@ -84,12 +84,23 @@
     <pre></pre>
     <p *ngIf="offer.isAvailable === true" class="text-available">Available.</p>
     <p *ngIf="offer.isAvailable === false" class="text-available">Currently unavailable</p>
-    <button class="btn-buy" *ngIf="isProduct(offer) && userRole === 'ROLE_ORGANIZER'" (click)="buyProduct(offer)">
-      BUY NOW
-    </button>
-    <button class="btn-buy" *ngIf="isService(offer) && offer.isAvailable === true" (click)="openReservationDialog()">
-      BOOK IT
-    </button>
+    <div class="action-buttons" *ngIf="userRole === 'ROLE_ORGANIZER'">
+      <!-- Buy Button (Products Only) -->
+      <button class="btn-buy" *ngIf="isProduct(offer) && offer.isAvailable" (click)="buyProduct(offer)">
+        BUY NOW
+      </button>
+
+      <!-- Reserve Button (Services Only) -->
+      <button class="btn-buy" *ngIf="isService(offer) && offer.isAvailable" (click)="openReservationDialog(offer)">
+        BOOK IT
+      </button>
+
+      <!-- New Action Button (Always Visible for Organizers) -->
+      <button class="btn-review" *ngIf="canReview" (click)="handleExtraAction()">
+        Write your review!
+      </button>
+    </div>
+
   </div>
 
 </div>
