@@ -42,3 +42,14 @@ export interface TimeSlot {
   time: Date;
   duration: number;
 }
+
+export interface ProviderCompany{
+  id: number;
+  companyName: string;
+  companyEmail: string;
+  companyAddress: string;
+  description: string;
+  companyPhotos: string[];
+  openingTime: string;
+  closingTime: string;
+}
