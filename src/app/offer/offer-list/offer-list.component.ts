@@ -41,7 +41,7 @@ export class OfferListComponent implements OnInit {
   }
 
    private getPagedEntities(){
-    this.offerService.getAll(this.pageProperties).subscribe({next: (response: PagedResponse<Offer>)=>{
+    this.offerService.getAccepted(this.pageProperties).subscribe({next: (response: PagedResponse<Offer>)=>{
       console.log('Fetch all :', response);
       this.offers = response.content;
       console.log(this.offers[0]);

@@ -14,9 +14,20 @@
         </button>
       </div>
     </div>
+
     <div class="offer-list">
-      <app-offer-card *ngFor="let offer of offers" [offer]="offer"></app-offer-card>
+      <ng-container *ngIf="offers.length > 0; else noOffers">
+        <app-offer-card *ngFor="let offer of offers" [offer]="offer"></app-offer-card>
+      </ng-container>
+      <ng-template #noOffers>
+        <div class="no-offers-message">
+          <i class="fa fa-tag"></i>
+          <p>No offers available. Please try adjusting your search or filter criteria.</p>
+        </div>
+      </ng-template>
     </div>
+
+
     <mat-paginator
     [pageSize]="pageProperties.pageSize"
     [pageSizeOptions]="pageProperties.pageSizeOptions"
