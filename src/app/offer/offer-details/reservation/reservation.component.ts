@@ -58,7 +58,7 @@ export class ReservationComponent {
   }
 
   fetchEvents(): Observable<OrganizersEventDTO[]> {
-    return this.http.get<OrganizersEventDTO[]>(`/api/organizers/${this.organizerId}/future-events`);
+    return this.http.get<OrganizersEventDTO[]>(`/api/organizers/future-events`);
   }
 
   onFromTimeChange() {
