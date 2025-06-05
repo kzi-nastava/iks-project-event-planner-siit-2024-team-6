@@ -1,6 +1,7 @@
 <div class="budget-section">
     <div class="budget-section-header">
         <h2 class="budget-section-title">Budget Planning</h2>
+         <button class="back-button" (click)="goBack()">Go Back</button>
     </div>
 
     <div class="budget-container">
@@ -8,7 +9,8 @@
             <!-- User-selected budget items go here -->
             <div class="budget-header">
                 <span>Category</span>
-                <span>Max Amount</span>
+                <span>Maximum ($)</span>
+                <span>Spent ($)</span>
                 <span></span>
                 <span>
                     <button class="new-item-button" (click)="openCreateItemPopup()">New Item</button>
@@ -18,13 +20,14 @@
             <div class="budget-row" *ngFor="let item of budget?.budgetItems">
                 <span>{{ item.category }}</span>
                 <span>{{ item.maxPrice }}</span>
+                <span>{{ item.currPrice }}</span>
                 <span>
                     <button class="edit-button" (click)="onEdit(item)">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </button>
                 </span>
-                <span> 
-                    <button class="delete-button" (click)="onDelete(item)"> 
+                <span>
+                    <button class="delete-button" (click)="onDelete(item)">
                         <i class="fa fa-times" aria-hidden="true"></i>
                     </button>
                 </span>
@@ -51,8 +54,8 @@
     </div>
 
     <div class="budget-summary">
-        <div class="total-amount" >Total Max Amount: {{budget?.total}}</div>
-        <div class="leftover-amount">Leftover Amount: {{budget?.left}}</div>
+        <div class="total-amount">Total Max Amount: {{budget?.total}}</div>
+        <div class="leftover-amount">Spent Amount: {{totalSpent}}</div>
         <button class="search-button" (click)="onSearch()">
             <i class="fa fa-search"></i> Search
         </button>
@@ -96,8 +99,9 @@
             </div>
         </div>
     </div>
-    <app-budget-offer-list class="offers" [offers] = "filteredOffers"></app-budget-offer-list>
-    <div class="paginator"><mat-paginator [pageSize]="pageProperties.pageSize" [pageSizeOptions]="pageProperties.pageSizeOptions"
-        [length]="pageProperties.totalCount" (page)="pageChanged($event)">
-    </mat-paginator></div>
+    <app-budget-offer-list class="offers" [offers]="filteredOffers"></app-budget-offer-list>
+    <div class="paginator"><mat-paginator [pageSize]="pageProperties.pageSize"
+            [pageSizeOptions]="pageProperties.pageSizeOptions" [length]="pageProperties.totalCount"
+            (page)="pageChanged($event)">
+        </mat-paginator></div>
 </div>

@@ -1,55 +1,61 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { Service } from '../../model/offer.model';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { AuthService } from '../../../infrastructure/auth/auth.service';
 import { OrganizersEventDTO } from '../../../dto/event-dtos';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NewReservationDTO } from '../../../dto/reservation-dtos';
-
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-reservation',
   templateUrl: './reservation.component.html',
-  styleUrl: './reservation.component.css'
+  styleUrls: ['./reservation.component.css']
 })
-export class ReservationComponent {
+export class ReservationComponent implements OnInit {
   userRole: string = '';
   selectedDate: Date | null = null;
   fromTime: string = '';
   toTime: string = '';
   minDate: Date = new Date();
-  @Input() service!: Service;
+
+  service!: Service;
+
   isPreciseDurationDefined: boolean = false;
   events: OrganizersEventDTO[] = [];
-  selectedEvent: OrganizersEventDTO = null;
+  selectedEvent: OrganizersEventDTO | null = null;
   organizerId: number | null = null;
 
-  constructor(private http: HttpClient, private router: Router, private authService: AuthService, private snackBar: MatSnackBar ) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private snackBar: MatSnackBar,@Inject(MAT_DIALOG_DATA) public data: { service: Service },
+    private dialogRef: MatDialogRef<ReservationComponent>
+  ) {this.service = data.service;}
 
   ngOnInit() {
     this.userRole = this.authService.getRole();
-    console.log("ULOGAA ",this.userRole);
-    if(this.userRole != "ROLE_ORGANIZER"){
+
+    if (this.userRole !== 'ROLE_ORGANIZER') {
       return;
     }
+
     this.calculateMinDate();
     this.isPreciseDurationDefined = this.service.preciseDuration !== 0;
     this.organizerId = this.authService.getUserId();
+
     this.fetchEvents().subscribe({
       next: (events) => {
-        this.events = events; // No conversion of `date`
+        this.events = events;
       },
       error: (error) => {
         console.error('Failed to fetch events:', error);
+        this.snackBar.open('Failed to load events.', 'Close', { duration: 3000 });
       }
     });
-    console.log(this.service);
   }
 
-  //takes into consideration latest reservation time
   calculateMinDate() {
     const today = new Date();
     const daysToAdd = Math.ceil(this.service.latestReservation / 24);
@@ -58,7 +64,7 @@ export class ReservationComponent {
   }
 
   fetchEvents(): Observable<OrganizersEventDTO[]> {
-    return this.http.get<OrganizersEventDTO[]>(`/api/organizers/${this.organizerId}/future-events`);
+    return this.http.get<OrganizersEventDTO[]>(`/api/organizers/future-events`);
   }
 
   onFromTimeChange() {
@@ -66,7 +72,6 @@ export class ReservationComponent {
       this.calculateToTime();
     }
   }
-
 
   calculateToTime() {
     const [hours, minutes] = this.fromTime.split(':').map(Number);
@@ -80,27 +85,6 @@ export class ReservationComponent {
     const toMinutes = String(date.getMinutes()).padStart(2, '0');
 
     this.toTime = `${toHours}:${toMinutes}`;
-  }
-
-
-  book() {
-    if (!this.validateFields()) {
-      return;
-    }
-    const dateString = `${this.selectedDate!.getFullYear()}-${String(this.selectedDate!.getMonth() + 1).padStart(2,'0')}-${String(this.selectedDate!.getDate()).padStart(2,'0')}`;
-
-    const startDateTimeStr = `${dateString}T${this.fromTime}:00`;
-    const endDateTimeStr = `${dateString}T${this.toTime}:00`;
-
-    const dto : NewReservationDTO = {
-      startTime: startDateTimeStr,
-      endTime: endDateTimeStr,
-      serviceId: this.service.id,
-      eventId: this.selectedEvent.id
-    };
-
-    console.log(dto);
-    this.addReservation(dto);
   }
 
   validateFields(): boolean {
@@ -124,21 +108,37 @@ export class ReservationComponent {
     }
     return true;
   }
-  
-  addReservation(dto: NewReservationDTO): void {  
+
+  book() {
+    if (!this.validateFields()) {
+      return;
+    }
+
+    const dateString = `${this.selectedDate!.getFullYear()}-${String(this.selectedDate!.getMonth() + 1).padStart(2, '0')}-${String(this.selectedDate!.getDate()).padStart(2, '0')}`;
+
+    const startDateTimeStr = `${dateString}T${this.fromTime}:00`;
+    const endDateTimeStr = `${dateString}T${this.toTime}:00`;
+
+    const dto: NewReservationDTO = {
+      startTime: startDateTimeStr,
+      endTime: endDateTimeStr,
+      serviceId: this.service.id,
+      eventId: this.selectedEvent!.id
+    };
+
     this.http.post('/api/reservations/', dto).subscribe({
-      next: (response) => {
+      next: () => {
         this.snackBar.open('Reservation confirmed!', 'Close', {
           duration: 5000,
         });
       },
       error: (error) => {
-        const errorMessage =
-        error.error?.message || 'An unexpected error occurred.';
+        const errorMessage = error.error?.message || 'An unexpected error occurred.';
         this.snackBar.open(errorMessage, 'Close', {
-        duration: 5000,
-      });
+          duration: 5000,
+        });
       },
     });
+    this.dialogRef.close();
   }
 }

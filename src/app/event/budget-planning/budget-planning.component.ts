@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Category } from '../../category/model/category.model';
+import { Location } from '@angular/common';
 import { Budget, BudgetItem } from '../model/event.model'
 import { EventService } from '../event.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -31,6 +31,7 @@ export class BudgetPlanningComponent {
   selectedCategory = '';
   enteredMaxAmount: number = 0;
   savedCurrPrice: number = 0;
+  totalSpent: number = 0;
 
   pageProperties = {
     page: 0,
@@ -39,7 +40,7 @@ export class BudgetPlanningComponent {
     pageSizeOptions: [4, 8, 12]
   };
 
-  constructor(private categoryService: CategoryService, private route: ActivatedRoute, private eventService: EventService, private dialog: MatDialog, private snackBar: MatSnackBar, private offerService: OfferService) { }
+  constructor(private location: Location, private categoryService: CategoryService, private route: ActivatedRoute, private eventService: EventService, private dialog: MatDialog, private snackBar: MatSnackBar, private offerService: OfferService) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -50,10 +51,15 @@ export class BudgetPlanningComponent {
     this.eventService.getBudgetByEventId(Number(this.eventId)).subscribe((budget) => {
       if (budget) {
         this.budget = budget;
+        this.totalSpent = this.budget.total - this.budget.left;
+        this.recalculateBudget();
       } else {
         console.error('Budget not found');
       }
     });
+  }
+  goBack(): void {
+    this.location.back(); // Goes to the previous route
   }
 
   openCreateItemPopup(): void {
@@ -200,6 +206,7 @@ export class BudgetPlanningComponent {
       next: (response: PagedResponse<Offer> | null) => {
         if (response && response.content) {
           this.filteredOffers = response.content;
+          console.log(this.filteredOffers);
           this.pageProperties.totalCount = response.totalElements;
           console.log('Paged and filtered offers:', response);
         } else {
@@ -224,8 +231,11 @@ export class BudgetPlanningComponent {
 
   private recalculateBudget(): void {
     this.budget.total = this.budget.budgetItems.reduce((sum, item) => sum + item.maxPrice, 0);
-    this.budget.left = this.budget.total - this.budget.budgetItems.reduce((sum, item) => sum + item.currPrice, 0); // adjust if you subtract used money elsewhere
+    const totalCurrPrice = this.budget.budgetItems.reduce((sum, item) => sum + item.currPrice, 0);
+    this.budget.left = this.budget.total - totalCurrPrice;
+    this.totalSpent = totalCurrPrice;
   }
+
 
   private updateBudget(): void {
     const dto = this.toNewBudgetDTO(this.budget);

@@ -9,6 +9,16 @@
     border-radius: 0px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+.back-button{
+  background-color: #8B6A9D;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
 
 .budget-section-header {
     display: flex;
@@ -45,7 +55,7 @@
 }
 
 .user-section{
-    flex: 2;
+    flex: 3;
 }
 
 .recommended-section{
@@ -59,7 +69,7 @@
 .budget-header, 
 .budget-row {
   display: grid;
-  grid-template-columns: 2fr 1.5fr 1fr 1fr;   
+  grid-template-columns: 2fr 1.5fr 1fr 0.5fr 1fr;
   align-items: center;
   gap: 10px;
   padding: 8px 0;           /* Moderate space between the texts */
