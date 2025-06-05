@@ -341,6 +341,14 @@ export class OfferService {
 
     return this.httpClient.get<boolean>(`api/offers/${offerId}/purchased`, { headers });
   }
+  checkIfReserved(offerId: number): Observable<boolean> {
+    const token = localStorage.getItem('user'); // Retrieve token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.get<boolean>(`api/reservations/${offerId}/reserved`, { headers });
+  }
 
 }
 
