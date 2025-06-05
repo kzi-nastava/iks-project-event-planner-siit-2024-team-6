@@ -37,7 +37,7 @@ export class OfferInfoComponent {
     this.checkIfAbleToReview(offerId);
   }
 
-  checkIfAbleToReview(offerId:number){
+  checkIfAbleToReview(offerId: number) {
     this.offerService.checkIfPurchased(offerId).subscribe({
       next: (result) => this.canReview = result,
       error: (err) => {
@@ -45,6 +45,17 @@ export class OfferInfoComponent {
         this.canReview = false; // or handle unauthorized
       }
     });
+    this.offerService.checkIfReserved(offerId).subscribe({
+      next: (reserved) => {
+        if (reserved) {
+          this.canReview = true;
+        }
+      },
+      error: (err) => {
+        
+      }
+    });
+
   }
 
   checkFavourite() {
@@ -55,7 +66,7 @@ export class OfferInfoComponent {
   }
   openReviewDialog() {
     this.dialog.open(ReviewDialogComponent, {
-      width: '450px',      
+      width: '450px',
       height: 'auto',
       data: { offerId: 123 }
     }).afterClosed().subscribe(result => {
