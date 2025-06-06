@@ -20,7 +20,7 @@
   </div>
 
   <!-- Category Section -->
-  <div class="filter-section" *ngIf="isProductsSelected || isServicesSelected">
+  <div class="filter-section">
     <h4>Category</h4>
     <select [(ngModel)]="selectedCategory">
       <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
@@ -28,7 +28,7 @@
   </div>
   
   <!-- EventType Section -->
-  <div class="filter-section" *ngIf="isProductsSelected || isServicesSelected">
+  <div class="filter-section">
     <h4>For Event Type</h4>
     <select [(ngModel)]="selectedEventType">
       <option *ngFor="let type of types" [value]="type.name">{{ type.name }}</option>
@@ -36,7 +36,7 @@
   </div>
 
   <!-- On Sale Section -->
-  <div class="filter-section" *ngIf="isProductsSelected || isServicesSelected">
+  <div class="filter-section">
     <h4>On Sale</h4>
     <label>
       <input type="checkbox" [(ngModel)]="isOnSale" />
@@ -45,7 +45,7 @@
   </div>
 
   <!-- Price Range Section -->
-  <div class="filter-section" *ngIf="isProductsSelected || isServicesSelected">
+  <div class="filter-section">
     <h4>Price Range</h4>
     <input type="range" min="0" max="3000" step="10" [(ngModel)]="maxPrice" />
     <div class="price-display">
