@@ -1,0 +1,31 @@
+<div class="comment-section">
+  <div class="comment-section-header">
+    <h2 class="comment-section-title">Comments</h2>
+    <!-- Optional: add a button or action here if needed -->
+    <!-- <button class="btn-add-comment" (click)="onAddComment()">Add Comment</button> -->
+  </div>
+
+  <div *ngIf="reactions && reactions.length > 0; else noComments" class="comment-list">
+    <app-comment-card 
+      *ngFor="let reaction of reactions"
+      [reaction]="reaction"
+      (reactionUpdated)="onReactionApproved($event)"
+      (reactionDeleted)="onReactionDeleted($event)">
+    </app-comment-card>
+  </div>
+
+  <ng-template #noComments>
+    <div class="no-comments-message">
+      <i class="fa fa-times" aria-hidden="true"></i>
+      <p>No comments available.</p>
+    </div>
+  </ng-template>
+
+  <!-- Optional: Pagination for comments if needed -->
+  <!--
+  <mat-paginator *ngIf="reactions && reactions.length > 0" [pageSize]="pageProperties.pageSize" 
+    [pageSizeOptions]="pageProperties.pageSizeOptions" [length]="pageProperties.totalCount" 
+    (page)="pageChanged($event)">
+  </mat-paginator>
+  -->
+</div>

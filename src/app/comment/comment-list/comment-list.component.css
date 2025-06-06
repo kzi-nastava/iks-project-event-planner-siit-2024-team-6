@@ -1,0 +1,62 @@
+.comment-section {
+  margin-top: 100px; /* adjust based on your navbar height */
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.comment-section-header {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between; /* use space-between if you add a button */
+  align-items: center;
+  margin-bottom: 40px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--blue);
+}
+
+.comment-section-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--blue);
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.comment-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+}
+
+/* No comments message styling */
+.no-comments-message {
+  text-align: center;
+  width: 100%;
+  color: #555;
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 20px;
+}
+
+/* Optional: button style for add comment button if used */
+.btn-add-comment {
+  background-color: #8b6a9d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-add-comment:hover {
+  background-color: #7a5989;
+}
