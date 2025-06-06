@@ -6,6 +6,7 @@ import { environment } from '../../env/environment';
 import { PagedResponse } from '../shared/model/paged-response.model';
 import { NewOfferDTO } from '../dto/offer-dtos';
 import { NewBudgetDTO } from '../dto/budget-dtos';
+import { NewReactionDTO, ReactionDTO } from '../dto/reaction-dtos';
 
 
 @Injectable({
@@ -89,8 +90,8 @@ export class OfferService {
       Authorization: `Bearer ${token}`,
     });
     return this.httpClient.post<void>(
-      `${this.apiUrl}${offerId}/add-favour`,{},
-      {headers}
+      `${this.apiUrl}${offerId}/add-favour`, {},
+      { headers }
     );
   }
 
@@ -100,8 +101,8 @@ export class OfferService {
       Authorization: `Bearer ${token}`,
     });
     return this.httpClient.post<void>(
-      `${this.apiUrl}${offerId}/remove-favour`,{},
-      {headers}
+      `${this.apiUrl}${offerId}/remove-favour`, {},
+      { headers }
     );
   }
 
@@ -111,7 +112,7 @@ export class OfferService {
       Authorization: `Bearer ${token}`,
     });
     return this.httpClient.get<boolean>(
-      `${this.apiUrl}${offerId}/is-favourited`,{headers}
+      `${this.apiUrl}${offerId}/is-favourited`, { headers }
     );
   }
 
@@ -314,6 +315,39 @@ export class OfferService {
     return this.httpClient.get<PagedResponse<Offer>>(this.apiUrl + `all-elements`, { params: params });
   }
 
+  buyProduct(productId: number, eventId: number) {
+    return this.httpClient.post(`/api/offers/${productId}/buy?eventId=${eventId}`, null);
+  }
+
+  addReaction(reaction: NewReactionDTO): Observable<ReactionDTO> {
+    const token = localStorage.getItem('user'); // Retrieve token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.post<ReactionDTO>(
+      `/api/reactions/`,
+      reaction,
+      { headers }
+    );
+  }
+
+  checkIfPurchased(offerId: number): Observable<boolean> {
+    const token = localStorage.getItem('user'); // Retrieve token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.get<boolean>(`api/offers/${offerId}/purchased`, { headers });
+  }
+  checkIfReserved(offerId: number): Observable<boolean> {
+    const token = localStorage.getItem('user'); // Retrieve token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.get<boolean>(`api/reservations/${offerId}/reserved`, { headers });
+  }
 
 }
 

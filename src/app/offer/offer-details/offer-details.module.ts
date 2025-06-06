@@ -12,13 +12,19 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CompanyDialogComponent } from './company-dialog/company-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { BuyDialogComponent } from './buy-dialog/buy-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ReviewDialogComponent } from './review-dialog/review-dialog.component';
 
 
 @NgModule({
   declarations: [
     OfferInfoComponent,
     ReservationComponent,
-    CompanyDialogComponent
+    CompanyDialogComponent,
+    BuyDialogComponent,
+    ReviewDialogComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +36,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressSpinnerModule,
+    ReactiveFormsModule
   ],
   exports: [
     OfferInfoComponent

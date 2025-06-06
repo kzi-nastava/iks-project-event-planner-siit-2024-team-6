@@ -9,21 +9,23 @@ import { MatDialog } from '@angular/material/dialog';
 import { CompanyDialogComponent } from '../company-dialog/company-dialog.component';
 import { AuthService } from '../../../infrastructure/auth/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { BuyDialogComponent } from '../buy-dialog/buy-dialog.component';
+import { ReservationComponent } from '../reservation/reservation.component';
+import { ReviewDialogComponent } from '../review-dialog/review-dialog.component';
+import { NewReactionDTO } from '../../../dto/reaction-dtos';
 @Component({
   selector: 'app-offer-info',
   templateUrl: './offer-info.component.html',
   styleUrl: './offer-info.component.css'
 })
 export class OfferInfoComponent {
-  bookOffer() {
-    throw new Error('Method not implemented.');
-  }
   userRole: string = '';
   offer: Offer | null = null;
   currentSlide: number = 0;
   showReservation = false;
   company: ProviderCompany = null;
   isFavorite = false;
+  canReview = false;
 
   constructor(private route: ActivatedRoute, private offerService: OfferService, private location: Location, private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar) { }
 
@@ -32,6 +34,28 @@ export class OfferInfoComponent {
     this.fetchOffer(offerId);
     this.fetchProviderCompany(offerId);
     this.userRole = this.authService.getRole();
+    this.checkIfAbleToReview(offerId);
+  }
+
+  checkIfAbleToReview(offerId: number) {
+    this.offerService.checkIfPurchased(offerId).subscribe({
+      next: (result) => this.canReview = result,
+      error: (err) => {
+        console.error(err);
+        this.canReview = false; // or handle unauthorized
+      }
+    });
+    this.offerService.checkIfReserved(offerId).subscribe({
+      next: (reserved) => {
+        if (reserved) {
+          this.canReview = true;
+        }
+      },
+      error: (err) => {
+        
+      }
+    });
+
   }
 
   checkFavourite() {
@@ -39,6 +63,40 @@ export class OfferInfoComponent {
       next: (fav) => (this.isFavorite = fav),
       error: (err) => this.showSnack('Failed to load favourite status', true),
     });
+  }
+  openReviewDialog() {
+    this.dialog.open(ReviewDialogComponent, {
+      width: '450px',
+      height: 'auto',
+      data: { offerId: 123 }
+    }).afterClosed().subscribe(result => {
+      if (!result) return;
+
+      const reaction: NewReactionDTO = {
+        offerId: this.offer.id,
+        text: result.comment?.trim() || undefined,
+        rating: result.rating || undefined
+      };
+
+      this.offerService.addReaction(reaction).subscribe({
+        next: (saved) => {
+          console.log('Reaction saved:', saved);
+          this.snackBar.open('Your review has been submitted!', 'Close', {
+            duration: 3000, // milliseconds
+            verticalPosition: 'top', // or 'bottom'
+            horizontalPosition: 'center', // or 'end' / 'start'
+            panelClass: ['snackbar-success'] // optional for styling
+          });
+        },
+        error: (err) => {
+          this.snackBar.open('Failed to submit review. Try again.', 'Close', {
+            duration: 3000,
+            panelClass: ['snackbar-error']
+          });
+        }
+      });
+    });
+
   }
 
   fetchProviderCompany(offerId: number) {
@@ -52,6 +110,7 @@ export class OfferInfoComponent {
       },
     });
   }
+
   openCompanyDialog() {
     this.dialog.open(CompanyDialogComponent, {
       width: '400px',
@@ -62,13 +121,14 @@ export class OfferInfoComponent {
   fetchOffer(id: number) {
     this.offerService.getById(id).subscribe((offerData) => {
       this.offer = offerData as Offer & { type: string }; // Assert the additional type property
-       this.checkFavourite();
+      this.checkFavourite();
     });
   }
 
   isService(offer: Offer): offer is Service {
     return offer.type === 'Service';
   }
+
 
   // Type guard to check if offer is a Product
   isProduct(offer: Offer): offer is Product {
@@ -96,7 +156,24 @@ export class OfferInfoComponent {
   }
   buyProduct(offer: any) {
     console.log('Buying product:', offer);
-    // You can later replace this with your actual purchase logic
+    const dialogRef = this.dialog.open(BuyDialogComponent, {
+      width: '400px',
+      data: offer.id
+    });
+
+    dialogRef.afterClosed().subscribe(eventId => {
+      if (eventId) {
+        this.offerService.buyProduct(offer.id, eventId).subscribe({
+          next: () => {
+            this.snackBar.open('Product successfully added to budget!', 'Close', { duration: 3000 });
+            this.canReview = true;
+          },
+          error: () => {
+            this.snackBar.open('Failed to buy product. Check if you have eb Try again later.', 'Close', { duration: 3000 });
+          }
+        });
+      }
+    });
   }
 
   contactProvider() {
@@ -106,27 +183,39 @@ export class OfferInfoComponent {
   }
 
   toggleFavorite() {
-    if(!this.authService.isLoggedIn()){
+    if (!this.authService.isLoggedIn()) {
       this.showSnack('You need to be logged in to add to favourites', true);
       return;
     }
     this.isFavorite = !this.isFavorite;
     if (!this.isFavorite) {
       this.offerService.removeFromFavourites(this.offer.id).subscribe({
-        next: () => {this.isFavorite = false; this.showSnack('Removed from favourites');},
+        next: () => { this.isFavorite = false; this.showSnack('Removed from favourites'); },
         error: (err) => this.showSnack('Failed to remove from favourites', true),
       });
     } else {
       this.offerService.addToFavourites(this.offer.id).subscribe({
-        next: () => {this.isFavorite = true;this.showSnack('Added to favourites');},
+        next: () => { this.isFavorite = true; this.showSnack('Added to favourites'); },
         error: (err) => this.showSnack('Failed to add to favourites', true),
       });
     }
   }
 
 
-  toggleReservation() {
-    this.showReservation = !this.showReservation;
+  openReservationDialog(service: Service) {
+    const dialogRef = this.dialog.open(ReservationComponent, {
+      width: '600px',
+      data: {
+        service
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Reservation was successful!');
+        this.canReview = true;
+      }
+    });
   }
 
   goToSlide(index: number) {

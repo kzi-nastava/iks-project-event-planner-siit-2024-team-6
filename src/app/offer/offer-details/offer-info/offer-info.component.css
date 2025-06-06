@@ -162,6 +162,12 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
 
 .btn-buy {
   margin-top: 1rem;
@@ -172,6 +178,17 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   background-color: #D3A3B0;
+  color: #fff;
+}
+.btn-review{
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: #8b6a9d;
   color: #fff;
 }
 
