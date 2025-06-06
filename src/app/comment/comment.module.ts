@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommentListComponent } from './comment-list/comment-list.component';
 import { CommentCardComponent } from './comment-card/comment-card.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 
@@ -11,7 +12,8 @@ import { CommentCardComponent } from './comment-card/comment-card.component';
     CommentCardComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatPaginatorModule
   ]
 })
 export class CommentModule { }

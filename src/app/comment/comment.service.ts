@@ -11,9 +11,9 @@ export class CommentService {
 
   constructor(private http: HttpClient) {}
 
-  getAllComments(): Observable<Reaction[]> {
-    return this.http.get<Reaction[]>(`${this.apiUrl}/pending`);
-  }
+ getPendingComments(page: number, size: number): Observable<any> {
+  return this.http.get<any>(`/api/reactions/pending?page=${page}&size=${size}`);
+}
 
   updateCommentStatus(id: number, status: 'approved' | 'deleted'): Observable<any> {
     return this.http.patch(`${this.apiUrl}/${id}/status`, { status });
