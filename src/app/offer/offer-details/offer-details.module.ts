@@ -15,6 +15,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { BuyDialogComponent } from './buy-dialog/buy-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ReviewDialogComponent } from './review-dialog/review-dialog.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     OfferInfoComponent,
     ReservationComponent,
     CompanyDialogComponent,
-    BuyDialogComponent
+    BuyDialogComponent,
+    ReviewDialogComponent
   ],
   imports: [
     CommonModule,

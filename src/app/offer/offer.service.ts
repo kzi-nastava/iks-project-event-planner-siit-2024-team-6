@@ -6,6 +6,7 @@ import { environment } from '../../env/environment';
 import { PagedResponse } from '../shared/model/paged-response.model';
 import { NewOfferDTO } from '../dto/offer-dtos';
 import { NewBudgetDTO } from '../dto/budget-dtos';
+import { NewReactionDTO, ReactionDTO } from '../dto/reaction-dtos';
 
 
 @Injectable({
@@ -317,6 +318,36 @@ export class OfferService {
 
   buyProduct(productId: number, eventId: number) {
     return this.httpClient.post(`/api/offers/${productId}/buy?eventId=${eventId}`, null);
+  }
+
+  addReaction(reaction: NewReactionDTO): Observable<ReactionDTO> {
+    const token = localStorage.getItem('user'); // Retrieve token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.post<ReactionDTO>(
+      `/api/reactions/`,
+      reaction,
+      { headers }
+    );
+  }
+
+  checkIfPurchased(offerId: number): Observable<boolean> {
+    const token = localStorage.getItem('user'); // Retrieve token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.get<boolean>(`api/offers/${offerId}/purchased`, { headers });
+  }
+  checkIfReserved(offerId: number): Observable<boolean> {
+    const token = localStorage.getItem('user'); // Retrieve token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.get<boolean>(`api/reservations/${offerId}/reserved`, { headers });
   }
 
 }
