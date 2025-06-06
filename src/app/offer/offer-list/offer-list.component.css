@@ -61,10 +61,13 @@
   }
   
   .offer-list {
-    flex: 3;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 10px;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  padding: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
   }
   
   
@@ -158,3 +161,21 @@ mat-paginator {
   background-color: var(--pink);
 }
 
+.no-offers-message {
+  text-align: center;
+  width: 100%;
+  color: #555;          
+  font-size: 18px;
+  font-weight: 500;
+  padding: 40px 0;
+}
+
+.no-offers-message i {
+  font-size: 48px;
+  color: var(--blue);
+  margin-bottom: 10px;
+}
+
+.no-offers-message p {
+  margin: 0;
+}

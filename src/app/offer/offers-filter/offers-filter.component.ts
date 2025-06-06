@@ -80,15 +80,18 @@ export class OffersFilterComponent implements OnInit {
   }
 
   resetFilters() {
-    this.isProductsSelected = false;
-    this.isServicesSelected = false;
+    this.isProductsSelected = true;
+    this.isServicesSelected = true;
     this.selectedCategory = '';
     this.maxPrice = 3000;
     //this.startDate = '';
     //this.endDate = '';
     this.selectedEventType = '';
     this.isOnSale = false;
-    this.apply.emit({});
+    this.apply.emit({
+      isProduct: true,
+      isService: true
+    });
     console.log('Filters reset');
   }
 }
