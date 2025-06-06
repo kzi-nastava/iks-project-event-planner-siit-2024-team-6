@@ -17,6 +17,7 @@ export class EventListComponent implements OnInit {
   filters: any = {};
   searchQuery: string = '';
   isFiltered: boolean = false;
+  sortDir: string = 'asc';
   pageProperties = {
     page: 0,
     pageSize: 8,
@@ -41,7 +42,9 @@ export class EventListComponent implements OnInit {
   }
 
   private getPagedEntities(){
-    this.eventService.getAll(this.pageProperties).subscribe({next: (response: PagedResponse<Event>)=>{
+    const params = this.buildQueryParams();
+    console.log(params)
+    this.eventService.getAll(params).subscribe({next: (response: PagedResponse<Event>)=>{
       console.log('Fetch all :', response);
       this.events = response.content;
       this.pageProperties.totalCount = response.totalElements;
@@ -50,10 +53,7 @@ export class EventListComponent implements OnInit {
 
 
   private getFilteredEntities() {
-    const params = {
-      ...this.pageProperties,
-      ...this.filters,
-    };
+    const params = this.buildQueryParams();
     console.log("Params: ",params);
     this.eventService.getFilteredEvents(params).subscribe({
       next: (response: PagedResponse<Event> | null) => {
@@ -88,9 +88,9 @@ export class EventListComponent implements OnInit {
 
     if (this.isFiltered) {
     this.getFilteredEntities();
-  } else {
-    this.getPagedEntities();
-  }
+    } else {
+      this.getPagedEntities();
+    }
   }
 
   onSearch() {
@@ -113,6 +113,34 @@ export class EventListComponent implements OnInit {
     this.getPagedEntities();
   }
 }
+onSortChange(sortDirection: string) {
+  this.filters.sortDir = sortDirection;
+  this.pageProperties.page = 0;
+  this.paginator.firstPage();
+
+  if (this.isFiltered || this.searchQuery) {
+    this.getFilteredEntities();
+  } else {
+    this.getPagedEntities();
+  }
+}
+private buildQueryParams(): any {
+  const params: any = {
+    ...this.filters,
+    ...this.pageProperties,
+    sortBy: 'date',
+    sortDir: this.sortDir
+  };
+  if (typeof this.pageProperties.page === 'number') {
+    params.page = this.pageProperties.page;
+  }
+
+  if (typeof this.pageProperties.pageSize === 'number') {
+    params.size = this.pageProperties.pageSize;
+  }
+  return params;
+}
+
 
 
 }
