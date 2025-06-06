@@ -60,3 +60,53 @@
 .btn-add-comment:hover {
   background-color: #7a5989;
 }
+
+mat-paginator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .mat-paginator-container {
+  justify-content: center;
+  padding: 10px 20px;
+  color: var(--dark-grey);
+  font-size: 14px;
+  }
+  
+  .mat-paginator-navigation-previous,
+  .mat-paginator-navigation-next {
+  color: var(--secondary-pink);
+  transition: color 0.2s ease, transform 0.2s ease;
+  }
+  
+  .mat-paginator-navigation-previous:hover,
+  .mat-paginator-navigation-next:hover {
+  color: var(--secondary-pink);
+  transform: scale(1.1);
+  }
+  
+  .mat-paginator-page-size {
+  margin-right: 20px;
+  font-size: 14px;
+  color: var(--dark-grey);
+  }
+  
+  .mat-paginator-range-label {
+  font-weight: 500;
+  color: var(--dark-grey);
+  }
+  
+  .mat-paginator-icon {
+  fill: var(--secondary-pink);
+  }
+  
+  .mat-paginator-navigation-previous:hover .mat-paginator-icon,
+  .mat-paginator-navigation-next:hover .mat-paginator-icon {
+  fill: var(--secondary-pink);
+  }

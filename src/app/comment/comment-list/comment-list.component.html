@@ -21,11 +21,11 @@
     </div>
   </ng-template>
 
-  <!-- Optional: Pagination for comments if needed -->
-  <!--
-  <mat-paginator *ngIf="reactions && reactions.length > 0" [pageSize]="pageProperties.pageSize" 
-    [pageSizeOptions]="pageProperties.pageSizeOptions" [length]="pageProperties.totalCount" 
-    (page)="pageChanged($event)">
-  </mat-paginator>
-  -->
+  <mat-paginator *ngIf="totalCount > 0"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[5, 10, 20]"
+  [length]="totalCount"
+  (page)="pageChanged($event)">
+</mat-paginator>
+
 </div>
