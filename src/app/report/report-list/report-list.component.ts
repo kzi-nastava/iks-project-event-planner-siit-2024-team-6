@@ -23,8 +23,8 @@ export class ReportListComponent implements OnInit {
   loadReports(): void {
     this.reportService.getReports(this.currentPage, this.pageSize).subscribe({
       next: (response) => {
-        this.reports = response.reports;
-        this.totalCount = response.totalCount;
+        this.reports = response.content;
+        this.totalCount = response.totalElements;
       },
       error: (err) => {
         console.error('Failed to load reports', err);
