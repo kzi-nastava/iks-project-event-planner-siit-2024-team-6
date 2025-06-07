@@ -31,6 +31,7 @@ import { ProviderProductEditComponent } from './offer/provider-product-edit/prov
 import { FavoriteProductsComponent } from './offer/favorite-products/favorite-products.component';
 import { FavoriteServicesComponent } from './offer/favorite-services/favorite-services.component';
 import { BudgetPlanningComponent } from './event/budget-planning/budget-planning.component';
+import { CalendarComponent } from './layout/calendar/calendar.component';
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
   { path: 'offers', component: OffersViewComponent},
@@ -85,6 +86,8 @@ const routes: Routes = [
   {path: 'categories', component: AdminViewComponent, canActivate: [AuthGuard], data: {role: 'ROLE_ADMIN' }},
   { path: '', redirectTo: '/events', pathMatch: 'full' },
   {path: 'notifications', component: NotificationListComponent},
+  {path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard],
+        data: {auser: 'Auth user'}},
 
 ];
 // /favorite/products
