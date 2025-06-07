@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
-import { Reaction } from '../model/comment.model';
+import { ReactionDTO } from '../../dto/reaction-dtos';
 import { CommentService } from '../comment.service';
 
 @Component({
@@ -11,8 +11,8 @@ import { CommentService } from '../comment.service';
   styleUrls: ['./comment-card.component.css'],
 })
 export class CommentCardComponent {
-  @Input() reaction!: Reaction;
-  @Output() reactionUpdated = new EventEmitter<Reaction>();
+  @Input() reaction!: ReactionDTO;
+  @Output() reactionUpdated = new EventEmitter<ReactionDTO>();
   @Output() reactionDeleted = new EventEmitter<number>();
 
   constructor(

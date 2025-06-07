@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Reaction } from './model/comment.model';
+import { ReactionDTO } from '../dto/reaction-dtos';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class CommentService {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
-  acceptComment(id: number): Observable<Reaction> {
-    return this.http.put<Reaction>(`${this.apiUrl}/${id}/accept`, {});
+  acceptComment(id: number): Observable<ReactionDTO> {
+    return this.http.put<ReactionDTO>(`${this.apiUrl}/${id}/accept`, {});
   }
 }
