@@ -95,13 +95,13 @@ loadOrganizer(id: number): void{
       const isParticipated = attends.some(event => event.id === this.event.id);
   
       if (isParticipated) {
-        this.eventService.removeFromFavorites(this.event.id).subscribe(() => {
+        this.eventService.removeParticipation(this.event.id).subscribe(() => {
           this.snackBar.open(`Event ${this.event.name} removed from attends`, 'Close', {
             duration: 3000,
           });
         });
       } else {
-        this.eventService.addToFavorites(this.event.id).subscribe(() => {
+        this.eventService.participateInEvent(this.event.id).subscribe(() => {
           this.snackBar.open(`Event ${this.event.name} added to attends`, 'Close', {
             duration: 3000,
           });
