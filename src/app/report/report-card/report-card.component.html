@@ -1,0 +1,17 @@
+<div class="report-card">
+  <div class="report-body">
+    <p class="report-reason"><strong>Reason:</strong> {{ report.reason }}</p>
+    <p class="report-users">
+      Reported by: <span class="user">{{ report.reporterUsername }}</span> <br />
+      Reported user: <span class="user">{{ report.reportedUsername }}</span>
+    </p>
+  </div>
+  <div class="report-footer">
+    <button (click)="suspendUser()" class="btn-edit">
+      <i class="fa fa-ban"></i> Suspend
+    </button>
+    <button (click)="rejectReport()" class="btn-delete">
+      <i class="fa fa-trash"></i> Reject Report
+    </button>
+  </div>
+</div>
