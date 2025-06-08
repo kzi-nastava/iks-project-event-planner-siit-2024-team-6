@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Offer, Product, Service } from './model/offer.model';
+import { Offer, Product, ProviderCompany, Service } from './model/offer.model';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../env/environment';
 import { PagedResponse } from '../shared/model/paged-response.model';
 import { NewOfferDTO } from '../dto/offer-dtos';
 import { NewBudgetDTO } from '../dto/budget-dtos';
+import { NewReactionDTO, ReactionDTO } from '../dto/reaction-dtos';
 
 
 @Injectable({
@@ -50,14 +51,13 @@ export class OfferService {
   private apiUrlProvider = environment.apiHost + '/providers/';
   constructor(private httpClient: HttpClient) { }
 
-  getAll(pageProperties?: any): Observable<PagedResponse<Offer>> {
-    let params = new HttpParams();
-    if (pageProperties) {
-      params = params.set('page', pageProperties.page).set('size', pageProperties.pageSize);
-    }
+  getAll(params: any): Observable<PagedResponse<Offer>> {
     return this.httpClient.get<PagedResponse<Offer>>(this.apiUrl + `all-elements`, { params: params });
   }
 
+    getAccepted(params: any): Observable<PagedResponse<Offer>> {
+    return this.httpClient.get<PagedResponse<Offer>>(this.apiUrl + `accepted`, { params: params });
+  }
   getAllProviderServices(pageProperties?: { page: number; pageSize: number }): Observable<PagedResponse<Service>> {
     let params = new HttpParams();
 
@@ -84,6 +84,38 @@ export class OfferService {
     );
   }
 
+  addToFavourites(offerId: number): Observable<void> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.post<void>(
+      `${this.apiUrl}${offerId}/add-favour`, {},
+      { headers }
+    );
+  }
+
+  removeFromFavourites(offerId: number): Observable<void> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.post<void>(
+      `${this.apiUrl}${offerId}/remove-favour`, {},
+      { headers }
+    );
+  }
+
+  isFavourited(offerId: number): Observable<boolean> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.get<boolean>(
+      `${this.apiUrl}${offerId}/is-favourited`, { headers }
+    );
+  }
+
   getAllProviderProducts(pageProperties?: { page: number; pageSize: number }): Observable<PagedResponse<Product>> {
     let params = new HttpParams();
 
@@ -97,6 +129,11 @@ export class OfferService {
 
     return this.httpClient.get<PagedResponse<Product>>(url, { params }
     );
+  }
+
+  getProviderByOfferId(offerId: number): Observable<ProviderCompany> {
+    const url = `${this.apiUrl}${offerId}/provider`;
+    return this.httpClient.get<ProviderCompany>(url);
   }
 
   getTopFive(): Observable<Offer[]> {
@@ -278,6 +315,39 @@ export class OfferService {
     return this.httpClient.get<PagedResponse<Offer>>(this.apiUrl + `all-elements`, { params: params });
   }
 
+  buyProduct(productId: number, eventId: number) {
+    return this.httpClient.post(`/api/offers/${productId}/buy?eventId=${eventId}`, null);
+  }
+
+  addReaction(reaction: NewReactionDTO): Observable<ReactionDTO> {
+    const token = localStorage.getItem('user'); // Retrieve token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.post<ReactionDTO>(
+      `/api/reactions/`,
+      reaction,
+      { headers }
+    );
+  }
+
+  checkIfPurchased(offerId: number): Observable<boolean> {
+    const token = localStorage.getItem('user'); // Retrieve token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.get<boolean>(`api/offers/${offerId}/purchased`, { headers });
+  }
+  checkIfReserved(offerId: number): Observable<boolean> {
+    const token = localStorage.getItem('user'); // Retrieve token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.get<boolean>(`api/reservations/${offerId}/reserved`, { headers });
+  }
 
 }
 

@@ -27,13 +27,10 @@ export class EventService {
   getEventTypesByCategoryName(categoryName: string): Observable<EventTypeDTO[]>{
     return this.httpClient.get<EventTypeDTO[]>(this.apiUrl+`${categoryName}/event-types-by-category-name`);
   }
-  getAll(pageProperties?: any): Observable<PagedResponse<Event>> {
-    let params = new HttpParams();
-    if(pageProperties){
-      params = params.set('page',pageProperties.page).set('size',pageProperties.pageSize)
-    }
-    return this.httpClient.get<PagedResponse<Event>>(this.apiUrl+`all-elements`, {params:params});
-  }
+  getAll(params: any): Observable<PagedResponse<Event>> {
+
+  return this.httpClient.get<PagedResponse<Event>>(this.apiUrl + `all-elements`, { params: params });
+}
 
   getAllByOrganizer(): Observable<Event[]> {
     return this.httpClient.get<Event[]>("/api/organizers/events");

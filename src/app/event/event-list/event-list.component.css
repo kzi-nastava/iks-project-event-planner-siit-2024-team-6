@@ -60,13 +60,13 @@
   transform: scale(1.1);
 }
 .event-list {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+   display: flex;
+  justify-content: center;
+  align-items: center; 
   min-height: 200px;
   padding: 20px;
-  flex-wrap: wrap;
-  gap: 20px;
+  flex-wrap: wrap;            
+  gap: 20px; 
 }
 
 

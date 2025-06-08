@@ -21,8 +21,8 @@ export class OffersFilterComponent implements OnInit {
   selectedEventType: string = '';
   isOnSale: boolean = false;
   maxPrice: number = 3000;
-  startDate: string = '';
-  endDate: string = '';
+//  startDate: string = '';
+//  endDate: string = '';
 
   constructor(
     private offerService: OfferService,
@@ -69,8 +69,8 @@ export class OffersFilterComponent implements OnInit {
       isService: this.isServicesSelected,
       category: this.selectedCategory,
       maxPrice: this.maxPrice,
-      startDate: this.startDate,
-      endDate: this.endDate,
+      //startDate: this.startDate,
+      //endDate: this.endDate,
       eventType: this.selectedEventType,
       isOnSale: this.isOnSale,
     };
@@ -80,15 +80,18 @@ export class OffersFilterComponent implements OnInit {
   }
 
   resetFilters() {
-    this.isProductsSelected = false;
-    this.isServicesSelected = false;
+    this.isProductsSelected = true;
+    this.isServicesSelected = true;
     this.selectedCategory = '';
     this.maxPrice = 3000;
-    this.startDate = '';
-    this.endDate = '';
+    //this.startDate = '';
+    //this.endDate = '';
     this.selectedEventType = '';
     this.isOnSale = false;
-    this.apply.emit({});
+    this.apply.emit({
+      isProduct: true,
+      isService: true
+    });
     console.log('Filters reset');
   }
 }

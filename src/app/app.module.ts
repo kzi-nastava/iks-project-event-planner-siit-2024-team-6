@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { NotificationModule } from './notification/notification.module';
 import { CategoryModule } from './category/category.module';
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
+import { CommentModule } from './comment/comment.module';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.c
     NotificationModule,
     AuthModule,
     CategoryModule,
+    CommentModule,
     MatPaginatorModule,
     CommonModule,
     FormsModule
