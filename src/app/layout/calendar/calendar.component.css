@@ -1,0 +1,42 @@
+.calendar-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.fc {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 8px;
+}
+
+.fc-toolbar-title {
+  font-size: 1.2rem;
+  color: #222;
+}
+
+.fc-button {
+  background: #007bff;
+  border: none;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  margin: 0 0.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.fc-button:hover {
+  background: #0056b3;
+}
+
+.fc-event:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}

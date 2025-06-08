@@ -13,7 +13,8 @@ import { SidebarOrganizerComponent } from './sidebar-organizer/sidebar-organizer
 import { SidebarProviderComponent } from './sidebar-provider/sidebar-provider.component';
 import { SidebarAdminComponent } from './sidebar-admin/sidebar-admin.component';
 import { SidebarUserComponent } from './sidebar-user/sidebar-user.component';
-
+import { CalendarComponent } from './calendar/calendar.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -24,20 +25,23 @@ import { SidebarUserComponent } from './sidebar-user/sidebar-user.component';
     SidebarOrganizerComponent,
     SidebarProviderComponent,
     SidebarAdminComponent,
-    SidebarUserComponent
+    SidebarUserComponent,
+    CalendarComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     RouterModule,
     EventModule,
-    OfferModule
+    OfferModule,
+    FullCalendarModule
   ],
   exports: [
     FooterComponent,
     NavBarComponent,
     HomeComponent,
-    SidebarComponent
+    SidebarComponent,
+    CalendarComponent
   ]
 })
 export class LayoutModule { }

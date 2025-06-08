@@ -24,6 +24,7 @@ export class EventViewComponent implements OnInit{
   agendaReady: boolean = false;
   infoReady: boolean = false;
   loggedIn: boolean = false;
+  isParticipated: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,6 +40,7 @@ export class EventViewComponent implements OnInit{
     if (eventId) {
       this.loadEvent(eventId);
       this.loadOrganizer(eventId);
+      this.checkParticipation(eventId);
 
       setTimeout(() => {
         this.agendaReady = true; // Имитация завершения подготовки
@@ -46,6 +48,11 @@ export class EventViewComponent implements OnInit{
       }, 1000); // Задержка в 1 секунду
     }
     this.loggedIn = this.authService.isLoggedIn();
+  }
+  checkParticipation(eventId: number): void {
+    this.eventService.getParticipatedEvents().subscribe((attends) => {
+      this.isParticipated = attends.some(event => event.id === eventId);
+    });
   }
 
   downloadAgenda(): void {
@@ -60,7 +67,7 @@ export class EventViewComponent implements OnInit{
     this.eventService.getEventById(id).subscribe((event) => {
       if(event){
       this.event = event;
-      
+
       } else {
         console.error('Event not found');
       }
@@ -78,7 +85,7 @@ loadOrganizer(id: number): void{
   addToFavorites(): void {
     this.eventService.getFavorites().subscribe((favorites) => {
       const isFavorite = favorites.some(event => event.id === this.event.id);
-  
+
       if (isFavorite) {
         this.eventService.removeFromFavorites(this.event.id).subscribe(() => {
           this.snackBar.open(`Event ${this.event.name} removed from favorites`, 'Close', {
@@ -88,6 +95,27 @@ loadOrganizer(id: number): void{
       } else {
         this.eventService.addToFavorites(this.event.id).subscribe(() => {
           this.snackBar.open(`Event ${this.event.name} added to favorites`, 'Close', {
+            duration: 3000,
+          });
+        });
+      }
+    });
+  }
+
+
+    participate(): void {
+    this.eventService.getParticipatedEvents().subscribe((attends) => {
+       const isCurrentlyParticipated = attends.some(event => event.id === this.event.id);
+
+      if (isCurrentlyParticipated) {
+        this.eventService.removeParticipation(this.event.id).subscribe(() => {
+          this.snackBar.open(`Event ${this.event.name} removed from attends`, 'Close', {
+            duration: 3000,
+          });
+        });
+      } else {
+        this.eventService.participateInEvent(this.event.id).subscribe(() => {
+          this.snackBar.open(`Event ${this.event.name} added to attends`, 'Close', {
             duration: 3000,
           });
         });
@@ -114,7 +142,7 @@ loadOrganizer(id: number): void{
     }
   }
 
-  
+
 reportOrganizer(): void {
     console.log("USAO");
     if (!this.organizer) {
