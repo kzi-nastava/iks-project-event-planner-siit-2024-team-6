@@ -21,6 +21,9 @@
               <p>{{ organizer?.phoneNumber || 'Phone number not available' }}</p>
             </div>
           </div>
+          <div class="organizer-buttons" *ngIf="loggedIn">
+<button class="report-button" (click)="reportOrganizer()">Report</button>
+          </div>
           <div class="organizer-action">
             <button (click)="addToFavorites()" class="favorite-button">
               Add to favorites <span>&hearts;</span>

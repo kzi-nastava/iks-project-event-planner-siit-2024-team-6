@@ -5,7 +5,9 @@ import { Event, OrganizerDTO } from '../model/event.model';
 import { EventTypeDTO, EventTypeService } from '../event-type.service';
 import { ActivityService } from '../activity.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { MatDialog } from '@angular/material/dialog';
+import { ReportDialogComponent } from '../../report/report-dialog/report-dialog.component';
+import { AuthService } from '../../infrastructure/auth/auth.service';
 
 @Component({
   selector: 'app-event-view',
@@ -21,12 +23,15 @@ export class EventViewComponent implements OnInit{
   currentPhotoIndex: number = 0; // Текущий индекс фотографии
   agendaReady: boolean = false;
   infoReady: boolean = false;
+  loggedIn: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private eventService: EventService,
     private activityService: ActivityService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private reportDialog: MatDialog,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +45,7 @@ export class EventViewComponent implements OnInit{
         this.infoReady = true;
       }, 1000); // Задержка в 1 секунду
     }
+    this.loggedIn = this.authService.isLoggedIn();
   }
 
   downloadAgenda(): void {
@@ -107,4 +113,27 @@ loadOrganizer(id: number): void{
         (this.currentPhotoIndex - 1 + this.event.photos.length) % this.event.photos.length;
     }
   }
+
+  
+reportOrganizer(): void {
+    console.log("USAO");
+    if (!this.organizer) {
+    console.error("Organizer not loaded");
+    return;
+  }
+
+  const dialogRef = this.reportDialog.open(ReportDialogComponent, {
+    width: '400px',
+    data: {
+      reportedId: this.organizer.id,
+    }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.snackBar.open('Report submitted successfully', 'Close', { duration: 3000 });
+    }
+  });
+  }
+
 }
