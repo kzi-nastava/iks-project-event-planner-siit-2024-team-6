@@ -82,11 +82,20 @@ export class EventService {
   addToFavorites(id: number): Observable<any>{
     return this.httpClient.post(`${this.apiUrl}${id}/favorite`, {});
   }
+  participateInEvent(id: number): Observable<any>{
+    return this.httpClient.post(`${this.apiUrl}${id}/participate`, {});
+  }
   removeFromFavorites(id: number): Observable<any>{
     return this.httpClient.delete(`${this.apiUrl}${id}/favorite`);
   }
+  removeParticipation(id: number): Observable<any>{
+    return this.httpClient.delete(`${this.apiUrl}${id}/participate`);
+  }
   getFavorites(): Observable<Event[]>{
     return this.httpClient.get<Event[]>(`${this.apiUrl}unPagedFavorites`);
+  }
+  getParticipatedEvents(): Observable<Event[]>{
+    return this.httpClient.get<Event[]>(`${this.apiUrl}participated`); 
   }
 
   getFilteredFavorites(params: any): Observable<PagedResponse<Event>>{

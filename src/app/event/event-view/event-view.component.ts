@@ -21,6 +21,7 @@ export class EventViewComponent implements OnInit{
   currentPhotoIndex: number = 0; // Текущий индекс фотографии
   agendaReady: boolean = false;
   infoReady: boolean = false;
+  isParticipated: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,12 +35,18 @@ export class EventViewComponent implements OnInit{
     if (eventId) {
       this.loadEvent(eventId);
       this.loadOrganizer(eventId);
+      this.checkParticipation(eventId);
 
       setTimeout(() => {
         this.agendaReady = true; // Имитация завершения подготовки
         this.infoReady = true;
       }, 1000); // Задержка в 1 секунду
     }
+  }
+  checkParticipation(eventId: number): void {
+    this.eventService.getParticipatedEvents().subscribe((attends) => {
+      this.isParticipated = attends.some(event => event.id === eventId);
+    });
   }
 
   downloadAgenda(): void {
@@ -82,6 +89,27 @@ loadOrganizer(id: number): void{
       } else {
         this.eventService.addToFavorites(this.event.id).subscribe(() => {
           this.snackBar.open(`Event ${this.event.name} added to favorites`, 'Close', {
+            duration: 3000,
+          });
+        });
+      }
+    });
+  }
+
+
+    participate(): void {
+    this.eventService.getParticipatedEvents().subscribe((attends) => {
+       const isCurrentlyParticipated = attends.some(event => event.id === this.event.id);
+  
+      if (isCurrentlyParticipated) {
+        this.eventService.removeParticipation(this.event.id).subscribe(() => {
+          this.snackBar.open(`Event ${this.event.name} removed from attends`, 'Close', {
+            duration: 3000,
+          });
+        });
+      } else {
+        this.eventService.participateInEvent(this.event.id).subscribe(() => {
+          this.snackBar.open(`Event ${this.event.name} added to attends`, 'Close', {
             duration: 3000,
           });
         });
