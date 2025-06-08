@@ -1,0 +1,28 @@
+<div class="report-section">
+  <div class="report-section-header">
+    <h2 class="report-section-title">Reports</h2>
+  </div>
+
+  <div *ngIf="reports && reports.length > 0; else noReports" class="report-list">
+    <app-report-card
+      *ngFor="let report of reports"
+      [report]="report"
+      (suspend)="onSuspendUser(report)"
+      (reject)="onRejectReport(report)">
+    </app-report-card>
+  </div>
+
+  <ng-template #noReports>
+    <div class="no-reports-message">
+      <i class="fa fa-times" aria-hidden="true"></i>
+      <p>No reports available.</p>
+    </div>
+  </ng-template>
+
+  <mat-paginator *ngIf="totalCount > 0"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 20]"
+    [length]="totalCount"
+    (page)="pageChanged($event)">
+  </mat-paginator>
+</div>

@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {AuthService} from "../auth.service";
 import {AuthResponse} from '../model/auth-response.model';
 import {Login} from "../model/login.model";
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +22,8 @@ export class LoginComponent {
     private http: HttpClient,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute // Inject ActivatedRoute to get query parameters
+    private route: ActivatedRoute, // Inject ActivatedRoute to get query parameters
+    private snackBar: MatSnackBar
 
   ) {
     this.loginForm = this.fb.group({
@@ -45,8 +46,6 @@ export class LoginComponent {
   }
 
   onLogin(): void {
-    console.log("Email je ",this.email);
-    console.log("pass je  ", this.loginForm.value.password);
     if (this.loginForm.valid) {
       const login: Login = {
         email: this.loginForm.get('email')?.value || "",
@@ -55,10 +54,21 @@ export class LoginComponent {
       this.authService.login(login).subscribe({
         next: (response: AuthResponse) => {
           localStorage.setItem('user', response.token);
-          this.authService.setUser()
-          this.router.navigate(['events'])
+          this.authService.setUser();
+          this.router.navigate(['events']);
+        },
+        error: (error) => {
+          if (error.status === 403) {
+            const message = error.error?.message || 'You are suspended. Please try again later.';
+            this.snackBar.open(message, 'Close', {
+              duration: 5000,
+              panelClass: ['warning-snackbar']
+            });
+          } else {
+            console.error('Login failed:', error);
+          }
         }
-      })
+      });
     } else {
       console.error('Form is invalid:', this.loginForm.errors);
     }

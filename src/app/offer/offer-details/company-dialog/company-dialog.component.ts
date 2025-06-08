@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { ProviderCompany } from '../../model/offer.model';
+import { ReportDialogComponent } from '../../../report/report-dialog/report-dialog.component';
 
 @Component({
   selector: 'app-company-dialog',
@@ -12,17 +13,21 @@ export class CompanyDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<CompanyDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { company: ProviderCompany }
+    @Inject(MAT_DIALOG_DATA) public data: { company: ProviderCompany },
+    private reportDialog: MatDialog
   ) { }
 
   close(): void {
     this.dialogRef.close();
   }
   report(): void {
-    // You can replace this with your actual reporting logic, e.g., API call or showing another dialog
-    alert(`Reporting provider: ${this.data.company.companyName}`);
-  }
-
+  this.reportDialog.open(ReportDialogComponent, {
+    width: '400px',
+    data: {
+      reportedId: this.data.company.id
+    }
+  });
+}
 
   prevPhoto() {
     if (!this.data.company.companyPhotos?.length) return;

@@ -23,7 +23,7 @@ import { ProviderProductViewComponent } from './provider-product-view/provider-p
 import { ProviderProductListComponent } from './provider-product-list/provider-product-list.component';
 import { FavoriteProductsComponent } from './favorite-products/favorite-products.component';
 import { FavoriteServicesComponent } from './favorite-services/favorite-services.component';
-
+import { ReportModule } from '../report/report.module';
 
 @NgModule({
   declarations: [
@@ -53,7 +53,8 @@ import { FavoriteServicesComponent } from './favorite-services/favorite-services
     FormsModule,
     ReactiveFormsModule,
     MatPaginatorModule,
-    OfferDetailsModule
+    OfferDetailsModule,
+    ReportModule
   ],
   exports: [
     OfferSliderComponent,

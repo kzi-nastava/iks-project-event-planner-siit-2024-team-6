@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommentService } from '../comment.service';
-import { Reaction } from '../model/comment.model';
+import { ReactionDTO } from '../../dto/reaction-dtos';
 import { PageEvent } from '@angular/material/paginator';
 
 @Component({
@@ -9,7 +9,7 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./comment-list.component.css']
 })
 export class CommentListComponent implements OnInit {
-  reactions: Reaction[] = [];
+  reactions: ReactionDTO[] = [];
   pageSize = 5;
   currentPage = 0;
   totalCount = 0;
@@ -36,7 +36,7 @@ export class CommentListComponent implements OnInit {
     this.loadComments();
   }
 
-  onReactionApproved(updatedReaction: Reaction): void {
+  onReactionApproved(updatedReaction: ReactionDTO): void {
     this.reactions = this.reactions.filter(r => r.id !== updatedReaction.id);
     this.totalCount--;
   }
