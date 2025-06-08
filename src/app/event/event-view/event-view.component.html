@@ -45,14 +45,24 @@
           <p> {{ event?.date|date:'fullDate' }}</p>
         </div>
         <div>
-          <p *ngIf="event?.isPublic">This event is public, you are welcome to join!</p>
-          <button 
-            *ngIf="event?.isPublic" 
-            (click)="participate()" 
-            class="btn-join"
-          >
-            Join
-          </button>
+ <p *ngIf="event?.isPublic">This event is public, you are welcome to join!</p>
+
+  <!-- Кнопки для участия или отмены -->
+  <button
+    *ngIf="event?.isPublic && !isParticipated"
+    (click)="participate()"
+    class="btn-join"
+  >
+    Join
+  </button>
+
+  <button
+    *ngIf="event?.isPublic && isParticipated"
+    (click)="participate()"
+    class="btn-cancel"
+  >
+    Cancel Participation
+  </button>
         </div>
         <div>
           <p>If you have any questions contact us</p>

@@ -258,3 +258,14 @@
 .btn-join:hover {
   background-color: #218838; /* темно-синий при наведении */
 }
+.btn-cancel {
+  background-color: #dc3545; /* Красная кнопка */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.btn-cancel:hover {
+  background-color: #c82333; /* Темно-красный при наведении */
+}
