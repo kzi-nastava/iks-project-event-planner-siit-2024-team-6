@@ -38,7 +38,7 @@ export class ReportDialogComponent {
 
   const reportData: NewReportDTO = {
     reason: this.reportForm.get('reason')?.value,
-    reportedId : this.data.reported,
+    reportedId : this.data.reportedId,
     reporterId: this.authService.getUserId()
     };
 
@@ -55,6 +55,7 @@ export class ReportDialogComponent {
   error: (err) => {
     console.error('Failed to submit report', err);
     this.errorMessage = 'Failed to submit report. Please try again later.';
+    console.log(reportData)
   }
 });
 

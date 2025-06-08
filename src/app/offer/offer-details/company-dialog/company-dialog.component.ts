@@ -24,7 +24,7 @@ export class CompanyDialogComponent {
   this.reportDialog.open(ReportDialogComponent, {
     width: '400px',
     data: {
-      reported: this.data.company.id
+      reportedId: this.data.company.id
     }
   });
 }
