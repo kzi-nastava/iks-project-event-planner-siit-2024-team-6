@@ -89,7 +89,7 @@ const routes: Routes = [
   {path: 'categories', component: AdminViewComponent, canActivate: [AuthGuard], data: {role: 'ROLE_ADMIN' }},
   { path: '', redirectTo: '/events', pathMatch: 'full' },
   {path: 'notifications', component: NotificationListComponent},
-  {path: 'reports', component: ReportListComponent, canActivate: [AuthGuard], data: { role: 'ROLE_ADMIN' }
+  {path: 'reports', component: ReportListComponent, canActivate: [AuthGuard], data: { role: 'ROLE_ADMIN' }},
    {path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard],
         data: {auser: 'Auth user'}},
   {path: 'comments', component: CommentListComponent, canActivate: [AuthGuard], data: { role: 'ROLE_ADMIN' }
