@@ -3,3 +3,9 @@ export interface Chat {
   name: string;
   photoUrl: string;
 }
+
+export interface Message {
+    id: number;
+    text: string;
+    isFromUser: boolean;
+}
