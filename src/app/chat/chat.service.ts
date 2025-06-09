@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Chat } from './model/chat.model';
+import { Chat, Message } from './model/chat.model';
 import { Observable } from 'rxjs';
 import { NewMessageDTO } from '../dto/message-dtos';
 
@@ -27,5 +27,11 @@ export class ChatService {
     });
 
     return this.http.post<number>(`${this.apiUrl}/find/${userId}`, {}, { headers });
+  }
+  getMessages(chatId: number): Observable<Message[]> {
+    return this.http.get<Message[]>(`${this.apiUrl}/${chatId}`);
+  }
+  sendMessage(chatId: number, message: NewMessageDTO): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${chatId}/send`, message);
   }
 }
