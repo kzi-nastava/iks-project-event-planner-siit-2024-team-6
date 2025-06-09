@@ -142,6 +142,10 @@ loadOrganizer(id: number): void{
     }
   }
 
+  openChat(): void{
+    
+  }
+
 
 reportOrganizer(): void {
     console.log("USAO");
