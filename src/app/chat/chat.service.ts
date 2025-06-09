@@ -20,16 +20,12 @@ export class ChatService {
 
     return this.http.get<Chat[]>(`${this.apiUrl}/`, { headers });
   }
-  sendMessage(userId: number, messageDto: NewMessageDTO): Observable<number> {
+  findByUsers(userId: number) {
     const token = localStorage.getItem('user'); // Assuming the JWT token is stored in localStorage
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`, // Set the Authorization header with the token
     });
 
-    return this.http.post<number>(
-      `${this.apiUrl}/send/${userId}`,
-      messageDto,
-      { headers }
-    );
+    return this.http.post<number>(`${this.apiUrl}/find/${userId}`, {}, { headers });
   }
 }

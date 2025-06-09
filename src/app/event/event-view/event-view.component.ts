@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../event.service';
 import { Event, OrganizerDTO } from '../model/event.model';
 import { EventTypeDTO, EventTypeService } from '../event-type.service';
@@ -8,13 +8,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ReportDialogComponent } from '../../report/report-dialog/report-dialog.component';
 import { AuthService } from '../../infrastructure/auth/auth.service';
+import { ChatService } from '../../chat/chat.service';
 
 @Component({
   selector: 'app-event-view',
   templateUrl: './event-view.component.html',
   styleUrl: './event-view.component.css'
 })
-export class EventViewComponent implements OnInit{
+export class EventViewComponent implements OnInit {
   event: Event | undefined;
   reviewText: string = '';
   reviewRating: number = 0;
@@ -32,8 +33,10 @@ export class EventViewComponent implements OnInit{
     private activityService: ActivityService,
     private snackBar: MatSnackBar,
     private reportDialog: MatDialog,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private chatService: ChatService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     const eventId = Number(this.route.snapshot.paramMap.get('id'));
@@ -65,23 +68,23 @@ export class EventViewComponent implements OnInit{
 
   loadEvent(id: number): void {
     this.eventService.getEventById(id).subscribe((event) => {
-      if(event){
-      this.event = event;
+      if (event) {
+        this.event = event;
 
       } else {
         console.error('Event not found');
       }
     });
   }
-loadOrganizer(id: number): void{
-  this.eventService.getEventOrganizer(id).subscribe((organizer) => {
-    if(organizer){
-      this.organizer = organizer;
-    } else {
-      console.error('Event not found');
-    }
-  });
-}
+  loadOrganizer(id: number): void {
+    this.eventService.getEventOrganizer(id).subscribe((organizer) => {
+      if (organizer) {
+        this.organizer = organizer;
+      } else {
+        console.error('Event not found');
+      }
+    });
+  }
   addToFavorites(): void {
     this.eventService.getFavorites().subscribe((favorites) => {
       const isFavorite = favorites.some(event => event.id === this.event.id);
@@ -103,9 +106,9 @@ loadOrganizer(id: number): void{
   }
 
 
-    participate(): void {
+  participate(): void {
     this.eventService.getParticipatedEvents().subscribe((attends) => {
-       const isCurrentlyParticipated = attends.some(event => event.id === this.event.id);
+      const isCurrentlyParticipated = attends.some(event => event.id === this.event.id);
 
       if (isCurrentlyParticipated) {
         this.eventService.removeParticipation(this.event.id).subscribe(() => {
@@ -142,30 +145,41 @@ loadOrganizer(id: number): void{
     }
   }
 
-  openChat(): void{
-    
+  openChat(): void {
+    this.chatService.findByUsers(this.organizer.id).subscribe({
+      next: (chatId) => {
+        this.router.navigate(['/chat', chatId]);
+      },
+      error: (err) => {
+        this.snackBar.open('Failed to start chat. Please try again.', 'Close', {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+        });
+      }
+    });
   }
 
 
-reportOrganizer(): void {
+  reportOrganizer(): void {
     console.log("USAO");
     if (!this.organizer) {
-    console.error("Organizer not loaded");
-    return;
-  }
-
-  const dialogRef = this.reportDialog.open(ReportDialogComponent, {
-    width: '400px',
-    data: {
-      reportedId: this.organizer.id,
+      console.error("Organizer not loaded");
+      return;
     }
-  });
 
-  dialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      this.snackBar.open('Report submitted successfully', 'Close', { duration: 3000 });
-    }
-  });
+    const dialogRef = this.reportDialog.open(ReportDialogComponent, {
+      width: '400px',
+      data: {
+        reportedId: this.organizer.id,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.snackBar.open('Report submitted successfully', 'Close', { duration: 3000 });
+      }
+    });
   }
 
 }
