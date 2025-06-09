@@ -28,9 +28,12 @@ export class ChatComponent implements OnInit {
     this.loadMessages();
   }
 
+
   loadMessages() {
     this.chatService.getMessages(this.receiverId).subscribe({
-      next: (data) => this.messages = data,
+      next: (data) => {this.receiver = data.chat;
+        this.messages = data.messages;
+      },
       error: (err) => {
         this.snackBar.open('Could not load messages.', 'Close', {
           duration: 3000,
