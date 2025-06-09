@@ -8,6 +8,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ReportDialogComponent } from '../../report/report-dialog/report-dialog.component';
 import { AuthService } from '../../infrastructure/auth/auth.service';
+import { NotificationService } from '../../notification/notification.service';
+import { NewNotificationDTO } from '../../notification/model/notification.model';
 
 @Component({
   selector: 'app-event-view',
@@ -32,7 +34,8 @@ export class EventViewComponent implements OnInit{
     private activityService: ActivityService,
     private snackBar: MatSnackBar,
     private reportDialog: MatDialog,
-    private authService: AuthService
+    private authService: AuthService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -125,6 +128,25 @@ loadOrganizer(id: number): void{
 
   submitReview(): void {
     console.log('Review submitted:', this.reviewText, this.reviewRating);
+     const stars = '⭐'.repeat(this.reviewRating || 0);
+    const notificationText = `You got a new review for "${this.event.name}": Comment: ${this.reviewText || 'No comment'} - Rating: ${stars} (${this.reviewRating || '_'}/5)`;
+
+    const newNotification: NewNotificationDTO = {
+    receiverId: this.organizer.id,
+    text: notificationText
+  };
+
+  this.notificationService.createNotification(newNotification).subscribe({
+    next: (notification) => {
+      this.snackBar.open('Notification sent', 'Close', { duration: 3000 });
+      this.reviewText = '';
+      this.reviewRating = 0;
+    },
+    error: (err) => {
+      console.error('Failed to send notification', err);
+      this.snackBar.open('Failed to send review notification', 'Close', { duration: 3000 });
+    }
+  });
   }
 
   //Ph
