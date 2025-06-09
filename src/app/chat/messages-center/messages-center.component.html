@@ -1,0 +1,17 @@
+<div class="messages-container">
+  <div class="header">
+    <button class="back-button" (click)="goBack()">&#8592;</button>
+    <h2>CHATS</h2>
+  </div>
+
+  <div class="chat-list">
+    <div
+      class="chat-card"
+      *ngFor="let partner of chatPartners"
+      (click)="openChat(partner.id)"
+    >
+      <img [src]="partner.photoUrl" class="avatar" />
+      <span class="name"><em>{{ partner.name }}</em></span>
+    </div>
+  </div>
+</div>
