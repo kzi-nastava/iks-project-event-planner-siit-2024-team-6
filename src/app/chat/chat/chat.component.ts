@@ -5,6 +5,7 @@ import { ChatService } from '../chat.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NewMessageDTO } from '../../dto/message-dtos';
 import { AuthService } from '../../infrastructure/auth/auth.service';
+import { Location } from '@angular/common'
 
 // chat.component.ts
 @Component({
@@ -22,7 +23,8 @@ export class ChatComponent implements OnInit {
     private route: ActivatedRoute,
     private chatService: ChatService,
     private snackBar: MatSnackBar,
-    private authService: AuthService
+    private authService: AuthService,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -35,6 +37,9 @@ export class ChatComponent implements OnInit {
     });
   }
 
+   goBack(): void {
+    this.location.back(); // <-- goes to the previous route
+  }
 
   loadMessages() {
     this.chatService.getMessages(this.receiverId).subscribe({
@@ -77,6 +82,7 @@ export class ChatComponent implements OnInit {
       }
     });
   }
+  
   ngOnDestroy() {
     this.chatService.disconnect();
   }

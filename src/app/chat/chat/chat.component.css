@@ -86,3 +86,12 @@
   border-color: #9b7ab1;
   box-shadow: 0 0 0 2px rgba(155, 122, 177, 0.2);
 }
+
+.back-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    margin-right: 10px;
+    
+}
