@@ -31,8 +31,15 @@ export class ChatComponent implements OnInit {
 
   loadMessages() {
     this.chatService.getMessages(this.receiverId).subscribe({
-      next: (data) => {this.receiver = data.chat;
+      next: (data) => {
+        this.receiver = data.chat;
+        this.messages = data.messages.map(msg => ({
+          id: msg.id,
+          text: msg.text,
+          isFromUser: msg.isFromUser // rename here to match your interface
+        }));
         this.messages = data.messages;
+        console.log(this.messages);
       },
       error: (err) => {
         this.snackBar.open('Could not load messages.', 'Close', {
@@ -44,7 +51,7 @@ export class ChatComponent implements OnInit {
   }
 
   sendMessage() {
-    if (this.newMessage.trim().length == 0){
+    if (this.newMessage.trim().length == 0) {
       return;
     }
     const message: NewMessageDTO = {
