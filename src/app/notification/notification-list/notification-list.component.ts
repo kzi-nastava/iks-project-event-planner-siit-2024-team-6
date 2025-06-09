@@ -2,54 +2,67 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotificationService } from '../notification.service';
 import { Notification } from '../model/notification.model';
 import { AuthService } from '../../infrastructure/auth/auth.service';
-import { WebSocketService } from '../../shared/services/web-socket.service';
-import { Subscription } from 'rxjs';
+import { IMessage } from '@stomp/stompjs';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-notification-list',
   templateUrl: './notification-list.component.html',
-  styleUrl: './notification-list.component.css'
+  styleUrls: ['./notification-list.component.css']
 })
 export class NotificationListComponent implements OnInit, OnDestroy {
   notifications: Notification[] = [];
-  private notificationSubscription!: Subscription;
+  private userId!: number;
+
+  pageProperties = {
+    pageIndex: 0,
+    pageSize: 5,
+    totalCount: 0,
+    pageSizeOptions: [5, 10, 20]
+  };
 
   constructor(
     private notificationService: NotificationService,
-    private authService: AuthService,
-    private webSocketService: WebSocketService // ✅ Inject WebSocket Service
+    private authService: AuthService
   ) {}
 
-  ngOnInit(): void {
-    const userId = this.authService.getUserId();
-    console.log(userId);
+  async ngOnInit(): Promise<void> {
+    this.userId = this.authService.getUserId();
 
-    // Fetch existing notifications from API
-    this.notificationService.getUserNotifications(userId).subscribe({
-      next: (data) => {
-        this.notifications = data;
-        console.log('Existing Notifications:', this.notifications);
+    await this.notificationService.connect();
+
+    this.loadUserNotifications();
+
+    await this.notificationService.subscribeToUserNotifications(this.userId, (message: IMessage) => {
+      const notification = JSON.parse(message.body) as Notification;
+      this.notifications.unshift(notification);
+      this.pageProperties.totalCount++;
+    });
+  }
+
+  private loadUserNotifications(): void {
+    this.notificationService.getUserNotifications(
+      this.userId,
+      this.pageProperties.pageIndex,
+      this.pageProperties.pageSize
+    ).subscribe({
+      next: (response) => {
+        this.notifications = response.content;
+        this.pageProperties.totalCount = response.totalElements;
       },
       error: (err) => {
         console.error('Failed to load notifications', err);
       }
     });
+  }
 
-    // Subscribe to real-time notifications via WebSockets
-    this.notificationSubscription = this.webSocketService.notifications$.subscribe({
-      next: (notification) => {
-        if (notification) {
-          this.notifications.unshift(notification); // Add new notification to the top
-          console.log('New Notification Received:', notification);
-        }
-      },
-      error: (err) => console.error('WebSocket Error:', err)
-    });
+  pageChanged(event: PageEvent): void {
+    this.pageProperties.pageIndex = event.pageIndex;
+    this.pageProperties.pageSize = event.pageSize;
+    this.loadUserNotifications();
   }
 
   ngOnDestroy(): void {
-    if (this.notificationSubscription) {
-      this.notificationSubscription.unsubscribe(); // Unsubscribe to avoid memory leaks
-    }
+    this.notificationService.disconnect();
   }
 }
