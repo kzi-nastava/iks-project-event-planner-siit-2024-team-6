@@ -4,7 +4,7 @@
     <h2>CHATS</h2>
   </div>
 
-  <div class="chat-list">
+  <div class="chat-list"  *ngIf="chatPartners && chatPartners.length > 0; else noChats" >
     <div
       class="chat-card"
       *ngFor="let partner of chatPartners"
@@ -14,4 +14,10 @@
       <span class="name"><em>{{ partner.name }}</em></span>
     </div>
   </div>
+  <ng-template #noChats>
+        <div class="no-chats-message">
+          <i class="fa fa-times" aria-hidden="true"></i>
+          <p>No chats.</p>
+        </div>
+      </ng-template>
 </div>
