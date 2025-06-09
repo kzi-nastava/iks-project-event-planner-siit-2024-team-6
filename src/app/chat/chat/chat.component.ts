@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ChatService } from '../chat.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NewMessageDTO } from '../../dto/message-dtos';
+import { AuthService } from '../../infrastructure/auth/auth.service';
 
 // chat.component.ts
 @Component({
@@ -20,12 +21,18 @@ export class ChatComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private chatService: ChatService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
     this.receiverId = +this.route.snapshot.paramMap.get('id')!;
     this.loadMessages();
+    const userId = this.authService.getUserId();
+    this.chatService.connect(userId);
+    this.chatService.messages$.subscribe((msgs) => {
+      this.messages = msgs;
+    });
   }
 
 
@@ -69,5 +76,8 @@ export class ChatComponent implements OnInit {
         });
       }
     });
+  }
+  ngOnDestroy() {
+    this.chatService.disconnect();
   }
 }
