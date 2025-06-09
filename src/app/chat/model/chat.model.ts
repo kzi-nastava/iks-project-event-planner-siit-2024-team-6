@@ -9,3 +9,8 @@ export interface Message {
     text: string;
     isFromUser: boolean;
 }
+
+export interface ChatWithMessages {
+  chat: Chat;
+  messages: Message[];
+}
