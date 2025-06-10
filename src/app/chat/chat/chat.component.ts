@@ -30,12 +30,12 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
     this.receiverId = +this.route.snapshot.paramMap.get('id')!;
-    this.loadMessages();
     const userId = this.authService.getUserId();
     this.chatService.connect(userId);
     this.chatService.messages$.subscribe((msgs) => {
       this.messages = msgs;
     });
+    this.loadMessages();
   }
   ngAfterViewInit() {
     this.scrollToBottom();
@@ -46,7 +46,7 @@ export class ChatComponent implements OnInit {
 
   scrollToBottom(): void {
     try {
-      this.scrollAnchor.nativeElement.scrollIntoView({ behavior: 'smooth' , block: 'end'});
+      this.scrollAnchor.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
     } catch (err) { }
   }
 
@@ -58,8 +58,7 @@ export class ChatComponent implements OnInit {
     this.chatService.getMessages(this.receiverId).subscribe({
       next: (data) => {
         this.receiver = data.chat;
-        this.messages = data.messages;
-        console.log(this.messages);
+        this.chatService.setInitialMessages(data.messages);
         setTimeout(() => this.scrollToBottom(), 0);
       },
       error: (err) => {
@@ -70,6 +69,7 @@ export class ChatComponent implements OnInit {
       }
     });
   }
+
 
   sendMessage() {
     if (this.newMessage.trim().length == 0) {

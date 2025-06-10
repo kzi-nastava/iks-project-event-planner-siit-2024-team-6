@@ -53,7 +53,7 @@ export class ChatService {
       console.log('WebSocket connected: ', frame);
 
       // 👇 Server publishes here — we subscribe to it
-      this.stompClient.subscribe(`/socket-subscriber/messages/${userId}`, (msg: IMessage) => {
+      this.stompClient.subscribe(`/socket-publisher/messages/${userId}`, (msg: IMessage) => {
         if (msg.body) {
           const newMsg: Message = JSON.parse(msg.body);
           const currentMessages = this.messagesSubject.getValue();
@@ -65,9 +65,15 @@ export class ChatService {
     this.stompClient.activate();
   }
 
+
   disconnect() {
     if (this.stompClient) {
       this.stompClient.deactivate();
     }
   }
+
+  setInitialMessages(messages: Message[]) {
+    this.messagesSubject.next(messages);
+  }
+
 }
