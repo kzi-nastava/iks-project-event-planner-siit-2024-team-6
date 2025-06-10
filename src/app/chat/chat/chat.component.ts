@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Chat, Message } from '../model/chat.model';
 import { ActivatedRoute } from '@angular/router';
 import { ChatService } from '../chat.service';
@@ -18,6 +18,7 @@ export class ChatComponent implements OnInit {
   newMessage = '';
   receiverId!: number;
   receiver?: Chat;
+  @ViewChild('scrollAnchor') private scrollAnchor!: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,8 +37,20 @@ export class ChatComponent implements OnInit {
       this.messages = msgs;
     });
   }
+  ngAfterViewInit() {
+    this.scrollToBottom();
+  }
+  ngAfterViewChecked() {
+    this.scrollToBottom(); // Optional, ensures scroll on DOM updates
+  }
 
-   goBack(): void {
+  scrollToBottom(): void {
+    try {
+      this.scrollAnchor.nativeElement.scrollIntoView({ behavior: 'smooth' , block: 'end'});
+    } catch (err) { }
+  }
+
+  goBack(): void {
     this.location.back(); // <-- goes to the previous route
   }
 
@@ -45,13 +58,9 @@ export class ChatComponent implements OnInit {
     this.chatService.getMessages(this.receiverId).subscribe({
       next: (data) => {
         this.receiver = data.chat;
-        this.messages = data.messages.map(msg => ({
-          id: msg.id,
-          text: msg.text,
-          isFromUser: msg.isFromUser // rename here to match your interface
-        }));
         this.messages = data.messages;
         console.log(this.messages);
+        setTimeout(() => this.scrollToBottom(), 0);
       },
       error: (err) => {
         this.snackBar.open('Could not load messages.', 'Close', {
@@ -73,6 +82,7 @@ export class ChatComponent implements OnInit {
       next: (messageDto) => {
         this.messages.push(messageDto);  // Optionally update chat view
         this.newMessage = '';
+        setTimeout(() => this.scrollToBottom(), 0)
       },
       error: () => {
         this.snackBar.open('Failed to send message.', 'Close', {
@@ -82,7 +92,7 @@ export class ChatComponent implements OnInit {
       }
     });
   }
-  
+
   ngOnDestroy() {
     this.chatService.disconnect();
   }
