@@ -163,53 +163,52 @@ form {
     position: relative;
   }
   
-  /* Floating Back Button */
-  .floating-back-btn {
-    position: fixed;
-    top: 60px;
-    left: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%; /* Circular button */
-    background-color: #8b6a9d; /* Purple color */
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    z-index: 1000;
-  }
-  
-  .floating-back-btn:hover {
-    background-color: #724c81; /* Darker shade of purple on hover */
-    transform: scale(1.1); /* Slight enlargement on hover */
-  }
-  
-  .floating-back-btn:active {
-    transform: scale(0.95); /* Slight shrink on click */
-  }
   
   .back-icon {
-    width: 48px;
-    height: 48px;
-    fill: white; /* Icon color */
+    width: 45px;
+    height: 45px;/* Icon color */
   }
+
+  .header {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 50px;
+}
+
+.back-button {
+  position: absolute;
+  background: none;
+  border: none;
+  font-size: 40px;
+  cursor: pointer;
+  color: #3f4c6d;
+}
+
+.header h2 {
+  margin: 0 auto;
+  text-align: center;
+  flex-grow: 1;
+  pointer-events: none;
+  /* so click doesn't affect h2 */
+}
   
-  .checkbox-group {
-    display: flex;
-    gap: 20px; /* Adds space between checkboxes */
-    align-items: center; /* Aligns the labels and checkboxes vertically */
-  }
-  
-  .checkbox-group label {
-    display: flex;
-    align-items: center; /* Ensures proper alignment between checkbox and label text */
-    gap: 5px; /* Adds a small space between the checkbox and label text */
-    font-size: 14px; /* Adjust text size for better readability */
-  }
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  /* Allows wrapping only when needed */
+  gap: 20px;
+  align-items: center;
+}
+
+.checkbox-group label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  /* Prevents label text from wrapping */
+  font-size: 14px;
+}
   /* Checkbox and Radio Button Styles */
 input[type="checkbox"],
 input[type="radio"] {
