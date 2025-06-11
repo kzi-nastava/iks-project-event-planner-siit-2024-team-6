@@ -1,7 +1,11 @@
 <div class="price-list-container">
-  <h2>Price List</h2>
+  <div class="price-list-header">
+    <button mat-icon-button color="primary" class="back-button" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
 
-  <div class="price-list-actions">
+    <h2 class="price-list-title">Price List</h2>
+
     <button mat-raised-button color="primary" (click)="exportToPDF()" class="export-btn">
       Export as PDF
     </button>

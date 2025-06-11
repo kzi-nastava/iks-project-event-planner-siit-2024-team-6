@@ -20,6 +20,27 @@
         margin-bottom: 1rem;
     }
 
+    .price-list-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+
+        .back-button {
+            margin-right: 1rem;
+        }
+
+        .price-list-title {
+            flex-grow: 1;
+            margin: 0;
+        }
+
+        .export-btn {
+            white-space: nowrap;
+        }
+    }
+
+
     .export-btn {
         display: inline-flex;
         align-items: center;
@@ -32,7 +53,7 @@
     }
 
     .export-btn:hover {
-        background-color:#724c81;
+        background-color: #724c81;
     }
 
     ::ng-deep .mat-tab-group {
@@ -49,4 +70,19 @@
     ::ng-deep .mat-tab-body {
         padding: 1rem;
     }
+
+    .back-button {
+        margin-right: 1rem;
+        background-color: #fafafa;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+
+        mat-icon {
+            font-size: 24px;
+        }
+    }
+
 }

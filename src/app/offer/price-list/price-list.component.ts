@@ -16,7 +16,7 @@ export class PriceListComponent implements OnInit {
   constructor(
     private offerService: OfferService,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.fetchPriceList();
@@ -38,6 +38,10 @@ export class PriceListComponent implements OnInit {
       }
     });
   }
+  goBack(): void {
+    history.back(); // or use Angular's Router if preferred
+  }
+
 
   exportToPDF(): void {
     this.offerService.downloadPriceListPdf().subscribe({
