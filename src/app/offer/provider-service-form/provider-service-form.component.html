@@ -1,14 +1,14 @@
 <div class="form-page">
-  <!-- Floating Back Button -->
-  <button class="floating-back-btn" (click)="goBack()">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="back-icon">
-      <path d="M15.5 19.5 6 12l9.5-7.5v15Z" fill="white" />
-    </svg>
-  </button>
 
   <!-- Service Form -->
   <form class="form" [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
-    <h2>Create Service</h2>
+    <div class="header">
+      <button class="back-button" (click)="goBack()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="back-icon">
+      <path d="M15.5 19.5 6 12l9.5-7.5v15Z" fill="#3f4c6d" />
+    </svg></button>
+      <h2>Create Service</h2>
+    </div>
+
 
     <!-- Service Name -->
     <div class="form-group">
@@ -26,7 +26,7 @@
       <select id="category" formControlName="category">
         <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
       </select>
-      <button id="proposeCategory" type="button" (click)="proposeCategory()">
+      <button id="proposeCategory" [disabled]="proposedCategory" type="button" (click)="proposeCategory()">
         Propose New Category
       </button>
     </div>
@@ -83,7 +83,7 @@
       </div>
 
       <label for="discount">Discount:</label>
-      <input id="discount" type="number" formControlName="discount" placeholder="Enter discount percentage (if any)" />
+      <input id="discount" type="number" formControlName="discount" placeholder="Enter discounted price (if any)" />
       <div *ngIf="serviceForm.get('discount')?.touched && serviceForm.get('discount')?.errors?.['min']"
         class="error-message">
         Discount must not be less than 0.
@@ -139,7 +139,7 @@
     <!-- Fixed Duration -->
     <div *ngIf="isFixedDuration" class="form-group">
       <label for="duration">Fixed Duration (minutes):</label>
-      <input id="duration" type="number" formControlName="duration" placeholder="Enter duration in hours" />
+      <input id="duration" type="number" formControlName="duration" placeholder="Enter duration in minutes" />
       <div *ngIf="serviceForm.get('duration').touched && serviceForm.get('duration')?.errors?.['required']"
         class="error-message">
         Duration is required.

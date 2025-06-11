@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Budget, BudgetItem } from '../model/event.model'
 import { EventService } from '../event.service';
@@ -40,7 +40,7 @@ export class BudgetPlanningComponent {
     pageSizeOptions: [4, 8, 12]
   };
 
-  constructor(private location: Location, private categoryService: CategoryService, private route: ActivatedRoute, private eventService: EventService, private dialog: MatDialog, private snackBar: MatSnackBar, private offerService: OfferService) { }
+  constructor(private router: Router, private categoryService: CategoryService, private route: ActivatedRoute, private eventService: EventService, private dialog: MatDialog, private snackBar: MatSnackBar, private offerService: OfferService) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -59,7 +59,7 @@ export class BudgetPlanningComponent {
     });
   }
   goBack(): void {
-    this.location.back(); // Goes to the previous route
+    this.router.navigate(['/event', this.eventId, 'organizer-page']);
   }
 
   openCreateItemPopup(): void {

@@ -1,0 +1,24 @@
+<!-- chat.component.html -->
+<div class="chat-container">
+    <div class="chat-header">
+        <button class="back-button" (click)="goBack()">&#8592;</button>
+        <img [src]="receiver?.photoUrl" class="avatar" />
+        <span>{{ receiver?.name }}</span>
+        <a class="action-link">Block</a>
+        <a class="action-link">Report</a>
+    </div>
+
+    <div class="chat-messages">
+        <div *ngFor="let message of messages" class="message-bubble" [class.sent]="message.isFromUser"
+            [class.received]="!message.isFromUser">
+            {{ message.text }}
+        </div>
+        <div #scrollAnchor></div>
+    </div>
+
+    <div class="chat-input">
+        <input [(ngModel)]="newMessage" placeholder="Type your message..." />
+        <button (click)="sendMessage()">Send</button>
+    </div>
+
+</div>

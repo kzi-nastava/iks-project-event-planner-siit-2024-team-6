@@ -43,14 +43,19 @@ export class ProviderOfferCardComponent {
             this.deleteOfferEvent.emit();
           },
           error: (err) => {
-            this.snackBar.open('Error when deleting the service, please try again.', 'Close', {
-              duration: 5000,
-              verticalPosition: 'top',
-            });
+            if (err.status === 400) {
+              this.snackBar.open('Future reservations for this service exist. Delete unavailable.', 'Close', {
+                duration: 5000,
+                verticalPosition: 'top',
+              });
+            } else {
+              this.snackBar.open('Error when deleting the service, please try again.', 'Close', {
+                duration: 5000,
+                verticalPosition: 'top',
+              });
+            }
           }
         });
-      } else {
-        console.log('User cancelled the action');
       }
     });
   }

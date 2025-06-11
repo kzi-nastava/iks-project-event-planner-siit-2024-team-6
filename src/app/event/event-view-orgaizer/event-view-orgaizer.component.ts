@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './event-view-orgaizer.component.html',
   styleUrl: './event-view-orgaizer.component.css'
 })
-export class EventViewOrgaizerComponent  implements OnInit, AfterViewInit{
+export class EventViewOrgaizerComponent implements OnInit, AfterViewInit {
 
 
   event: Event | undefined;
@@ -58,8 +58,8 @@ export class EventViewOrgaizerComponent  implements OnInit, AfterViewInit{
 
   loadEvent(id: number): void {
     this.eventService.getEventById(id).subscribe((event) => {
-      if(event){
-      this.event = event;
+      if (event) {
+        this.event = event;
       } else {
         console.error('Event not found');
       }
@@ -74,18 +74,18 @@ export class EventViewOrgaizerComponent  implements OnInit, AfterViewInit{
   buildChart(): void {
     // Убедитесь, что canvas элемент существует
     const canvas = document.getElementById('eventChart') as HTMLCanvasElement | null;
-  
+
     if (!canvas) {
       console.error('Canvas element not found!');
       return;
     }
-  
+
     const ctx = canvas.getContext('2d');
     if (!ctx) {
       console.error('Failed to get canvas context');
       return;
     }
-  
+
     this.chart = new Chart(ctx, {
       type: 'bar',
       data: {
@@ -118,23 +118,23 @@ export class EventViewOrgaizerComponent  implements OnInit, AfterViewInit{
       }
     });
   }
-  
+
   removePhoto(index: number): void {
     this.event.photos.splice(index, 1);
   }
-loadOrganizer(id: number): void{
-  this.eventService.getEventOrganizer(id).subscribe((organizer) => {
-    if(organizer){
-      this.organizer = organizer;
-    } else {
-      console.error('Event not found');
-    }
-  });
-}
+  loadOrganizer(id: number): void {
+    this.eventService.getEventOrganizer(id).subscribe((organizer) => {
+      if (organizer) {
+        this.organizer = organizer;
+      } else {
+        console.error('Event not found');
+      }
+    });
+  }
   addToFavorites(): void {
     this.eventService.getFavorites().subscribe((favorites) => {
       const isFavorite = favorites.some(event => event.id === this.event.id);
-  
+
       if (isFavorite) {
         this.eventService.removeFromFavorites(this.event.id).subscribe(() => {
           this.snackBar.open(`Event ${this.event.name} removed from favorites`, 'Close', {
@@ -174,7 +174,7 @@ loadOrganizer(id: number): void{
     this.router.navigate([`my_events`]);
 
   }
-  update(): void{
+  update(): void {
     this.eventService.updateEvent(this.event).subscribe();
   }
   deleteEvent(): void {
@@ -197,7 +197,13 @@ loadOrganizer(id: number): void{
   openAgengda(): void {
     this.router.navigate([`event/${this.event.id}/agenda`])
   }
-  openBudgetPlanning():void{
+  openBudgetPlanning(): void {
     this.router.navigate(['/budget-planning', this.event.id]);
   }
+  isFutureDate(date: string | Date): boolean {
+    const eventDate = new Date(date);
+    const now = new Date();
+    return eventDate.getTime() > now.getTime();
+  }
+
 }

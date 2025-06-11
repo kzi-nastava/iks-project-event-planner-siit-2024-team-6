@@ -77,6 +77,10 @@ const routes: Routes = [
         data: {role: 'ROLE_ORGANIZER'} },
   { path: 'event/:id/edit-activity/:activityId', component: ActivityFormComponent, canActivate: [AuthGuard],
     data: {role: 'ROLE_ORGANIZER'} },
+  {
+    path: 'chat',
+    loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule)
+  },
   { path: 'offer/:id', component: OfferInfoComponent },
   { path: 'favorite/events', component: FavoriteEventsComponent, canActivate: [AuthGuard],
     data: {auser: 'Auth user'} },

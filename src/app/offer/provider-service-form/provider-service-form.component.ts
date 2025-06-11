@@ -23,6 +23,7 @@ export class ProviderServiceFormComponent implements OnInit {
   selectedEventTypes: string[] = [];
   selectedCategory: string = null;
   photos: string[] = [];
+  proposedCategory = false;
 
   constructor(
     private fb: FormBuilder,
@@ -143,7 +144,7 @@ export class ProviderServiceFormComponent implements OnInit {
             maxDuration: this.serviceForm.value.maxDuration || 0,
             latestReservation: this.serviceForm.value.reservationDeadline,
             latestCancelation: this.serviceForm.value.cancellationDeadline,
-            isReservationAutoApproved: this.serviceForm.value.isFixedDuration !== 'fixed' && this.serviceForm.value.confirmation === 'automatic',
+            isReservationAutoApproved: this.isFixedDuration && this.serviceForm.value.confirmation === 'automatic',
             eventTypes: eventTypes,
             photos: this.photos,
             isDeleted: false,
@@ -227,6 +228,7 @@ export class ProviderServiceFormComponent implements OnInit {
       if (result) {
         console.log('Proposed Category:', result);
         this.newCategory = result;
+        this.proposedCategory = true;
       }
     });
   }
