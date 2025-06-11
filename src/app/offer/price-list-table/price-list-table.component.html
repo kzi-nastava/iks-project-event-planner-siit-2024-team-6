@@ -17,13 +17,16 @@
 
         <ng-container matColumnDef="discountPrice">
             <mat-header-cell *matHeaderCellDef> Discount (€) </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{ element.offerDiscountPrice | number:'1.2-2' }} </mat-cell>
+            <mat-cell *matCellDef="let element">
+                {{ element.offerDiscountPrice === 0 ? 'None' : (element.offerDiscountPrice | number:'1.2-2') }}
+            </mat-cell>
         </ng-container>
+
 
         <ng-container matColumnDef="edit">
             <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <button mat-icon-button color="accent" (click)="edit(element)">
+                <button mat-icon-button class="edit-button" (click)="edit(element)">
                     <mat-icon>edit</mat-icon>
                 </button>
             </mat-cell>

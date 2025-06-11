@@ -14,3 +14,13 @@ mat-header-cell {
 mat-table {
   width: 100%;
 }
+.edit-button {
+  color: #FFFF;
+  background-color: #8b6a9d;
+  border-radius: 20%;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #2e2f49;
+  }
+}
