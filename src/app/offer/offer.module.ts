@@ -24,6 +24,14 @@ import { ProviderProductListComponent } from './provider-product-list/provider-p
 import { FavoriteProductsComponent } from './favorite-products/favorite-products.component';
 import { FavoriteServicesComponent } from './favorite-services/favorite-services.component';
 import { ReportModule } from '../report/report.module';
+import { PriceListComponent } from './price-list/price-list.component';
+import { PriceListTableComponent } from './price-list-table/price-list-table.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatIconModule } from '@angular/material/icon';
+
+
 
 @NgModule({
   declarations: [
@@ -46,7 +54,9 @@ import { ReportModule } from '../report/report.module';
     ProviderProductViewComponent,
     ProviderProductListComponent,
     FavoriteProductsComponent,
-    FavoriteServicesComponent
+    FavoriteServicesComponent,
+    PriceListComponent,
+    PriceListTableComponent
   ],
   imports: [
     CommonModule,
@@ -54,7 +64,11 @@ import { ReportModule } from '../report/report.module';
     ReactiveFormsModule,
     MatPaginatorModule,
     OfferDetailsModule,
-    ReportModule
+    ReportModule,
+    MatTableModule,
+    MatCardModule,
+    MatTabsModule,
+    MatIconModule
   ],
   exports: [
     OfferSliderComponent,
