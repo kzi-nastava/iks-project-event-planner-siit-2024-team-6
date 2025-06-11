@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Offer, Product, ProviderCompany, Service } from './model/offer.model';
+import { Offer, PriceListItem, Product, ProviderCompany, Service } from './model/offer.model';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../env/environment';
@@ -51,11 +51,29 @@ export class OfferService {
   private apiUrlProvider = environment.apiHost + '/providers/';
   constructor(private httpClient: HttpClient) { }
 
+  getPriceList(): Observable<PriceListItem[]> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.get<PriceListItem[]>(this.apiUrlProvider + `price-list`, { headers });
+  }
+
+  downloadPriceListPdf() {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.get(this.apiUrlProvider + `price-list/export`, { headers, responseType: 'blob' });
+  }
+
   getAll(params: any): Observable<PagedResponse<Offer>> {
     return this.httpClient.get<PagedResponse<Offer>>(this.apiUrl + `all-elements`, { params: params });
   }
 
-    getAccepted(params: any): Observable<PagedResponse<Offer>> {
+  getAccepted(params: any): Observable<PagedResponse<Offer>> {
     return this.httpClient.get<PagedResponse<Offer>>(this.apiUrl + `accepted`, { params: params });
   }
   getAllProviderServices(pageProperties?: { page: number; pageSize: number }): Observable<PagedResponse<Service>> {
