@@ -1,0 +1,16 @@
+<div class="price-list-container">
+  <h2>Price List</h2>
+
+  <div class="price-list-actions">
+    <button mat-raised-button color="primary" (click)="exportToPDF()">Export as PDF</button>
+  </div>
+
+  <mat-tab-group>
+    <mat-tab label="Products">
+      <app-price-list-table [items]="products"></app-price-list-table>
+    </mat-tab>
+    <mat-tab label="Services">
+      <app-price-list-table [items]="services"></app-price-list-table>
+    </mat-tab>
+  </mat-tab-group>
+</div>
