@@ -44,7 +44,7 @@ export class ChatService {
   // ---- WebSocket: Connect to receive messages only ----
   connect(userId: number) {
     this.stompClient = new Client({
-      webSocketFactory: () => new SockJS('http://localhost:8080/socket'),
+      webSocketFactory: () => new SockJS('http://localhost:8080/socket-web'),
       debug: (str) => console.log('STOMP: ' + str),
       reconnectDelay: 5000
     });
