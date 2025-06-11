@@ -1,0 +1,16 @@
+mat-card {
+  padding: 1rem;
+}
+
+mat-header-cell, mat-cell {
+  padding: 12px;
+  font-size: 15px;
+}
+
+mat-header-cell {
+  font-weight: 600;
+}
+
+mat-table {
+  width: 100%;
+}
