@@ -24,7 +24,7 @@
 
 
         <ng-container matColumnDef="edit">
-            <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
             <mat-cell *matCellDef="let element">
                 <button mat-icon-button class="edit-button" (click)="edit(element)">
                     <mat-icon>edit</mat-icon>
@@ -32,7 +32,7 @@
             </mat-cell>
         </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-header-row style="background-color:  #3F4C6D;; color: aliceblue;" *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
 </mat-card>
