@@ -1,131 +1,115 @@
 <div class="event-view">
-    <div class="grid-container">
-      <!-- Block 1: Photos and Add to Favorites -->
-      <div class="block block-1">
-        <div class="event-image">
-          <div class="image-carousel">
-            <button (click)="prevPhoto()" class="carousel-button prev">&lt;</button>
-            <img [src]="event?.photos[currentPhotoIndex]" alt="Event Image" />
-            <button (click)="nextPhoto()" class="carousel-button next">&gt;</button>
+  <div class="grid-container">
+    <!-- Block 1: Photos and Add to Favorites -->
+    <div class="block block-1">
+      <div class="event-image">
+        <div class="image-carousel">
+          <button (click)="prevPhoto()" class="carousel-button prev">&lt;</button>
+          <img [src]="event?.photos[currentPhotoIndex]" alt="Event Image" />
+          <button (click)="nextPhoto()" class="carousel-button next">&gt;</button>
+        </div>
+      </div>
+
+      <!-- Organizer Container -->
+      <div class="organizer-container">
+        <div class="organizer-info">
+          <div class="organizer-icon">
+            <i class="fa fa-user-circle icon"></i>
+          </div>
+          <div class="organizer-details">
+            <p>{{ organizer?.name || 'Organizer' }}</p>
+            <p>{{ organizer?.phoneNumber || 'Phone number not available' }}</p>
           </div>
         </div>
+        <div class="organizer-action">
+          <button (click)="addToFavorites()" class="favorite-button">
+            Add to favorites <span>&hearts;</span>
+          </button>
+        </div>
+      </div>
 
-<!-- Organizer Container -->
-<div class="organizer-container">
-    <div class="organizer-info">
-      <div class="organizer-icon">
-        <i class="fa fa-user-circle icon"></i>
+      <!-- Photo Management -->
+      <div class="photo-management">
+        <h2>Photos</h2>
+        <div class="photo-list">
+          <div *ngFor="let photo of event?.photos; let i = index" class="photo-item">
+            <img [src]="photo" alt="Event Photo" />
+            <button (click)="removePhoto(i)" class="delete-photo-btn">Delete</button>
+          </div>
+        </div>
+        <div class="add-photo">
+          <input type="text" [(ngModel)]="newPhotoUrl" placeholder="Enter photo URL" />
+          <button (click)="addPhoto()">Add Photo</button>
+        </div>
       </div>
-      <div class="organizer-details">
-        <p>{{ organizer?.name || 'Organizer' }}</p>
-        <p>{{ organizer?.phoneNumber || 'Phone number not available' }}</p>
-      </div>
-    </div>
-    <div class="organizer-action">
-      <button (click)="addToFavorites()" class="favorite-button">
-        Add to favorites <span>&hearts;</span>
-      </button>
-    </div>
-  </div>
-  
-  <!-- Photo Management -->
-  <div class="photo-management">
-    <h2>Photos</h2>
-    <div class="photo-list">
-      <div *ngFor="let photo of event?.photos; let i = index" class="photo-item">
-        <img [src]="photo" alt="Event Photo" />
-        <button (click)="removePhoto(i)" class="delete-photo-btn">Delete</button>
-      </div>
-    </div>
-    <div class="add-photo">
-      <input type="text" [(ngModel)]="newPhotoUrl" placeholder="Enter photo URL" />
-      <button (click)="addPhoto()">Add Photo</button>
-    </div>
-  </div>
-  
-      </div>
-  <!-- Block 2: Editable Event Details -->
-  <div class="block block-2">
-    <p>
-      <input
-        type="text"
-        [(ngModel)]="event.name"
-        placeholder="Event Name"
-        class="editable-field"
-      />
-    </p>
-    <div class="event-info">
-      <p style="font-weight: bold; font-style: italic;">
-        <i class="fa-solid fa-align-justify"></i> Description
-      </p>
-      <textarea [(ngModel)]="event.description" placeholder="Enter event description"></textarea>
-  
-      <p style="font-weight: bold; font-style: italic;">
-        <i class="fa-solid fa-location-dot"></i> Where
-      </p>
-      <input type="text" [(ngModel)]="event.place" placeholder="Enter location" />
 
-      <p style="font-weight: bold; font-style: italic;">
-        <i class="fa-solid fa-user-group"></i> Max participants:
-      </p>
-      <input type="text" [(ngModel)]="event.maxParticipants" placeholder="Enter max participants" />
-  
-      <p style="font-weight: bold; font-style: italic;">
-        <i class="fa-regular fa-calendar"></i> When
-      </p>
-      <p style="font-weight:lighter; font-style: italic; font-size: small;">{{ event?.date|date:'fullDate' }}</p>
-      <input type="date" [(ngModel)]="event.date" />
     </div>
-    <div class="event-actions">
+    <!-- Block 2: Editable Event Details -->
+    <div class="block block-2">
+      <p>
+        <input type="text" [(ngModel)]="event.name" placeholder="Event Name" class="editable-field" />
+      </p>
+      <div class="event-info">
+        <p style="font-weight: bold; font-style: italic;">
+          <i class="fa-solid fa-align-justify"></i> Description
+        </p>
+        <textarea [(ngModel)]="event.description" placeholder="Enter event description"></textarea>
+
+        <p style="font-weight: bold; font-style: italic;">
+          <i class="fa-solid fa-location-dot"></i> Where
+        </p>
+        <input type="text" [(ngModel)]="event.place" placeholder="Enter location" />
+
+        <p style="font-weight: bold; font-style: italic;">
+          <i class="fa-solid fa-user-group"></i> Max participants:
+        </p>
+        <input type="text" [(ngModel)]="event.maxParticipants" placeholder="Enter max participants" />
+
+        <p style="font-weight: bold; font-style: italic;">
+          <i class="fa-regular fa-calendar"></i> When
+        </p>
+        <p style="font-weight:lighter; font-style: italic; font-size: small;">{{ event?.date|date:'fullDate' }}</p>
+        <input type="date" [(ngModel)]="event.date" />
+      </div>
+      <div class="event-actions">
         <button (click)="saveChanges()" class="save-button">Save changes</button>
         <button *ngIf="event?.isDeleted" (click)="activateEvent()" class="activate-button">
           Activate
         </button>
-      
+
         <!-- Условие: Если isDeleted = false -->
         <button *ngIf="!event?.isDeleted" (click)="deleteEvent()" class="delete-button">
           Delete event
         </button>
-        <button class="btn-budget" (click)="openBudgetPlanning()">
+        <button *ngIf="event?.date && isFutureDate(event.date)" class="btn-budget" (click)="openBudgetPlanning()">
           Budget
-        </button>
-      </div>
-  </div>
-  
-      <!-- Block 3: Agenda and Reviews -->
-      <div class="block block-3">
-        <h3>Festival agenda</h3>
-        <button (click)="openAgengda()" class="delete-button">Manage agenda</button>
-        
-        <div *ngIf="event">
-          <p>Statistics graph for "{{ event.name }}"</p>
-          <div>
-            <canvas id="eventChart"></canvas>
-          </div>
-        </div>
-        <p *ngIf="!statisticsReady" class="loading-text">Generating statistics PDF...</p>
-        <button
-          *ngIf="statisticsReady"
-          (click)="downloadEventStatisticsPDF()"
-          class="download-btn"
-        >
-          Download statistics
         </button>
 
       </div>
-  
-      <!-- Block 4: Map -->
-      <div class="block block-4">
-        <h3 class="map-title">Show on map</h3>
-        <iframe
-          width="100%"
-          height="350"
-          [src]="mapUrl"
-          style="border:0;"
-          allowfullscreen=""
-          loading="lazy"
-        ></iframe>
+    </div>
+
+    <!-- Block 3: Agenda and Reviews -->
+    <div class="block block-3">
+      <h3>Festival agenda</h3>
+      <button (click)="openAgengda()" class="delete-button">Manage agenda</button>
+
+      <div *ngIf="event">
+        <p>Statistics graph for "{{ event.name }}"</p>
+        <div>
+          <canvas id="eventChart"></canvas>
+        </div>
       </div>
+      <p *ngIf="!statisticsReady" class="loading-text">Generating statistics PDF...</p>
+      <button *ngIf="statisticsReady" (click)="downloadEventStatisticsPDF()" class="download-btn">
+        Download statistics
+      </button>
+
+    </div>
+
+    <!-- Block 4: Map -->
+    <div class="block block-4">
+      <h3 class="map-title">Show on map</h3>
+      <iframe width="100%" height="350" [src]="mapUrl" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
   </div>
-  
+</div>
