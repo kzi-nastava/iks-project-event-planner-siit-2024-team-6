@@ -13,7 +13,7 @@ import { PagedResponse } from '../shared/model/paged-response.model';
 export class NotificationService {
   private baseUrl = '/api/notifications/';
   private stompClient: Client;
-  private readonly socketUrl = 'http://localhost:8080/socket';
+  private readonly socketUrl = 'http://localhost:8080/socket-web';
   private subscriptions: StompSubscription[] = [];
   private connectedPromise!: Promise<void>;
   private connectedResolve!: () => void;
