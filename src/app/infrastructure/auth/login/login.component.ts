@@ -55,6 +55,7 @@ export class LoginComponent {
         next: (response: AuthResponse) => {
           localStorage.setItem('user', response.token);
           this.authService.setUser();
+          this.authService.saveMuted(response.muted);
           this.router.navigate(['events']);
         },
         error: (error) => {

@@ -28,6 +28,17 @@ export class AuthService {
     });
   }
 
+  
+
+  getMuted(): boolean {
+    const muted = localStorage.getItem('notificationsMuted');
+    return muted ? JSON.parse(muted) : false;
+  }
+
+  saveMuted(muted: boolean): void {
+    localStorage.setItem('notificationsMuted', JSON.stringify(muted));
+  }
+
   getRole(): any {
     if (this.isLoggedIn()) {
       const accessToken: any = localStorage.getItem('user');
@@ -64,6 +75,7 @@ export class AuthService {
   logout(): void {
     console.log('[AuthService] Logging out user...');
     localStorage.removeItem('user'); // Удаляем токен из localStorage
+    localStorage.removeItem('notificationsMuted');
     this.user$.next(null); // Сбрасываем роль пользователя
   }
 }
