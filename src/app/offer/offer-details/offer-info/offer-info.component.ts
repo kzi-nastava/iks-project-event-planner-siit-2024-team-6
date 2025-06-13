@@ -13,6 +13,8 @@ import { BuyDialogComponent } from '../buy-dialog/buy-dialog.component';
 import { ReservationComponent } from '../reservation/reservation.component';
 import { ReviewDialogComponent } from '../review-dialog/review-dialog.component';
 import { NewReactionDTO } from '../../../dto/reaction-dtos';
+import { NewNotificationDTO } from '../../../notification/model/notification.model';
+import { NotificationService } from '../../../notification/notification.service';
 @Component({
   selector: 'app-offer-info',
   templateUrl: './offer-info.component.html',
@@ -27,7 +29,7 @@ export class OfferInfoComponent {
   isFavorite = false;
   canReview = false;
 
-  constructor(private route: ActivatedRoute, private offerService: OfferService, private location: Location, private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar) { }
+  constructor(private route: ActivatedRoute, private offerService: OfferService, private notificationService: NotificationService, private location: Location, private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     const offerId = Number(this.route.snapshot.paramMap.get('id'));
@@ -86,6 +88,20 @@ export class OfferInfoComponent {
             verticalPosition: 'top', // or 'bottom'
             horizontalPosition: 'center', // or 'end' / 'start'
             panelClass: ['snackbar-success'] // optional for styling
+          });
+          // Send notification to provider
+          const stars = '⭐'.repeat(saved.rating || 0);
+          const notificationText = `You got a new review for "${this.offer.name}": Comment: ${saved.text || 'No comment'} - Rating: ${stars} (${saved.rating || '_'}/5)`;
+
+
+          const notificationDto: NewNotificationDTO = {
+            text: notificationText,
+            receiverId: this.company.id
+          };
+
+          this.notificationService.createNotification(notificationDto).subscribe({
+            next: (n) => console.log('Notification sent:', n),
+            error: (err) => console.error('Failed to send notification:', err)
           });
         },
         error: (err) => {

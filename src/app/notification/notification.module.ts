@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotificationListComponent } from './notification-list/notification-list.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 
@@ -9,7 +10,8 @@ import { NotificationListComponent } from './notification-list/notification-list
     NotificationListComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatPaginatorModule
   ]
 })
 export class NotificationModule { }

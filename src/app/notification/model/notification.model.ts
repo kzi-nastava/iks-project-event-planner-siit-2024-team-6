@@ -6,3 +6,7 @@ export interface Notification {
     type: NotificationType;
     timestamp: string;
   }
+export interface NewNotificationDTO{
+  receiverId: number;
+  text: string
+}

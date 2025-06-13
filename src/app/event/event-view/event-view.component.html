@@ -85,7 +85,15 @@
         <div class="review-section">
           <h3 class="review-title">Write your review here!</h3>
           <textarea [(ngModel)]="reviewText" class="review-textarea" placeholder="Opinion"></textarea>
-          <input type="number" [(ngModel)]="reviewRating" class="review-rating" placeholder="Rating" />
+          <input
+            type="number"
+            [(ngModel)]="reviewRating"
+            class="review-rating"
+            placeholder="Rating (1-5)"
+            min="1"
+            max="5"
+            step="1"
+          />          
           <button (click)="submitReview()" class="submit-review">Submit</button>
         </div>
       </div>
