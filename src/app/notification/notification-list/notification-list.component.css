@@ -10,10 +10,7 @@
     text-align: left;
     font-size: 32px;
     font-weight: 700;
-    margin-bottom: 40px;
     color: var(--blue);
-    border-bottom: 2px solid var(--blue);
-
   }
   
   .notification-card {
@@ -116,5 +113,16 @@ mat-paginator {
 .mat-paginator-navigation-previous:hover .mat-paginator-icon,
 .mat-paginator-navigation-next:hover .mat-paginator-icon {
   fill: var(--secondary-pink);
+}
+
+mat-slide-toggle {
+  align-self: center;
+  font-weight: 600;
+  font-size: 8px;
+  color: var(--dark-grey);
+}
+
+.mat-slide-toggle-label {
+  margin-left: 8px;
 }
 
