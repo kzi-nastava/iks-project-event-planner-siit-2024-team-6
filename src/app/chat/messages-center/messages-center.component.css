@@ -1,6 +1,7 @@
 .messages-container {
     background-color: #865a97;
     margin: 30px auto;             /* Center vertically & horizontally */
+    margin-top: 70px;
     padding: 16px;
     color: white;
     max-width: 500px;              /* Limit width */

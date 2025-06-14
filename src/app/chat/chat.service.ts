@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Chat, ChatWithMessages, Message } from './model/chat.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { NewMessageDTO } from '../dto/message-dtos';
@@ -15,6 +16,8 @@ export class ChatService {
   private stompClient!: Client;
   private messagesSubject = new BehaviorSubject<Message[]>([]);
   public messages$ = this.messagesSubject.asObservable();
+  private reloadChatsSource = new Subject<void>();
+  reloadChats$ = this.reloadChatsSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -41,9 +44,10 @@ export class ChatService {
     return this.http.post(`${this.apiUrl}/${chatId}/send`, message);
   }
 
-  blockUser(blockerId: number, blockedId: number): Observable<BlockDTO> {
-  return this.http.post<BlockDTO>(`http://localhost:8080/api/users/${blockerId}/block/${blockedId}`, {});
+  blockChat(chatId: number): Observable<any> {
+  return this.http.post<any>(`http://localhost:8080/api/chats/${chatId}/block`, {});
   }
+
 
   getOtherParticipant(chatId: number): Observable<number> {
     return this.http.get<number>(`/api/chats/${chatId}/participant`);
@@ -83,6 +87,9 @@ export class ChatService {
 
   setInitialMessages(messages: Message[]) {
     this.messagesSubject.next(messages);
+  }
+  notifyReloadChats() {
+    this.reloadChatsSource.next();
   }
 
 }
