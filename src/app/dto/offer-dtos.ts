@@ -37,3 +37,8 @@ export interface NewOfferDTO {
     categorySuggestion?: NewCategoryDTO; // Adjust the type based on your frontend needs
     eventTypes: NewEventTypeDTO[];
   }
+
+  export interface NewPriceListItemDTO{
+    price: number;
+    salePrice: number;
+  }
