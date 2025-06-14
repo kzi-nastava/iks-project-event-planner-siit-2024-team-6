@@ -30,6 +30,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
+import { PriceEditDialogComponent } from './price-edit-dialog/price-edit-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -56,7 +61,8 @@ import { MatIconModule } from '@angular/material/icon';
     FavoriteProductsComponent,
     FavoriteServicesComponent,
     PriceListComponent,
-    PriceListTableComponent
+    PriceListTableComponent,
+    PriceEditDialogComponent
   ],
   imports: [
     CommonModule,
@@ -68,7 +74,11 @@ import { MatIconModule } from '@angular/material/icon';
     MatTableModule,
     MatCardModule,
     MatTabsModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDialogModule
   ],
   exports: [
     OfferSliderComponent,
