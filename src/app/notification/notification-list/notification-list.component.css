@@ -10,10 +10,7 @@
     text-align: left;
     font-size: 32px;
     font-weight: 700;
-    margin-bottom: 40px;
     color: var(--blue);
-    border-bottom: 2px solid var(--blue);
-
   }
   
   .notification-card {
@@ -57,21 +54,13 @@
     color: #888;
   }
 
-  /* Type-specific styles */
-  .notification-card.suggestion {
-    background-color: rgba(211, 163, 176, 0.35) !important;
-    border-left: 6px solid var(--pink);
-  }
   
-  .notification-card.info {
+  .notification-card {
     background-color: rgba(139, 106, 157, 0.35) !important;
     border-left: 6px solid var(--purple);
   }
-  .notification-card.info:hover {
+  .notification-card:hover {
     background-color: rgba(139, 106, 157, 0.55) !important;
-  }
-  .notification-card.suggestion:hover {
-    background-color: rgba(211, 163, 176, 0.55) !important;
   }
   
 
@@ -124,5 +113,16 @@ mat-paginator {
 .mat-paginator-navigation-previous:hover .mat-paginator-icon,
 .mat-paginator-navigation-next:hover .mat-paginator-icon {
   fill: var(--secondary-pink);
+}
+
+mat-slide-toggle {
+  align-self: center;
+  font-weight: 600;
+  font-size: 8px;
+  color: var(--dark-grey);
+}
+
+.mat-slide-toggle-label {
+  margin-left: 8px;
 }
 

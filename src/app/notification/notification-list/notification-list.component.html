@@ -1,18 +1,26 @@
 <div class="notifications-container">
-    <h2 class="notifications-title">Your Notifications</h2>
-    <div *ngFor="let notification of notifications" class="notification-card" [ngClass]="notification.type.toLowerCase()">
-      <div class="notification-content">
-        <p class="notification-text">{{ notification.text }}</p>
-      </div>
-      <div class="notification-footer">
-        <span class="notification-date">{{ notification.timestamp | date:'short' }}</span>
-      </div>
+  <div class="notifications-header" style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--blue); margin-bottom: 40px;">
+    <h2 class="notifications-title" style="margin: 0;">Your Notifications</h2>
+    <mat-slide-toggle
+      [(ngModel)]="isMuted"
+      (change)="onToggleMute($event.checked)">
+      Mute
+    </mat-slide-toggle>
+  </div>
+
+  <div *ngFor="let notification of notifications" class="notification-card">
+    <div class="notification-content">
+      <p class="notification-text">{{ notification.text }}</p>
     </div>
-     <mat-paginator
+    <div class="notification-footer">
+      <span class="notification-date">{{ notification.timestamp | date:'short' }}</span>
+    </div>
+  </div>
+
+  <mat-paginator
     [pageSize]="pageProperties.pageSize"
     [pageSizeOptions]="pageProperties.pageSizeOptions"
     [length]="pageProperties.totalCount"
     (page)="pageChanged($event)">
-    </mat-paginator>
-  </div>
-  
+  </mat-paginator>
+</div>

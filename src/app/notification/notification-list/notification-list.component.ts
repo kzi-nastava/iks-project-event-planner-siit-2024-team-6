@@ -13,6 +13,7 @@ import { PageEvent } from '@angular/material/paginator';
 export class NotificationListComponent implements OnInit, OnDestroy {
   notifications: Notification[] = [];
   private userId!: number;
+  isMuted = false;
 
   pageProperties = {
     pageIndex: 0,
@@ -28,7 +29,7 @@ export class NotificationListComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.userId = this.authService.getUserId();
-
+    this.isMuted = this.authService.getMuted();
     await this.notificationService.connect();
 
     this.loadUserNotifications();
@@ -55,6 +56,17 @@ export class NotificationListComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+
+  onToggleMute(muted: boolean) {
+  this.isMuted = muted;
+  const userId = this.authService.getUserId();
+  this.notificationService.toggleMute(userId, muted).subscribe({
+    next: () => console.log(`Mute status updated: ${muted}`),
+    error: err => console.error('Failed to update mute status', err)
+  });
+}
+
 
   pageChanged(event: PageEvent): void {
     this.pageProperties.pageIndex = event.pageIndex;

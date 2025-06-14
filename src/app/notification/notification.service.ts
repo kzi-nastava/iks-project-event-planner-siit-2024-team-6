@@ -76,6 +76,12 @@ export class NotificationService {
     this.subscriptions.push(subscription);
   }
 
+
+  toggleMute(userId: number, mute: boolean): Observable<void> {
+  const url = `/api/users/mute/${userId}`;
+  return this.http.put<void>(url, null, { params: { mute: mute.toString() } });
+  }
+
   disconnect(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
     this.stompClient.deactivate();
