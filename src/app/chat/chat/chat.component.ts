@@ -71,6 +71,7 @@ export class ChatComponent implements OnInit {
   }
 
 
+
   sendMessage() {
     if (this.newMessage.trim().length == 0) {
       return;
@@ -92,6 +93,38 @@ export class ChatComponent implements OnInit {
       }
     });
   }
+
+  blockUser() {
+  if (!this.receiver || !this.receiver.id) {
+    this.snackBar.open('Cannot block user: chat not loaded yet.', 'Close', {
+      duration: 3000,
+      panelClass: ['snackbar-error']
+    });
+    return;
+  }
+
+  const chatId = this.receiver.id;
+
+  this.chatService.blockChat(chatId).subscribe({
+    next: (response) => {
+      console.log('Block successful:', response);
+      this.snackBar.open('User has been blocked.', 'Close', {
+        duration: 3000,
+        panelClass: ['snackbar-success']
+      });
+      this.chatService.notifyReloadChats();
+      this.goBack();
+    },
+    error: (err) => {
+      console.error('Block failed:', err);
+      this.snackBar.open('Failed to block user.', 'Close', {
+        duration: 3000,
+        panelClass: ['snackbar-error']
+      });
+    }
+  });
+}
+
 
   ngOnDestroy() {
     this.chatService.disconnect();
