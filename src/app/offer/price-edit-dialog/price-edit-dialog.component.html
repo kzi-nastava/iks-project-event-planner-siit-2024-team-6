@@ -1,0 +1,19 @@
+<form [formGroup]="form" class="edit-price-form">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Price</mat-label>
+    <input matInput formControlName="offerPrice" type="number" min="0" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Discounted Price</mat-label>
+    <input matInput formControlName="offerDiscountPrice" type="number" min="0" />
+    <mat-error *ngIf="form.hasError('saleNotLessThanPrice')">
+      Discounted price must be less than the regular price.
+    </mat-error>
+  </mat-form-field>
+
+  <div class="actions">
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid">Save</button>
+  </div>
+</form>
