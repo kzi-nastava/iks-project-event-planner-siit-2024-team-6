@@ -18,6 +18,7 @@ export class ChatComponent implements OnInit {
   newMessage = '';
   receiverId!: number;
   receiver?: Chat;
+  otherParticipantId: number;
   @ViewChild('scrollAnchor') private scrollAnchor!: ElementRef;
 
   constructor(
@@ -36,6 +37,7 @@ export class ChatComponent implements OnInit {
       this.messages = msgs;
     });
     this.loadMessages();
+    this.loadOtherParticipant();
   }
   ngAfterViewInit() {
     this.scrollToBottom();
@@ -70,6 +72,18 @@ export class ChatComponent implements OnInit {
     });
   }
 
+  loadOtherParticipant() {
+  this.chatService.getOtherParticipant(this.receiverId).subscribe({
+    next: (participantId) => {
+      console.log('Other participant ID:', participantId);
+      this.otherParticipantId = participantId;
+    },
+    error: (err) => {
+      console.error('Failed to fetch other participant:', err);
+    }
+  });
+  }
+
 
   sendMessage() {
     if (this.newMessage.trim().length == 0) {
@@ -92,6 +106,37 @@ export class ChatComponent implements OnInit {
       }
     });
   }
+
+  blockUser() {
+
+  if (this.otherParticipantId === undefined) {
+    this.snackBar.open('Cannot block user: participant not loaded yet.', 'Close', {
+      duration: 3000,
+      panelClass: ['snackbar-error']
+    });
+    return;
+  }
+  const blockerId = this.authService.getUserId();
+  const blockedId = this.otherParticipantId;
+
+  this.chatService.blockUser(blockerId, blockedId).subscribe({
+  next: (response) => {
+    console.log('Block successful:', response);
+    this.snackBar.open('User has been blocked.', 'Close', {
+      duration: 3000,
+      panelClass: ['snackbar-success']
+    });
+  },
+  error: (err) => {
+    console.error('Block failed:', err);
+    this.snackBar.open('Failed to block user.', 'Close', {
+      duration: 3000,
+      panelClass: ['snackbar-error']
+    });
+  }
+});
+}
+
 
   ngOnDestroy() {
     this.chatService.disconnect();

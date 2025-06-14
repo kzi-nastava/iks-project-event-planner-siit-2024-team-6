@@ -4,8 +4,7 @@
         <button class="back-button" (click)="goBack()">&#8592;</button>
         <img [src]="receiver?.photoUrl" class="avatar" />
         <span>{{ receiver?.name }}</span>
-        <a class="action-link">Block</a>
-        <a class="action-link">Report</a>
+        <button (click)="blockUser()" class="block-button">Block User</button>
     </div>
 
     <div class="chat-messages">
