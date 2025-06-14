@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Chat, ChatWithMessages, Message } from './model/chat.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { NewMessageDTO } from '../dto/message-dtos';
+import { BlockDTO } from '../dto/block-dto';
 import { Client, IMessage } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 
@@ -38,6 +39,14 @@ export class ChatService {
   }
   sendMessage(chatId: number, message: NewMessageDTO): Observable<any> {
     return this.http.post(`${this.apiUrl}/${chatId}/send`, message);
+  }
+
+  blockUser(blockerId: number, blockedId: number): Observable<BlockDTO> {
+  return this.http.post<BlockDTO>(`http://localhost:8080/api/users/${blockerId}/block/${blockedId}`, {});
+  }
+
+  getOtherParticipant(chatId: number): Observable<number> {
+    return this.http.get<number>(`/api/chats/${chatId}/participant`);
   }
 
 
