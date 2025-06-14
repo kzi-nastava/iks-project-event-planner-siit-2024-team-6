@@ -4,7 +4,7 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../env/environment';
 import { PagedResponse } from '../shared/model/paged-response.model';
-import { NewOfferDTO } from '../dto/offer-dtos';
+import { NewOfferDTO, NewPriceListItemDTO } from '../dto/offer-dtos';
 import { NewBudgetDTO } from '../dto/budget-dtos';
 import { NewReactionDTO, ReactionDTO } from '../dto/reaction-dtos';
 
@@ -348,6 +348,14 @@ export class OfferService {
       reaction,
       { headers }
     );
+  }
+
+  updatePrice(id: number, dto: NewPriceListItemDTO): Observable<PriceListItem> {
+    const token = localStorage.getItem('user'); // Retrieve token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.put<PriceListItem>(`${this.apiUrlProvider}price/${id}`, dto, {headers});
   }
 
   checkIfPurchased(offerId: number): Observable<boolean> {
