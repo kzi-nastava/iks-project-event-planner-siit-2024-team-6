@@ -90,6 +90,10 @@ this.checkFavorite();
       }
     });
   }
+//   toggleFavorite(): void {
+//   this.isFavorite = !this.isFavorite;
+
+// }
   loadOrganizer(id: number): void {
     this.eventService.getEventOrganizer(id).subscribe((organizer) => {
       if (organizer) {
@@ -99,7 +103,8 @@ this.checkFavorite();
       }
     });
   }
-  addToFavorites(): void {
+  toggleFavorite(): void {
+    this.isFavorite = !this.isFavorite;
     this.eventService.getFavorites().subscribe((favorites) => {
       const isFavorite = favorites.some(event => event.id === this.event.id);
 

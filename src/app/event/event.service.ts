@@ -46,7 +46,7 @@ export class EventService {
       Authorization: `Bearer ${token}`,
     });
     return this.httpClient.get<boolean>(
-      `${this.apiUrl}${eventId}/is-favourited`, { headers }
+      `${this.apiUrl}${eventId}/is-favorited`, { headers }
     );
   }
   getTopFive(): Observable<Event[]> {

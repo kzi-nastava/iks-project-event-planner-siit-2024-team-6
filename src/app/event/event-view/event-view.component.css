@@ -307,3 +307,15 @@
   background-color: #c82333; /* Темно-красный при наведении */
 }
 
+.add-fav {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.heart-icon {
+  width: 35px;
+  height: 35px;
+}
