@@ -40,6 +40,15 @@ export class EventService {
     return this.httpClient.post("/api/organizers/events", event);
   }
 
+  isFavorited(eventId: number): Observable<boolean> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.get<boolean>(
+      `${this.apiUrl}${eventId}/is-favourited`, { headers }
+    );
+  }
   getTopFive(): Observable<Event[]> {
     return this.httpClient.get<Event[]>(this.apiUrl+`top-five`);
   }

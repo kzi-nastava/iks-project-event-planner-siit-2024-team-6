@@ -28,6 +28,7 @@ export class EventViewComponent implements OnInit {
   infoReady: boolean = false;
   loggedIn: boolean = false;
   isParticipated: boolean = false;
+  isFavorite: boolean  = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -60,7 +61,12 @@ export class EventViewComponent implements OnInit {
       this.isParticipated = attends.some(event => event.id === eventId);
     });
   }
-
+  checkFavorite() {
+    this.eventService.isFavorited(this.event.id).subscribe({
+      next: (fav) => (this.isFavorite = fav),
+      error: (err) => this.showSnack('Failed to load favourite status', true),
+    });
+  }
   downloadAgenda(): void {
     this.activityService.downloadAgendaPdf(this.event.id);
   }
@@ -68,12 +74,17 @@ export class EventViewComponent implements OnInit {
   downloadInfo(): void {
     this.eventService.downloadInfoPdf(this.event.id);
   }
-
+  showSnack(message: string, isError: boolean = false) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      panelClass: isError ? 'snack-error' : 'snack-success'
+    });
+  }
   loadEvent(id: number): void {
     this.eventService.getEventById(id).subscribe((event) => {
       if (event) {
         this.event = event;
-
+this.checkFavorite();
       } else {
         console.error('Event not found');
       }
