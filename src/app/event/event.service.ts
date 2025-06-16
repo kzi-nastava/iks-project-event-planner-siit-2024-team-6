@@ -150,6 +150,11 @@ export class EventService {
     // Perform the HTTP GET request to retrieve categories
     return this.httpClient.get<string[]>(url, { headers });
   }
+  getEventStatistics(eventId: number): Observable<{ participants: number, maxParticipants: number, rating: number }> {
+  return this.httpClient.get<{ participants: number, maxParticipants: number, rating: number }>(
+    `${this.apiUrl}${eventId}/statistics`
+  );
+}
   
 }
 

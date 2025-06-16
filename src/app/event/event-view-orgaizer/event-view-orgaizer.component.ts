@@ -23,6 +23,8 @@ export class EventViewOrgaizerComponent implements OnInit, AfterViewInit {
   newPhotoUrl: string = '';
   chart: Chart | undefined;
   statisticsReady: boolean = false;
+  isFavorite: boolean  = false;
+statisticsData: { participants: number, maxParticipants: number, rating: number } | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,17 +35,29 @@ export class EventViewOrgaizerComponent implements OnInit, AfterViewInit {
     Chart.register(...registerables);
   }
 
-  ngOnInit(): void {
-    const eventId = Number(this.route.snapshot.paramMap.get('id'));
-    if (eventId) {
-      this.loadEvent(eventId);
-      this.loadOrganizer(eventId);
+ngOnInit(): void {
+  const eventId = Number(this.route.snapshot.paramMap.get('id'));
+  if (eventId) {
+    this.loadEvent(eventId);
+    this.loadOrganizer(eventId);
 
-      setTimeout(() => {
-        this.statisticsReady = true; // Имитация завершения подготовки
-      }, 1000); // Задержка в 1 секунду
-    }
+    this.eventService.getEventStatistics(eventId).subscribe({
+      next: (stats) => {
+        this.statisticsData = stats;
+        this.statisticsReady = true;
+
+        // Подождём до следующего цикла рендера Angular, чтобы canvas успел появиться
+        setTimeout(() => {
+          this.buildChart();
+        }, 0);
+      },
+      error: () => {
+        this.showSnack('Failed to load event statistics', true);
+      }
+    });
   }
+}
+
 
   addPhoto(): void {
     if (this.newPhotoUrl.trim()) {
@@ -55,69 +69,95 @@ export class EventViewOrgaizerComponent implements OnInit, AfterViewInit {
   downloadEventStatisticsPDF(): void {
     this.eventService.downloadEventStatisticsPDF(this.event.id);
   }
-
+  checkFavorite() {
+    this.eventService.isFavorited(this.event.id).subscribe({
+      next: (fav) => (this.isFavorite = fav),
+      error: (err) => this.showSnack('Failed to load favourite status', true),
+    });
+  }
+    showSnack(message: string, isError: boolean = false) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      panelClass: isError ? 'snack-error' : 'snack-success'
+    });
+  }
   loadEvent(id: number): void {
     this.eventService.getEventById(id).subscribe((event) => {
       if (event) {
         this.event = event;
+        this.checkFavorite(); // Проверка на избранное после загрузки события
       } else {
         console.error('Event not found');
       }
     });
   }
+  toggleFavorite(): void {
+    this.isFavorite = !this.isFavorite;
+    this.eventService.getFavorites().subscribe((favorites) => {
+      const isFavorite = favorites.some(event => event.id === this.event.id);
 
-  ngAfterViewInit(): void {
-    // Построение графика после загрузки DOM
-    this.buildChart();
-  }
-
-  buildChart(): void {
-    // Убедитесь, что canvas элемент существует
-    const canvas = document.getElementById('eventChart') as HTMLCanvasElement | null;
-
-    if (!canvas) {
-      console.error('Canvas element not found!');
-      return;
-    }
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) {
-      console.error('Failed to get canvas context');
-      return;
-    }
-
-    this.chart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Participants', 'Max Participants', 'Rating'],
-        datasets: [
-          {
-            label: 'Event Stats',
-            data: [25, 50, 4.5], // Пример данных
-            backgroundColor: [
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-              'rgba(153, 102, 255, 0.2)'
-            ],
-            borderColor: [
-              'rgba(75, 192, 192, 1)',
-              'rgba(255, 159, 64, 1)',
-              'rgba(153, 102, 255, 1)'
-            ],
-            borderWidth: 1
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
+      if (isFavorite) {
+        this.eventService.removeFromFavorites(this.event.id).subscribe(() => {
+          this.snackBar.open(`Event ${this.event.name} removed from favorites`, 'Close', {
+            duration: 3000,
+          });
+        });
+      } else {
+        this.eventService.addToFavorites(this.event.id).subscribe(() => {
+          this.snackBar.open(`Event ${this.event.name} added to favorites`, 'Close', {
+            duration: 3000,
+          });
+        });
       }
     });
   }
+  ngAfterViewInit(): void {
+    // Построение графика после загрузки DOM
+    // this.buildChart();
+  }
+
+ buildChart(): void {
+  if (!this.statisticsData) return;
+
+  const canvas = document.getElementById('eventChart') as HTMLCanvasElement | null;
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  if (this.chart) {
+    this.chart.destroy(); // если график уже существует, удалим его
+  }
+
+  this.chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Participants', 'Max Participants', 'Rating'],
+      datasets: [
+        {
+          label: 'Event Statistics',
+          data: [
+            this.statisticsData.participants,
+            this.statisticsData.maxParticipants,
+            this.statisticsData.rating
+          ],
+          backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+          borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 159, 64, 1)', 'rgba(153, 102, 255, 1)'],
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+
 
   removePhoto(index: number): void {
     this.event.photos.splice(index, 1);
