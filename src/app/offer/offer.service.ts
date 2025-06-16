@@ -279,14 +279,6 @@ export class OfferService {
 
     return this.httpClient.get<any>(`${this.apiUrlProvider}search`, { headers, params });
   }
-
-  addToFavorites(id: number): Observable<any> {
-    return this.httpClient.post(`${this.apiUrl}${id}/favorite`, {});
-  }
-
-  removeFromFavorites(id: number): Observable<any> {
-    return this.httpClient.delete(`${this.apiUrl}${id}/favorite`);
-  }
   getFavorites(): Observable<Offer[]> {
     return this.httpClient.get<Offer[]>(`${this.apiUrl}favorites`);
   }

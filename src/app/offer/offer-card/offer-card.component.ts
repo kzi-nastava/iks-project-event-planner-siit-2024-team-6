@@ -17,25 +17,4 @@ export class OfferCardComponent {
   onCardClick() {
     this.router.navigate(['/offer', this.offer.id]);
   }
-
-
-  manageFavorites(id: number) {
-    this.offerService.getFavorites().subscribe((favorites) => {
-      const isFavorite = favorites.some(offer => offer.id === id);
-  
-      if (isFavorite) {
-        this.offerService.removeFromFavorites(id).subscribe(() => {
-          this.snackBar.open(`Offer ${this.offer.name} removed from favorites`, 'Close', {
-            duration: 3000,
-          });
-        });
-      } else {
-        this.offerService.addToFavorites(id).subscribe(() => {
-          this.snackBar.open(`Offer ${this.offer.name} added to favorites`, 'Close', {
-            duration: 3000,
-          });
-        });
-      }
-    });
-  }
 }
