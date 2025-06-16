@@ -40,6 +40,15 @@ export class EventService {
     return this.httpClient.post("/api/organizers/events", event);
   }
 
+  isFavorited(eventId: number): Observable<boolean> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.get<boolean>(
+      `${this.apiUrl}${eventId}/is-favorited`, { headers }
+    );
+  }
   getTopFive(): Observable<Event[]> {
     return this.httpClient.get<Event[]>(this.apiUrl+`top-five`);
   }
@@ -141,6 +150,11 @@ export class EventService {
     // Perform the HTTP GET request to retrieve categories
     return this.httpClient.get<string[]>(url, { headers });
   }
+  getEventStatistics(eventId: number): Observable<{ participants: number, maxParticipants: number, rating: number }> {
+  return this.httpClient.get<{ participants: number, maxParticipants: number, rating: number }>(
+    `${this.apiUrl}${eventId}/statistics`
+  );
+}
   
 }
 

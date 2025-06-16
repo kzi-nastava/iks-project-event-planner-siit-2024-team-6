@@ -21,11 +21,21 @@
             <p>{{ organizer?.phoneNumber || 'Phone number not available' }}</p>
           </div>
         </div>
-        <div class="organizer-action">
-          <button (click)="addToFavorites()" class="favorite-button">
-            Add to favorites <span>&hearts;</span>
-          </button>
-        </div>
+<div class="add-fav" (click)="toggleFavorite()">
+  <!-- Outlined heart SVG -->
+  <svg *ngIf="!isFavorite" class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+    stroke="#8B6A9D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path
+      d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z" />
+  </svg>
+
+  <!-- Filled heart SVG -->
+  <svg *ngIf="isFavorite === true" class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+    fill="#8B6A9D">
+    <path
+      d="M19.3,5.71C18.841,5.246 18.294,4.878 17.692,4.627C17.089,4.377 16.443,4.248 15.79,4.25C15.137,4.248 14.491,4.377 13.888,4.627C13.286,4.878 12.739,5.246 12.28,5.71L12,6L11.72,5.72C10.792,4.792 9.533,4.27 8.22,4.27C6.907,4.27 5.648,4.792 4.72,5.72C3.804,6.655 3.291,7.911 3.291,9.22C3.291,10.529 3.804,11.785 4.72,12.72L11.49,19.51C11.631,19.65 11.821,19.729 12.02,19.729C12.219,19.729 12.409,19.65 12.55,19.51L19.32,12.72C20.236,11.782 20.748,10.522 20.744,9.211C20.74,7.9 20.222,6.642 19.3,5.71Z" />
+  </svg>
+</div>
       </div>
 
       <!-- Photo Management -->
@@ -39,7 +49,8 @@
         </div>
         <div class="add-photo">
           <input type="text" [(ngModel)]="newPhotoUrl" placeholder="Enter photo URL" />
-          <button (click)="addPhoto()">Add Photo</button>
+          <button (click)="addPhoto()" class="add-photo-btn">Add Photo</button>
+
         </div>
       </div>
 
@@ -93,12 +104,12 @@
       <h3>Festival agenda</h3>
       <button (click)="openAgengda()" class="delete-button">Manage agenda</button>
 
-      <div *ngIf="event">
-        <p>Statistics graph for "{{ event.name }}"</p>
-        <div>
-          <canvas id="eventChart"></canvas>
-        </div>
-      </div>
+      <p *ngIf="!statisticsData">Loading statistics...</p>
+<div *ngIf="statisticsData">
+  <p>Statistics graph for "{{ event.name }}"</p>
+  <canvas id="eventChart"></canvas>
+</div>
+
       <p *ngIf="!statisticsReady" class="loading-text">Generating statistics PDF...</p>
       <button *ngIf="statisticsReady" (click)="downloadEventStatisticsPDF()" class="download-btn">
         Download statistics

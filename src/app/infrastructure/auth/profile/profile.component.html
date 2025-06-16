@@ -4,7 +4,6 @@
     <form class="profile__form">
       <div class="profile__content">
         
-        <!-- User Data Section (Left) -->
         <div class="profile__form-section pink-bg">
           <h2 class="profile-title">{{ user?.name }} {{ user?.lastname }}</h2>
 
@@ -38,7 +37,6 @@
             <input [(ngModel)]="updatedUser.phoneNumber" name="phoneNumber" />
           </div>
           <br>
-          <!--Profile Photo-->
           <div class="profile__photo-container">
             <div class="profile__photo-container">
               <div class="profile__photo-wrapper" *ngIf="updatedUser.photoUrl; else placeholder">
@@ -65,7 +63,6 @@
             </div>
           </div>
 
-          <!-- Provider Specific Fields -->
           <div *ngIf="user?.userType === 'Provider'">
             <h2 class="profile-title">{{ user?.companyName }}</h2>
 
@@ -94,7 +91,7 @@
               <input [(ngModel)]="updatedUser.closingTime" name="closingTime" />
             </div>
           </div>
-          <!--Company photos-->
+
           <div *ngIf="user?.userType === 'Provider'" class="company-photo-gallery">
             <h3 class="gallery-title">Company Photos</h3>
             <div class="photo-gallery">
@@ -111,7 +108,7 @@
         </div>
       </div>
 
-      <!-- Action Buttons -->
+
       <div class="profile__buttons">
         <button type="button" class="submit-button" style="background-color: #4CAF50;" (click)="submitChanges()">Submit Changes</button>
         <button type="button" class="submit-button" (click)="changePassword()">Change Password</button>
