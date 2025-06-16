@@ -53,3 +53,11 @@ export interface ProviderCompany{
   openingTime: string;
   closingTime: string;
 }
+
+export interface PriceListItem{
+  offerId: number;
+  offerName: String;
+  offerPrice: number;
+  offerDiscountPrice: number;
+  isService: boolean;
+}

@@ -34,6 +34,7 @@ import { BudgetPlanningComponent } from './event/budget-planning/budget-planning
 import { CalendarComponent } from './layout/calendar/calendar.component';
 import { CommentListComponent } from './comment/comment-list/comment-list.component';
 import { ReportListComponent } from './report/report-list/report-list.component';
+import { PriceListComponent } from './offer/price-list/price-list.component';
 
 const routes: Routes = [
   { path: 'events', component: EventsViewComponent },
@@ -50,6 +51,8 @@ const routes: Routes = [
     data: {role: 'ROLE_PROVIDER'}},
     { path: 'product-edit', component: ProviderProductEditComponent , canActivate: [AuthGuard],
       data: {role: 'ROLE_PROVIDER'}},
+      { path: 'price-list', component: PriceListComponent, canActivate: [AuthGuard],
+      data: {role: 'ROLE_PROVIDER'} },
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegistrationComponent},
