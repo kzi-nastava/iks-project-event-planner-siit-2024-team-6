@@ -108,7 +108,7 @@ export class BudgetPlanningComponent {
   }
 
   confirmCreateItemPopup(): void {
-    if (this.selectedCategory && this.enteredMaxAmount > 0) {
+    if (this.selectedCategory && !this.budget.budgetItems.some(item => item.category === this.selectedCategory) && this.enteredMaxAmount > 0) {
       const newItem = {
         category: this.selectedCategory,
         maxPrice: this.enteredMaxAmount,
@@ -119,7 +119,7 @@ export class BudgetPlanningComponent {
       this.closeCreateItemPopup();
       this.updateBudget();
     } else {
-      this.snackBar.open('Please select a category and enter a valid amount.', 'Close', {
+      this.snackBar.open('Please select a non-picked category and enter a valid amount.', 'Close', {
         duration: 3000,
       });
     }
