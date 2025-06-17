@@ -23,10 +23,7 @@
   <div class="scrollable-comments">
     <div *ngFor="let reaction of companyComments">
       <div class="reaction-card" *ngIf="reaction.rating !== null || (reaction.text?.trim() || '') !== ''">
-        <div class="user-report-row">
-          <p *ngIf="reaction.userName" style="color: #8b6a9d;"><strong>User:</strong> {{ reaction.userName }}</p>
-          <button mat-button color="warn" (click)="reportComment(reaction)">Report Comment</button>
-        </div>
+        <p *ngIf="reaction.userName" style="color: #8b6a9d;"><strong>User:</strong> {{ reaction.userName }}</p>
         <p *ngIf="reaction.rating !== null"><strong>Rating:</strong> {{ reaction.rating }}</p>
         <p *ngIf="(reaction.text?.trim() || '') !== ''"><strong>Comment:</strong> {{ reaction.text }}</p>
       </div>
