@@ -38,7 +38,12 @@ export class OfferListComponent implements OnInit {
   pageChanged(pageEvent: PageEvent){
     this.pageProperties.page = pageEvent.pageIndex;
     this.pageProperties.pageSize = pageEvent.pageSize;
-    this.getPagedEntities();
+
+    if (this.isFiltered || this.searchQuery) {
+      this.getFilteredEntities();
+    } else {
+      this.getPagedEntities();
+    }
   }
 
    private getPagedEntities(){
@@ -99,7 +104,6 @@ export class OfferListComponent implements OnInit {
                     filters.isService === false ||
                     (filters.minPrice != null && filters.minPrice !== 0) ||
                     (filters.maxPrice != null && filters.maxPrice !== 3000);
-
     this.filters = filters;
     this.pageProperties.page = 0;
     this.paginator.firstPage();
@@ -121,6 +125,7 @@ export class OfferListComponent implements OnInit {
       isProduct: true,
       isService: true
     };
+    this.isFiltered = false;
     this.pageProperties.page = 0;
     this.paginator.firstPage();
     this.getPagedEntities();
