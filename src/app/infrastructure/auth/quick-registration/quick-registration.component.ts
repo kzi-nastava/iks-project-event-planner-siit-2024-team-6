@@ -12,6 +12,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class QuickRegistrationComponent {
 
   registrationForm: FormGroup;
+  eventId: number | null = null;
+
 
   constructor(private fb: FormBuilder, private http: HttpClient, private route: ActivatedRoute, private router: Router) {
     this.registrationForm = this.fb.group({
@@ -25,6 +27,7 @@ export class QuickRegistrationComponent {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const email = params['email'] || '';
+      this.eventId = params['eventId'] ? +params['eventId'] : null;
       if (email) {
         this.registrationForm.patchValue({ email });
         this.registrationForm.get('email')?.disable();
@@ -37,13 +40,13 @@ export class QuickRegistrationComponent {
     if (this.registrationForm.valid) {
       const formData = {
         ...this.registrationForm.getRawValue(),
-        email: this.registrationForm.get('email')?.value
+        email: this.registrationForm.get('email')?.value,
+        eventId: this.eventId
       };
       console.log(formData);
       this.http.post<string>('/api/users/quick-register', formData).subscribe({
         next: (response: string) => {
           console.log('Registration successful!', response);
-          alert('Registration successful!');
           const email = this.registrationForm.get('email')?.value;
           this.router.navigate(['/login'], { queryParams: { email } });
         },

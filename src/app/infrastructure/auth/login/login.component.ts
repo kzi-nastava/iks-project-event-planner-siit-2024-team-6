@@ -16,6 +16,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   email: string = '';
   disableEmail: boolean = false;
+  eventId: number;
 
   constructor(
     private fb: FormBuilder,
@@ -36,6 +37,7 @@ export class LoginComponent {
     this.route.queryParams.subscribe(params => {
       this.email = params['email'] || '';
       this.disableEmail = params['disableEmail'] === 'true';
+      this.eventId = params['eventId'] ? +params['eventId'] : null;
 
       this.loginForm.patchValue({ email: this.email });
 
@@ -56,7 +58,20 @@ export class LoginComponent {
           localStorage.setItem('user', response.token);
           this.authService.setUser();
           this.authService.saveMuted(response.muted);
-          this.router.navigate(['events']);
+           // If eventId exists, add user to attend event
+          if (this.eventId) {
+            this.http.post(`/api/events/${this.eventId}/participate`, {}).subscribe({
+              next: () => {
+                this.router.navigate(['events']);
+              },
+              error: (err) => {
+                console.error('Failed to add participation:', err);
+                this.router.navigate(['events']);
+              }
+            });
+          } else {
+            this.router.navigate(['events']);
+          }
         },
         error: (error) => {
           if (error.status === 403) {
