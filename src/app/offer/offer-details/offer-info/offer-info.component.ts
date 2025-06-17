@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Offer, ProviderCompany } from '../../model/offer.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from '../../offer.service';
 import { Service } from '../../model/offer.model';
 import { Product } from '../../model/offer.model';
@@ -15,6 +15,7 @@ import { ReviewDialogComponent } from '../review-dialog/review-dialog.component'
 import { NewReactionDTO } from '../../../dto/reaction-dtos';
 import { NewNotificationDTO } from '../../../notification/model/notification.model';
 import { NotificationService } from '../../../notification/notification.service';
+import { ChatService } from '../../../chat/chat.service';
 @Component({
   selector: 'app-offer-info',
   templateUrl: './offer-info.component.html',
@@ -29,17 +30,16 @@ export class OfferInfoComponent {
   isFavorite = false;
   canReview = false;
 
-  constructor(private route: ActivatedRoute, private offerService: OfferService, private notificationService: NotificationService, private location: Location, private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar) { }
+  constructor(private route: ActivatedRoute, private offerService: OfferService, private notificationService: NotificationService, private location: Location, private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar, private cdr: ChangeDetectorRef, private chatService: ChatService, private router: Router) { }
 
   ngOnInit() {
     const offerId = Number(this.route.snapshot.paramMap.get('id'));
     this.fetchOffer(offerId);
     this.fetchProviderCompany(offerId);
     this.userRole = this.authService.getRole();
-    this.checkIfAbleToReview(offerId);
   }
 
-  checkIfAbleToReview(offerId: number) {
+  checkIfBought(offerId: number){
     this.offerService.checkIfPurchased(offerId).subscribe({
       next: (result) => this.canReview = result,
       error: (err) => {
@@ -47,17 +47,26 @@ export class OfferInfoComponent {
         this.canReview = false; // or handle unauthorized
       }
     });
+  }
+
+  checkIfBooked(offerId: number){
     this.offerService.checkIfReserved(offerId).subscribe({
       next: (reserved) => {
-        if (reserved) {
-          this.canReview = true;
-        }
+          this.canReview = reserved;
       },
       error: (err) => {
-        
+        console.error(err);
+        this.canReview = false;
       }
     });
+  }
 
+  checkIfAbleToReview(offerId: number) {
+    if(this.isService(this.offer)){
+      this.checkIfBooked(offerId);
+    }else{
+      this.checkIfBought(offerId);
+    }
   }
 
   checkFavourite() {
@@ -138,6 +147,7 @@ export class OfferInfoComponent {
     this.offerService.getById(id).subscribe((offerData) => {
       this.offer = offerData as Offer & { type: string }; // Assert the additional type property
       this.checkFavourite();
+      this.checkIfAbleToReview(id);
     });
   }
 
@@ -183,6 +193,7 @@ export class OfferInfoComponent {
           next: () => {
             this.snackBar.open('Product successfully added to budget!', 'Close', { duration: 3000 });
             this.canReview = true;
+            this.openReviewDialog();
           },
           error: () => {
             this.snackBar.open('Failed to buy product. Check if you have eb Try again later.', 'Close', { duration: 3000 });
@@ -192,10 +203,19 @@ export class OfferInfoComponent {
     });
   }
 
-  contactProvider() {
-    // You could open a dialog, send a message, or route to contact form
-    console.log('Contacting provider:', this.offer?.name);
-    // Example: this.dialog.open(ContactDialogComponent, { data: this.offer.provider });  
+  contactProvider(): void {
+    this.chatService.findByUsers(this.company.id).subscribe({
+      next: (chatId) => {
+        this.router.navigate(['/chat', chatId]);
+      },
+      error: (err) => {
+        this.snackBar.open('Failed to start chat. Please try again.', 'Close', {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+        });
+      }
+    });
   }
 
   toggleFavorite() {
@@ -230,6 +250,8 @@ export class OfferInfoComponent {
       if (result) {
         console.log('Reservation was successful!');
         this.canReview = true;
+        this.cdr.detectChanges();
+        setTimeout(() => this.openReviewDialog(), 0);
       }
     });
   }

@@ -6,6 +6,7 @@ import { Service } from '../model/offer.model';
 import { EventService } from '../../event/event.service';
 import { forkJoin } from 'rxjs';
 import { NewOfferDTO } from '../../dto/offer-dtos';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-provider-service-edit',
@@ -25,7 +26,8 @@ export class ProviderServiceEditComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private offerService: OfferService,
-    private eventService: EventService
+    private eventService: EventService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -174,19 +176,26 @@ export class ProviderServiceEditComponent implements OnInit {
           // Call the service to update the offer
           this.offerService.updateService(this.offer.id, updatedOffer).subscribe({
             next: (response) => {
+              this.snackBar.open('Offer updated successfully', 'Close', {
+                duration: 3000, 
+                panelClass: ['snackbar-success']
+              });
               console.log('Offer updated successfully:', response);
               this.router.navigate(['/my-services']);
             },
             error: (err) => {
+              this.showError("Error updating offer:"+err);
               console.error('Error updating offer:', err);
             },
           });
         },
         error: (err) => {
+          this.showError("Error fetching event types:"+err);
           console.error('Error fetching event types:', err);
         },
       });
     } else {
+      this.showError("Form is invalid or offer data is missing!");
       console.error('Form is invalid or offer data is missing!');
     }
   }
@@ -240,6 +249,12 @@ export class ProviderServiceEditComponent implements OnInit {
       }
       return null; // Valid if at least one is selected
     };
+  }
+  showError(message: string): void{
+    this.snackBar.open(message, 'Dismiss', {
+      duration: 5000,
+      panelClass: ['snackbar-error']
+    });
   }
   
 }

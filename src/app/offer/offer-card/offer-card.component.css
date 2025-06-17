@@ -166,7 +166,6 @@
 .rating svg {
     width: 25px;
     height: 25px;
-    fill: var(--dark-grey);
 }
 
 .rating span {
