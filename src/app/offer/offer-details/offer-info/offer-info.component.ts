@@ -26,21 +26,19 @@ export class OfferInfoComponent {
   currentSlide: number = 0;
   showReservation = false;
   company: ProviderCompany = null;
-  offerId: number;
   isFavorite = false;
   canReview = false;
 
   constructor(private route: ActivatedRoute, private offerService: OfferService, private notificationService: NotificationService, private location: Location, private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.offerId = Number(this.route.snapshot.paramMap.get('id'));
-    this.fetchOffer(this.offerId);
-    this.fetchProviderCompany(this.offerId);
+    const offerId = Number(this.route.snapshot.paramMap.get('id'));
+    this.fetchOffer(offerId);
+    this.fetchProviderCompany(offerId);
     this.userRole = this.authService.getRole();
-    this.checkIfAbleToReview(this.offerId);
   }
 
-  checkIfAbleToReview(offerId: number) {
+  checkIfBought(offerId: number){
     this.offerService.checkIfPurchased(offerId).subscribe({
       next: (result) => this.canReview = result,
       error: (err) => {
@@ -48,17 +46,26 @@ export class OfferInfoComponent {
         this.canReview = false; // or handle unauthorized
       }
     });
+  }
+
+  checkIfBooked(offerId: number){
     this.offerService.checkIfReserved(offerId).subscribe({
       next: (reserved) => {
-        if (reserved) {
-          this.canReview = true;
-        }
+          this.canReview = reserved;
       },
       error: (err) => {
-        
+        console.error(err);
+        this.canReview = false;
       }
     });
+  }
 
+  checkIfAbleToReview(offerId: number) {
+    if(this.isService(this.offer)){
+      this.checkIfBooked(offerId);
+    }else{
+      this.checkIfBought(offerId);
+    }
   }
 
   checkFavourite() {
@@ -139,6 +146,7 @@ export class OfferInfoComponent {
     this.offerService.getById(id).subscribe((offerData) => {
       this.offer = offerData as Offer & { type: string }; // Assert the additional type property
       this.checkFavourite();
+      this.checkIfAbleToReview(id);
     });
   }
 
@@ -232,7 +240,8 @@ export class OfferInfoComponent {
       if (result) {
         console.log('Reservation was successful!');
         this.canReview = true;
-        this.openReviewDialog();
+        this.cdr.detectChanges();
+        setTimeout(() => this.openReviewDialog(), 0);
       }
     });
   }
