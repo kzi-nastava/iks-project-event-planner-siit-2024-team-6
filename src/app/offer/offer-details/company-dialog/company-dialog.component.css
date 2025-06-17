@@ -44,3 +44,38 @@
   justify-content: space-between;
   width: 100%;
 }
+
+.comments-section {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 1rem;
+  padding-right: 10px;
+  border-top: 1px solid #ccc;
+  padding-top: 1rem;
+}
+
+.comment-box {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+.comment-text {
+  margin: 0;
+  font-style: italic;
+}
+
+.rating {
+  color: #ff9800; /* Orange star color */
+}
+.scrollable-comments {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+
+.reaction-card {
+  border-bottom: 1px solid #ccc;
+  padding: 0.5rem 0;
+}
+

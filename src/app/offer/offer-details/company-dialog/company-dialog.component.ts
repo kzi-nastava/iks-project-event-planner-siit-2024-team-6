@@ -2,6 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { ProviderCompany } from '../../model/offer.model';
 import { ReportDialogComponent } from '../../../report/report-dialog/report-dialog.component';
+import { OfferService } from '../../offer.service';
+import { ReactionDTO } from '../../../dto/reaction-dtos';
 
 @Component({
   selector: 'app-company-dialog',
@@ -10,24 +12,55 @@ import { ReportDialogComponent } from '../../../report/report-dialog/report-dial
 })
 export class CompanyDialogComponent {
   currentPhotoIndex = 0;
+  page = 0;
+  size = 5;
+  totalPages = 0;
+  companyComments: ReactionDTO[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<CompanyDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { company: ProviderCompany },
-    private reportDialog: MatDialog
+    private reportDialog: MatDialog,
+    private offerService: OfferService
   ) { }
+
+  ngOnInit(): void {
+    this.loadReactions();
+  }
 
   close(): void {
     this.dialogRef.close();
   }
   report(): void {
-  this.reportDialog.open(ReportDialogComponent, {
-    width: '400px',
-    data: {
-      reportedId: this.data.company.id
+    this.reportDialog.open(ReportDialogComponent, {
+      width: '400px',
+      data: {
+        reportedId: this.data.company.id
+      }
+    });
+  }
+
+  loadReactions() {
+    const providerId = this.data.company.id; // adjust as per your dialog input
+    this.offerService.getProviderReactions(providerId, this.page, this.size).subscribe(response => {
+      this.companyComments = response.content;
+      this.totalPages = response.totalPages;
+    });
+  }
+
+  nextPage() {
+    if (this.page < this.totalPages - 1) {
+      this.page++;
+      this.loadReactions();
     }
-  });
-}
+  }
+
+  prevPage() {
+    if (this.page > 0) {
+      this.page--;
+      this.loadReactions();
+    }
+  }
 
   prevPhoto() {
     if (!this.data.company.companyPhotos?.length) return;

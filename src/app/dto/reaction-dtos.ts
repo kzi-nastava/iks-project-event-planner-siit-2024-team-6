@@ -11,4 +11,5 @@ export interface ReactionDTO {
     eventId?: number;
     text?: string;
     rating?: number;
+    userName: string;
 }

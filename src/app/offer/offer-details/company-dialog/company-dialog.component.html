@@ -5,12 +5,8 @@
   <div class="carousel" *ngIf="data.company.companyPhotos?.length > 0">
     <button class="nav prev" (click)="prevPhoto()">❮</button>
 
-    <img
-      [src]="data.company.companyPhotos[currentPhotoIndex]"
-      alt="Company photo"
-      class="carousel-image"
-      (error)="onImageError($event)"
-    />
+    <img [src]="data.company.companyPhotos[currentPhotoIndex]" alt="Company photo" class="carousel-image"
+      (error)="onImageError($event)" />
 
     <button class="nav next" (click)="nextPhoto()">❯</button>
   </div>
@@ -22,6 +18,26 @@
 
   <p><strong>Working Hours:</strong> {{ data.company.openingTime }} - {{ data.company.closingTime }}</p>
 
+  <!-- Scrollable comments section -->
+  <h4>Comments & Ratings</h4>
+  <div class="scrollable-comments">
+    <div *ngFor="let reaction of companyComments">
+      <div class="reaction-card" *ngIf="reaction.rating !== null || (reaction.text?.trim() || '') !== ''">
+        <p *ngIf="reaction.userName" style="color:  #8b6a9d;"><strong>User:</strong> {{ reaction.userName }}</p>
+        <p *ngIf="reaction.rating !== null"><strong>Rating:</strong> {{ reaction.rating }}</p>
+        <p *ngIf="(reaction.text?.trim() || '') !== ''"><strong>Comment:</strong> {{ reaction.text }}</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pagination-buttons">
+    <button mat-button (click)="prevPage()" [disabled]="page === 0">Previous</button>
+    <span>Page {{ page + 1 }} of {{ totalPages }}</span>
+    <button mat-button (click)="nextPage()" [disabled]="page + 1 >= totalPages">Next</button>
+  </div>
+
+
 </mat-dialog-content>
 
 <mat-dialog-actions>
@@ -30,4 +46,3 @@
     <button mat-button (click)="close()">Close</button>
   </div>
 </mat-dialog-actions>
-

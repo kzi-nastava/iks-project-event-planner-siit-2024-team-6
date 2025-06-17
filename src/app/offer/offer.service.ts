@@ -342,12 +342,25 @@ export class OfferService {
     );
   }
 
+  getProviderReactions(providerId: number, page: number = 0, size: number = 10): Observable<PagedResponse<ReactionDTO>> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+
+    return this.httpClient.get<PagedResponse<ReactionDTO>>(`api/reactions/provider/${providerId}`, { params });
+  }
+
+  getOfferRating(offerId: number): Observable<number> {
+    return this.httpClient.get<number>(`/api/reactions/rating-offer/${offerId}`);
+  }
+
+
   updatePrice(id: number, dto: NewPriceListItemDTO): Observable<PriceListItem> {
     const token = localStorage.getItem('user'); // Retrieve token from localStorage
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.httpClient.put<PriceListItem>(`${this.apiUrlProvider}price/${id}`, dto, {headers});
+    return this.httpClient.put<PriceListItem>(`${this.apiUrlProvider}price/${id}`, dto, { headers });
   }
 
   checkIfPurchased(offerId: number): Observable<boolean> {
