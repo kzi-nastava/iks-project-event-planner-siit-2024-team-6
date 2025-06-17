@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Offer, ProviderCompany } from '../../model/offer.model';
 import { ActivatedRoute } from '@angular/router';
 import { OfferService } from '../../offer.service';
@@ -26,17 +26,18 @@ export class OfferInfoComponent {
   currentSlide: number = 0;
   showReservation = false;
   company: ProviderCompany = null;
+  offerId: number;
   isFavorite = false;
   canReview = false;
 
-  constructor(private route: ActivatedRoute, private offerService: OfferService, private notificationService: NotificationService, private location: Location, private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar) { }
+  constructor(private route: ActivatedRoute, private offerService: OfferService, private notificationService: NotificationService, private location: Location, private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
-    const offerId = Number(this.route.snapshot.paramMap.get('id'));
-    this.fetchOffer(offerId);
-    this.fetchProviderCompany(offerId);
+    this.offerId = Number(this.route.snapshot.paramMap.get('id'));
+    this.fetchOffer(this.offerId);
+    this.fetchProviderCompany(this.offerId);
     this.userRole = this.authService.getRole();
-    this.checkIfAbleToReview(offerId);
+    this.checkIfAbleToReview(this.offerId);
   }
 
   checkIfAbleToReview(offerId: number) {
@@ -183,6 +184,7 @@ export class OfferInfoComponent {
           next: () => {
             this.snackBar.open('Product successfully added to budget!', 'Close', { duration: 3000 });
             this.canReview = true;
+            this.openReviewDialog();
           },
           error: () => {
             this.snackBar.open('Failed to buy product. Check if you have eb Try again later.', 'Close', { duration: 3000 });
@@ -230,6 +232,7 @@ export class OfferInfoComponent {
       if (result) {
         console.log('Reservation was successful!');
         this.canReview = true;
+        this.openReviewDialog();
       }
     });
   }
