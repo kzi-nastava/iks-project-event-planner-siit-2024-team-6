@@ -67,7 +67,7 @@
       </div>
 
       <label for="discount">Discount:</label>
-      <input id="discount" type="number" formControlName="discount" placeholder="Enter discount percentage (if any)" />
+      <input id="discount" type="number" formControlName="discount" placeholder="Enter discount price (if any)" />
       <div *ngIf="serviceForm.get('discount')?.touched && serviceForm.get('discount')?.errors?.['min']"
         class="error-message">
         Discount must not be less than 0.
@@ -123,7 +123,7 @@
     <!-- Fixed Duration -->
     <div *ngIf="isFixedDuration" class="form-group">
       <label for="duration">Fixed Duration (minutes):</label>
-      <input id="duration" type="number" formControlName="duration" placeholder="Enter duration in hours" />
+      <input id="duration" type="number" formControlName="duration" placeholder="Enter duration in minutes" />
       <div *ngIf="serviceForm.get('duration').touched && serviceForm.get('duration')?.errors?.['required']"
         class="error-message">
         Duration is required.
