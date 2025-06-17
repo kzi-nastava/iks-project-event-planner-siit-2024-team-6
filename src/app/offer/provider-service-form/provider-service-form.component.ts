@@ -8,6 +8,7 @@ import { NewOfferDTO } from '../../dto/offer-dtos';
 import { MatDialog } from '@angular/material/dialog';
 import { NewCategoryDTO } from '../../dto/category-dtos';
 import { CategoryDialogComponent } from '../../category/category-dialog/category-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-provider-service-form',
@@ -32,6 +33,7 @@ export class ProviderServiceFormComponent implements OnInit {
     private eventService: EventService,
     private cdr: ChangeDetectorRef,
     private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -155,19 +157,26 @@ export class ProviderServiceFormComponent implements OnInit {
 
           this.offerService.createService(createdOffer).subscribe({
             next: (response) => {
-              console.log('Offer updated successfully:', response);
+               this.snackBar.open('Offer created successfully', 'Close', {
+                duration: 3000, 
+                panelClass: ['snackbar-success']
+              });
+              console.log('Offer created successfully:', response);
               this.router.navigate(['/my-services']);
             },
             error: (err) => {
+              this.showError("Error creating offer:"+err);
               console.error('Error creating offer:', err);
             },
           });
         },
         error: (err) => {
+          this.showError("Error fetching event types:"+err);
           console.error('Error fetching event types:', err);
         },
       });
     } else {
+      this.showError("Form is invalid or offer data is missing!");
       console.error('Form is invalid or offer data is missing!');
     }
   }
@@ -230,6 +239,12 @@ export class ProviderServiceFormComponent implements OnInit {
         this.newCategory = result;
         this.proposedCategory = true;
       }
+    });
+  }
+  showError(message: string): void{
+    this.snackBar.open(message, 'Dismiss', {
+      duration: 5000,
+      panelClass: ['snackbar-error']
     });
   }
 }
