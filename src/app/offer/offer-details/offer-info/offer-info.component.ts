@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Offer, ProviderCompany } from '../../model/offer.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from '../../offer.service';
 import { Service } from '../../model/offer.model';
 import { Product } from '../../model/offer.model';
@@ -15,6 +15,7 @@ import { ReviewDialogComponent } from '../review-dialog/review-dialog.component'
 import { NewReactionDTO } from '../../../dto/reaction-dtos';
 import { NewNotificationDTO } from '../../../notification/model/notification.model';
 import { NotificationService } from '../../../notification/notification.service';
+import { ChatService } from '../../../chat/chat.service';
 @Component({
   selector: 'app-offer-info',
   templateUrl: './offer-info.component.html',
@@ -29,7 +30,7 @@ export class OfferInfoComponent {
   isFavorite = false;
   canReview = false;
 
-  constructor(private route: ActivatedRoute, private offerService: OfferService, private notificationService: NotificationService, private location: Location, private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar, private cdr: ChangeDetectorRef) { }
+  constructor(private route: ActivatedRoute, private offerService: OfferService, private notificationService: NotificationService, private location: Location, private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar, private cdr: ChangeDetectorRef, private chatService: ChatService, private router: Router) { }
 
   ngOnInit() {
     const offerId = Number(this.route.snapshot.paramMap.get('id'));
@@ -202,10 +203,19 @@ export class OfferInfoComponent {
     });
   }
 
-  contactProvider() {
-    // You could open a dialog, send a message, or route to contact form
-    console.log('Contacting provider:', this.offer?.name);
-    // Example: this.dialog.open(ContactDialogComponent, { data: this.offer.provider });  
+  contactProvider(): void {
+    this.chatService.findByUsers(this.company.id).subscribe({
+      next: (chatId) => {
+        this.router.navigate(['/chat', chatId]);
+      },
+      error: (err) => {
+        this.snackBar.open('Failed to start chat. Please try again.', 'Close', {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+        });
+      }
+    });
   }
 
   toggleFavorite() {

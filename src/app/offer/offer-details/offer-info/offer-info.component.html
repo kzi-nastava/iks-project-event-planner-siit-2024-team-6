@@ -29,9 +29,9 @@
           </strong>
         </p>
       </div>
-
+       <div class="organizer-buttons" *ngIf="userRole === 'ROLE_ORGANIZER'">
       <button style="background-color: #3F4C6D;" class="btn btn-secondary" (click)="contactProvider()">Contact
-        Us</button>
+        Us</button></div>
     </div>
 
   </div>
