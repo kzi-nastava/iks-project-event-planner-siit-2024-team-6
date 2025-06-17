@@ -20,9 +20,9 @@ export class EventListComponent implements OnInit {
   sortDir: string = 'asc';
   pageProperties = {
     page: 0,
-    pageSize: 8,
+    pageSize: 10,
     totalCount: 0,
-    pageSizeOptions: [4, 8, 12]
+    pageSizeOptions: [5, 10, 15]
  };
  @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -38,7 +38,11 @@ export class EventListComponent implements OnInit {
   pageChanged(pageEvent: PageEvent){
     this.pageProperties.page = pageEvent.pageIndex;
     this.pageProperties.pageSize = pageEvent.pageSize;
-    this.getPagedEntities();
+    if (this.isFiltered) {
+      this.getFilteredEntities();
+    } else {
+      this.getPagedEntities();
+    }
   }
 
   private getPagedEntities(){
@@ -108,6 +112,7 @@ export class EventListComponent implements OnInit {
   if (!query || query.trim() === '') {
     this.searchQuery = '';
     this.filters = {};
+    this.isFiltered = false;
     this.pageProperties.page = 0;
     this.paginator.firstPage();
     this.getPagedEntities();
