@@ -87,10 +87,14 @@ export class BudgetPlanningComponent {
         maxPrice: this.enteredMaxAmount,
         currPrice: 0
       });
+      this.recalculateBudget();
+      this.updateBudget();
+      this.closePopup();
+    } else {
+      this.snackBar.open('Please select a non-picked category and enter a valid amount.', 'Close', {
+        duration: 3000,
+      });
     }
-    this.recalculateBudget();
-    this.updateBudget();
-    this.closePopup();
   }
 
   confirmEditPopup(): void {
@@ -148,7 +152,6 @@ export class BudgetPlanningComponent {
   fetchRecommendedCategories(): void {
     this.eventService.getRecommendedCategories(Number(this.eventId)).subscribe({
       next: (categories) => {
-        console.log(categories);
         this.recommendedCategories = categories;
       },
       error: (err) => {
