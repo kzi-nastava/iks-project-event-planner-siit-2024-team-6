@@ -11,6 +11,9 @@ import { ReactionDTO } from '../../../dto/reaction-dtos';
   styleUrls: ['./company-dialog.component.scss']
 })
 export class CompanyDialogComponent {
+reportComment(_t25: ReactionDTO) {
+throw new Error('Method not implemented.');
+}
   currentPhotoIndex = 0;
   page = 0;
   size = 5;

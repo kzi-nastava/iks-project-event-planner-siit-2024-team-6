@@ -38,6 +38,12 @@
     }
   }
 }
+.user-report-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 
 .dialog-actions-container {
   display: flex;
