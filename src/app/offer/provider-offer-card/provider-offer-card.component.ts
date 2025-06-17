@@ -19,6 +19,11 @@ export class ProviderOfferCardComponent {
     private offerService: OfferService,
     private dialog: MatDialog
   ) { }
+  offerRating: number | null = null;
+
+  ngOnInit(): void {
+    this.loadOfferRating(this.offer.id);
+  }
   editService(service: Service): void {
     this.offerService.setService(service);
     this.router.navigate(['/service-edit']);
@@ -58,6 +63,16 @@ export class ProviderOfferCardComponent {
         });
       }
     });
+  }
+
+  loadOfferRating(offerId: number): void {
+    this.offerService.getOfferRating(offerId).subscribe({
+      next: (rating) => this.offerRating = rating,
+      error: (err) => console.error('Failed to fetch offer rating:', err)
+    });
+  }
+  getDisplayRating(rating: number | null | undefined): string {
+    return rating && !isNaN(rating) && rating !== 0 ? rating.toFixed(1) : 'No rating';
   }
 
 }
