@@ -28,8 +28,7 @@ export class Interceptor implements HttpInterceptor {
 
     // Если токен существует, добавляем его в заголовок "Authorization"
     if (accessToken) {
-      console.log(`[Interceptor] Adding token to request: ${req.url}`);
-      console.log(`[Interceptor] Token: Bearer ${accessToken}`);
+      //console.log(`[Interceptor] Adding token to request: ${req.url}`);
       
       const cloned = req.clone({
         headers: req.headers.set('X-Auth-Token', 'Bearer ' + accessToken),

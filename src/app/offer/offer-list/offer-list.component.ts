@@ -99,7 +99,7 @@ export class OfferListComponent implements OnInit {
     
     this.isFiltered = !!filters.category ||
                     !!filters.eventType ||
-                    filters.onSale === true ||
+                    filters.isOnSale === true || filters.isOnSale === 'true'
                     filters.isProduct === false ||
                     filters.isService === false ||
                     (filters.minPrice != null && filters.minPrice !== 0) ||
