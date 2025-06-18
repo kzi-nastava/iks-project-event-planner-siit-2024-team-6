@@ -192,6 +192,11 @@ export class ProviderServiceFormComponent implements OnInit {
     });
   }
 
+  addPhotoUrl(url: string): void {
+    this.photos.push(url);
+    this.serviceForm.get('photos')?.setValue(this.photos);
+  }
+
   fetchCategories(): void {
     this.offerService.getAllCategories().subscribe({
       next: (data) => {
