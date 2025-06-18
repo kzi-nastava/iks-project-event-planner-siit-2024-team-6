@@ -103,10 +103,9 @@
     </div>
 
     <div class="form-group">
-      <label class="add-photos-label">
-        <input id="photos" type="file" formControlName="photos" multiple hidden (change)="onPhotosSelected($event)" />
-        <span class="add-photos-btn">Add Photos</span>
-      </label>
+      <label for="photo-url">Add Photo URL:</label>
+      <input id="photo-url" type="text" placeholder="Enter image URL" #photoUrlInput />
+      <button type="button" (click)="addPhotoUrl(photoUrlInput.value); photoUrlInput.value = ''">Add Photo</button>
     </div>
 
     <!-- Visibility and Availability -->
