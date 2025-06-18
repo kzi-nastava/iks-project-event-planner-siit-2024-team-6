@@ -20,6 +20,7 @@ export class ProviderServiceEditComponent implements OnInit {
   selectedEventTypes: string[] = [];
   photos: string[] = []
   isFixedDuration: boolean = true; // Default to fixed duration
+  photoUrl: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -28,7 +29,7 @@ export class ProviderServiceEditComponent implements OnInit {
     private offerService: OfferService,
     private eventService: EventService,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Retrieve the offer object passed via Router State
@@ -43,12 +44,12 @@ export class ProviderServiceEditComponent implements OnInit {
 
     this.fetchEventTypes();
 
-     // Set initial duration type state
-     this.isFixedDuration = this.offer.preciseDuration != 0 && this.offer.preciseDuration != null;
+    // Set initial duration type state
+    this.isFixedDuration = this.offer.preciseDuration != 0 && this.offer.preciseDuration != null;
 
-     // Pre-select event types if available
+    // Pre-select event types if available
     this.selectedEventTypes = [];
-    this.offer.eventTypes.forEach(eventType => {this.selectedEventTypes.push(eventType.name)});
+    this.offer.eventTypes.forEach(eventType => { this.selectedEventTypes.push(eventType.name) });
 
     // Initialize the form with default values
     this.serviceForm = this.fb.group({
@@ -78,7 +79,7 @@ export class ProviderServiceEditComponent implements OnInit {
     const target = event.target as HTMLImageElement;
     target.src = 'https://via.placeholder.com/300x200.png?text=404+Not+Found';
   }
-  
+
 
   // Navigate back to the services list
   goBack(): void {
@@ -110,7 +111,7 @@ export class ProviderServiceEditComponent implements OnInit {
 
   updateDurationValidation(): void {
     const isFixed = this.isFixedDuration;
-  
+
     if (isFixed) {
       this.serviceForm.get('duration')?.setValidators([Validators.required, Validators.min(1)]);
       this.serviceForm.get('minDuration')?.clearValidators();
@@ -120,13 +121,13 @@ export class ProviderServiceEditComponent implements OnInit {
       this.serviceForm.get('minDuration')?.setValidators([Validators.required, Validators.min(1)]);
       this.serviceForm.get('maxDuration')?.setValidators([Validators.required, Validators.min(1)]);
     }
-  
+
     // Update validation state
     this.serviceForm.get('duration')?.updateValueAndValidity();
     this.serviceForm.get('minDuration')?.updateValueAndValidity();
     this.serviceForm.get('maxDuration')?.updateValueAndValidity();
   }
-  
+
 
   // Handle event type checkbox changes
   onEventTypeChange(eventType: string, event: Event): void {
@@ -148,7 +149,7 @@ export class ProviderServiceEditComponent implements OnInit {
       const eventTypeObservables = this.selectedEventTypes.map(name =>
         this.eventService.getEventTypeByName(name)
       );
-  
+
       forkJoin(eventTypeObservables).subscribe({
         next: (eventTypes) => {
           // Create the updated offer payload
@@ -172,25 +173,25 @@ export class ProviderServiceEditComponent implements OnInit {
             isDeleted: false,
             category: this.offer.category,
           };
-  
+
           // Call the service to update the offer
           this.offerService.updateService(this.offer.id, updatedOffer).subscribe({
             next: (response) => {
               this.snackBar.open('Offer updated successfully', 'Close', {
-                duration: 3000, 
+                duration: 3000,
                 panelClass: ['snackbar-success']
               });
               console.log('Offer updated successfully:', response);
               this.router.navigate(['/my-services']);
             },
             error: (err) => {
-              this.showError("Error updating offer:"+err);
+              this.showError("Error updating offer:" + err);
               console.error('Error updating offer:', err);
             },
           });
         },
         error: (err) => {
-          this.showError("Error fetching event types:"+err);
+          this.showError("Error fetching event types:" + err);
           console.error('Error fetching event types:', err);
         },
       });
@@ -205,7 +206,7 @@ export class ProviderServiceEditComponent implements OnInit {
       const duration = control.value;
       const minDuration = this.serviceForm?.get('minDuration')?.value;
       const maxDuration = this.serviceForm?.get('maxDuration')?.value;
-  
+
       if (
         (duration === null || duration === 0) &&
         (!minDuration || minDuration <= 0 || !maxDuration || maxDuration <= 0)
@@ -215,7 +216,7 @@ export class ProviderServiceEditComponent implements OnInit {
       return null;
     };
   }
-  
+
 
   fetchEventTypes(): void {
     this.eventService.getAllNames().subscribe({
@@ -236,6 +237,10 @@ export class ProviderServiceEditComponent implements OnInit {
       });
     }
   }
+   addPhotoUrl(url: string): void {
+    this.photos.push(url);
+    this.serviceForm.get('photos')?.setValue(this.photos);
+  }
 
   removePhoto(index: number): void {
     this.photos.splice(index, 1);
@@ -250,11 +255,11 @@ export class ProviderServiceEditComponent implements OnInit {
       return null; // Valid if at least one is selected
     };
   }
-  showError(message: string): void{
+  showError(message: string): void {
     this.snackBar.open(message, 'Dismiss', {
       duration: 5000,
       panelClass: ['snackbar-error']
     });
   }
-  
+
 }
