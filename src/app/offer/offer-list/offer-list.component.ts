@@ -20,9 +20,9 @@ export class OfferListComponent implements OnInit {
   sortDir: string = 'asc';
   pageProperties = {
     page: 0,
-    pageSize: 8,
+    pageSize: 10,
     totalCount: 0,
-    pageSizeOptions: [4, 8, 12]
+    pageSizeOptions: [5, 10, 15]
  };
  @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -99,11 +99,13 @@ export class OfferListComponent implements OnInit {
     
     this.isFiltered = !!filters.category ||
                     !!filters.eventType ||
-                    filters.isOnSale === true || filters.isOnSale === 'true'
+                    filters.isOnSale === true || filters.isOnSale === 'true' ||
                     filters.isProduct === false ||
                     filters.isService === false ||
                     (filters.minPrice != null && filters.minPrice !== 0) ||
                     (filters.maxPrice != null && filters.maxPrice !== 3000);
+    console.log(this.isFiltered);
+    console.log(filters.isService)
     this.filters = filters;
     this.pageProperties.page = 0;
     this.paginator.firstPage();
