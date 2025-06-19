@@ -300,7 +300,7 @@ export class OfferService {
     });
 
     return this.httpClient.post<PagedResponse<Offer>>(
-      '/api/offers/searchByBudget',
+      '/api/offers/search-by-budget',
       budgetDTO,
       { headers, params }
     );
