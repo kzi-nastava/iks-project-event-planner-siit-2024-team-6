@@ -145,7 +145,7 @@ export class EventService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    const url = `${this.apiUrl}${eventId}/getCategories`;
+    const url = `${this.apiUrl}${eventId}/categories`;
 
     // Perform the HTTP GET request to retrieve categories
     return this.httpClient.get<string[]>(url, { headers });
