@@ -108,7 +108,7 @@ export class OfferService {
       Authorization: `Bearer ${token}`,
     });
     return this.httpClient.post<void>(
-      `${this.apiUrl}${offerId}/add-favour`, {},
+      `${this.apiUrl}${offerId}/favourite`, {},
       { headers }
     );
   }
@@ -118,8 +118,8 @@ export class OfferService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.httpClient.post<void>(
-      `${this.apiUrl}${offerId}/remove-favour`, {},
+    return this.httpClient.delete<void>(
+      `${this.apiUrl}${offerId}/favourite`,
       { headers }
     );
   }
@@ -300,7 +300,7 @@ export class OfferService {
     });
 
     return this.httpClient.post<PagedResponse<Offer>>(
-      '/api/offers/searchByBudget',
+      '/api/offers/search-by-budget',
       budgetDTO,
       { headers, params }
     );
@@ -351,7 +351,7 @@ export class OfferService {
   }
 
   getOfferRating(offerId: number): Observable<number> {
-    return this.httpClient.get<number>(`/api/reactions/rating-offer/${offerId}`);
+    return this.httpClient.get<number>(`/api/offers/${offerId}/rating`);
   }
 
 
