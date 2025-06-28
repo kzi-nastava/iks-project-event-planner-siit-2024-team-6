@@ -66,6 +66,10 @@ export class LoginComponent {
               },
               error: (err) => {
                 console.error('Failed to add participation:', err);
+                this.snackBar.open("You have already joined this event.", 'Close', {
+              duration: 5000,
+              panelClass: ['warning-snackbar']
+            });
                 this.router.navigate(['events']);
               }
             });
