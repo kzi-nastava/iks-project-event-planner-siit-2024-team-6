@@ -7,6 +7,8 @@ export interface Event {
     name: string;
     description: string;
     place: string;
+    latitude: number;
+    longitude: number;
     maxParticipants: number;
     participants: number;
     isPublic: boolean;

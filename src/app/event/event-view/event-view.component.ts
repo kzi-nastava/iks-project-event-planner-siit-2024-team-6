@@ -11,6 +11,7 @@ import { AuthService } from '../../infrastructure/auth/auth.service';
 import { NotificationService } from '../../notification/notification.service';
 import { NewNotificationDTO } from '../../notification/model/notification.model';
 import { ChatService } from '../../chat/chat.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-event-view',
@@ -21,7 +22,7 @@ export class EventViewComponent implements OnInit {
   event: Event | undefined;
   reviewText: string = '';
   reviewRating: number = 0;
-  mapUrl: string = '';
+  mapUrl: SafeResourceUrl = '';
   organizer: OrganizerDTO | undefined;
   currentPhotoIndex: number = 0; // Текущий индекс фотографии
   agendaReady: boolean = false;
@@ -39,7 +40,8 @@ export class EventViewComponent implements OnInit {
     private authService: AuthService,
     private notificationService: NotificationService,
     private chatService: ChatService,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -84,7 +86,13 @@ export class EventViewComponent implements OnInit {
     this.eventService.getEventById(id).subscribe((event) => {
       if (event) {
         this.event = event;
-this.checkFavorite();
+        this.checkFavorite();
+        // google maps url
+        if (event.latitude != null && event.longitude != null) {
+          this.mapUrl = this.sanitizeMapUrl(event.latitude, event.longitude);
+        } else {
+          this.mapUrl = '';
+        }
       } else {
         console.error('Event not found');
       }
@@ -199,6 +207,10 @@ this.checkFavorite();
   }
 
 
+  sanitizeMapUrl(lat: number, lng: number): SafeResourceUrl {
+    const url = `https://www.google.com/maps?q=${lat},${lng}&hl=es;z=14&output=embed`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
   reportOrganizer(): void {
     console.log("USAO");
     if (!this.organizer) {
