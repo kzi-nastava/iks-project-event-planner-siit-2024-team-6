@@ -209,11 +209,13 @@ ngOnInit(): void {
         (this.currentPhotoIndex - 1 + this.event.photos.length) % this.event.photos.length;
     }
   }
-  saveChanges(): void {
-    this.update();
-    this.router.navigate([`my_events`]);
+saveChanges(): void {
+  if (!this.isFormValid()) return;
 
-  }
+  this.update();
+  this.router.navigate([`my_events`]);
+}
+
   update(): void {
     this.eventService.updateEvent(this.event).subscribe();
   }
@@ -245,5 +247,32 @@ ngOnInit(): void {
     const now = new Date();
     return eventDate.getTime() > now.getTime();
   }
+isFormValid(): boolean {
+  if (!this.event.name || this.event.name.trim() === '') {
+    this.showSnack('Event name is required', true);
+    return false;
+  }
 
+  if (!this.event.description || this.event.description.trim() === '') {
+    this.showSnack('Description is required', true);
+    return false;
+  }
+
+  if (!this.event.place || this.event.place.trim() === '') {
+    this.showSnack('Place is required', true);
+    return false;
+  }
+
+  if (!this.event.maxParticipants || isNaN(+this.event.maxParticipants)) {
+    this.showSnack('Max participants must be a number', true);
+    return false;
+  }
+
+  if (!this.event.date) {
+    this.showSnack('Date is required', true);
+    return false;
+  }
+
+  return true;
+}
 }
