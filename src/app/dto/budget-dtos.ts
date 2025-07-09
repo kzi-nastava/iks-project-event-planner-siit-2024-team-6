@@ -7,3 +7,8 @@ interface BudgetItemDTO {
     currPrice: number;
     category: string;
   }
+
+  export interface NewBudgetItemDTO {
+    maxPrice: number;
+    category: string;
+  }
