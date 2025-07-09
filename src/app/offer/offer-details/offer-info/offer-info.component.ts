@@ -195,8 +195,8 @@ export class OfferInfoComponent {
             this.canReview = true;
             this.openReviewDialog();
           },
-          error: () => {
-            this.snackBar.open('Failed to buy product. Check if you have eb Try again later.', 'Close', { duration: 3000 });
+          error: (err) => {
+            this.snackBar.open('Failed to buy product: ' + this.extractErrorMessage(err), 'Close', { duration: 3000 });
           }
         });
       }
@@ -261,6 +261,11 @@ export class OfferInfoComponent {
   }
   goBack(): void {
     this.location.back(); // Goes to the previous route
+  }
+  extractErrorMessage(error: any): string {
+    if (typeof error?.error === 'string') return error.error;
+    if (error?.error?.message) return error.error.message;
+    return 'Unexpected error occurred.';
   }
   onImageError(event: Event) {
     const target = event.target as HTMLImageElement;
