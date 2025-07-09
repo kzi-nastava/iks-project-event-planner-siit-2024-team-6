@@ -77,10 +77,6 @@ export class EventService {
     return this.httpClient.get<Budget>(url, { headers });
   }
 
-  updateBudget(id: number, budgetDTO: NewBudgetDTO): Observable<Budget> {
-    return this.httpClient.put<Budget>(`/api/organizers/budget/${id}`, budgetDTO);
-  }
-
   addBudgetItem(budgetId: number, item: { category: string, maxPrice: number }): Observable<BudgetItem> {
     return this.httpClient.post<BudgetItem>(
       `/api/organizers/budget/${budgetId}/items`,
