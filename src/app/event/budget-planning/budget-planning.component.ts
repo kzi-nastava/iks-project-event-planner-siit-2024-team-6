@@ -52,7 +52,6 @@ export class BudgetPlanningComponent {
       if (budget) {
         this.budget = budget;
         this.totalSpent = this.budget.total - this.budget.left;
-        this.recalculateBudget();
       } else {
         console.error('Budget not found');
       }
