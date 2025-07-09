@@ -82,14 +82,11 @@ export class BudgetPlanningComponent {
 
   confirmPopup(): void {
     if (this.selectedCategory && !this.budget.budgetItems.some(item => item.category === this.selectedCategory)) {
-      this.budget.budgetItems.push({
-        category: this.selectedCategory,
-        maxPrice: this.enteredMaxAmount,
-        currPrice: 0
-      });
-      this.recalculateBudget();
-      this.updateBudget();
+      this.addBudgetItem(this.selectedCategory, this.enteredMaxAmount);
       this.closePopup();
+      this.snackBar.open('Item created successfully', 'Close', {
+        duration: 3000
+      });
     } else {
       this.snackBar.open('Please select a non-picked category and enter a valid amount.', 'Close', {
         duration: 3000,
@@ -99,29 +96,19 @@ export class BudgetPlanningComponent {
 
   confirmEditPopup(): void {
     if (this.enteredMaxAmount > 0 && this.enteredMaxAmount >= this.savedCurrPrice) {
-      this.budget.budgetItems = this.budget.budgetItems.filter(i => i.category !== this.selectedCategory);
-      this.budget.budgetItems.push({
-        category: this.selectedCategory,
-        maxPrice: this.enteredMaxAmount,
-        currPrice: this.savedCurrPrice
-      });
-      this.recalculateBudget();
-      this.updateBudget();
+      const item = this.budget.budgetItems.find(i => i.category === this.selectedCategory);
+      this.editBudgetItem(item.id, this.enteredMaxAmount);
     }
     this.closeEditPopup();
   }
 
   confirmCreateItemPopup(): void {
     if (this.selectedCategory && !this.budget.budgetItems.some(item => item.category === this.selectedCategory) && this.enteredMaxAmount > 0) {
-      const newItem = {
-        category: this.selectedCategory,
-        maxPrice: this.enteredMaxAmount,
-        currPrice: 0,
-      };
-      this.budget.budgetItems.push(newItem);
-      this.recalculateBudget();
+      this.addBudgetItem(this.selectedCategory, this.enteredMaxAmount);
+      this.snackBar.open('Item created successfully', 'Close', {
+        duration: 3000
+      });
       this.closeCreateItemPopup();
-      this.updateBudget();
     } else {
       this.snackBar.open('Please select a non-picked category and enter a valid amount.', 'Close', {
         duration: 3000,
@@ -190,9 +177,22 @@ export class BudgetPlanningComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('User confirmed the action');
-        this.budget.budgetItems = this.budget.budgetItems.filter(i => i !== item);
-        this.recalculateBudget();
-        this.updateBudget();
+        this.eventService.deleteBudgetItem(this.budget.id, item.id).subscribe({
+          next: () => {
+            console.log('Item deleted successfully');
+            this.budget.budgetItems = this.budget.budgetItems.filter(i => i.id !== item.id);
+            this.recalculateBudget();
+            this.snackBar.open('Item deleted successfully', 'Close', {
+              duration: 3000
+            });
+          },
+          error: (err) => {
+            console.error('Failed to delete item', err);
+            this.snackBar.open('Failed to delete item: ' + this.extractErrorMessage(err), 'Close', {
+              duration: 3000
+            });
+          }
+        });
       } else {
         console.log('User cancelled the action');
       }
@@ -239,20 +239,46 @@ export class BudgetPlanningComponent {
     this.totalSpent = totalCurrPrice;
   }
 
-
-  private updateBudget(): void {
-    const dto = this.toNewBudgetDTO(this.budget);
-    this.eventService.updateBudget(this.budget.id, dto).subscribe({
-      next: (updated) => {
-        this.budget = updated;
-        this.snackBar.open('Budget updated successfully!', 'Close', { duration: 3000 });
-        this.budget = updated;
+  private addBudgetItem(c: string, mp: number): void {
+    const dto = { category: c, maxPrice: mp }
+    this.eventService.addBudgetItem(this.budget.id, dto).subscribe({
+      next: (created) => {
+        this.budget.budgetItems.push(created);
+        this.recalculateBudget();
       },
-      error: () => {
-        this.snackBar.open('Failed to update budget.', 'Close', { duration: 3000 });
+      error: (err) => {
+        this.snackBar.open('Failed to create budget item: ' + this.extractErrorMessage(err), 'Close', {
+          duration: 3000
+        });
       }
     });
   }
+
+  private editBudgetItem(itemId: number, price: number): void {
+    this.eventService.updateBudgetItemPrice(this.budget.id, itemId, price).subscribe({
+      next: (updatedItem) => {
+        console.log('Updated item:', updatedItem);
+        this.budget.budgetItems = this.budget.budgetItems.filter(i => i.id !== updatedItem.id);
+        this.budget.budgetItems.push({
+          id: updatedItem.id,
+          category: updatedItem.category,
+          maxPrice: updatedItem.maxPrice,
+          currPrice: updatedItem.currPrice
+        });
+        this.recalculateBudget();
+        this.snackBar.open('Item updated successfully', 'Close', {
+          duration: 3000
+        });
+      },
+      error: (err) => {
+        console.error('Failed to update item', err);
+        this.snackBar.open('Failed to update budget item: ' + this.extractErrorMessage(err), 'Close', {
+          duration: 3000
+        });
+      }
+    });
+  }
+
   private toNewBudgetDTO(budget: Budget): NewBudgetDTO {
     return {
       budgetItems: budget.budgetItems.map(item => ({
@@ -262,4 +288,11 @@ export class BudgetPlanningComponent {
       }))
     };
   }
+
+  extractErrorMessage(error: any): string {
+    if (typeof error?.error === 'string') return error.error;
+    if (error?.error?.message) return error.error.message;
+    return 'Unexpected error occurred.';
+  }
+
 }
