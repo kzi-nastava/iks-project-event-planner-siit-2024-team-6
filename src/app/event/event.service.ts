@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Budget, Event, OrganizerDTO } from './model/event.model';
+import { Budget, BudgetItem, Event, OrganizerDTO } from './model/event.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {environment} from '../../env/environment';
 import {Observable} from 'rxjs';
 import {PagedResponse} from '../shared/model/paged-response.model';
 import { EventTypeDTO } from './event-type.service';
-import { NewBudgetDTO } from '../dto/budget-dtos';
+import { NewBudgetDTO, NewBudgetItemDTO } from '../dto/budget-dtos';
 
 
 @Injectable({
@@ -80,6 +80,27 @@ export class EventService {
   updateBudget(id: number, budgetDTO: NewBudgetDTO): Observable<Budget> {
     return this.httpClient.put<Budget>(`/api/organizers/budget/${id}`, budgetDTO);
   }
+
+  addBudgetItem(budgetId: number, item: { category: string, maxPrice: number }): Observable<BudgetItem> {
+    return this.httpClient.post<BudgetItem>(
+      `/api/organizers/budget/${budgetId}/items`,
+      item
+    );
+  }
+
+  updateBudgetItemPrice(budgetId: number, itemId: number, price: number): Observable<BudgetItem> {
+    return this.httpClient.put<BudgetItem>(
+      `api/organizers/budget/${budgetId}/items/${itemId}`,
+      price
+    );
+  }
+
+  deleteBudgetItem(budgetId: number, itemId: number): Observable<void> {
+    return this.httpClient.delete<void>(
+      `api/organizers/budget/${budgetId}/items/${itemId}`
+    );
+  }
+
 
   updateEvent(event: any): Observable<any> {
     return this.httpClient.put(`/api/organizers/events/${event.id}`, event);
