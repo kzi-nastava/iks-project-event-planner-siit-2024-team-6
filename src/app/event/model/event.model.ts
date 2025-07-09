@@ -39,6 +39,7 @@ export interface Event {
   }
 
   export interface BudgetItem {
+    id: number;
     maxPrice: number;
     currPrice: number;
     category: string;
