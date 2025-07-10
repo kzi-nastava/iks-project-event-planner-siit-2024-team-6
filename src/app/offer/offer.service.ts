@@ -293,14 +293,14 @@ export class OfferService {
     return this.httpClient.get<PagedResponse<Service>>('/api/offers/search-services', { headers, params });
   }
 
-  getFilteredOffersByBudget(budgetDTO: NewBudgetDTO, params: any): Observable<PagedResponse<Offer>> {
+  getFilteredOffersByBudget(budgetId: number, budgetDTO: NewBudgetDTO, params: any): Observable<PagedResponse<Offer>> {
     const token = localStorage.getItem('user');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-
+    const url = `/api/offers/search-by-budget/${budgetId}`;
     return this.httpClient.post<PagedResponse<Offer>>(
-      '/api/offers/search-by-budget',
+      url,
       budgetDTO,
       { headers, params }
     );
