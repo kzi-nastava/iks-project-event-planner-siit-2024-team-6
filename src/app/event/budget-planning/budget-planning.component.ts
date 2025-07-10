@@ -204,7 +204,7 @@ export class BudgetPlanningComponent {
     };
     const dto = this.toNewBudgetDTO(this.budget);
     // Replace with your actual filtering logic based on budget items or user input
-    this.offerService.getFilteredOffersByBudget(dto, params).subscribe({
+    this.offerService.getFilteredOffersByBudget(this.budget.id, dto, params).subscribe({
       next: (response: PagedResponse<Offer> | null) => {
         if (response && response.content) {
           this.filteredOffers = response.content;
