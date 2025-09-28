@@ -1,0 +1,31 @@
+<h1 mat-dialog-title class="text-center">Leave a Review</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="reviewForm" class="dialog-form">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Your comment</mat-label>
+      <textarea matInput formControlName="comment" rows="4" placeholder="Share your thoughts"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Rating</mat-label>
+      <mat-select formControlName="rating">
+        <mat-option *ngFor="let r of [1, 2, 3, 4, 5]" [value]="r">{{ r }} ★</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+</div>
+
+<div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+</div>
+
+
+<div mat-dialog-actions align="center">
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-flat-button color="primary" (click)="submit()" [disabled]="reviewForm.invalid">
+    Submit
+  </button>
+</div>

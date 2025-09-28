@@ -1,211 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Offer, Product, Service } from './model/offer.model';
-
-const SERVICES: Service[] = [
-  {
-    status: 'AVAILABLE',
-    name: 'Event Decoration Service',
-    description: 'Professional decoration service for weddings, parties, and more.',
-    price: 500,
-    photos: ['https://static.wixstatic.com/media/cd8c84_2b2a5e93744a46678743bb950173ad63~mv2.jpg/v1/fill/w_1792,h_960,al_c/cd8c84_2b2a5e93744a46678743bb950173ad63~mv2.jpg'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-02-15'),
-    eventTypes: [],
-    category: { name: 'Decoration', description: 'Birthday and wedding decoration' },
-    minDuration: 120,
-    maxDuration: 480,
-    preciseDuration: 240,
-    latestReservation: 60,
-    latestCancelation: 24,
-    reservations: [
-      {
-        isCanceled: false,
-        reservedAt: new Date('2024-03-01'),
-        timeSlot: { time: new Date('2024-03-15T10:00:00'), duration: 240 },
-      },
-    ],
-  } as Service,
-  {
-    status: 'AVAILABLE',
-    name: 'Photography Service',
-    description: 'Capture your special moments with our professional photography service.',
-    price: 250,
-    photos: ['https://www.indiafilings.com/learn/wp-content/uploads/2017/07/GST-Rate-for-Photography-Services.jpg'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-03-10'),
-    eventTypes: [],
-    category: { name: 'Photography', description: 'Event photography services' },
-    minDuration: 60,
-    maxDuration: 360,
-    preciseDuration: 180,
-    latestReservation: 48,
-    latestCancelation: 12,
-    reservations: [],
-  } as Service,
-  {
-    status: 'AVAILABLE',
-    name: 'Catering Service',
-    description: 'Delicious catering for events, including appetizers, main courses, and desserts.',
-    price: 1200,
-    sale: 1000,
-    photos: ['https://www.randstad.cl/s3fs-media/cl/public/styles/blog_article/public/migration/blog_page/images/blog_image_5A58832C-CE41-4678-B855-8425FA675F6C.jpeg?itok=6AxHwI2D'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-04-01'),
-    eventTypes: [],
-    category: { name: 'Food', description: 'Event catering services' },
-    minDuration: 240,
-    maxDuration: 720,
-    preciseDuration: 480,
-    latestReservation: 72,
-    latestCancelation: 48,
-    reservations: [],
-  } as Service,
-  {
-    status: 'AVAILABLE',
-    name: 'Wedding Filming',
-    description: 'Capture your special moments with our professional photography service.',
-    price: 300,
-    photos: ['https://www.indiafilings.com/learn/wp-content/uploads/2017/07/GST-Rate-for-Photography-Services.jpg'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-03-10'),
-    eventTypes: [],
-    category: { name: 'Photography', description: 'Event photography services' },
-    minDuration: 60,
-    maxDuration: 360,
-    preciseDuration: 180,
-    latestReservation: 48,
-    latestCancelation: 12,
-    reservations: [],
-  } as Service,
-  {
-    status: 'AVAILABLE',
-    name: 'Luna Sweets',
-    description: 'Delicious catering for events, including appetizers, main courses, and desserts.',
-    price: 1200,
-    sale: 160,
-    photos: ['https://www.randstad.cl/s3fs-media/cl/public/styles/blog_article/public/migration/blog_page/images/blog_image_5A58832C-CE41-4678-B855-8425FA675F6C.jpeg?itok=6AxHwI2D'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-04-01'),
-    eventTypes: [],
-    category: { name: 'Food', description: 'Event catering services' },
-    minDuration: 240,
-    maxDuration: 720,
-    preciseDuration: 480,
-    latestReservation: 72,
-    latestCancelation: 48,
-    reservations: [],
-  } as Service
-]
-
-const OFFERS: (Product | Service)[] = [
-  // Products
-  {
-    status: 'AVAILABLE',
-    name: 'Pizza Margherita',
-    description: 'Delicious stone-baked pizza with fresh mozzarella, basil, and tomato sauce.',
-    price: 12.99,
-    sale: 8.99,
-    photos: ['https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Supreme_pizza.jpg/1200px-Supreme_pizza.jpg'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-01-01'),
-    eventTypes: [],
-    category: { name: 'Food', description: 'Delicious meals and snacks' },
-  } as Product,
-  {
-    status: 'AVAILABLE',
-    name: 'Wireless Headphones',
-    description: 'High-quality wireless headphones with noise-canceling features and deep bass.',
-    price: 149.99,
-    sale: 129.99,
-    photos: ['https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MQTQ3?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1687660671363'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-01-15'),
-    eventTypes: [],
-    category: { name: 'Electronics', description: 'Gadgets and tech accessories' },
-  } as Product,
-  {
-    status: 'AVAILABLE',
-    name: 'Custom Mug',
-    description: 'Personalized ceramic mug with your design or text printed on it.',
-    price: 15.99,
-    photos: ['https://cms.cloudinary.vpsvc.com/images/c_scale,dpr_auto,f_auto,q_auto:best,t_productPageHeroGalleryTransformation_v2,w_auto/legacy_dam/en-us/S001683929/NPIB-8347-Mugs-Lifestyle-Callouts-Business-Consumer-PDP-Hero-001?cb=21b1a464ee1896c60a41e5b29e152e769309c0d7'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-01-20'),
-    eventTypes: [],
-    category: { name: 'Gifts', description: 'Personalized gift items' },
-  } as Product,
-
-  // Services
-  {
-    status: 'AVAILABLE',
-    name: 'Event Decoration Service',
-    description: 'Professional decoration service for weddings, parties, and more.',
-    price: 500,
-    photos: ['https://static.wixstatic.com/media/cd8c84_2b2a5e93744a46678743bb950173ad63~mv2.jpg/v1/fill/w_1792,h_960,al_c/cd8c84_2b2a5e93744a46678743bb950173ad63~mv2.jpg'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-02-15'),
-    eventTypes: [],
-    category: { name: 'Decoration', description: 'Birthday and wedding decoration' },
-    minDuration: 120,
-    maxDuration: 480,
-    preciseDuration: 240,
-    latestReservation: 60,
-    latestCancelation: 24,
-    reservations: [
-      {
-        isCanceled: false,
-        reservedAt: new Date('2024-03-01'),
-        timeSlot: { time: new Date('2024-03-15T10:00:00'), duration: 240 },
-      },
-    ],
-  } as Service,
-  {
-    status: 'AVAILABLE',
-    name: 'Photography Service',
-    description: 'Capture your special moments with our professional photography service.',
-    price: 250,
-    photos: ['https://www.indiafilings.com/learn/wp-content/uploads/2017/07/GST-Rate-for-Photography-Services.jpg'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-03-10'),
-    eventTypes: [],
-    category: { name: 'Photography', description: 'Event photography services' },
-    minDuration: 60,
-    maxDuration: 360,
-    preciseDuration: 180,
-    latestReservation: 48,
-    latestCancelation: 12,
-    reservations: [],
-  } as Service,
-  {
-    status: 'AVAILABLE',
-    name: 'Catering Service',
-    description: 'Delicious catering for events, including appetizers, main courses, and desserts.',
-    price: 1200,
-    sale: 1000,
-    photos: ['https://www.randstad.cl/s3fs-media/cl/public/styles/blog_article/public/migration/blog_page/images/blog_image_5A58832C-CE41-4678-B855-8425FA675F6C.jpeg?itok=6AxHwI2D'],
-    isAvailable: true,
-    isDeleted: false,
-    lastChanged: new Date('2024-04-01'),
-    eventTypes: [],
-    category: { name: 'Food', description: 'Event catering services' },
-    minDuration: 240,
-    maxDuration: 720,
-    preciseDuration: 480,
-    latestReservation: 72,
-    latestCancelation: 48,
-    reservations: [],
-  } as Service
-];
+import { Offer, PriceListItem, Product, ProviderCompany, Service } from './model/offer.model';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../env/environment';
+import { PagedResponse } from '../shared/model/paged-response.model';
+import { NewOfferDTO, NewPriceListItemDTO } from '../dto/offer-dtos';
+import { NewBudgetDTO } from '../dto/budget-dtos';
+import { NewReactionDTO, ReactionDTO } from '../dto/reaction-dtos';
 
 
 @Injectable({
@@ -213,9 +14,12 @@ const OFFERS: (Product | Service)[] = [
 })
 export class OfferService {
   private offerList: Offer[] = [];
-  private servicesList: Service[] = [...SERVICES];
+  private servicesList: Service[] = [];
+  private productsList: Product[] = [];
+  private editService: Service = null;
+  private editProduct: Product = null;
 
-  constructor() {
+  /*constructor() {
     for (let offerObj of OFFERS) {
       const offer: Offer = {
         status: offerObj.status,
@@ -241,31 +45,340 @@ export class OfferService {
       };
       this.offerList.push(offer);
     }
+  }*/
+
+  private apiUrl = environment.apiHost + `/offers/`;
+  private apiUrlProvider = environment.apiHost + '/providers/';
+  constructor(private httpClient: HttpClient) { }
+
+  getPriceList(): Observable<PriceListItem[]> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.get<PriceListItem[]>(this.apiUrlProvider + `price-list`, { headers });
   }
 
-  getAll(): Offer[] {
-    return this.offerList;
+  downloadPriceListPdf() {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.get(this.apiUrlProvider + `price-list/export`, { headers, responseType: 'blob' });
   }
 
-  add(offer: Offer): void {
-    this.offerList.push(offer);
+  getAll(params: any): Observable<PagedResponse<Offer>> {
+    return this.httpClient.get<PagedResponse<Offer>>(this.apiUrl + `all-elements`, { params: params });
+  }
+
+  getAccepted(params: any): Observable<PagedResponse<Offer>> {
+    return this.httpClient.get<PagedResponse<Offer>>(this.apiUrl + `accepted`, { params: params });
+  }
+  getAllProviderServices(pageProperties?: { page: number; pageSize: number }): Observable<PagedResponse<Service>> {
+    let params = new HttpParams();
+
+    if (pageProperties) {
+      params = params
+        .set('page', pageProperties.page.toString())
+        .set('pageSize', pageProperties.pageSize.toString()); // <-- match backend
+    }
+
+    // Retrieve the token (assuming it's stored in localStorage)
+    const token = localStorage.getItem('user');
+    console.log("TOKEN");
+    console.log(token);
+
+    // Set the Authorization header with the JWT token
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    });
+
+    const url = `${this.apiUrlProvider}my-services`; // Ensure no extra slash
+    console.log("Request URL:", url);
+
+    return this.httpClient.get<PagedResponse<Service>>(url, { params, headers }
+    );
+  }
+
+  addToFavourites(offerId: number): Observable<void> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.post<void>(
+      `${this.apiUrl}${offerId}/favourite`, {},
+      { headers }
+    );
+  }
+
+  removeFromFavourites(offerId: number): Observable<void> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.delete<void>(
+      `${this.apiUrl}${offerId}/favourite`,
+      { headers }
+    );
+  }
+
+  isFavourited(offerId: number): Observable<boolean> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.get<boolean>(
+      `${this.apiUrl}${offerId}/is-favourited`, { headers }
+    );
+  }
+
+  getAllProviderProducts(pageProperties?: { page: number; pageSize: number }): Observable<PagedResponse<Product>> {
+    let params = new HttpParams();
+
+    if (pageProperties) {
+      params = params
+        .set('page', pageProperties.page.toString())
+        .set('size', pageProperties.pageSize.toString());
+    }
+
+    const url = `${this.apiUrlProvider}my-products`; // Ensure no extra slash
+
+    return this.httpClient.get<PagedResponse<Product>>(url, { params }
+    );
+  }
+
+  getProviderByOfferId(offerId: number): Observable<ProviderCompany> {
+    const url = `${this.apiUrl}${offerId}/provider`;
+    return this.httpClient.get<ProviderCompany>(url);
+  }
+
+  getTopFive(): Observable<Offer[]> {
+    return this.httpClient.get<Offer[]>(this.apiUrl + `top-five`);
+  }
+
+  getById(id: number): Observable<Offer> {
+    return this.httpClient.get<Offer>(`${this.apiUrl}${id}`);
+  }
+
+  createOffer(offer: Offer): Observable<Offer> {
+    return this.httpClient.post<Offer>(this.apiUrl, offer);
+  }
+
+  updateOffer(id: number, offer: Offer): Observable<Offer> {
+    return this.httpClient.put<Offer>(`${this.apiUrl}${id}`, offer);
+  }
+
+  updateService(id: number, offer: NewOfferDTO): Observable<Offer> {
+    // Retrieve the token (assuming it's stored in localStorage)
+    const token = localStorage.getItem('user');
+    console.log("TOKEN");
+    console.log(token);
+
+    // Set the Authorization header with the JWT token
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    });
+
+    const url = `${this.apiUrlProvider}${id}`; // Ensure no extra slash
+    console.log("Request URL:", url);
+
+    return this.httpClient.put<Offer>(url, offer, { headers });
+  }
+
+  updateProduct(id: number, offer: NewOfferDTO): Observable<Offer> {
+    // Retrieve the token (assuming it's stored in localStorage)
+
+    const url = `${this.apiUrlProvider}${id}`; // Ensure no extra slash
+    console.log("Request URL:", url);
+
+    return this.httpClient.put<Offer>(`${url}/product`, offer);
   }
   getServices(): Service[] {
     return this.servicesList;
   }
-  
-  addService(service: Service): void{
+  getProducts(): Product[] {
+    return this.productsList;
+  }
+  addService(service: Service): void {
     this.servicesList.push(service);
   }
 
-  private serviceData: Offer;
-
-  setService(service: Offer): void {
-    this.serviceData = service;
+  addProduct(product: Product): void {
+    this.productsList.push(product);
   }
 
-  getService(): Offer {
-    return this.serviceData;
+  getAllCategories(): Observable<string[]> {
+    // Retrieve the token (assuming it's stored in localStorage)
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    const url = `${this.apiUrlProvider}categories`;
+
+    // Perform the HTTP GET request to retrieve categories
+    return this.httpClient.get<string[]>(url, { headers });
   }
-  
+
+  setService(service: Service): void {
+    this.editService = service;
+  }
+
+  setProduct(product: Product): void {
+    this.editProduct = product;
+  }
+
+  getService(): Service {
+    const x = this.editService;
+    this.setService(null);
+    return x;
+  }
+
+  getProduct(): Product {
+    const x = this.editProduct;
+    this.setProduct(null);
+    return x;
+  }
+
+  deleteOffer(offerId: number): Observable<void> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    const url = `${this.apiUrlProvider}${offerId}`;
+    return this.httpClient.delete<void>(url, { headers });
+  }
+  createService(newOffer: NewOfferDTO): Observable<NewOfferDTO> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+
+    return this.httpClient.post<NewOfferDTO>(`${this.apiUrlProvider}`, newOffer, { headers });
+  }
+
+  createProduct(newOffer: NewOfferDTO): Observable<NewOfferDTO> {
+    return this.httpClient.post<NewOfferDTO>(`${this.apiUrlProvider}product`, newOffer);
+  }
+
+  deleteProduct(offerId: number): Observable<void> {
+    const url = `${this.apiUrlProvider}${offerId}`;
+    return this.httpClient.delete<void>(url);
+  }
+
+  searchOffers(name: string, page: number, size: number): Observable<any> {
+    const token = localStorage.getItem('user'); // Retrieve token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    let params = new HttpParams().set('name', name || '').set('page', page).set('size', size);
+
+    return this.httpClient.get<any>(`${this.apiUrlProvider}search`, { headers, params });
+  }
+  getFavorites(): Observable<Offer[]> {
+    return this.httpClient.get<Offer[]>(`${this.apiUrl}favorites`);
+  }
+  getFilteredOffers(params: any): Observable<PagedResponse<Offer>> {
+    return this.httpClient.get<PagedResponse<Offer>>('/api/offers/search', { params });
+  }
+  getFilteredProviderServices(params: any): Observable<PagedResponse<Service>> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.get<PagedResponse<Service>>('/api/offers/search-services', { headers, params });
+  }
+
+  getFilteredOffersByBudget(budgetId: number, budgetDTO: NewBudgetDTO, params: any): Observable<PagedResponse<Offer>> {
+    const token = localStorage.getItem('user');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    const url = `/api/offers/search-by-budget/${budgetId}`;
+    return this.httpClient.post<PagedResponse<Offer>>(
+      url,
+      budgetDTO,
+      { headers, params }
+    );
+  }
+
+
+  getFilteredFavoriteProducts(params: any): Observable<PagedResponse<Offer>> {
+    return this.httpClient.get<PagedResponse<Offer>>('/api/offers/favoriteProducts', { params });
+  }
+  getFilteredFavoriteServices(params: any): Observable<PagedResponse<Offer>> {
+    return this.httpClient.get<PagedResponse<Offer>>('/api/offers/favoriteServices', { params });
+  }
+  getAllCategoriesNames(): Observable<string[]> {
+    return this.httpClient.get<string[]>(`${this.apiUrl}categories`);
+  }
+
+  getFavoriteProducts(pageProperties?: any): Observable<PagedResponse<Offer>> {
+    let params = new HttpParams();
+    if (pageProperties) {
+      params = params.set('page', pageProperties.page).set('size', pageProperties.pageSize);
+    }
+    return this.httpClient.get<PagedResponse<Offer>>(this.apiUrl + `all-elements`, { params: params });
+  }
+
+  buyProduct(productId: number, eventId: number) {
+    return this.httpClient.post(`/api/offers/${productId}/buy?eventId=${eventId}`, null);
+  }
+
+  addReaction(reaction: NewReactionDTO): Observable<ReactionDTO> {
+    const token = localStorage.getItem('user'); // Retrieve token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.post<ReactionDTO>(
+      `/api/reactions/`,
+      reaction,
+      { headers }
+    );
+  }
+
+  getProviderReactions(providerId: number, page: number = 0, size: number = 10): Observable<PagedResponse<ReactionDTO>> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+
+    return this.httpClient.get<PagedResponse<ReactionDTO>>(`api/reactions/provider/${providerId}`, { params });
+  }
+
+  getOfferRating(offerId: number): Observable<number> {
+    return this.httpClient.get<number>(`/api/offers/${offerId}/rating`);
+  }
+
+
+  updatePrice(id: number, dto: NewPriceListItemDTO): Observable<PriceListItem> {
+    const token = localStorage.getItem('user'); // Retrieve token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.put<PriceListItem>(`${this.apiUrlProvider}price/${id}`, dto, { headers });
+  }
+
+  checkIfPurchased(offerId: number): Observable<boolean> {
+    const token = localStorage.getItem('user'); // Retrieve token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.get<boolean>(`api/offers/${offerId}/purchased`, { headers });
+  }
+  checkIfReserved(offerId: number): Observable<boolean> {
+    const token = localStorage.getItem('user'); // Retrieve token from localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.httpClient.get<boolean>(`api/reservations/${offerId}/reserved`, { headers });
+  }
+
 }
+

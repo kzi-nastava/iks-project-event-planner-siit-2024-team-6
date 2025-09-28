@@ -163,53 +163,52 @@ form {
     position: relative;
   }
   
-  /* Floating Back Button */
-  .floating-back-btn {
-    position: fixed;
-    top: 60px;
-    left: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%; /* Circular button */
-    background-color: #8b6a9d; /* Purple color */
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    z-index: 1000;
-  }
-  
-  .floating-back-btn:hover {
-    background-color: #724c81; /* Darker shade of purple on hover */
-    transform: scale(1.1); /* Slight enlargement on hover */
-  }
-  
-  .floating-back-btn:active {
-    transform: scale(0.95); /* Slight shrink on click */
-  }
   
   .back-icon {
-    width: 48px;
-    height: 48px;
-    fill: white; /* Icon color */
+    width: 45px;
+    height: 45px;/* Icon color */
   }
+
+  .header {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 50px;
+}
+
+.back-button {
+  position: absolute;
+  background: none;
+  border: none;
+  font-size: 40px;
+  cursor: pointer;
+  color: #3f4c6d;
+}
+
+.header h2 {
+  margin: 0 auto;
+  text-align: center;
+  flex-grow: 1;
+  pointer-events: none;
+  /* so click doesn't affect h2 */
+}
   
-  .checkbox-group {
-    display: flex;
-    gap: 20px; /* Adds space between checkboxes */
-    align-items: center; /* Aligns the labels and checkboxes vertically */
-  }
-  
-  .checkbox-group label {
-    display: flex;
-    align-items: center; /* Ensures proper alignment between checkbox and label text */
-    gap: 5px; /* Adds a small space between the checkbox and label text */
-    font-size: 14px; /* Adjust text size for better readability */
-  }
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  /* Allows wrapping only when needed */
+  gap: 20px;
+  align-items: center;
+}
+
+.checkbox-group label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  /* Prevents label text from wrapping */
+  font-size: 14px;
+}
   /* Checkbox and Radio Button Styles */
 input[type="checkbox"],
 input[type="radio"] {
@@ -223,4 +222,78 @@ input[type="radio"] {
 input[type="checkbox"]:checked + label,
 input[type="radio"]:checked + label {
   color: #8B6A9D;
+}
+.photo-preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.photo-preview {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-photo-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, background-color 0.3s ease;
+}
+
+.remove-photo-btn:hover {
+  background-color: #d93636;
+  transform: scale(1.1);
+}
+
+.remove-photo-btn:active {
+  transform: scale(0.9);
+}
+
+.add-photos-btn {
+  display: inline-block;
+  width: 25%;
+  margin-left: 0;
+  padding: 10px;
+  background-color: #3f4c6d;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.add-photos-btn:hover {
+  background-color: #37425a;
+}
+.error-message {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 5px;
 }

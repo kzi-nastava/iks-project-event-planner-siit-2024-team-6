@@ -11,11 +11,8 @@
       <a routerLink="/events" routerLinkActive="active">Events</a>
       <a routerLink="/offers" >Products and Services</a>
     </div>
-    <div class="navbar__search">
-      <input type="text" placeholder="Search">
-      <button><i class="fa fa-search"></i></button>
-    </div>
-    <div class="navbar__profile" routerLink="/login" routerLinkActive="active">
+    
+    <div class="navbar__profile" (click)="onProfileClick()">
       <i class="fa fa-user-circle"></i>
     </div>
     <app-sidebar #sidebar></app-sidebar>

@@ -14,7 +14,14 @@ export class EventSliderComponent implements OnInit {
   constructor(private eventService: EventService) {}
 
   ngOnInit(): void {
-    this.events = this.eventService.getAll();
+    this.eventService.getTopFive().subscribe({
+      next: (data: Event[]) => {
+        this.events = data;
+      },
+      error: (err) => {
+        console.error('Error fetching top five events:', err);
+      }
+    });
   }
 
   slideLeft(): void {

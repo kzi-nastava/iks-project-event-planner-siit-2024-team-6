@@ -1,0 +1,113 @@
+/* Invite Header Styling */
+.invite-header {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--dark-grey);
+    text-align: center;
+  }
+  
+  /* Email List Container */
+  .email-list-container {
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 12px;
+    min-width: 500px;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 2rem auto;
+  }
+  
+  /* Form Field Styling */
+  .email-input {
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  mat-form-field input {
+    font-size: 16px;
+  }
+
+  
+  /* Email Chips Container */
+  .email-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 220px;       /* Set the maximum height */
+    overflow-y: auto;        /* Enable vertical scrolling when max height is exceeded */
+    padding: 5px;           /* Add padding to avoid chips touching the container */
+    border: 1px solid #ddd;  /* Optional: Add a subtle border */
+    border-radius: 8px;      /* Match the container's rounded corners */
+  }
+  
+  /* Scrollbar Styling (for WebKit-based browsers like Chrome, Safari) */
+  .email-chips::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .email-chips::-webkit-scrollbar-thumb {
+    background-color: #bbb;
+    border-radius: 8px;
+  }
+  
+  .email-chips::-webkit-scrollbar-thumb:hover {
+    background-color: #999;
+  }
+  
+  /* Each Email Item */
+  .email-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Chip Styling */
+  mat-chip {
+    background-color: #e3f2fd;
+    color: var(--pink);
+    font-weight: 500;
+    width: 100%;                /* Make chips take the full width */
+    padding: 5px;              /* Add padding inside the chip for spacing */
+    border-radius: 8px;         /* Rounded corners for the chip */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;           /* Align the text to the left */
+    transition: background-color 0.2s, box-shadow 0.2s;
+  }
+  
+  mat-chip:hover {
+    background-color: rgba(211, 163, 176, 0.35); /* Example: Light pink with 50% opacity */
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Chip Remove Icon */
+  mat-icon[matChipRemove] {
+    cursor: pointer;
+    color: #d32f2f;
+    transition: color 0.2s;
+  }
+  
+  mat-icon[matChipRemove]:hover {
+    color: #b71c1c;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 600px) {
+    .email-list-container {
+      padding: 1rem;
+    }
+  
+    .invite-header {
+      font-size: 20px;
+    }
+  
+    .email-chips {
+      max-height: 200px; /* Slightly smaller max height on small screens */
+    }
+  }
+  

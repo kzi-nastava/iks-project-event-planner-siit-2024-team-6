@@ -6,6 +6,7 @@
     <button class="close-button" (click)="closeFilter()">&times;</button>
   </div>
 
+  <!-- Offer Type Section -->
   <div class="filter-section">
     <h4>Offer Type</h4>
     <label>
@@ -18,40 +19,65 @@
     </label>
   </div>
 
-  <div class="filter-section" *ngIf="isProductsSelected || isServicesSelected">
+  <!-- Category Section -->
+  <div class="filter-section">
     <h4>Category</h4>
     <select [(ngModel)]="selectedCategory">
-      <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+      <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+    </select>
+  </div>
+  
+  <!-- EventType Section -->
+  <div class="filter-section">
+    <h4>For Event Type</h4>
+    <select [(ngModel)]="selectedEventType">
+      <option *ngFor="let type of types" [value]="type.name">{{ type.name }}</option>
     </select>
   </div>
 
-  <div class="filter-section" *ngIf="isProductsSelected || isServicesSelected">
+  <!-- On Sale Section -->
+  <div class="filter-section">
+    <h4>On Sale</h4>
+    <label>
+      <input type="checkbox" [(ngModel)]="isOnSale" />
+      Show only offers on sale
+    </label>
+  </div>
+
+  <!-- Price Range Section -->
+  <div class="filter-section">
     <h4>Price Range</h4>
-    <input type="range" min="0" max="1000" step="10" [(ngModel)]="priceRange" />
+    <input type="range" min="0" max="3000" step="10" [(ngModel)]="maxPrice" />
     <div class="price-display">
-        <div class="price-item">
-          <span>Min:</span>
-          <strong>$0</strong>
-        </div>
-        <div class="price-item">
-          <span>Max:</span>
-          <strong>${{ priceRange }}</strong>
-        </div>
+      <div class="price-item">
+        <span>Min:</span>
+        <strong>$0</strong>
       </div>
+      <div class="price-item">
+        <span>Max:</span>
+        <strong>${{ maxPrice }}</strong>
+      </div>
+    </div>
   </div>
 
-  <div class="filter-section" *ngIf="isServicesSelected">
-    <h4>Date</h4>
-    <input type="date" class="date-picker" [(ngModel)]="selectedDate" />
+  <!-- Date Range Section 
+<div class="filter-section" *ngIf="isServicesSelected">
+  <h4>Choose Dates</h4>
+  <div class="date-range">
+    <div class="date-field">
+      <label>From:</label>
+      <input type="date" [(ngModel)]="startDate" class="date-picker" />
+    </div>
+    <div class="date-field">
+      <label>To:</label>
+      <input type="date" [(ngModel)]="endDate" class="date-picker" />
+    </div>
   </div>
-
-  <div class="filter-section" *ngIf="isServicesSelected">
-    <h4>Time</h4>
-    <input type="time" class="time-picker" [(ngModel)]="selectedTime" />
-  </div>
-
+</div>
+-->
+  <!-- Footer Buttons -->
   <div class="filter-footer">
-    <button class="apply-button" (click)="applyFilters()">Apply</button>
     <button class="reset-button" (click)="resetFilters()">Reset</button>
+    <button class="apply-button" (click)="applyFilters()">Apply</button>
   </div>
 </div>

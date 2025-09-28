@@ -1,0 +1,97 @@
+.report-section {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #f9f9f9;
+  padding: 20px;
+  min-height: 600px;
+  border-radius: 0;
+  min-height: 600px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.report-section-header {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--blue);
+}
+
+.report-section-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--blue);
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.report-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+}
+
+.no-reports-message {
+  text-align: center;
+  width: 100%;
+  color: var(--dark-grey);
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 20px;
+}
+
+mat-paginator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .mat-paginator-container {
+  justify-content: center;
+  padding: 10px 20px;
+  color: var(--dark-grey);
+  font-size: 14px;
+  }
+  
+  .mat-paginator-navigation-previous,
+  .mat-paginator-navigation-next {
+  color: var(--secondary-pink);
+  transition: color 0.2s ease, transform 0.2s ease;
+  }
+  
+  .mat-paginator-navigation-previous:hover,
+  .mat-paginator-navigation-next:hover {
+  color: var(--secondary-pink);
+  transform: scale(1.1);
+  }
+  
+  .mat-paginator-page-size {
+  margin-right: 20px;
+  font-size: 14px;
+  color: var(--dark-grey);
+  }
+  
+  .mat-paginator-range-label {
+  font-weight: 500;
+  color: var(--dark-grey);
+  }
+  
+  .mat-paginator-icon {
+  fill: var(--secondary-pink);
+  }
+  
+  .mat-paginator-navigation-previous:hover .mat-paginator-icon,
+  .mat-paginator-navigation-next:hover .mat-paginator-icon {
+  fill: var(--secondary-pink);
+  }

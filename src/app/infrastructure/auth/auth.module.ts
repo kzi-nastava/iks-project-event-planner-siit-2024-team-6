@@ -3,21 +3,36 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { RouterModule } from '@angular/router';
-
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { ProfileComponent } from './profile/profile.component';
+import { FormsModule } from '@angular/forms';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { QuickRegistrationComponent } from './quick-registration/quick-registration.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    ProfileComponent,
+    ChangePasswordComponent,
+    QuickRegistrationComponent
   ],
   imports: [
-    CommonModule,
-    RouterModule
+    CommonModule, 
+    ReactiveFormsModule,
+    RouterModule,
+    HttpClientModule, 
+    FormsModule,
+    MatSnackBarModule
   ],
   exports: [
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    ProfileComponent,
+    ChangePasswordComponent,
+    QuickRegistrationComponent
   ]
 })
 export class AuthModule { }

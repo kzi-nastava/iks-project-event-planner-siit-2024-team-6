@@ -1,31 +1,35 @@
-import { Category } from "../../event/model/event.model";
-import { EventType } from "../../event/model/event.model";
+import { EventTypeDTO } from "../../event/event-type.service";
 
 export interface Offer {
+  id: number;
   status: string;
   name: string;
   description: string;
   price: number;
   sale?: number;
   photos: string[];
-  category: Category;
+  category: string;
   isAvailable: boolean;
   isDeleted: boolean;
+  isVisible: boolean;
   lastChanged: Date;
-  eventTypes: EventType[];
+  eventTypes: EventTypeDTO[];
+  type?: 'Service' | 'Product';
 }
 
 export interface Product extends Offer {
+  type: 'Product';
 }
 
 export interface Service extends Offer {
+  type: 'Service';
   specifics: string;
   minDuration: number;
   maxDuration: number;
   preciseDuration: number;
   latestReservation: number;
   latestCancelation: number;
-  reservations: Reservation[];
+  isReservationAutoApproved: boolean;
 }
 
 export interface Reservation {
@@ -37,4 +41,23 @@ export interface Reservation {
 export interface TimeSlot {
   time: Date;
   duration: number;
+}
+
+export interface ProviderCompany{
+  id: number;
+  companyName: string;
+  companyEmail: string;
+  companyAddress: string;
+  description: string;
+  companyPhotos: string[];
+  openingTime: string;
+  closingTime: string;
+}
+
+export interface PriceListItem{
+  offerId: number;
+  offerName: String;
+  offerPrice: number;
+  offerDiscountPrice: number;
+  isService: boolean;
 }

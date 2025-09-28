@@ -1,0 +1,140 @@
+<div class="form-page">
+    <!-- Floating Back Button -->
+    <button class="floating-back-btn" (click)="goBack()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        class="back-icon"
+      >
+        <path d="M15.5 19.5 6 12l9.5-7.5v15Z" fill="white" />
+      </svg>
+    </button>
+  
+    <!-- product Form -->
+    <form class="form" [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <h2>Edit product</h2>
+  
+      <!-- product Name -->
+      <div class="form-group">
+        <label for="name">Product Name:</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          placeholder="Enter the product name"
+          required
+        />
+        <div *ngIf="productForm.get('name')?.touched && productForm.get('name')?.errors?.['required']" class="error-message">
+          product name is required.
+         </div>
+      </div>
+
+       <!-- Event Types -->
+       <div class="form-group">
+        <label>Event Types:</label>
+        <div *ngFor="let eventType of eventTypes; let i = index" class="checkbox-group">
+          <label>
+            <input
+              type="checkbox"
+              [value]="eventType"
+              [checked]="selectedEventTypes.includes(eventType)"
+              (change)="onEventTypeChange(eventType, $event)"
+            />
+            {{ eventType }}
+          </label>
+        </div>
+        <!-- Error Message -->
+        <div *ngIf="productForm.get('eventTypes')?.errors?.['noEventTypesSelected']" class="error-message">
+          At least one event type must be selected.
+        </div>
+      </div>
+  
+      <!-- product Description -->
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="4"
+        ></textarea>
+        <div *ngIf="productForm.get('description')?.touched && productForm.get('description')?.errors?.['required']" class="error-message">
+          product description is required.
+         </div>
+      </div>
+  
+  
+      <!-- Price and Discount -->
+      <div class="form-group">
+        <label for="price">Price (€):</label>
+        <input
+          id="price"
+          type="number"
+          formControlName="price"
+          placeholder="Enter the price"
+          required
+        />
+        <div *ngIf="productForm.get('price')?.touched && productForm.get('price')?.errors?.['required']" class="error-message">
+         Price is required.
+        </div>
+        <div *ngIf="productForm.get('price')?.touched && productForm.get('price')?.errors?.['min']" class="error-message">
+          Price must be greater than 0.
+        </div>
+  
+        <label for="discount">Discount:</label>
+        <input
+          id="discount"
+          type="number"
+          formControlName="discount"
+          placeholder="Enter discount percentage (if any)"
+        />
+        <div *ngIf="productForm.get('discount')?.touched && productForm.get('discount')?.errors?.['min']" class="error-message">
+          Discount must not be less than 0.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="photo-url">Add Photo URL:</label>
+        <div class="photo-url-input-group">
+          <input
+            id="photo-url"
+            type="text"
+            class="form-control"
+            placeholder="Enter image URL"
+            #photoUrlInput
+          />
+          <button type="button" class="btn btn-primary" (click)="addPhotoUrl(photoUrlInput.value); photoUrlInput.value = ''">
+            Add
+          </button>
+        </div>
+        <div class="photo-preview-container">
+          <div class="photo-preview" *ngFor="let photo of photos; let i = index">
+            <img [src]="photo" alt="Offer Photo" (error)="onPhotoError($event)" />
+            <button type="button" class="remove-photo-btn" (click)="removePhoto(i)">
+              &times;
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Visibility and Availability -->
+      <div class="form-group checkbox-group">
+        <label>
+          <input id="visibility" type="checkbox" formControlName="visibility" />
+          Visibility
+        </label>
+        <label>
+          <input id="availability" type="checkbox" formControlName="availability" />
+          Availability
+        </label>
+      </div>
+  
+  
+      <!-- Submit Button -->
+      <div class="form-actions">
+        <button type="submit" [disabled]="productForm.invalid">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+  

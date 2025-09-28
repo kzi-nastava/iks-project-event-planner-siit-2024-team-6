@@ -7,12 +7,34 @@ import { OffersViewComponent } from './offers-view/offers-view.component';
 import { OfferCardComponent } from './offer-card/offer-card.component';
 import { OfferListComponent } from './offer-list/offer-list.component';
 import { OffersFilterComponent } from './offers-filter/offers-filter.component';
+import { OfferDetailsModule } from './offer-details/offer-details.module';
 import { ProviderServiceFilterComponent } from './provider-service-filter/provider-service-filter.component';
 import { ProviderServiceListComponent } from './provider-service-list/provider-service-list.component';
 import { ProviderServiceViewComponent } from './provider-service-view/provider-service-view.component';
 import { ProviderOfferCardComponent } from './provider-offer-card/provider-offer-card.component';
 import { ProviderServiceFormComponent } from './provider-service-form/provider-service-form.component';
 import { ProviderServiceEditComponent } from './provider-service-edit/provider-service-edit.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { ProviderProductCardComponent } from './provider-product-card/provider-product-card.component';
+import { ProviderProductEditComponent } from './provider-product-edit/provider-product-edit.component';
+import { ProviderProductFilterComponent } from './provider-product-filter/provider-product-filter.component';
+import { ProviderProductFormComponent } from './provider-product-form/provider-product-form.component';
+import { ProviderProductViewComponent } from './provider-product-view/provider-product-view.component';
+import { ProviderProductListComponent } from './provider-product-list/provider-product-list.component';
+import { FavoriteProductsComponent } from './favorite-products/favorite-products.component';
+import { FavoriteServicesComponent } from './favorite-services/favorite-services.component';
+import { ReportModule } from '../report/report.module';
+import { PriceListComponent } from './price-list/price-list.component';
+import { PriceListTableComponent } from './price-list-table/price-list-table.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatIconModule } from '@angular/material/icon';
+import { PriceEditDialogComponent } from './price-edit-dialog/price-edit-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -29,16 +51,40 @@ import { ProviderServiceEditComponent } from './provider-service-edit/provider-s
     ProviderServiceViewComponent,
     ProviderOfferCardComponent,
     ProviderServiceFormComponent,
-    ProviderServiceEditComponent
+    ProviderServiceEditComponent,
+    ProviderProductCardComponent,
+    ProviderProductEditComponent,
+    ProviderProductFilterComponent,
+    ProviderProductFormComponent,
+    ProviderProductViewComponent,
+    ProviderProductListComponent,
+    FavoriteProductsComponent,
+    FavoriteServicesComponent,
+    PriceListComponent,
+    PriceListTableComponent,
+    PriceEditDialogComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatPaginatorModule,
+    OfferDetailsModule,
+    ReportModule,
+    MatTableModule,
+    MatCardModule,
+    MatTabsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDialogModule
   ],
   exports: [
     OfferSliderComponent,
-    ProviderServiceViewComponent
+    ProviderServiceViewComponent,
+    ProviderProductEditComponent,
+    OfferCardComponent
   ]
 })
 export class OfferModule { }

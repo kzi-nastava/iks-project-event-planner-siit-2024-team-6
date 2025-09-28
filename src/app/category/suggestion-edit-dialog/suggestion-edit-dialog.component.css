@@ -1,0 +1,106 @@
+/* Container for dialog content */
+.dialog-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Title styling */
+  .dialog-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #4a4a4a;
+  }
+  
+  /* Form styling */
+  .dialog-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Space between form fields */
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto; /* Center the form horizontally */
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  /* Divider styling */
+  .divider {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 14px;
+    color: #888;
+    text-transform: uppercase;
+  }
+  
+  /* Action buttons */
+  .dialog-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  
+  .btn-save {
+    background-color: #8b6a9d;
+    color: white !important;             
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-save:hover {
+    background-color: #7a5989;
+  }
+  
+  .btn-cancel {
+    background-color: #3f4c6d;
+    color: white !important;             
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-cancel:hover {
+    background-color: #354259;
+  }
+  
+  /* Loading container */
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #555;
+  }
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 600px) {
+    .dialog-form {
+      max-width: 100%;
+    }
+  
+    .dialog-actions {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .btn-save,
+    .btn-cancel {
+      width: 100%;
+    }
+  }
+  

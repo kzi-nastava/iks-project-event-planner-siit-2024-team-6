@@ -48,52 +48,16 @@
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-.navbar__search {
+.navbar__profile {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-left: auto;
-}
+  margin-right: 0px;
 
-.navbar__search input {
-  padding: 6px 10px;
-  font-size: 14px;
-  border-radius: 5px;
-  border: 1px solid #bdc3c7;
-  outline: none;
 }
-
-.navbar__search input:focus {
-  border-color: var(--pink);
-}
-
-.navbar__search button {
-  background-color: #fff;
-  color: var(--blue);
-  border: none;
-  padding: 6px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.navbar__search button i {
-  font-size: 16px;
-}
-
-.navbar__search button:hover {
-  background-color: var(--pink);
-}
-
 .navbar__profile i {
   font-size: 28px;
   cursor: pointer;
+  padding-right: 10px;
 }
-
-.navbar__search {
-  margin-right: 0px;
-}
-
-.navbar__profile {
-  margin-left: 20px;
-}
-

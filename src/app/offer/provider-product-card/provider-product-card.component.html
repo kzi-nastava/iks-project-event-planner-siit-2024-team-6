@@ -1,0 +1,60 @@
+<div class="product-list">
+    <div class="product-card">
+      <!-- Sale Tag (only shows when there is a valid sale price) -->
+      <div *ngIf="product.sale && product.sale > 0" class="sale-tag">SALE</div>
+  
+      <!-- product Image and Title -->
+      <div class="product-card-image">
+        <img 
+          [src]="product.photos[0] || 'https://via.placeholder.com/300x200'" 
+          [alt]="product.name" 
+          (error)="onImageError($event)"
+        />
+        <h3 class="product-card-title">{{ product.name }}</h3>
+      </div>
+  
+      <!-- product Content -->
+      <div class="product-card-content">
+        <div class="product-card-info">
+          <!-- Category Info -->
+          <div class="info-item">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">
+              <path d="m260-520 220-360 220 360H260ZM700-80q-75 0-127.5-52.5T520-260q0-75 52.5-127.5T700-440q75 0 127.5 52.5T880-260q0 75-52.5 127.5T700-80Zm-580-20v-320h320v320H120Zm580-60q42 0 71-29t29-71q0-42-29-71t-71-29q-42 0-71 29t-29 71q0 42 29 71t71 29Zm-500-20h160v-160H200v160Zm202-420h156l-78-126-78 126Zm78 0ZM360-340Zm340 80Z"/>
+            </svg>
+            <span>{{ product.category || 'No Category' }}</span>
+          </div>
+  
+          <!-- Price Info -->
+          <div class="info-item">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">
+              <path d="M856-390 570-104q-12 12-27 18t-30 6q-15 0-30-6t-27-18L103-457q-11-11-17-25.5T80-513v-287q0-33 23.5-56.5T160-880h287q16 0 31 6.5t26 17.5l352 353q12 12 17.5 27t5.5 30q0 15-5.5 29.5T856-390ZM513-160l286-286-353-354H160v286l353 354ZM260-640q25 0 42.5-17.5T320-700q0-25-17.5-42.5T260-760q-25 0-42.5 17.5T200-700q0 25 17.5 42.5T260-640Zm220 160Z"/>
+            </svg>
+            <span *ngIf="product.sale && product.sale > 0" class="sale-price">${{ product.sale }}</span>
+            <span [class.strikethrough]="product.sale">${{ product.price }}</span>
+          </div>
+        </div>
+      </div>
+  
+      <!-- product Description -->
+      <p class="product-description">
+        {{ product.description | slice: 0:150 }}...
+      </p>
+  
+      <!-- Rating Block -->
+      <div class="rating">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#FFD700">
+          <path d="M480-120 372-308 150-336l165-160L272-756l208 120 208-120-43 260 165 160-222 28-108 188Z"/>
+        </svg>
+        <span>4.5</span>
+      </div>
+  
+      <!-- product Footer with Actions -->
+      <div class="product-footer">
+        <div class="product-actions">
+          <button (click)="editProduct(product)" class="btn edit-btn"> <i class="fa fa-edit"></i> Edit</button>
+          <button  (click)="deleteProduct(product.id)" class="btn delete-btn"><i class="fa fa-trash"></i> Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

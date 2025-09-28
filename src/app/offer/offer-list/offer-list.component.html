@@ -2,6 +2,16 @@
     <div class="offer-section-header">
       <h2 class="offer-section-title">Products and Services</h2>
       <div class="filter-container">
+        <div class="search">
+          <input type="text" [(ngModel)]="searchQuery"  (ngModelChange)="onSearchChange($event)" placeholder="Search">
+          <button (click)="onSearch()"><i class="fa fa-search"></i></button>
+        </div>
+        <!-- Sorting dropdown -->
+        <label for="sortDir" class="filter-text" style="margin-left: 10px;">Sort:</label>
+        <select id="sortDir" [(ngModel)]="sortDir" #sortSelect (change)="onSortChange(sortSelect.value)">
+          <option value="asc">Price (Low to High)</option>
+          <option value="desc">Price (High to Low)</option>
+        </select>
         <span class="filter-text">Filter</span>
         <button class="filter-icon" (click)="toggleFilter()">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
@@ -10,11 +20,29 @@
         </button>
       </div>
     </div>
+
     <div class="offer-list">
-      <app-offer-card *ngFor="let offer of offers" [offer]="offer"></app-offer-card>
+      <ng-container *ngIf="offers.length > 0; else noOffers">
+        <app-offer-card *ngFor="let offer of offers" [offer]="offer"></app-offer-card>
+      </ng-container>
+      <ng-template #noOffers>
+        <div class="no-offers-message">
+          <i class="fa fa-tag"></i>
+          <p>No offers available. Please try adjusting your search or filter criteria.</p>
+        </div>
+      </ng-template>
     </div>
-  </div>
-  <app-offers-filter 
-  [isVisible]="isFilterVisible" 
-  (close)="toggleFilter()">
-</app-offers-filter>
+
+
+    <mat-paginator
+    [pageSize]="pageProperties.pageSize"
+    [pageSizeOptions]="pageProperties.pageSizeOptions"
+    [length]="pageProperties.totalCount"
+    (page)="pageChanged($event)">
+    </mat-paginator>
+    </div>
+    <app-offers-filter 
+    [isVisible]="isFilterVisible" 
+    (close)="toggleFilter()"
+    (apply)="onFiltersApplied($event)">
+  </app-offers-filter>

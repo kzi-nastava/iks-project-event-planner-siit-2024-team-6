@@ -1,0 +1,16 @@
+<div class="comment-card">
+  <div class="comment-body">
+    <p class="comment-text">{{ reaction.text }}</p>
+    <p class="comment-rating" *ngIf="reaction.rating !== null">
+      Rating: <span>{{ reaction.rating }}/5</span>
+    </p>
+  </div>
+  <div class="comment-footer">
+    <button (click)="approveComment()" class="btn-edit">
+      <i class="fa fa-check"></i> Approve
+    </button>
+    <button (click)="deleteComment()" class="btn-delete">
+      <i class="fa fa-trash"></i> Delete
+    </button>
+  </div>
+</div>

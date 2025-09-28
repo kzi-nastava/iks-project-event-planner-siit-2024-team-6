@@ -1,0 +1,28 @@
+<h2 mat-dialog-title class="text-center">Select Event</h2>
+
+<mat-dialog-content *ngIf="!loading; else loadingSpinner">
+  <div class="selection-container">
+    <mat-form-field appearance="fill" class="w-80">
+      <mat-label>Choose an event</mat-label>
+      <mat-select [formControl]="selectedEvent" required>
+        <mat-option *ngFor="let event of events" [value]="event.id">
+          {{ event.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="selectedEvent.invalid">Please select an event</mat-error>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<ng-template #loadingSpinner>
+  <div class="flex justify-center p-4">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button style=" background-color: #D3A3B0; color: aliceblue;" [disabled]="!selectedEvent.valid" (click)="confirm()">
+    Confirm Purchase
+  </button>
+</mat-dialog-actions>

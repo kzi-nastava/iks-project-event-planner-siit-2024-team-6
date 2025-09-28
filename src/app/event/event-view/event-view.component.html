@@ -1,0 +1,125 @@
+<div class="event-view">
+    <div class="grid-container">
+      <!-- Block 1: Photos and Add to Favorites -->
+      <div class="block block-1">
+        <div class="event-image">
+          <div class="image-carousel">
+            <button (click)="prevPhoto()" class="carousel-button prev">&lt;</button>
+            <img [src]="event?.photos[currentPhotoIndex]" alt="Event Image" />
+            <button (click)="nextPhoto()" class="carousel-button next">&gt;</button>
+          </div>
+        </div>
+
+        <div class="organizer-container">
+          <div class="organizer-info">
+            <div class="organizer-icon">
+              <!-- <span class="icon">👤</span> -->
+              <i class="fa fa-user-circle icon"></i>
+            </div>
+            <div class="organizer-details">
+              <p>{{ organizer?.name || 'Organizer' }}</p>
+              <p>{{ organizer?.phoneNumber || 'Phone number not available' }}</p>
+            </div>
+          </div>
+          <div class="organizer-buttons" *ngIf="loggedIn">
+            <button class="chat-button" (click)="openChat()">Chat with us</button>
+<button class="report-button" (click)="reportOrganizer()">Report</button>
+          </div>
+<div class="add-fav" (click)="toggleFavorite()">
+  <!-- Outlined heart SVG -->
+  <svg *ngIf="!isFavorite" class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+    stroke="#8B6A9D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path
+      d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z" />
+  </svg>
+
+  <!-- Filled heart SVG -->
+  <svg *ngIf="isFavorite === true" class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+    fill="#8B6A9D">
+    <path
+      d="M19.3,5.71C18.841,5.246 18.294,4.878 17.692,4.627C17.089,4.377 16.443,4.248 15.79,4.25C15.137,4.248 14.491,4.377 13.888,4.627C13.286,4.878 12.739,5.246 12.28,5.71L12,6L11.72,5.72C10.792,4.792 9.533,4.27 8.22,4.27C6.907,4.27 5.648,4.792 4.72,5.72C3.804,6.655 3.291,7.911 3.291,9.22C3.291,10.529 3.804,11.785 4.72,12.72L11.49,19.51C11.631,19.65 11.821,19.729 12.02,19.729C12.219,19.729 12.409,19.65 12.55,19.51L19.32,12.72C20.236,11.782 20.748,10.522 20.744,9.211C20.74,7.9 20.222,6.642 19.3,5.71Z" />
+  </svg>
+</div>
+        </div>
+        
+
+
+        
+      </div>
+  
+      <!-- Block 2: Festival Details -->
+      <div class="block block-2">
+        <h1 class="event-title">{{ event?.name }}</h1>
+        <div class="event-info">
+          <p style="font-weight: bold; font-style: italic;"><i class="fa-solid fa-align-justify"></i> Description</p>
+          <p> {{ event?.description }}</p>
+          <p style="font-weight: bold; font-style: italic;"><i class="fa-solid fa-location-dot"></i> Where</p>
+          <p> {{ event?.place }}</p>
+          <p style="font-weight: bold; font-style: italic;"><i class="fa-regular fa-calendar"></i> When</p>
+          <p> {{ event?.date|date:'fullDate' }}</p>
+        </div>
+        <div>
+ <p *ngIf="event?.isPublic">This event is public, you are welcome to join!</p>
+
+  <!-- Кнопки для участия или отмены -->
+  <button
+    *ngIf="event?.isPublic && !isParticipated"
+    (click)="participate()"
+    class="btn-join"
+  >
+    Join
+  </button>
+
+  <button
+    *ngIf="event?.isPublic && isParticipated"
+    (click)="participate()"
+    class="btn-cancel"
+  >
+    Cancel Participation
+  </button>
+        </div>
+        <div>
+          <p>If you have any questions contact us</p>
+        </div>
+        <div>
+          <p *ngIf="!infoReady" class="loading-text">Generating pdfInformation...</p>
+        <button *ngIf="infoReady" (click)="downloadInfo()" class="download-btn">Download Festival Info</button>
+        </div>
+      </div>
+  
+      <!-- Block 3: Agenda and Reviews -->
+      <div class="block block-3">
+        <h3>Festival agenda</h3>
+        <p *ngIf="!agendaReady" class="loading-text">Generating agenda...</p>
+        <button *ngIf="agendaReady" (click)="downloadAgenda()" class="download-btn">Download Festival Agenda</button>
+        <div class="review-section">
+          <h3 class="review-title">Write your review here!</h3>
+          <textarea [(ngModel)]="reviewText" class="review-textarea" placeholder="Opinion"></textarea>
+          <input
+            type="number"
+            [(ngModel)]="reviewRating"
+            class="review-rating"
+            placeholder="Rating (1-5)"
+            min="1"
+            max="5"
+            step="1"
+          />          
+          <button (click)="submitReview()" class="submit-review">Submit</button>
+        </div>
+      </div>
+  
+      <!-- Block 4: Map -->
+      <div class="block block-4">
+        <h3 class="map-title">Event Location</h3>
+        <iframe
+          width="100%"
+          height="350"
+          [src]="mapUrl"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+  

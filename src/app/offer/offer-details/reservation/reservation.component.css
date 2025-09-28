@@ -1,0 +1,33 @@
+.booking-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #D3A3B0;
+    border-radius: 12px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+  
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .time-inputs {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  button {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+  

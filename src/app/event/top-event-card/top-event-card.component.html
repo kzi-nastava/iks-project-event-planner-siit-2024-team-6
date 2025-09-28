@@ -1,11 +1,11 @@
 <div
   class="top-event-card"
-  [ngStyle]="{ 'background-image': 'url(' + event.photo + ')' }">
+  [ngStyle]="{ 'background-image': 'url(' + event.photos[0] + ')' }">
   <div class="top-event-card-overlay">
     <div class="top-event-card-content">
       <h2>{{ event.name }}</h2>
       <p>{{ event.description }}</p>
-      <button class="top-event-card-button">VIEW</button>
+      <button class="top-event-card-button" (click)="onViewClick()">VIEW</button>
     </div>
   </div>
 </div>
