@@ -123,7 +123,7 @@ describe('ProviderServiceFormComponent', () => {
       maxDuration: 120,
       reservationDeadline: 48,
       cancellationDeadline: 24,
-      confirmation: 'automatic', // ignorisano (disabled) pod 'varied'
+      confirmation: 'automatic', 
       visibility: false,
       availability: true,
       specifics: '',
@@ -133,8 +133,7 @@ describe('ProviderServiceFormComponent', () => {
     fixture.detectChanges();
   }
 
-  // ===== Testovi =====
-  it('učitava kategorije i tipove događaja i postavlja podrazumevanu kategoriju', () => {
+  it('gets all categories and event types and sets default category', () => {
     expect(offerService.getAllCategories).toHaveBeenCalled();
     expect(eventService.getAllNames).toHaveBeenCalled();
 
@@ -143,7 +142,7 @@ describe('ProviderServiceFormComponent', () => {
     expect(component.eventTypes).toEqual(['Wedding', 'Conference']);
   });
 
-  it('custom validator za eventTypes: zahteva bar jedan izabran', () => {
+  it('custom validator for eventTypes: at least one must be selected', () => {
     const ctrl = component.serviceForm.get('eventTypes')!;
     expect(ctrl.errors?.['noEventTypesSelected']).toBeTrue();
 
@@ -151,7 +150,7 @@ describe('ProviderServiceFormComponent', () => {
     expect(ctrl.errors).toBeNull();
   });
 
-  it('toggling trajanja radi (fixed -> varied)', () => {
+  it('toggels duration (fixed -> varied)', () => {
     // initial: fixed
     expect(component.isFixedDuration).toBeTrue();
     expect(component.serviceForm.get('duration')?.enabled).toBeTrue();
@@ -169,13 +168,13 @@ describe('ProviderServiceFormComponent', () => {
     expect(component.serviceForm.get('confirmation')?.disabled).toBeTrue();
   });
 
-  it('ne submituje ako forma nije validna (prikaže grešku)', () => {
+  it('shows error if the form is invalid', () => {
     component.onSubmit();
     expect(offerService.createService).not.toHaveBeenCalled();
     expect(snackBar.open).toHaveBeenCalled();
   });
 
-  it('submituje za FIXED kada je validno (payload, toast, navigate)', () => {
+  it('submits FIXED when valid (payload, toast, navigate)', () => {
     fillValidFixedForm();
     component.onSubmit();
 
@@ -208,7 +207,7 @@ describe('ProviderServiceFormComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['/my-services']);
   });
 
-  it('submituje za VARIED i forsira isReservationAutoApproved=false', () => {
+  it('submits VARIED i forces isReservationAutoApproved=false', () => {
     fillValidVariedForm();
     component.onSubmit();
 
@@ -221,7 +220,7 @@ describe('ProviderServiceFormComponent', () => {
     expect(sent.isReservationAutoApproved).toBeFalse(); // confirmation disabled
   });
 
-  it('prikaže grešku kada lookup event type padne', () => {
+  it('show error when lookup event type brekas', () => {
     fillValidFixedForm();
     eventService.getEventTypeByName.and.returnValue(throwError(() => new Error('boom')));
 
@@ -230,7 +229,7 @@ describe('ProviderServiceFormComponent', () => {
     expect(snackBar.open).toHaveBeenCalled();
   });
 
-  it('prikaže grešku kada createService padne', () => {
+  it('show error when createServce breaks', () => {
     fillValidFixedForm();
     offerService.createService.and.returnValue(throwError(() => new Error('save failed')));
 
@@ -238,7 +237,7 @@ describe('ProviderServiceFormComponent', () => {
     expect(snackBar.open).toHaveBeenCalled();
   });
 
-  it('proposeCategory otvara dijalog i čuva rezultat', () => {
+  it('proposeCategory opens a dialog ad saves result', () => {
     dialog.open.and.returnValue({ afterClosed: () => of({ name: 'NewCat', description: '' }) } as any);
     component.proposeCategory();
     expect(dialog.open).toHaveBeenCalled();
@@ -246,19 +245,19 @@ describe('ProviderServiceFormComponent', () => {
     expect(component.proposedCategory).toBeTrue();
   });
 
-  it('addPhotoUrl gura url i ažurira form control', () => {
+  it('addPhotoUrl adds new photo url and updates from', () => {
     component.addPhotoUrl('http://img/test.png');
     expect(component.photos).toContain('http://img/test.png');
     expect(component.serviceForm.get('photos')?.value).toContain('http://img/test.png');
   });
 
-  it('removePhoto briše odgovarajuću fotku', () => {
+  it('removePhoto deletes the selected photo', () => {
     component.photos = ['a.png', 'b.png', 'c.png'];
     component.removePhoto(1);
     expect(component.photos).toEqual(['a.png', 'c.png']);
   });
 
-  it('onPhotoError postavlja fallback src', () => {
+  it('onPhotoError sets fallback src', () => {
     const img = document.createElement('img');
     img.src = 'bad.png';
     component.onPhotoError({ target: img } as any);
