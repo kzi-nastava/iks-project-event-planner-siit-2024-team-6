@@ -2,9 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { EventService } from '../event.service';
 import { Event } from '../model/event.model';
 import { PageEvent } from '@angular/material/paginator';
-import {PagedResponse} from '../../shared/model/paged-response.model';
+import { PagedResponse } from '../../shared/model/paged-response.model';
 import { MatPaginator } from '@angular/material/paginator';
-
 
 @Component({
   selector: 'app-event-list',
@@ -12,7 +11,6 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./event-list.component.css'],
 })
 export class EventListComponent implements OnInit {
-  
   events: Event[] = [];
   filters: any = {};
   searchQuery: string = '';
@@ -20,22 +18,21 @@ export class EventListComponent implements OnInit {
   sortDir: string = 'asc';
   pageProperties = {
     page: 0,
-    pageSize: 10,
+    pageSize: 3,
     totalCount: 0,
-    pageSizeOptions: [5, 10, 15]
- };
- @ViewChild(MatPaginator) paginator: MatPaginator;
-
+    pageSizeOptions: [3, 6, 9],
+  };
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   isFilterVisible = false;
 
   constructor(private eventService: EventService) {}
 
   ngOnInit(): void {
-    this.getPagedEntities()
+    this.getPagedEntities();
   }
 
-  pageChanged(pageEvent: PageEvent){
+  pageChanged(pageEvent: PageEvent) {
     this.pageProperties.page = pageEvent.pageIndex;
     this.pageProperties.pageSize = pageEvent.pageSize;
     if (this.isFiltered) {
@@ -45,20 +42,21 @@ export class EventListComponent implements OnInit {
     }
   }
 
-  private getPagedEntities(){
+  private getPagedEntities() {
     const params = this.buildQueryParams();
-    console.log(params)
-    this.eventService.getAll(params).subscribe({next: (response: PagedResponse<Event>)=>{
-      console.log('Fetch all :', response);
-      this.events = response.content;
-      this.pageProperties.totalCount = response.totalElements;
-    }});
+    console.log(params);
+    this.eventService.getAll(params).subscribe({
+      next: (response: PagedResponse<Event>) => {
+        console.log('Fetch all :', response);
+        this.events = response.content;
+        this.pageProperties.totalCount = response.totalElements;
+      },
+    });
   }
-
 
   private getFilteredEntities() {
     const params = this.buildQueryParams();
-    console.log("Params: ",params);
+    console.log('Params: ', params);
     this.eventService.getFilteredEvents(params).subscribe({
       next: (response: PagedResponse<Event> | null) => {
         if (response && response.content) {
@@ -85,13 +83,14 @@ export class EventListComponent implements OnInit {
 
   onFiltersApplied(filters: any) {
     console.log('Received filters:', filters);
-    this.isFiltered = !!filters.eventType || !!filters.startDate || !!filters.endDate;
+    this.isFiltered =
+      !!filters.eventType || !!filters.startDate || !!filters.endDate;
     this.filters = filters;
     this.pageProperties.page = 0;
     this.paginator.firstPage();
 
     if (this.isFiltered) {
-    this.getFilteredEntities();
+      this.getFilteredEntities();
     } else {
       this.getPagedEntities();
     }
@@ -109,43 +108,40 @@ export class EventListComponent implements OnInit {
     this.getFilteredEntities();
   }
   onSearchChange(query: string) {
-  if (!query || query.trim() === '') {
-    this.searchQuery = '';
-    this.filters = {};
-    this.isFiltered = false;
+    if (!query || query.trim() === '') {
+      this.searchQuery = '';
+      this.filters = {};
+      this.isFiltered = false;
+      this.pageProperties.page = 0;
+      this.paginator.firstPage();
+      this.getPagedEntities();
+    }
+  }
+  onSortChange(sortDirection: string) {
+    this.filters.sortDir = sortDirection;
     this.pageProperties.page = 0;
     this.paginator.firstPage();
-    this.getPagedEntities();
+
+    if (this.isFiltered || this.searchQuery) {
+      this.getFilteredEntities();
+    } else {
+      this.getPagedEntities();
+    }
   }
-}
-onSortChange(sortDirection: string) {
-  this.filters.sortDir = sortDirection;
-  this.pageProperties.page = 0;
-  this.paginator.firstPage();
+  private buildQueryParams(): any {
+    const params: any = {
+      ...this.filters,
+      ...this.pageProperties,
+      sortBy: 'date',
+      sortDir: this.sortDir,
+    };
+    if (typeof this.pageProperties.page === 'number') {
+      params.page = this.pageProperties.page;
+    }
 
-  if (this.isFiltered || this.searchQuery) {
-    this.getFilteredEntities();
-  } else {
-    this.getPagedEntities();
+    if (typeof this.pageProperties.pageSize === 'number') {
+      params.size = this.pageProperties.pageSize;
+    }
+    return params;
   }
-}
-private buildQueryParams(): any {
-  const params: any = {
-    ...this.filters,
-    ...this.pageProperties,
-    sortBy: 'date',
-    sortDir: this.sortDir
-  };
-  if (typeof this.pageProperties.page === 'number') {
-    params.page = this.pageProperties.page;
-  }
-
-  if (typeof this.pageProperties.pageSize === 'number') {
-    params.size = this.pageProperties.pageSize;
-  }
-  return params;
-}
-
-
-
 }

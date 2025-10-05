@@ -9,7 +9,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-report-dialog',
   templateUrl: './report-dialog.component.html',
-  styleUrls: ['./report-dialog.component.scss']
 })
 export class ReportDialogComponent {
   reportForm: FormGroup;
@@ -34,31 +33,28 @@ export class ReportDialogComponent {
   }
 
   submit(): void {
-  if (this.reportForm.invalid) return;
+    if (this.reportForm.invalid) return;
 
-  const reportData: NewReportDTO = {
-    reason: this.reportForm.get('reason')?.value,
-    reportedId : this.data.reportedId,
-    reporterId: this.authService.getUserId()
+    const reportData: NewReportDTO = {
+      reason: this.reportForm.get('reason')?.value,
+      reportedId: this.data.reportedId,
+      reporterId: this.authService.getUserId(),
     };
 
-
-  this.reportService.reportUser(reportData).subscribe({
-  next: (response) => {
-    console.log('Report submitted successfully:', response);
-    this.dialogRef.close(response);
-    this.snackBar.open('Report submitted successfully.', 'Close', {
-      duration: 3000,
-      panelClass: ['success-snackbar']
+    this.reportService.reportUser(reportData).subscribe({
+      next: (response) => {
+        console.log('Report submitted successfully:', response);
+        this.dialogRef.close(response);
+        this.snackBar.open('Report submitted successfully.', 'Close', {
+          duration: 3000,
+          panelClass: ['success-snackbar'],
+        });
+      },
+      error: (err) => {
+        console.error('Failed to submit report', err);
+        this.errorMessage = 'Failed to submit report. Please try again later.';
+        console.log(reportData);
+      },
     });
-  },
-  error: (err) => {
-    console.error('Failed to submit report', err);
-    this.errorMessage = 'Failed to submit report. Please try again later.';
-    console.log(reportData)
   }
-});
-
-}
-
 }

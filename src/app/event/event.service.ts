@@ -1,43 +1,50 @@
 import { Injectable } from '@angular/core';
 import { Budget, BudgetItem, Event, OrganizerDTO } from './model/event.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import {environment} from '../../env/environment';
-import {Observable} from 'rxjs';
-import {PagedResponse} from '../shared/model/paged-response.model';
+import { environment } from '../../env/environment';
+import { Observable } from 'rxjs';
+import { PagedResponse } from '../shared/model/paged-response.model';
 import { EventTypeDTO } from './event-type.service';
 import { NewBudgetDTO, NewBudgetItemDTO } from '../dto/budget-dtos';
-
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventService {
+  private apiUrl = environment.apiHost + `/events/`;
+  constructor(private httpClient: HttpClient) {}
 
-
-  private apiUrl = environment.apiHost+`/events/`; 
-  constructor(private httpClient: HttpClient){}
-  
   getEventOrganizer(eventId: number): Observable<OrganizerDTO> {
-    return this.httpClient.get<OrganizerDTO>(`${this.apiUrl}${eventId}/getOrganizer`);
+    return this.httpClient.get<OrganizerDTO>(
+      `${this.apiUrl}${eventId}/getOrganizer`
+    );
   }
-  
-  getEventTypesByCategory(categoryId: number): Observable<EventTypeDTO[]>{
-    return this.httpClient.get<EventTypeDTO[]>(this.apiUrl+`${categoryId}/event-types-by-category`);
+
+  getEventTypesByCategory(categoryId: number): Observable<EventTypeDTO[]> {
+    return this.httpClient.get<EventTypeDTO[]>(
+      this.apiUrl + `${categoryId}/event-types-by-category`
+    );
   }
-  getEventTypesByCategoryName(categoryName: string): Observable<EventTypeDTO[]>{
-    return this.httpClient.get<EventTypeDTO[]>(this.apiUrl+`${categoryName}/event-types-by-category-name`);
+  getEventTypesByCategoryName(
+    categoryName: string
+  ): Observable<EventTypeDTO[]> {
+    return this.httpClient.get<EventTypeDTO[]>(
+      this.apiUrl + `${categoryName}/event-types-by-category-name`
+    );
   }
   getAll(params: any): Observable<PagedResponse<Event>> {
-
-  return this.httpClient.get<PagedResponse<Event>>(this.apiUrl + `all-elements`, { params: params });
-}
+    return this.httpClient.get<PagedResponse<Event>>(
+      this.apiUrl + `all-elements`,
+      { params: params }
+    );
+  }
 
   getAllByOrganizer(): Observable<Event[]> {
-    return this.httpClient.get<Event[]>("/api/organizers/events");
+    return this.httpClient.get<Event[]>('/api/organizers/events');
   }
 
   createEvent(event: any): Observable<any> {
-    return this.httpClient.post("/api/organizers/events", event);
+    return this.httpClient.post('/api/organizers/events', event);
   }
 
   isFavorited(eventId: number): Observable<boolean> {
@@ -46,26 +53,29 @@ export class EventService {
       Authorization: `Bearer ${token}`,
     });
     return this.httpClient.get<boolean>(
-      `${this.apiUrl}${eventId}/is-favorited`, { headers }
+      `${this.apiUrl}${eventId}/is-favorited`,
+      { headers }
     );
   }
   getTopFive(): Observable<Event[]> {
-    return this.httpClient.get<Event[]>(this.apiUrl+`top-five`);
+    return this.httpClient.get<Event[]>(this.apiUrl + `top-five`);
   }
 
-  getAllNames(): Observable<string[]>{
-      return this.httpClient.get<string[]>(this.apiUrl+"event-types");
+  getAllNames(): Observable<string[]> {
+    return this.httpClient.get<string[]>(this.apiUrl + 'event-types');
   }
 
-  getEventTypeByName(name: String): Observable<EventTypeDTO>{
-    return this.httpClient.get<EventTypeDTO>(`${this.apiUrl}${name}/event-type`);
+  getEventTypeByName(name: String): Observable<EventTypeDTO> {
+    return this.httpClient.get<EventTypeDTO>(
+      `${this.apiUrl}${name}/event-type`
+    );
   }
 
   getEventById(id: number): Observable<Event> {
     return this.httpClient.get<Event>(`${this.apiUrl}${id}`);
   }
 
-  getBudgetByEventId(id:number): Observable<Budget> {
+  getBudgetByEventId(id: number): Observable<Budget> {
     // Retrieve the token (assuming it's stored in localStorage)
     const token = localStorage.getItem('user');
     const headers = new HttpHeaders({
@@ -77,14 +87,21 @@ export class EventService {
     return this.httpClient.get<Budget>(url, { headers });
   }
 
-  addBudgetItem(budgetId: number, item: { category: string, maxPrice: number }): Observable<BudgetItem> {
+  addBudgetItem(
+    budgetId: number,
+    item: { category: string; maxPrice: number }
+  ): Observable<BudgetItem> {
     return this.httpClient.post<BudgetItem>(
       `/api/organizers/budget/${budgetId}/items`,
       item
     );
   }
 
-  updateBudgetItemPrice(budgetId: number, itemId: number, price: number): Observable<BudgetItem> {
+  updateBudgetItemPrice(
+    budgetId: number,
+    itemId: number,
+    price: number
+  ): Observable<BudgetItem> {
     return this.httpClient.put<BudgetItem>(
       `api/organizers/budget/${budgetId}/items/${itemId}`,
       price
@@ -97,7 +114,6 @@ export class EventService {
     );
   }
 
-
   updateEvent(event: any): Observable<any> {
     return this.httpClient.put(`/api/organizers/events/${event.id}`, event);
   }
@@ -105,32 +121,35 @@ export class EventService {
     return this.httpClient.delete(`/api/organizers/events/${id}`);
   }
 
-  addToFavorites(id: number): Observable<any>{
+  addToFavorites(id: number): Observable<any> {
     return this.httpClient.post(`${this.apiUrl}${id}/favorite`, {});
   }
-  participateInEvent(id: number): Observable<any>{
+  participateInEvent(id: number): Observable<any> {
     return this.httpClient.post(`${this.apiUrl}${id}/participate`, {});
   }
-  removeFromFavorites(id: number): Observable<any>{
+  removeFromFavorites(id: number): Observable<any> {
     return this.httpClient.delete(`${this.apiUrl}${id}/favorite`);
   }
-  removeParticipation(id: number): Observable<any>{
+  removeParticipation(id: number): Observable<any> {
     return this.httpClient.delete(`${this.apiUrl}${id}/participate`);
   }
-  getFavorites(): Observable<Event[]>{
+  getFavorites(): Observable<Event[]> {
     return this.httpClient.get<Event[]>(`${this.apiUrl}unPagedFavorites`);
   }
-  getParticipatedEvents(): Observable<Event[]>{
-    return this.httpClient.get<Event[]>(`${this.apiUrl}participated`); 
+  getParticipatedEvents(): Observable<Event[]> {
+    return this.httpClient.get<Event[]>(`${this.apiUrl}participated`);
   }
 
-  getFilteredFavorites(params: any): Observable<PagedResponse<Event>>{
-    return this.httpClient.get<PagedResponse<Event>>('/api/events/favorites', { params });
+  getFilteredFavorites(params: any): Observable<PagedResponse<Event>> {
+    return this.httpClient.get<PagedResponse<Event>>('/api/events/favorites', {
+      params,
+    });
   }
-  
+
   downloadInfoPdf(eventId: number): void {
-    this.httpClient.get(`${this.apiUrl}${eventId}/getInfoPDF`, { responseType: 'blob' })
-      .subscribe(blob => {
+    this.httpClient
+      .get(`${this.apiUrl}${eventId}/getInfoPDF`, { responseType: 'blob' })
+      .subscribe((blob) => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -141,8 +160,11 @@ export class EventService {
   }
 
   downloadEventStatisticsPDF(eventId: number): void {
-    this.httpClient.get(`${this.apiUrl}${eventId}/getEventStatisticsPDF`, { responseType: 'blob' })
-      .subscribe(blob => {
+    this.httpClient
+      .get(`${this.apiUrl}${eventId}/getEventStatisticsPDF`, {
+        responseType: 'blob',
+      })
+      .subscribe((blob) => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -153,9 +175,11 @@ export class EventService {
   }
 
   getFilteredEvents(params: any): Observable<PagedResponse<Event>> {
-    return this.httpClient.get<PagedResponse<Event>>('/api/events/search', { params });
+    return this.httpClient.get<PagedResponse<Event>>('/api/events/search', {
+      params,
+    });
   }
-  
+
   getRecommendedCategories(eventId: number): Observable<string[]> {
     // Retrieve the token (assuming it's stored in localStorage)
     const token = localStorage.getItem('user');
@@ -167,14 +191,18 @@ export class EventService {
     // Perform the HTTP GET request to retrieve categories
     return this.httpClient.get<string[]>(url, { headers });
   }
-  getEventStatistics(eventId: number): Observable<{ participants: number, maxParticipants: number, rating: number }> {
-  return this.httpClient.get<{ participants: number, maxParticipants: number, rating: number }>(
-    `${this.apiUrl}${eventId}/statistics`
-  );
+  getEventStatistics(eventId: number): Observable<{
+    participants: number;
+    maxParticipants: number;
+    rating: number;
+  }> {
+    return this.httpClient.get<{
+      participants: number;
+      maxParticipants: number;
+      rating: number;
+    }>(`${this.apiUrl}${eventId}/statistics`);
+  }
 }
-  
-}
-
 
 // const EVENTS: Event[] = [
 //   {
@@ -402,6 +430,5 @@ export class EventService {
 //     boughtProducts: [
 //     ],
 //   },
-  
 
 // ];
