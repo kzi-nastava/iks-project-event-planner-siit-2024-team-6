@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NewCategoryDTO } from '../../dto/category-dtos';
 import { CategoryDialogComponent } from '../../category/category-dialog/category-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ValidatorFn, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-provider-service-form',
@@ -37,8 +38,6 @@ export class ProviderServiceFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.fetchEventTypes();
-    this.fetchCategories();
     this.serviceForm = this.fb.group({
       name: [null, Validators.required],
       description: [null, Validators.required],
@@ -57,10 +56,13 @@ export class ProviderServiceFormComponent implements OnInit {
       specifics: [''],
       photos: [[]],
       newCategory: [''],
-      category: [Validators.required]
+      category: [null]
     });
     this.isFixedDuration = true;
     this.toggleDurationFields();
+    this.updateCategoryValidation();
+    this.fetchEventTypes();
+    this.fetchCategories();
   }
 
   onPhotoError(event: Event): void {
@@ -201,8 +203,11 @@ export class ProviderServiceFormComponent implements OnInit {
     this.offerService.getAllCategories().subscribe({
       next: (data) => {
         this.categories = data;
-        if (this.categories.length > 0) {
-          this.serviceForm.get('category')?.setValue(this.categories[0]);
+        const categoryCtrl = this.serviceForm.get('category');
+
+        // Only pick default if NOT proposing and nothing selected
+        if (!this.proposedCategory && !categoryCtrl?.value && this.categories.length > 0) {
+          categoryCtrl?.setValue(this.categories[0]);
         }
       },
       error: (err) => {
@@ -224,15 +229,12 @@ export class ProviderServiceFormComponent implements OnInit {
     this.photos.splice(index, 1);
   }
 
-  validateEventTypes(): Validators {
-    return (control: AbstractControl) => {
-      const selectedTypes = control.value;
-      if (!selectedTypes || selectedTypes.length === 0) {
-        return { noEventTypesSelected: true };
-      }
-      return null;
-    };
-  }
+  validateEventTypes(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const selected = control.value as string[] | null;
+    return !selected || selected.length === 0 ? { noEventTypesSelected: true } : null;
+  };
+}
   proposeCategory(): void {
     const dialogRef = this.dialog.open(CategoryDialogComponent, {
       width: '400px'
@@ -243,6 +245,9 @@ export class ProviderServiceFormComponent implements OnInit {
         console.log('Proposed Category:', result);
         this.newCategory = result;
         this.proposedCategory = true;
+        const categoryCtrl = this.serviceForm.get('category');
+        categoryCtrl?.setValue(null);
+        this.updateCategoryValidation();
       }
     });
   }
@@ -252,4 +257,16 @@ export class ProviderServiceFormComponent implements OnInit {
       panelClass: ['snackbar-error']
     });
   }
+  private updateCategoryValidation(): void {
+    const categoryCtrl = this.serviceForm.get('category');
+    if (!categoryCtrl) return;
+
+    if (this.proposedCategory) {
+      categoryCtrl.clearValidators();
+    } else {
+      categoryCtrl.setValidators([Validators.required]);
+    }
+    categoryCtrl.updateValueAndValidity({ emitEvent: false });
+  }
+
 }
