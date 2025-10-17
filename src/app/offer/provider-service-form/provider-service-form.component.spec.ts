@@ -1,4 +1,3 @@
-// provider-service-form.component.spec.ts
 import { CommonModule } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -9,7 +8,6 @@ import { of, throwError } from 'rxjs';
 
 import { ProviderServiceFormComponent } from './provider-service-form.component';
 
-// VAŽNO: iste putanje kao u komponenti
 import { OfferService } from '../offer.service';
 import { EventService } from '../../event/event.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,7 +18,7 @@ describe('ProviderServiceFormComponent', () => {
   let fixture: ComponentFixture<ProviderServiceFormComponent>;
   let component: ProviderServiceFormComponent;
 
-  // koristimo SPY objekte umesto pravih servisa
+  // using SPY objects instead of the real ones
   let offerService: jasmine.SpyObj<OfferService>;
   let eventService: jasmine.SpyObj<EventService>;
   let dialog: jasmine.SpyObj<MatDialog>;
@@ -28,7 +26,7 @@ describe('ProviderServiceFormComponent', () => {
   let router: Router;
 
   beforeEach(async () => {
-    // napravimo spy instance pre TestBed-a
+    // creating spy instances before every test
     offerService = jasmine.createSpyObj<OfferService>('OfferService', [
       'getAllCategories',
       'createService',
@@ -40,9 +38,8 @@ describe('ProviderServiceFormComponent', () => {
     dialog = jasmine.createSpyObj<MatDialog>('MatDialog', ['open']);
     snackBar = jasmine.createSpyObj<MatSnackBar>('MatSnackBar', ['open']);
 
-    // default stubovi
+    // default stubs
     offerService.getAllCategories.and.returnValue(of(['VENUE', 'MUSIC']));
-    // kast na any da utišamo tip razliku u testu
     offerService.createService.and.returnValue(of({ id: 1 } as any));
     eventService.getAllNames.and.returnValue(of(['Wedding', 'Conference']));
     eventService.getEventTypeByName.and.callFake((name: string) => of({ name } as any));
@@ -116,7 +113,7 @@ describe('ProviderServiceFormComponent', () => {
       name: 'Catering',
       description: 'Buffet catering',
       price: 500,
-      discount: 50,
+      discount: 600,
       durationType: 'varied',
       duration: null,
       minDuration: 30,
@@ -207,7 +204,7 @@ describe('ProviderServiceFormComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['/my-services']);
   });
 
-  it('submits VARIED i forces isReservationAutoApproved=false', () => {
+  it('submits VARIED and forces isReservationAutoApproved=false', () => {
     fillValidVariedForm();
     component.onSubmit();
 
@@ -220,7 +217,7 @@ describe('ProviderServiceFormComponent', () => {
     expect(sent.isReservationAutoApproved).toBeFalse(); // confirmation disabled
   });
 
-  it('show error when lookup event type brekas', () => {
+  it('show error when lookup event type breaks', () => {
     fillValidFixedForm();
     eventService.getEventTypeByName.and.returnValue(throwError(() => new Error('boom')));
 
@@ -237,7 +234,7 @@ describe('ProviderServiceFormComponent', () => {
     expect(snackBar.open).toHaveBeenCalled();
   });
 
-  it('proposeCategory opens a dialog ad saves result', () => {
+  it('proposeCategory opens a dialog and saves result', () => {
     dialog.open.and.returnValue({ afterClosed: () => of({ name: 'NewCat', description: '' }) } as any);
     component.proposeCategory();
     expect(dialog.open).toHaveBeenCalled();
