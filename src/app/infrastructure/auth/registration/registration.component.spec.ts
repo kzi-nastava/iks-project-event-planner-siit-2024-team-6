@@ -1,7 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RegistrationComponent } from './registration.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { NavBarComponent } from '../../../layout/nav-bar/nav-bar.component';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 
 describe('RegistrationComponent', () => {
@@ -14,11 +18,9 @@ describe('RegistrationComponent', () => {
     const routerMock = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
-      declarations: [RegistrationComponent],
       imports: [ReactiveFormsModule, HttpClientTestingModule],
-      providers: [
-        { provide: Router, useValue: routerMock }
-      ]
+      declarations: [RegistrationComponent, NavBarComponent],
+      providers: [{ provide: Router, useValue: routerMock }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RegistrationComponent);
@@ -26,6 +28,10 @@ describe('RegistrationComponent', () => {
     httpMock = TestBed.inject(HttpTestingController);
     routerSpy = TestBed.inject(Router) as jasmine.SpyObj<Router>;
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    httpMock.verify();
   });
 
   it('should create component', () => {
@@ -41,22 +47,23 @@ describe('RegistrationComponent', () => {
       address: 'Main Street',
       phoneNumber: '123456789',
       photoUrl: 'photo.jpg',
-      role: 'organizer'
+      role: 'organizer',
     });
 
     component.onSubmit();
 
     const req = httpMock.expectOne('/api/users');
     expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual(jasmine.objectContaining({
-      name: 'John',
-      lastname: 'Doe',
-      email: 'john@example.com',
-      role: 'organizer'
-    }));
+    expect(req.request.body).toEqual(
+      jasmine.objectContaining({
+        name: 'John',
+        lastname: 'Doe',
+        email: 'john@example.com',
+        role: 'organizer',
+      })
+    );
 
     req.flush({ message: 'Success' });
-
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
   });
 
@@ -75,38 +82,35 @@ describe('RegistrationComponent', () => {
       description: 'Best service',
       openingTime: '09:00',
       closingTime: '17:00',
-      companyPhoto: 'photo.png'
+      companyPhoto: 'photo.png',
     });
 
     component.onSubmit();
 
     const req = httpMock.expectOne('/api/users');
     expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual(jasmine.objectContaining({
-      email: 'anna@example.com',
-      role: 'provider',
-      companyName: 'Cool Company',
-      companyEmail: 'contact@company.com'
-    }));
+    expect(req.request.body).toEqual(
+      jasmine.objectContaining({
+        email: 'anna@example.com',
+        role: 'provider',
+        companyName: 'Cool Company',
+        companyEmail: 'contact@company.com',
+      })
+    );
 
     req.flush({ message: 'Provider registered' });
-
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
   });
 
   it('should not submit if form is invalid', () => {
     component.registrationForm.patchValue({
       email: '',
-      password: ''
+      password: '',
     });
 
     component.onSubmit();
 
     httpMock.expectNone('/api/users');
     expect(routerSpy.navigate).not.toHaveBeenCalled();
-  });
-
-  afterEach(() => {
-    httpMock.verify();
   });
 });

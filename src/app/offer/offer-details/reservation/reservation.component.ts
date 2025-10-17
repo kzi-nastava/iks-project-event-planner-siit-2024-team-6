@@ -11,7 +11,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-reservation',
   templateUrl: './reservation.component.html',
-  styleUrls: ['./reservation.component.css']
+  styleUrls: ['./reservation.component.css'],
 })
 export class ReservationComponent implements OnInit {
   userRole: string = '';
@@ -30,9 +30,12 @@ export class ReservationComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private authService: AuthService,
-    private snackBar: MatSnackBar,@Inject(MAT_DIALOG_DATA) public data: { service: Service },
+    private snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public data: { service: Service },
     private dialogRef: MatDialogRef<ReservationComponent>
-  ) {this.service = data.service;}
+  ) {
+    this.service = data.service;
+  }
 
   ngOnInit() {
     this.userRole = this.authService.getRole();
@@ -51,8 +54,10 @@ export class ReservationComponent implements OnInit {
       },
       error: (error) => {
         console.error('Failed to fetch events:', error);
-        this.snackBar.open('Failed to load events.', 'Close', { duration: 3000 });
-      }
+        this.snackBar.open('Failed to load events.', 'Close', {
+          duration: 3000,
+        });
+      },
     });
   }
 
@@ -89,19 +94,51 @@ export class ReservationComponent implements OnInit {
 
   validateFields(): boolean {
     if (!this.selectedEvent) {
-      this.snackBar.open('Please select an event for your reservation.', 'Close', {
-        duration: 3000,
-      });
+      this.snackBar.open(
+        'Please select an event for your reservation.',
+        'Close',
+        {
+          duration: 3000,
+        }
+      );
       return false;
     }
     if (!this.selectedDate) {
-      this.snackBar.open('Please select a date for your reservation.', 'Close', {
-        duration: 3000,
-      });
+      this.snackBar.open(
+        'Please select a date for your reservation.',
+        'Close',
+        {
+          duration: 3000,
+        }
+      );
+      return false;
+    }
+    if (this.selectedDate < this.minDate) {
+      this.snackBar.open(
+        'Selected date cannot be before the minimum allowed date.',
+        'Close',
+        { duration: 3000 }
+      );
       return false;
     }
     if (!this.fromTime || !this.toTime) {
-      this.snackBar.open('Please select a time for your reservation.', 'Close', {
+      this.snackBar.open(
+        'Please select a time for your reservation.',
+        'Close',
+        {
+          duration: 3000,
+        }
+      );
+      return false;
+    }
+    const [fromHours, fromMinutes] = this.fromTime.split(':').map(Number);
+    const [toHours, toMinutes] = this.toTime.split(':').map(Number);
+
+    const fromTotal = fromHours * 60 + fromMinutes;
+    const toTotal = toHours * 60 + toMinutes;
+
+    if (toTotal <= fromTotal) {
+      this.snackBar.open('End time must be after start time.', 'Close', {
         duration: 3000,
       });
       return false;
@@ -114,7 +151,12 @@ export class ReservationComponent implements OnInit {
       return;
     }
 
-    const dateString = `${this.selectedDate!.getFullYear()}-${String(this.selectedDate!.getMonth() + 1).padStart(2, '0')}-${String(this.selectedDate!.getDate()).padStart(2, '0')}`;
+    const dateString = `${this.selectedDate!.getFullYear()}-${String(
+      this.selectedDate!.getMonth() + 1
+    ).padStart(2, '0')}-${String(this.selectedDate!.getDate()).padStart(
+      2,
+      '0'
+    )}`;
 
     const startDateTimeStr = `${dateString}T${this.fromTime}:00`;
     const endDateTimeStr = `${dateString}T${this.toTime}:00`;
@@ -123,7 +165,7 @@ export class ReservationComponent implements OnInit {
       startTime: startDateTimeStr,
       endTime: endDateTimeStr,
       serviceId: this.service.id,
-      eventId: this.selectedEvent!.id
+      eventId: this.selectedEvent!.id,
     };
 
     this.http.post('/api/reservations/', dto).subscribe({
@@ -133,7 +175,8 @@ export class ReservationComponent implements OnInit {
         });
       },
       error: (error) => {
-        const errorMessage = error.error?.message || 'An unexpected error occurred.';
+        const errorMessage =
+          error.error?.message || 'An unexpected error occurred.';
         this.snackBar.open(errorMessage, 'Close', {
           duration: 5000,
         });
