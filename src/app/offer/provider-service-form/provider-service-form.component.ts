@@ -56,8 +56,11 @@ export class ProviderServiceFormComponent implements OnInit {
       specifics: [''],
       photos: [[]],
       newCategory: [''],
-      category: [null]
-    });
+      category: ['']
+    },{validators: [
+      this.discountNotGreaterThanPrice(),
+      this.minLEQMaxWhenVaried(),
+    ]});
     this.isFixedDuration = true;
     this.toggleDurationFields();
     this.updateCategoryValidation();
@@ -76,6 +79,7 @@ export class ProviderServiceFormComponent implements OnInit {
 
   onDurationTypeChange(type: string): void {
     this.isFixedDuration = type === 'fixed';
+    this.serviceForm.get('durationType')?.setValue(type, { emitEvent: false });
     this.toggleDurationFields();
   }
 
@@ -92,6 +96,7 @@ export class ProviderServiceFormComponent implements OnInit {
       this.serviceForm.get('confirmation')?.disable();
     }
     this.updateDurationValidation();
+    this.serviceForm.updateValueAndValidity({ emitEvent: false });
   }
 
   updateDurationValidation(): void {
@@ -207,7 +212,7 @@ export class ProviderServiceFormComponent implements OnInit {
 
         // Only pick default if NOT proposing and nothing selected
         if (!this.proposedCategory && !categoryCtrl?.value && this.categories.length > 0) {
-          categoryCtrl?.setValue(this.categories[0]);
+          categoryCtrl?.setValue('');
         }
       },
       error: (err) => {
@@ -230,11 +235,37 @@ export class ProviderServiceFormComponent implements OnInit {
   }
 
   validateEventTypes(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const selected = control.value as string[] | null;
-    return !selected || selected.length === 0 ? { noEventTypesSelected: true } : null;
-  };
-}
+    return (control: AbstractControl): ValidationErrors | null => {
+      const selected = control.value as string[] | null;
+      return !selected || selected.length === 0 ? { noEventTypesSelected: true } : null;
+    };
+  }
+
+  // add near your other validators
+  private discountNotGreaterThanPrice(): ValidatorFn {
+    return (group: AbstractControl): ValidationErrors | null => {
+      const g = group as FormGroup;
+      const price = g.get('price')?.value;
+      const discount = g.get('discount')?.value;
+      if (price == null || discount == null) return null;
+      return discount > price ? { discountGreaterThanPrice: true } : null;
+    };
+  }
+
+  private minLEQMaxWhenVaried(): ValidatorFn {
+    return (group: AbstractControl): ValidationErrors | null => {
+      const g = group as FormGroup;
+      const type = g.get('durationType')?.value as 'fixed' | 'varied';
+      if (type !== 'varied') return null;
+
+      const min = g.get('minDuration')?.value;
+      const max = g.get('maxDuration')?.value;
+      if (min == null || max == null) return null;
+
+      return min > max ? { minGreaterThanMax: true } : null;
+    };
+  }
+
   proposeCategory(): void {
     const dialogRef = this.dialog.open(CategoryDialogComponent, {
       width: '400px'
@@ -268,5 +299,17 @@ export class ProviderServiceFormComponent implements OnInit {
     }
     categoryCtrl.updateValueAndValidity({ emitEvent: false });
   }
+
+
+  get hasDiscountGreaterThanPrice(): boolean {
+    return this.serviceForm?.hasError('discountGreaterThanPrice') ?? false;
+  }
+
+  get hasMinGreaterThanMax(): boolean {
+    // Only meaningful in VARIED mode
+    return (!this.isFixedDuration) && (this.serviceForm?.hasError('minGreaterThanMax') ?? false);
+  }
+
+  get f() { return this.serviceForm.controls as any; }
 
 }

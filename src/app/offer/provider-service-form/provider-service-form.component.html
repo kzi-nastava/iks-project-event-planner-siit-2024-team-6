@@ -23,12 +23,19 @@
     <!-- Service Category -->
     <div class="form-group">
       <label for="category">Category:</label>
-      <select id="category" formControlName="category">
+      <select id="category" formControlName="category" [disabled]="proposedCategory">
+        <option value="" disabled hidden>— Select a category —</option>
         <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
       </select>
       <button id="proposeCategory" [disabled]="proposedCategory" type="button" (click)="proposeCategory()">
         Propose New Category
       </button>
+      <div
+        *ngIf="!proposedCategory && f.category?.touched && f.category?.errors?.required"
+        class="error-message"
+      >
+        You must either select a category or propose a new one.
+      </div>
     </div>
 
     <!-- Event Types -->
@@ -88,7 +95,13 @@
         class="error-message">
         Discount must not be less than 0.
       </div>
+
+      <div *ngIf="(f.price?.touched || f.discount?.touched) && hasDiscountGreaterThanPrice"
+        class="error-message">
+      Discount cannot be greater than the price.
     </div>
+    </div>
+
 
     <div class="form-group">
       <label>Uploaded Images:</label>
@@ -155,7 +168,7 @@
       <input id="minDuration" type="number" formControlName="minDuration" placeholder="Minimum duration" />
       <div *ngIf="serviceForm.get('minDuration')?.touched && serviceForm.get('minDuration')?.errors?.['required']"
         class="error-message">
-        Minimal duration is required.
+        Minimal duration is required when varied option is selected.
       </div>
       <div *ngIf="serviceForm.get('minDuration')?.touched && serviceForm.get('minDuration')?.errors?.['min']"
         class="error-message">
@@ -166,12 +179,17 @@
       <input id="maxDuration" type="number" formControlName="maxDuration" placeholder="Maximum duration" />
       <div *ngIf="serviceForm.get('maxDuration')?.touched && serviceForm.get('maxDuration')?.errors?.['required']"
         class="error-message">
-        Maximal duration is required when precise duration is 0.
+        Maximal duration is required when varied option is selected.
       </div>
       <div *ngIf="serviceForm.get('maxDuration')?.touched && serviceForm.get('maxDuration')?.errors?.['min']"
         class="error-message">
         Maximal duration must be greater than 0.
       </div>
+
+      <div *ngIf="(f.minDuration?.touched || f.maxDuration?.touched) && hasMinGreaterThanMax"
+        class="error-message">
+      Minimum duration cannot be greater than maximum duration.
+    </div>
     </div>
 
 

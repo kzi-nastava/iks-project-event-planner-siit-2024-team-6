@@ -3,8 +3,8 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { ProviderServiceFormComponent } from './provider-service-form.component';
 
@@ -12,7 +12,6 @@ import { OfferService } from '../offer.service';
 import { EventService } from '../../event/event.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ProviderServiceFormComponent', () => {
   let fixture: ComponentFixture<ProviderServiceFormComponent>;
@@ -50,7 +49,6 @@ describe('ProviderServiceFormComponent', () => {
         CommonModule,
         ReactiveFormsModule,
         RouterTestingModule,
-        HttpClientTestingModule
       ],
       providers: [
         { provide: OfferService, useValue: offerService },
@@ -61,10 +59,6 @@ describe('ProviderServiceFormComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
-    // (dodatno osiguranje, ako nešto nadjača provide)
-    TestBed.overrideProvider(OfferService, { useValue: offerService });
-    TestBed.overrideProvider(EventService, { useValue: eventService });
-
     fixture = TestBed.createComponent(ProviderServiceFormComponent);
     component = fixture.componentInstance;
 
@@ -74,7 +68,6 @@ describe('ProviderServiceFormComponent', () => {
     fixture.detectChanges(); // ngOnInit
   });
 
-  // ===== Helperi =====
   function selectEventType(name = 'Wedding') {
     component.onEventTypeChange(name, { target: { checked: true } } as any);
     fixture.detectChanges();
@@ -82,6 +75,7 @@ describe('ProviderServiceFormComponent', () => {
 
   function fillValidFixedForm() {
     selectEventType('Wedding');
+    component.onDurationTypeChange('fixed');
     component.serviceForm.patchValue({
       name: 'Live Band',
       description: 'Great live band for weddings',
@@ -99,10 +93,9 @@ describe('ProviderServiceFormComponent', () => {
       specifics: 'PA included',
       photos: [],
       newCategory: '',
-      // category postavlja fetchCategories() na 'VENUE'
+      category: 'VENUE', 
     });
-    component.isFixedDuration = true;
-    component.toggleDurationFields();
+    component.serviceForm.updateValueAndValidity({ emitEvent: false });
     fixture.detectChanges();
   }
 
@@ -113,7 +106,7 @@ describe('ProviderServiceFormComponent', () => {
       name: 'Catering',
       description: 'Buffet catering',
       price: 500,
-      discount: 600,
+      discount: 50,
       durationType: 'varied',
       duration: null,
       minDuration: 30,
@@ -126,16 +119,19 @@ describe('ProviderServiceFormComponent', () => {
       specifics: '',
       photos: [],
       newCategory: '',
+      category: 'VENUE', 
     });
+    component.serviceForm.updateValueAndValidity({ emitEvent: false });
     fixture.detectChanges();
   }
 
-  it('gets all categories and event types and sets default category', () => {
+  it('gets all categories and event types; category starts empty and required', () => {
     expect(offerService.getAllCategories).toHaveBeenCalled();
     expect(eventService.getAllNames).toHaveBeenCalled();
 
-    const catVal = component.serviceForm.get('category')?.value;
-    expect(catVal).toBe('VENUE');
+    const catCtrl = component.serviceForm.get('category')!;
+    expect(catCtrl.value).toBe(''); // placeholder (empty)
+    expect(catCtrl.hasError('required')).toBeTrue(); // explicit choice required
     expect(component.eventTypes).toEqual(['Wedding', 'Conference']);
   });
 
@@ -147,7 +143,7 @@ describe('ProviderServiceFormComponent', () => {
     expect(ctrl.errors).toBeNull();
   });
 
-  it('toggels duration (fixed -> varied)', () => {
+  it('toggles duration (fixed -> varied)', () => {
     // initial: fixed
     expect(component.isFixedDuration).toBeTrue();
     expect(component.serviceForm.get('duration')?.enabled).toBeTrue();
@@ -242,7 +238,26 @@ describe('ProviderServiceFormComponent', () => {
     expect(component.proposedCategory).toBeTrue();
   });
 
-  it('addPhotoUrl adds new photo url and updates from', () => {
+  it('when newCategory is proposed, DTO includes categorySuggestion and category remains null', () => {
+    fillValidFixedForm();
+
+    // simulate category proposing
+    component.newCategory = { name: 'CustomCat', description: '' } as any;
+    component.proposedCategory = true;
+    component.serviceForm.patchValue({ newCategory: 'CustomCat', category: null });
+    
+    component['updateCategoryValidation']?.();
+    component.serviceForm.updateValueAndValidity({ emitEvent: false });
+    fixture.detectChanges();
+
+    component.onSubmit();
+
+    const sent = offerService.createService.calls.mostRecent().args[0];
+    expect(sent.category).toBeNull(); // default is null when proposing
+    expect(sent.categorySuggestion).toEqual(jasmine.objectContaining({ name: 'CustomCat' }));
+  });
+
+  it('addPhotoUrl adds new photo url and updates form', () => {
     component.addPhotoUrl('http://img/test.png');
     expect(component.photos).toContain('http://img/test.png');
     expect(component.serviceForm.get('photos')?.value).toContain('http://img/test.png');
@@ -260,4 +275,158 @@ describe('ProviderServiceFormComponent', () => {
     component.onPhotoError({ target: img } as any);
     expect(img.src).toContain('https://via.placeholder.com/300x200.png?text=404+Not+Found');
   });
+
+  it('is invalid when discount > price', () => {
+    fillValidFixedForm();
+    component.serviceForm.patchValue({ price: 100, discount: 150 });
+    component.serviceForm.updateValueAndValidity({ emitEvent: false });
+    fixture.detectChanges();
+
+    expect(component.serviceForm.invalid).toBeTrue();
+    component.onSubmit();
+    expect(offerService.createService).not.toHaveBeenCalled();
+    expect(snackBar.open).toHaveBeenCalled();
+  });
+
+  it('is invalid in VARIED mode when minDuration > maxDuration', () => {
+    fillValidVariedForm();
+    component.serviceForm.patchValue({ minDuration: 200, maxDuration: 120 });
+    component.serviceForm.updateValueAndValidity({ emitEvent: false });
+    fixture.detectChanges();
+
+    expect(component.serviceForm.invalid).toBeTrue();
+    component.onSubmit();
+    expect(offerService.createService).not.toHaveBeenCalled();
+    expect(snackBar.open).toHaveBeenCalled();
+  });
+
+  it('includes multiple selected event types in the payload', () => {
+    fillValidFixedForm();
+    selectEventType('Conference'); // second event type
+    component.serviceForm.updateValueAndValidity({ emitEvent: false });
+    fixture.detectChanges();
+
+    component.onSubmit();
+
+    const sent = offerService.createService.calls.mostRecent().args[0];
+    const names = sent.eventTypes.map((et: any) => et.name);
+    expect(names).toContain('Wedding');
+    expect(names).toContain('Conference');
+  });
+
+  it('the form is invalid without the name', () => {
+    fillValidFixedForm();
+    component.serviceForm.patchValue({ name: null });
+    component.serviceForm.updateValueAndValidity({ emitEvent: false });
+    component.onSubmit();
+    expect(offerService.createService).not.toHaveBeenCalled();
+    expect(snackBar.open).toHaveBeenCalled();
+  });
+
+  it('the form is invalid without a description', () => {
+    fillValidFixedForm();
+    component.serviceForm.patchValue({ description: null });
+    component.serviceForm.updateValueAndValidity({ emitEvent: false });
+    component.onSubmit();
+    expect(offerService.createService).not.toHaveBeenCalled();
+    expect(snackBar.open).toHaveBeenCalled();
+  });
+
+  it('price=0 is invalid', () => {
+    fillValidFixedForm();
+    component.serviceForm.patchValue({ price: 0 });
+    component.serviceForm.updateValueAndValidity({ emitEvent: false });
+    expect(component.serviceForm.invalid).toBeTrue();
+    component.onSubmit();
+    expect(offerService.createService).not.toHaveBeenCalled();
+  });
+
+  it('in FIXED mode duration=0 is invalid', () => {
+    fillValidFixedForm();
+    component.serviceForm.patchValue({ duration: 0 });
+    component.serviceForm.updateValueAndValidity({ emitEvent: false });
+    expect(component.serviceForm.invalid).toBeTrue();
+  });
+
+  it('reservationDeadline=0 is invalid', () => {
+    fillValidFixedForm();
+    component.serviceForm.patchValue({ reservationDeadline: 0 });
+    component.serviceForm.updateValueAndValidity({ emitEvent: false });
+    expect(component.serviceForm.invalid).toBeTrue();
+  });
+
+  it('cancellationDeadline=0 is invalid', () => {
+    fillValidFixedForm();
+    component.serviceForm.patchValue({ cancellationDeadline: 0 });
+    component.serviceForm.updateValueAndValidity({ emitEvent: false });
+    expect(component.serviceForm.invalid).toBeTrue();
+  });
+
+  it('in FIXED mode with manual confirmation, auto-approve is false', () => {
+    fillValidFixedForm();
+    component.serviceForm.patchValue({ confirmation: 'manual' });
+    component.serviceForm.updateValueAndValidity({ emitEvent: false });
+    component.onSubmit();
+    const sent = offerService.createService.calls.mostRecent().args[0];
+    expect(sent.isReservationAutoApproved).toBeFalse();
+  });
+
+  it('from VARIED to FIXED remove min>max error and validates to true', () => {
+    fillValidVariedForm();
+    component.serviceForm.patchValue({ minDuration: 200, maxDuration: 120 });
+    component.serviceForm.updateValueAndValidity({ emitEvent: false });
+    expect(component.serviceForm.hasError('minGreaterThanMax')).toBeTrue();
+
+    component.onDurationTypeChange('fixed');
+    component.serviceForm.patchValue({ duration: 60 });
+    component.serviceForm.updateValueAndValidity({ emitEvent: false });
+
+    expect(component.isFixedDuration).toBeTrue();
+    expect(component.serviceForm.hasError('minGreaterThanMax')).toBeFalse();
+    expect(component.serviceForm.valid).toBeTrue();
+  });
+
+  it('goBack navigates to /my-services', () => {
+    component.goBack();
+    expect(router.navigate).toHaveBeenCalledWith(['/my-services']);
+  });
+
+  it('DTO contains exactly the remaining photos after removing some', () => {
+    fillValidFixedForm();
+    component.addPhotoUrl('http://a.png');
+    component.addPhotoUrl('http://b.png');
+    component.removePhoto(0); // remove 'a.png'
+
+    component.onSubmit();
+    const sent = offerService.createService.calls.mostRecent().args[0];
+    expect(sent.photos).toEqual(['http://b.png']);
+  });
+
+  it('when discount is not given (null), the sale field in DTO is null', () => {
+    fillValidFixedForm();
+    component.serviceForm.patchValue({ discount: null });
+    component.serviceForm.updateValueAndValidity({ emitEvent: false });
+
+    component.onSubmit();
+    const sent = offerService.createService.calls.mostRecent().args[0];
+    expect(sent.sale).toBeNull(); 
+  });
+
+  it('shows error when no category is selected and no category is proposed', () => {
+    component.proposedCategory = false; 
+    const categoryCtrl = component.serviceForm.get('category')!;
+    categoryCtrl.setValue(''); 
+    categoryCtrl.markAsTouched(); 
+
+    component.serviceForm.updateValueAndValidity({ emitEvent: false });
+    fixture.detectChanges();
+
+    expect(categoryCtrl.hasError('required')).toBeTrue();
+    expect(component.proposedCategory).toBeFalse();
+    
+    const compiled = fixture.nativeElement as HTMLElement;
+    const errMsg = compiled.querySelector('.error-message');
+    expect(errMsg?.textContent).toContain('You must either select a category or propose a new one');
+  });
+
 });
