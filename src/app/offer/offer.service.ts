@@ -298,7 +298,7 @@ export class OfferService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    const url = `/api/offers/search-by-budget/${budgetId}`;
+    const url = `/api/budgets/${budgetId}/offers:search`;
     return this.httpClient.post<PagedResponse<Offer>>(
       url,
       budgetDTO,

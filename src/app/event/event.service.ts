@@ -92,7 +92,7 @@ export class EventService {
     item: { category: string; maxPrice: number }
   ): Observable<BudgetItem> {
     return this.httpClient.post<BudgetItem>(
-      `/api/organizers/budget/${budgetId}/items`,
+      `/api/budgets/${budgetId}/items`,
       item
     );
   }
@@ -103,14 +103,14 @@ export class EventService {
     price: number
   ): Observable<BudgetItem> {
     return this.httpClient.put<BudgetItem>(
-      `api/organizers/budget/${budgetId}/items/${itemId}`,
+      `api/budgets/${budgetId}/items/${itemId}`,
       price
     );
   }
 
   deleteBudgetItem(budgetId: number, itemId: number): Observable<void> {
     return this.httpClient.delete<void>(
-      `api/organizers/budget/${budgetId}/items/${itemId}`
+      `api/budgets/${budgetId}/items/${itemId}`
     );
   }
 
